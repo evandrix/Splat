@@ -1,0 +1,536 @@
+% \iffalse meta-comment
+% ///////////////////////////////////////////////////////////////
+%
+% The provided documentclass `icldt' is based on the class `scrreprt'
+% from the koma-script package. It uses the packages `geometry' 
+% and `setspace' to fullfill the requirements for dissertations of 
+% the University of London and of Imperial College London.
+%
+% ///////////////////////////////////////////////////////////////
+%
+% Copyright (c) 2008, Daniel Wagner, www.PrettyPrinting.net
+% 
+% Permission is hereby granted, free of charge, to any person
+% obtaining a copy of this documentclass and associated
+% documentation files (the "Template"), to deal in the Template
+% without restriction, including without limitation the rights to
+% use, copy, modify, merge, publish, distribute, sublicense,
+% and/or sell copies of the Template, and to permit persons to
+% whom the Template is furnished to do so, subject to the
+% following conditions:
+%
+% The above copyright notice and this permission notice shall be
+% included in all copies or substantial portions of the Template.
+% 
+% THE TEMPLATE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND,
+% EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+% OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+% NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+% HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+% WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+% FROM, OUT OF OR IN CONNECTION WITH THE TEMPLATE OR THE USE OR
+% OTHER DEALINGS IN THE TEMPLATE.
+%
+% /////////////////////////////////////////////////////////////////
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{icldt.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\ProvidesClass{icldt}
+%<*class>
+    [2011/01/29 v2.0 Imperial College London Dissertation Template]
+%</class>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{url}
+\usepackage{textcomp}
+\EnableCrossrefs         
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{icldt.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2007/05/20}{Initial version}
+%
+% \GetFileInfo{icldt.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+% 
+%
+% \title{Imperial College London Dissertation Template\\
+%   The \textsf{icldt} class\thanks{This document
+%   corresponds to \textsf{icldt}~\fileversion, dated \filedate.}}
+% \author{Daniel Wagner\\\url{www.PrettyPrinting.net}}
+%
+% \maketitle
+% 
+% \setlength{\parindent}{0em}
+% \setlength{\parskip}{\medskipamount}
+% 
+% \section{Introduction}
+%
+% The provided documentclass \textsf{icldt} is based on the class 
+% \textsf{scrreprt} from the \textsf{koma-script} package. 
+% It uses the packages \textsf{geometry} and \textsf{setspace} to 
+% fullfill the requirements for dissertations of the University of London 
+% and of Imperial College London as cited in Section 3.
+%
+% \section{Usage}
+% 
+% The College regulation for dissertation leave some choices up to you. 
+% Most of these choices are available as documentclass options.
+%
+% \DescribeMacro{onehalfspacing}\DescribeMacro{doublespacing} 
+% You can choose between one-and-a-half or double linespacing with the 
+% option \texttt{onehalfspacing} respectively \texttt{doublespacing}.
+% One-and-a-half linespacing is default.
+% 
+% \DescribeMacro{imperial}\DescribeMacro{university} 
+% You can specify if you are submitting for a University of London or 
+% an Imperial College London degree with the option \texttt{university} respectively 
+% \texttt{imperial}. 
+% Use \texttt{imperial} if you are enrolled for an Imperial College London degree, 
+% but not for an University of London degree.
+% Use \texttt{university} if you are enrolled for an University of London degree, 
+% which is possible at Imperial College only if you started studying 
+% before 2007. Default is \texttt{imperial}. 
+%
+% \DescribeMacro{titlepagenumber=on}
+% \DescribeMacro{titlepagenumber=off}
+% The College requirements say that every page \emph{including the 
+% titlepage} has to be paginated with the arabic pagenumber. Many 
+% people believe a pagenumber on the titlepage looks horrible. 
+% Therefore you can choose to violate this requirement and switch 
+% the pagenumber on the titlepage off with the option 
+% \texttt{titlepagenumber=off}.
+% By default the template sticks stricktly to the requirements and 
+% uses \texttt{titlepagenumber=on} as default.
+%
+% \DescribeMacro{paper=a4}
+% \DescribeMacro{oneside}
+% \DescribeMacro{twoside}
+% All other options are passed on to the underlying
+% documentclass \textsf{scrreprt}. This is how
+% the paper format is set to A4 with a single-sided layout
+% by default. Imperial College London degrees allow double-sided
+% layout for thesis with more than 100 pages. Use option \texttt{twoside}
+% to switch to a double-sided layout.
+%
+% \DescribeMacro{11pt}
+% The College does not impose any restrictions on the fontsize.
+% By default the fontsize is set to 11pt which seems to be reasonable 
+% with regard to the paper format and margins.
+%
+% \subsection{Titlepage}
+% The titlepage includes all required information (see Section 3).
+% The titlepage can be adapted to degrees of 
+% ``University of London, Imperial College'' and to degrees of 
+% ``Imperial College London'' by using the class option 
+% \texttt{university} and \texttt{imperial} respectively.
+% To obtain a University of London degree at Imperial College
+% is only possible if you started studying before 2007.
+% Therefore the option \texttt{imperial} is chosen by default. 
+% \DescribeMacro{\maketitle} The titlepage is placed in the document
+% with \texttt{\symbol{92}maketitle}.
+%
+% \DescribeMacro{\college}
+% If you are from another college, e.\,g.\ within the University of 
+% London, you can re-define the college's
+% name with \texttt{\symbol{92}college}\{\textit{name}\}. By default
+% the college is Imperial College London.
+%
+% \DescribeMacro{\department}
+% You have to specify your department with 
+% \texttt{\symbol{92}department}\{\textit{name}\}.
+% The department's name is printed on the titlepage. It is also used
+% for the name of your degree. So if you study in the department of 
+% Computing it is assumed that you will get a degree in Computing. 
+% If this is not the case or if you are an external student who is 
+% not part of any department please use \DescribeMacro{\field} 
+% \texttt{\symbol{92}field}\{\textit{field~of~studies}\}
+% to declare the field of studies in which you will get your degree.
+%
+% \DescribeMacro{PhD}\DescribeMacro{MSc}\DescribeMacro{BSc}
+% You can choose the name of your degree which is printed on the 
+% titlepage by selecting one of the documentclass options 
+% \texttt{PhD}, \texttt{MSc}, \texttt{BSc}. 
+% The Diploma of Imperial College (DIC) is automatically added when 
+% you choose the option \texttt{PhD}. 
+% The \texttt{PhD} option is selected by default.
+%
+% \DescribeMacro{DIC=on}\DescribeMacro{DIC=off}
+% If you obtain a PhD without the Diploma of Imperial College use 
+% the option \texttt{DIC=off}.
+% To add the Diploma to any of the other degrees -- check with 
+% the College's administration if this is possible -- use 
+% the option \texttt{DIC=on}.
+%
+% \DescribeMacro{\supervisor}
+% The regulations do not require to mention your supervisor on 
+% the titlepage. If you want to do so anyway define her name 
+% with \texttt{\symbol{92}supervisor}\{\textit{name}\}.
+%
+% \subsection{Declaration}
+% Although it is not mentioned in the College's regulation,
+% some departments might require a signed declaration at the beginning
+% of the thesis, which states that the thesis is original work,
+% etc. In doubt please confirm with your supervisor or the PhD administrator 
+% in your department whether you need the declaration or not.
+% 
+% \DescribeMacro{declaration=on}\DescribeMacro{declaration=off}
+% You can switch the declaration on with then documentclass
+% option \texttt{declaration=on}. 
+% By default it is switched off, i.\,e.\ \texttt{declaration=off}.  
+% The titlepage is followed by a declaration that the 
+% dissertation is your original work and all cited 
+% material has been properly acknoledged. The declaration reads:
+% \begin{quote}\itshape
+% I herewith certify that all material in this dissertation 
+% which is not my own work has been properly acknowledged.
+% \end{quote}
+% This declaration is followed by your name as defined by 
+% \texttt{\symbol{92}author}\{\textit{name}\}. That is where you 
+% need to sign before you hand in your dissertation.
+%
+% \DescribeMacro{\declaration} If you want to change the text 
+% of the declaration use 
+% \texttt{\symbol{92}declaration}\{\textit{new~text}\}.
+%
+% \subsection{Abstract}
+% \DescribeEnv{abstract} Use the \texttt{abstract} environment to 
+% write the abstract of your dissertation. It should follow directly 
+% after the \texttt{\symbol{92}maketitle} command.
+%
+% Your abstract is not allowed to exceed 300 words.
+%
+% \subsection{Dedication}
+% \DescribeMacro{\dedication}\DescribeMacro{\makededication}
+% The regulations do neither require nor forbid a dedication of your 
+% dissertation to somebody or something. If you want to include a 
+% dedication define its text with 
+% \texttt{\symbol{92}dedication}\{\textit{text}\} which is provided 
+% by the \textsf{koma-script} class. To place it in the document use 
+%  \texttt{\symbol{92}makededication}.
+% The right place for the dedication would be between the abstract and the 
+% table of contents.
+%
+% \subsection{Table of Contents}
+% The College regulations say that ``the abstract should be followed 
+% by a full table of contents (including any material not bound in) and 
+% a list of tables, photographs and any other materials.''
+% 
+% You can create the table of contents and the lists with the standard 
+% \LaTeX\ commands \texttt{\symbol{92}tableofcontents},
+% \texttt{\symbol{92}listoffigures} and \texttt{\symbol{92}listoftables}.
+%
+% \section{Regulations for Dissertations} 
+% This section is an excerpt from the regulations for dissertations of the 
+% University of London and of Imperial College London. It cites all requirements 
+% which have direct impact on the document layout.
+% The full text of the requirements can be found online:
+% \begin{itemize}\small
+% \item Imperial College London:\\ 
+%  \url{http://www3.imperial.ac.uk/pls/portallive/docs/1/48333706.PDF}
+% \item University of London:\\ 
+%  \mbox{\url{http://www.london.ac.uk/fileadmin/documents/students/postgraduate/binding_notes.pdf}}
+% \end{itemize}
+% 
+
+% 
+% \subsection*{Paper}
+% A4 size paper (210 x 297 mm) should be used. Plain white 
+% paper must be used, of good quality and of sufficient opacity 
+% for normal reading. For a university of London degree only one 
+% side of the paper may be used. For Imperial College London degrees
+% ``pages may be printed double-sided for theses over 100 pages''.
+
+% \subsection*{Layout}
+% University of London:
+% Margins at the binding edge must be not less than 40 mm 
+% (1.5 inches) and other margins not less than 20 mm (0.75 inches). 
+%
+% Imperial College London: Page content should be 
+% centred, so that margins are equal distant from the edge of pages/binding.
+%
+% Double or one-and-a-half spacing should be used in typescripts, 
+% except for indented quotations or footnotes where single spacing 
+% may be used. 
+%
+%
+%
+% \subsection*{Pagination}
+% All pages must be numbered in one continuous sequence, 
+% i.\,e.\ from the title page of the first volume to the last 
+% page of type, in Arabic numerals from 1 onwards. This 
+% sequence must include everything bound in the volume, 
+% including maps, diagrams, blank pages, etc. Any material 
+% which cannot be bound in with the text must be placed in 
+% a pocket inside  or attached to the back cover or in a rigid 
+% container similar in format to the bound thesis.
+%
+% \subsection*{Title Page}
+% The title page must bear the officially-approved title of 
+% the thesis, the candidate's full name as registered, the 
+% name of the College/Institute at which the candidate was 
+% registered (except for External Students) and the degree
+% for which it is submitted.
+%
+% \subsection*{Abstract}
+% The title-page should be followed by an abstract consisting 
+% of no more than 300 words.
+%
+% \subsection*{Table of Contents}
+% In each copy of the thesis the abstract should be followed 
+% by a full table of contents (including any material not 
+% bound in) and a list of tables, photographs and any other 
+% materials.
+%
+%
+% \section{Copyright \& License}
+%
+% Copyright \textcopyright\ 2008, Daniel Wagner, \url{www.PrettyPrinting.net}
+% 
+% Permission is hereby granted, free of charge, to any person
+% obtaining a copy of this documentclass and associated
+% documentation files (the ``Template''), to deal in the Template
+% without restriction, including without limitation the rights to
+% use, copy, modify, merge, publish, distribute, sublicense,
+% and/or sell copies of the Template, and to permit persons to
+% whom the Template is furnished to do so, subject to the
+% following conditions:
+%
+% The above copyright notice and this permission notice shall be
+% included in all copies or substantial portions of the Template.
+%
+% \setlength{\fboxsep}{3mm}
+% \begin{center}
+% \noindent\fbox{\parbox{0.9\textwidth}{
+% The Template is provided ``as is'', without warranty of any kind,
+% express or implied, including but not limited to the warranties 
+% of merchantability, fitness for a particular purpose and
+% noninfringement. In no event shall the authors or copyright
+% holders be liable for any claim, damages or other liability,
+% whether in an action of contract, tort or otherwise, arising
+% from, out of or in connection with the Template or the use or
+% other dealings in the Template.
+% }}
+% \end{center}
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+
+% \section{Implementation}
+% These macros store the required information.
+%    \begin{macrocode}
+\newcommand*{\@supervisor}{}
+\newcommand*{\@university}{}
+\newcommand*{\@college}{Imperial College London}
+\newcommand*{\@department}{}
+\newcommand*{\@field}{}
+\newcommand*{\@degree}{}
+\newcommand*{\@diploma}{}
+\newcommand*{\@declaration}{}
+%    \end{macrocode}
+% The options for the documentclass are declared.
+% This will redefine the information in the macros defined above if necessary.
+%    \begin{macrocode}
+\DeclareOption{university}{%
+ \renewcommand{\@university}{University of London}}
+\DeclareOption{imperial}{%
+ \let\@university\empty}
+\DeclareOption{PhD}{%
+ \renewcommand{\@degree}{Doctor of Philosophy}
+ \renewcommand{\@diploma}{Diploma of Imperial College London}}
+\DeclareOption{MSc}{%
+ \renewcommand{\@degree}{Master of Science}\let\@diploma\empty}
+\DeclareOption{BSc}{%
+ \renewcommand{\@degree}{Bachelor of Science}\let\@diploma\empty}
+\DeclareOption{DIC=off}{%
+ \let\@diploma\empty}
+\DeclareOption{DIC=on}{%
+ \renewcommand{\@diploma}{Diploma of Imperial College London}}
+\DeclareOption{declaration=off}{%
+ \let\@declaration\empty}
+\DeclareOption{declaration=on}{%
+ \renewcommand{\@declaration}{%
+ I herewith certify that all material in this dissertation which 
+ is not my own work has been properly acknowledged.}}
+%    \end{macrocode}
+% These options offer (limited) choices for the layout.
+%    \begin{macrocode}
+\DeclareOption{doublespacing}{\AtBeginDocument{\doublespacing}}
+\DeclareOption{onehalfspacing}{\AtBeginDocument{\onehalfspacing}}
+\DeclareOption{titlepagenumber=off}{%
+ \AtEndOfClass{\renewcommand{\titlepagestyle}{empty}}}
+\DeclareOption{titlepagenumber=on}{%
+ \AtEndOfClass{\renewcommand{\titlepagestyle}{plain}}}
+\DeclareOption{paper=a4}{\PassOptionsToClass{\CurrentOption}{scrreprt}}
+\DeclareOption{11pt}{\PassOptionsToClass{\CurrentOption}{scrreprt}}
+\DeclareOption{oneside}{\PassOptionsToClass{\CurrentOption}{scrreprt}}
+%    \end{macrocode}
+% All other options are handled by the underlying documentclass
+% \textsf{scrreprt} from the \textsf{koma-script} package.
+%    \begin{macrocode}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrreprt}}
+%    \end{macrocode}
+% The default options are defined and executed.
+%    \begin{macrocode}
+\ExecuteOptions{onehalfspacing,titlepagenumber=on,imperial,PhD,
+	declaration=off,paper=a4,pagesize=auto,11pt,oneside}
+\ProcessOptions\relax
+%    \end{macrocode}
+% The whole document class builds on \textsf{scrreprt} 
+% from the \textsf{koma-script} package.
+%    \begin{macrocode}
+\LoadClass[pagesize=auto]{scrreprt}
+%    \end{macrocode}
+% The linespacing is controlled by the package \textsf{setspace}
+%    \begin{macrocode}
+\RequirePackage{setspace}
+%    \end{macrocode}
+% The page layout is set with the \textsf{geometry} package.
+%    \begin{macrocode}
+\RequirePackage[left=4.2cm,right=4.2cm,top=2.97cm,bottom=5.94cm]%
+ {geometry}
+%    \end{macrocode}
+% \begin{macro}{\supervisor}
+% Defines the name(s) of the supervisor(s).
+%    \begin{macrocode}
+\newcommand*{\supervisor}[1]{\gdef\@supervisor{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\college}
+% Defines the name of the college.
+%    \begin{macrocode}
+\newcommand*{\college}[1]{\gdef\@college{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\department}
+% Defines the name of the department.
+%    \begin{macrocode}
+\newcommand*{\department}[1]{\gdef\@department{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\field}
+% Defines the name of your field of studies.
+%    \begin{macrocode}
+\newcommand*{\field}[1]{\gdef\@field{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\declaration}
+% Redefines the declaration text.
+%    \begin{macrocode}
+\newcommand*{\declaration}[1]{\gdef\@declaration{#1}}
+%    \end{macrocode}
+% \end{macro}
+% The font for title and headlines is changed from sans-serif, which is 
+% default in \textsf{koma-script}, to the serif font.
+%    \begin{macrocode}
+\setkomafont{sectioning}{\rmfamily\bfseries}
+%    \end{macrocode}
+% The titlepage is typeset including all information required 
+% by the University of London and Imperial College London. 
+%    \begin{macrocode}
+\renewcommand*{\maketitle}{
+\begin{titlepage}
+ \par
+ \clearpage
+ \thispagestyle{\titlepagestyle}
+ \noindent\begin{minipage}[t]{\textwidth}
+  \centering\large
+  \ifx\@university\@empty \else \@university\par\fi 
+  \@college
+  \ifx\@department\@empty \else \par Department of \@department\fi
+ \end{minipage}
+ \null\vfill
+ \begin{center}
+  {\titlefont\huge \@title\par}
+  \vskip 3em
+  {\Large \lineskip 0.75em
+  \begin{tabular}[t]{c}
+   \@author
+  \end{tabular}\par}
+  \vskip 1.5em
+  {\Large \@date \par}
+  \vskip \z@ \@plus3fill
+  \ifx\@supervisor\@empty \else
+  {\Large Supervised by \@supervisor \par}
+  \fi
+  \vskip 3em
+ \end{center}\par
+ \noindent\begin{minipage}[b]{\textwidth}
+  \centering 
+  Submitted in part fulfilment of the requirements for the degree of\\
+  \@degree\ in \ifx\empty\@field{\@department}\else{\@field}\fi\ of 
+  \ifx\empty\@university{\@college}\else{the \@university}\fi
+  \ifx\@diploma\@empty\else{\\and the \@diploma}\fi
+ \end{minipage}
+%    \end{macrocode}
+% If the declaration option is switched on,
+% the titlepage is followed by the declaration that the dissertation
+% is original work of its author.
+%    \begin{macrocode}
+ \ifx\@declaration\@empty\else{
+ \cleardoublepage
+ \chapter*{Declaration}
+ \thispagestyle{plain}
+ \@declaration
+ \par\vspace{3cm}
+ \hfill\@author
+ \cleardoublepage
+ }\fi
+\end{titlepage}
+}
+%    \end{macrocode}
+% The dedication -- which is not mentioned in the requirements 
+% for dissertations of the University of London and Imperial 
+% College London -- is typeset on its own plain page.
+%    \begin{macrocode}
+\newcommand{\makededication}{
+ \ifx\@dedication\@empty \else
+ \clearpage
+ \thispagestyle{plain}
+ \null\vfill
+ {\centering \Large \@dedication \par}
+ \vskip \z@ \@plus3fill
+ \cleardoublepage
+ \fi
+}
+%    \end{macrocode}
+% \begin{environment}{abstract}
+% The abstract is implemented as a section without numbering
+% on its own plain page.
+%    \begin{macrocode}
+\renewenvironment{abstract}{%
+\chapter*{Abstract}\thispagestyle{plain}}{\cleardoublepage}
+%    \end{macrocode}
+% \end{environment}
+%
+% \Finale
+\endinput

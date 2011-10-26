@@ -1,0 +1,3 @@
+\contentsline {chapter}{\numberline {1}Where the Work Begins}{6}
+\contentsline {section}{\numberline {1.1}Write your thesis here instead of the following thousand words of placeholder text.}{6}
+\contentsline {chapter}{Bibliography}{9}

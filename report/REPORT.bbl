@@ -1,9 +1,45 @@
-\begin{thebibliography}{AS11}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{MMSW97}
 
-\bibitem[AS11]{ArjanSeesing2011}
-Hans-Gerhard~Gross Arjan~Seesing.
+\bibitem[CKK{\etalchar{+}}05]{Cheon2005}
+Yoonsik Cheon, Myoung~Yee Kim, Myoung~Yee Kim, Ashaveena Perum, and Ashaveena
+  Perum.
+\newblock A complete automation of unit testing for java programs.
+\newblock In {\em In Proceedings of the 2005 International Conference on
+  Software Engineering Research and Practice}, pages 290--295. CSREA Press,
+  2005.
+
+\bibitem[GR08]{Gupta2008}
+Nirmal~Kumar Gupta and Mukesh~Kumar Rohil.
+\newblock Using genetic algorithm for unit testing of object oriented software.
+\newblock In {\em Proceedings of the 1st International Conference on Emerging
+  Trends in Engineering and Technology (ICETET '08)}, pages 308--313. IEEE,
+  July 2008.
+
+\bibitem[MMSW97]{Michael1997}
+C.~C. Michael, G.~E. McGraw, M.~A. Schatz, and C.~C. Walton.
+\newblock Genetic algorithms for dynamic test data generation.
+\newblock In {\em Proceedings of the 12th international conference on Automated
+  software engineering (formerly: KBSE)}, ASE '97, pages 307--, Washington, DC,
+  USA, 1997. IEEE Computer Society.
+
+\bibitem[Pym10]{Pymodel2010}
+Pymodel: Model-based testing in python.
+\newblock \url{http://staff.washington.edu/jon/pymodel/www/}, March 2010.
+
+\bibitem[Reg11]{AlexGroceSep2011}
+Alex Groce \& Chaoqiang Zhang \& Eric Eide \& Yang Chen \&~John Regehr.
+\newblock Swarm testing.
+\newblock In {\em Swarm Testing}. Oregon State University, Corvallis, OR;
+  University of Utah, Sep 2011.
+
+\bibitem[SG06]{Seesing2006}
+Arjan Seesing and Hans-Gerhard Gross.
 \newblock A genetic programming approach to automated test generation for
   object-oriented software.
-\newblock Master's thesis, Delft University of Technology, 2011.
+\newblock {\em International Transactions on Systems Science and Applications},
+  1(2):127--134, September 2006.
+\newblock Special Issue Section on Evaluation of Novel Approaches to Software
+  Engineering Guest Editors: Pericles Loucopoulos and Kalle Lyytinen.
 
 \end{thebibliography}

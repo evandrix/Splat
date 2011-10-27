@@ -2,8 +2,8 @@
 % Encoding: MacRoman
 
 @INPROCEEDINGS{Cheon2005,
-  author = {Yoonsik Cheon and Myoung Yee Kim and Myoung Yee Kim and Ashaveena
-	Perum and Ashaveena Perum},
+  author = {Yoonsik Cheon and Yoonsik Cheon and Myoung Yee Kim and Myoung Yee
+	Kim and Ashaveena Perum and Ashaveena Perum},
   title = {A complete automation of unit testing for Java programs},
   booktitle = {In Proceedings of the 2005 International Conference on Software Engineering
 	Research and Practice},

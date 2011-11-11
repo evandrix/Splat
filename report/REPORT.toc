@@ -1,3 +1,17 @@
-\contentsline {chapter}{\numberline {1}Where the Work Begins}{6}{chapter.1}
-\contentsline {section}{\numberline {1.1}Write your thesis here instead of the following thousand words of placeholder text.}{6}{section.1.1}
-\contentsline {chapter}{Bibliography}{9}{chapter*.5}
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}
+\contentsline {chapter}{\numberline {2}Background}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Research}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Approach}{5}{section.2.2}
+\contentsline {section}{\numberline {2.3}Current state of the art}{5}{section.2.3}
+\contentsline {section}{\numberline {2.4}Motivation}{5}{section.2.4}
+\contentsline {section}{\numberline {2.5}Target audience}{5}{section.2.5}
+\contentsline {chapter}{\numberline {3}Body}{6}{chapter.3}
+\contentsline {section}{\numberline {3.1}Specification}{6}{section.3.1}
+\contentsline {section}{\numberline {3.2}Architecture}{6}{section.3.2}
+\contentsline {section}{\numberline {3.3}Algorithm outline}{6}{section.3.3}
+\contentsline {chapter}{\numberline {4}Evaluation}{7}{chapter.4}
+\contentsline {chapter}{\numberline {5}Plan of work}{8}{chapter.5}
+\contentsline {section}{\numberline {5.1}Remaining tasks}{8}{section.5.1}
+\contentsline {section}{\numberline {5.2}Estimated timetable}{8}{section.5.2}
+\contentsline {section}{\numberline {5.3}Possible extensions}{8}{section.5.3}
+\contentsline {chapter}{Bibliography}{10}{chapter*.3}

@@ -1,0 +1,82 @@
+Python
+======
+
+* general-purpose
+* high-level
+* design philosophy: code readability
+* "preferably only one obvious way to get things done"
+* large & comprehensive standard library
+* minimal core; highly extensible
+* multi-paradigm
+    - OO
+    - imperative (structured)
+    - functional * map(), reduce(), filter(), list comprehension for dict();set(), generation expressions, tools - itertools;functools
+    - AOP (metaprogramming/magic methods)
+* automatic memory management - RC, cycle-detecting GC
+* reference implementation: CPython (optimised variants unladen-swallow, Stackless)
+* JIT compiler: psyco or alternative implementation like PyPy
+* against premature optimisation
+
+Language features
+-----------------
+indentation for block delimiters, instead of braces
+
+Statements & control flow
+    - if-elif-else
+    - for
+    - while
+    - try
+    - class
+    - def
+    - with (context manager)
+    - pass
+    - assert
+    - yield
+
+Expressions
+    - integer division (/)
+    - compare by value (==)
+    - compare by reference (is)
+    - chained comparisons (a<b<c)
+    - and,or,not
+    - list comprehension
+    - anonymous functions / lambda expressions - limited as body can only be single expression
+    - ternary conditional expression: a if b else c
+    - list vs. tuples
+        - list mutable, cannot be dictionary keys
+        - tuples immutable (optional parentheses) eg. swap var `x,y = y,x`
+    - string format operator (%)
+    - string literals
+        - single or double quotation marks delimit
+        - triple quoted multiline strings
+        - raw string (r''), or bytearray (b'')
+    - index, slice expressions: a[key], a[start:stop:step] *0-based,negative*, shallow copy with a[:]
+    - expressions vs. statements
+    - eval() vs. exec()
+
+Methods on objects
+    - methods on objects = functions attached to object's class
+    - instance.method(argument) vs. Class.method(instance, argument)
+
+Typing
+    - duck typing
+    - dynamic name resolution (late binding) - binds methods & variable names during execution
+    - typed objects
+    - but untyped variable names
+    - type constraints not checked at compile time
+    - operations on object may fail => given object is not of suitable type
+    - dynamic, strong typed, ie. forbid operations not well-defined eg. number + string
+    - can define custom types as classes
+    - new instances = class call() = instances of metaclass type (type is an instance of type) = allow metaprogramming & reflection
+    - old vs. new style classes
+    - 2.7 eg:
+        - numeric: int, float, long, complex
+        - sequence: str, unicode, list, tuple, bytearray, buffer, xrange
+        - set: set, frozenset
+        - mapping: dict
+        
+Mathematics
+    - %
+    - //
+    - round()
+    - decimal

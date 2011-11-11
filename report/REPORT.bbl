@@ -1,6 +1,19 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{MMSW97}
 
+\bibitem[ACE11]{pubsdoc:irulan-tr}
+Tristan Allwood, Cristian Cadar, and Susan Eisenbach.
+\newblock {High Coverage Testing of Haskell Programs}.
+\newblock In {\em International Symposium on Software Testing and Analysis},
+  July 2011.
+
+\bibitem[BAR09]{BenAsher:2009:EUI:1534530.1534550}
+Yosi Ben~Asher and Nadav Rotem.
+\newblock The effect of unrolling and inlining for python bytecode
+  optimizations.
+\newblock In {\em Proceedings of SYSTOR 2009: The Israeli Experimental Systems
+  Conference}, SYSTOR '09, pages 14:1--14:14, New York, NY, USA, 2009. ACM.
+
 \bibitem[CKK{\etalchar{+}}05]{Cheon2005}
 Yoonsik Cheon, Myoung~Yee Kim, Myoung~Yee Kim, Ashaveena Perum, and Ashaveena
   Perum.
@@ -41,5 +54,11 @@ Arjan Seesing and Hans-Gerhard Gross.
   1(2):127--134, September 2006.
 \newblock Special Issue Section on Evaluation of Novel Approaches to Software
   Engineering Guest Editors: Pericles Loucopoulos and Kalle Lyytinen.
+
+\bibitem[Whi01]{Whitehead2001}
+R.~Whitehead.
+\newblock {\em Leading a software development team: a developer's guide to
+  successfully leading people and projects}.
+\newblock The SEI Series in Software Engineering. Addison-Wesley, 2001.
 
 \end{thebibliography}

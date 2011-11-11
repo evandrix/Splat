@@ -6,7 +6,7 @@
 \documentclass{icldt}
 \def \supervisor {Prof. Susan Eisenbach}
 \def \secondmarker {}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[usenames,dvipsnames]{color}
 \usepackage[pdftex,bookmarks=true]{hyperref}
 \hypersetup{colorlinks=false,pdfborder={0 0 0 }}
@@ -20,9 +20,9 @@
 \usepackage{moreverb}
 \usepackage{eukdate}
 \usepackage{indentfirst}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\setlength{\parindent}{1em}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \begin{titlepage}
 \begin{center}
@@ -41,38 +41,40 @@
 {\large \monthname\ \number\year}
 \end{center}
 \end{titlepage}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-\textbf{Write your own abstract here.}
+\textbf{}
 
-``In publishing and graphic design, lorem ipsum (or simply lipsum) is standard
-placeholder text used to demonstrate the graphic elements of a document or
-visual presentation, such as font, typography, and layout. Lipsum also serves as
-placeholder text in mock-ups of visual design projects before the actual words
-are inserted into the finished product. When used in this manner, lipsum is also
-called greeking.''
+``As games become technologically more advanced with the ages, there's never been a greater need for intelligent AI in games. Several methodologies exist, with the aim of making AI more human-like, making games more engaging and believable. From the days of using Finite State Machines to Hierarchical Logic, the different ways of approaching AI have substantially made AI more diverse. Behaviour Trees attempt to improve upon these techniques by allowing a modular, flexible and powerful architecture that is goal-orientated.''
 
-\hfill --- Wikipedia
+\hfill --- Pyrulan
 \end{abstract}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\dedication{}
 %\makededication
+\include{acknowledgement}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tableofcontents
 %\listoftables
 %\listoffigures
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 
 What is the problem? Why is it important? Why is it difficult to solve? What is the main idea? What issues are there to address?
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. In sollicitudin risus
-eu leo. Nulla eu libero. Nam blandit, odio cursus imperdiet tincidunt, elit
-lectus malesuada orci, eget adipiscing augue diam id nunc. Phasellus ac dui non
-arcu nonummy varius. Fusce nec turpis. Curabitur posuere purus ac justo. Sed
-cursus sapien at orci. Curabitur luctus. Duis suscipit tempus nulla. Aliquam
-erat volutpat. Nulla lacus. In eget dui ut massa consequat tempus. Sed laoreet
-sem a orci. Quisque leo. Duis dolor ipsum, commodo id, venenatis aliquet,
-vulputate a, dolor.
+Video games have become technologically more advanced over the years - exhibiting realistic graphic capabilities coupled with engaging gameplay. The area of Artificial Intelligence (AI) in video games has also arisen as an important factor in determining the quality of the game by measure of a player's experience. With increasing demand for more realistic computer controlled players, events and opponents capable of exhibiting human-like characteristics, AI has been a significant area of interest for the games industry and academics alike. Several methodologies exist to approach the modelling, scripting and the design of AI for video games, aiming to make game-controlled entities more realistic and intelligent. Behaviour Trees attempt to improve upon exisiting AI methodologies by being simple to implement, scalable to handle the most complex of game tasks and modular to improve reusability - ultimately improving the efficiency for developing and designing game AI. 
 
+    In this project, we plan to use Behaviour Trees to design and develop an AI-controlled player for the commercial real-time strategy game DEFCON. We approach the design of Behaviour Trees for the AI using a behaviour-oriented methodology which we introduce as Behaviour oriented Design (BOD) and also intend for the AI to adapt and learn to play the game of DEFCON by allowing the AI to evolve into a better player automatically using evolutionary machine learning techniques. The project aims to showcase the feasibility of combining such machine learning techniques together with behaviour trees as a practical approach to developing an effective and intelligent AI player.
+
+    \newpage
+    \section{Motivation}
+    
+    \subsection{Improvements of Behaviour Trees over traditional game AI}
+    Behaviour Trees have been proposed as a new approach to the designing of game AI, with advantages over other AI approaches being its simple design, scalability and modularity. Behaviour Trees have been adopted for use in commercial games for various uses including controlling character animation and coordinating non-playable character(NPC) behaviours. An example of the use of Behaviour Trees in commercial game AI includes the AI developed for the commercial First-Person-Shooter(FPS) Halo2~\cite{isla}. Thus, the project wishes to investigate the feasibility of Behaviour Trees for the purpose of designing an automated AI player for a real-time strategy(RTS) game such as DEFCON.
+
+	\subsection{Complexity of DEFCON as a Real-Time Strategy Game}
+    Real-time strategy (RTS) games offer a level of complexity which differ from other games such as platform games, puzzle games or even first-person-shooters. There exists a need to perform micro-managing over the numerous units in the game, as well as adopting strategies to be able to outwit opponents. DEFCON differs from other RTS games as well. In most other RTS games, winning heavily centres around accumulating resource and maximising the size of one's army or number of units. In DEFCON, however, players have an equal set of resources and number of units. The key factor to winning centres around a coming up with a good strategy to coordinate one's units and resources effectively. DEFCON thus exists as a challenging and interesting platform to develop an AI for.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background}
 \section{Research}
 \section{Approach}
@@ -82,16 +84,16 @@ Cite existing related work
 
 \section{Motivation}
 \section{Target audience}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Body}
 \section{Specification}
 \section{Architecture}
 \section{Algorithm outline}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evaluation}
 
 Which aspects (qualitative/quantitative)? Comparison with existing work? Results of tests/benchmarks?
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Plan of work}
 \section{Remaining tasks}
 \section{Estimated timetable}
@@ -99,7 +101,9 @@ Which aspects (qualitative/quantitative)? Comparison with existing work? Results
 
 Relative priority? Rationale?
 
-% The Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{alpha}
 \nocite{*}
 \bibliography{fyp}\addcontentsline{toc}{chapter}{Bibliography}

@@ -1,4 +1,4 @@
 all: clean
 
 clean:
-	rm -rf *.aux *.pdf *.log
+	rm -rf *.aux *.log

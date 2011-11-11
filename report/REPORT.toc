@@ -1,17 +1,20 @@
-\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}
-\contentsline {chapter}{\numberline {2}Background}{5}{chapter.2}
-\contentsline {section}{\numberline {2.1}Research}{5}{section.2.1}
-\contentsline {section}{\numberline {2.2}Approach}{5}{section.2.2}
-\contentsline {section}{\numberline {2.3}Current state of the art}{5}{section.2.3}
-\contentsline {section}{\numberline {2.4}Motivation}{5}{section.2.4}
-\contentsline {section}{\numberline {2.5}Target audience}{5}{section.2.5}
-\contentsline {chapter}{\numberline {3}Body}{6}{chapter.3}
-\contentsline {section}{\numberline {3.1}Specification}{6}{section.3.1}
-\contentsline {section}{\numberline {3.2}Architecture}{6}{section.3.2}
-\contentsline {section}{\numberline {3.3}Algorithm outline}{6}{section.3.3}
-\contentsline {chapter}{\numberline {4}Evaluation}{7}{chapter.4}
-\contentsline {chapter}{\numberline {5}Plan of work}{8}{chapter.5}
-\contentsline {section}{\numberline {5.1}Remaining tasks}{8}{section.5.1}
-\contentsline {section}{\numberline {5.2}Estimated timetable}{8}{section.5.2}
-\contentsline {section}{\numberline {5.3}Possible extensions}{8}{section.5.3}
-\contentsline {chapter}{Bibliography}{10}{chapter*.3}
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivation}{6}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Improvements of Behaviour Trees over traditional game AI}{6}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Complexity of DEFCON as a Real-Time Strategy Game}{6}{subsection.1.1.2}
+\contentsline {chapter}{\numberline {2}Background}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Research}{7}{section.2.1}
+\contentsline {section}{\numberline {2.2}Approach}{7}{section.2.2}
+\contentsline {section}{\numberline {2.3}Current state of the art}{7}{section.2.3}
+\contentsline {section}{\numberline {2.4}Motivation}{7}{section.2.4}
+\contentsline {section}{\numberline {2.5}Target audience}{7}{section.2.5}
+\contentsline {chapter}{\numberline {3}Body}{8}{chapter.3}
+\contentsline {section}{\numberline {3.1}Specification}{8}{section.3.1}
+\contentsline {section}{\numberline {3.2}Architecture}{8}{section.3.2}
+\contentsline {section}{\numberline {3.3}Algorithm outline}{8}{section.3.3}
+\contentsline {chapter}{\numberline {4}Evaluation}{9}{chapter.4}
+\contentsline {chapter}{\numberline {5}Plan of work}{10}{chapter.5}
+\contentsline {section}{\numberline {5.1}Remaining tasks}{10}{section.5.1}
+\contentsline {section}{\numberline {5.2}Estimated timetable}{10}{section.5.2}
+\contentsline {section}{\numberline {5.3}Possible extensions}{10}{section.5.3}
+\contentsline {chapter}{Bibliography}{12}{chapter*.4}

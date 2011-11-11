@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  27 OCT 2011 13:28
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  11 NOV 2011 13:49
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -274,7 +274,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip47
 )
-Package hyperref Info: Option `colorlinks' set `false' on input line 11.
+Package hyperref Info: Option `colorlinks' set `false' on input line 12.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/algorithms/algorithmic.sty
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
@@ -418,27 +418,30 @@ Package: eukdate 2009/03/18 v1.04 UK format date (Hart's Rules) with weekday
 \c@euk@century=\count130
 \c@euk@year=\count131
 )
+(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/indentfirst.sty
+Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
+)
 
 LaTeX Warning: Unused global option(s):
     [paper=a4,pagesize=auto].
 
-(./REPORT.aux)
+(./REPORT.aux (./acknowledgement.aux))
 \openout1 = `REPORT.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -489,7 +492,7 @@ LaTeX Font Info:    ... okay on input line 22.
 \everyMPtoPDFconversion=\toks27
 )
 \AtBeginShipoutBox=\box32
-Package hyperref Info: Link coloring OFF on input line 22.
+Package hyperref Info: Link coloring OFF on input line 26.
  (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -498,9 +501,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count138
 )
-LaTeX Info: Redefining \ref on input line 22.
-LaTeX Info: Redefining \pageref on input line 22.
-LaTeX Info: Redefining \nameref on input line 22.
+LaTeX Info: Redefining \ref on input line 26.
+LaTeX Info: Redefining \pageref on input line 26.
+LaTeX Info: Redefining \nameref on input line 26.
 
 (./REPORT.out) (./REPORT.out)
 \@outlinefile=\write3
@@ -529,31 +532,46 @@ e
 {/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 [2
 
+]
+\openout2 = `acknowledgement.aux'.
+
+ (./acknowledgement.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--4
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
+
+ []
+
+) [3
+
+
+
+
 ] (./REPORT.toc
-Overfull \hbox (0.41223pt too wide) in paragraph at lines 2--2
- [][] [][]\OT1/cmr/m/n/10.95 Write your the-sis here in-stead of the fol-low-in
-g thou-sand words 
+Overfull \hbox (5.94806pt too wide) in paragraph at lines 3--3
+ [][] [][]\OT1/cmr/m/n/10.95 Improvements of Be-haviour Trees over tra-di-tiona
+l game 
  []
 
 )
 \tf@toc=\write4
 \openout4 = `REPORT.toc'.
 
- [3
-
-
-
-] (./REPORT.lot)
-\tf@lot=\write5
-\openout5 = `REPORT.lot'.
-
  [4
 
-] (./REPORT.lof)
-\tf@lof=\write6
-\openout6 = `REPORT.lof'.
-
- [5
 
 ]
 Chapter 1.
@@ -564,38 +582,64 @@ Class scrreprt Warning: \float@addtolists detected!
 (scrreprt)              Support for \float@addtolists may be removed from
 (scrreprt)              `scrreprt' soon .
 
-[6
+[5
 
-] [7] (./REPORT.bbl [8]
-Underfull \hbox (badness 3098) in paragraph at lines 5--11
+]
+
+LaTeX Warning: Citation `isla' on page 6 undefined on input line 73.
+
+[6]
+Chapter 2.
+[7
+
+]
+Chapter 3.
+[8
+
+]
+Chapter 4.
+
+Overfull \hbox (6.08997pt too wide) in paragraph at lines 95--97
+[]\OT1/cmr/m/n/10.95 Which as-pects (qual-i-ta-tive/quantitative)? Com-par-i-so
+n with ex-ist-ing work?
+ []
+
+[9
+
+]
+Chapter 5.
+(./REPORT.bbl [10
+
+]
+Underfull \hbox (badness 3098) in paragraph at lines 18--24
 []\OT1/cmr/m/n/10.95 Yoonsik Cheon, My-oung Yee Kim, My-oung Yee Kim,
  []
 
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
- [9
+[11
 
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
- (./REPORT.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 191.
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 111.
+ [12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 111.
+ (./REPORT.aux (./acknowledgement.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 111.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 111.
 Package rerunfilecheck Info: File `REPORT.out' has not changed.
-(rerunfilecheck)             Checksum: 574291EF1DFAEDE53D23ED4021A8B0F0;233.
+(rerunfilecheck)             Checksum: 2E17454424277BF76DAB26BB8492AB8A;1215.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 111.
  ) 
 Here is how much of TeX's memory you used:
- 8088 strings out of 493633
- 121738 string characters out of 3143378
- 235660 words of memory out of 3000000
- 11251 multiletter control sequences out of 15000+200000
- 9986 words of font info for 36 fonts, out of 3000000 for 9000
+ 8133 strings out of 493633
+ 122473 string characters out of 3143378
+ 237456 words of memory out of 3000000
+ 11270 multiletter control sequences out of 15000+200000
+ 10293 words of font info for 37 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 41i,7n,42p,286b,348s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,7n,42p,991b,409s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb>
@@ -605,10 +649,10 @@ r/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
 local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
 al/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on REPORT.pdf (9 pages, 136003 bytes).
+Output written on REPORT.pdf (12 pages, 144200 bytes).
 PDF statistics:
- 117 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
- 25 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 197 compressed objects within 2 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

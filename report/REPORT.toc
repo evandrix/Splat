@@ -1,20 +1,47 @@
-\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}
+\select@language {british}
+\contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivation}{6}{section.1.1}
-\contentsline {subsection}{\numberline {1.1.1}Improvements of Behaviour Trees over traditional game AI}{6}{subsection.1.1.1}
-\contentsline {subsection}{\numberline {1.1.2}Complexity of DEFCON as a Real-Time Strategy Game}{6}{subsection.1.1.2}
-\contentsline {chapter}{\numberline {2}Background}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}Research}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}Approach}{7}{section.2.2}
-\contentsline {section}{\numberline {2.3}Current state of the art}{7}{section.2.3}
-\contentsline {section}{\numberline {2.4}Motivation}{7}{section.2.4}
-\contentsline {section}{\numberline {2.5}Target audience}{7}{section.2.5}
-\contentsline {chapter}{\numberline {3}Body}{8}{chapter.3}
-\contentsline {section}{\numberline {3.1}Specification}{8}{section.3.1}
-\contentsline {section}{\numberline {3.2}Architecture}{8}{section.3.2}
-\contentsline {section}{\numberline {3.3}Algorithm outline}{8}{section.3.3}
-\contentsline {chapter}{\numberline {4}Evaluation}{9}{chapter.4}
-\contentsline {chapter}{\numberline {5}Plan of work}{10}{chapter.5}
-\contentsline {section}{\numberline {5.1}Remaining tasks}{10}{section.5.1}
-\contentsline {section}{\numberline {5.2}Estimated timetable}{10}{section.5.2}
-\contentsline {section}{\numberline {5.3}Possible extensions}{10}{section.5.3}
-\contentsline {chapter}{Bibliography}{12}{chapter*.4}
+\contentsline {section}{\numberline {1.2}Automated software testing for dynamic languages}{6}{section.1.2}
+\contentsline {section}{\numberline {1.3}Python}{7}{section.1.3}
+\contentsline {section}{\numberline {1.4}Project contributions}{8}{section.1.4}
+\contentsline {section}{\numberline {1.5}Report organisation}{8}{section.1.5}
+\contentsline {chapter}{\numberline {2}Background}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introduction}{9}{section.2.1}
+\contentsline {section}{\numberline {2.2}Basic concepts}{9}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Definition of terms}{9}{subsection.2.2.1}
+\contentsline {subsubsection}{General testing}{9}{subsubsection*.4}
+\contentsline {subsubsection}{Graph theory}{9}{subsubsection*.5}
+\contentsline {subsection}{\numberline {2.2.2}Validation criteria}{10}{subsection.2.2.2}
+\contentsline {subsubsection}{Functional requirements}{10}{subsubsection*.6}
+\contentsline {subsubsection}{Non-functional requirements}{10}{subsubsection*.7}
+\contentsline {subsubsection}{Business requirements}{10}{subsubsection*.8}
+\contentsline {section}{\numberline {2.3}Implementations}{10}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Static method}{10}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Dynamic method}{10}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Hybrid}{11}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Overview}{11}{section.2.4}
+\contentsline {section}{\numberline {2.5}Current state of the art}{12}{section.2.5}
+\contentsline {section}{\numberline {2.6}Challenges}{12}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Parameter instantiation}{12}{subsection.2.6.1}
+\contentsline {subsubsection}{Lazy instantiation}{13}{subsubsection*.9}
+\contentsline {subsubsection}{Runtime in-memory manipulation}{13}{subsubsection*.10}
+\contentsline {subsubsection}{Random testing}{13}{subsubsection*.11}
+\contentsline {subsection}{\numberline {2.6.2}Optimising search space coverage}{13}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Testing a dynamically typed language}{13}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Non-terminating program executions}{14}{subsection.2.6.4}
+\contentsline {subsection}{\numberline {2.6.5}Early detection of path infeasibility}{14}{subsection.2.6.5}
+\contentsline {subsection}{\numberline {2.6.6}Improving code coverage}{14}{subsection.2.6.6}
+\contentsline {section}{\numberline {2.7}Summary}{14}{section.2.7}
+\contentsline {chapter}{\numberline {3}\textsc {Pyrulan}}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Specification}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}Approach}{16}{section.3.2}
+\contentsline {section}{\numberline {3.3}Architecture}{17}{section.3.3}
+\contentsline {section}{\numberline {3.4}Algorithm outline}{17}{section.3.4}
+\contentsline {chapter}{\numberline {4}Evaluation / Discussion}{18}{chapter.4}
+\contentsline {chapter}{\numberline {5}Conclusion \& Future Work}{19}{chapter.5}
+\contentsline {chapter}{\numberline {6}Project Plan}{20}{chapter.6}
+\contentsline {section}{\numberline {6.1}Estimated timetable}{20}{section.6.1}
+\contentsline {section}{\numberline {6.2}Possible extensions}{20}{section.6.2}
+\contentsline {chapter}{Bibliography}{24}{chapter*.12}
+\contentsline {chapter}{\numberline {A}Figures}{25}{appendix.A}
+\contentsline {chapter}{\numberline {B}Code listings}{26}{appendix.B}

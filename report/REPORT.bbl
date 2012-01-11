@@ -1,18 +1,44 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{MMSW97}
 
-\bibitem[ACE11]{pubsdoc:irulan-tr}
-Tristan Allwood, Cristian Cadar, and Susan Eisenbach.
-\newblock {High Coverage Testing of Haskell Programs}.
-\newblock In {\em International Symposium on Software Testing and Analysis},
-  July 2011.
+\bibitem[ACE11]{Allwood2011}
+Tristan O.~R. Allwood, Cristian Cadar, and Susan Eisenbach.
+\newblock High coverage testing of haskell programs.
+\newblock In Matthew~B. Dwyer and Frank Tip, editors, {\em Proceedings of the
+  20th International Symposium on Software Testing and Analysis, ISSTA 2011,
+  Toronto, ON, Canada, July 17-21, 2011}, pages 375--385. ACM, 2011.
 
-\bibitem[BAR09]{BenAsher:2009:EUI:1534530.1534550}
+\bibitem[AES07]{Andreou2007}
+Andreas~S. Andreou, Kypros~A. Economides, and Anastasis~A. Sofokleous.
+\newblock An automatic software test-data generation scheme based on data flow
+  criteria and genetic algorithms.
+\newblock {\em Computer and Information Technology, International Conference
+  on}, 0:867--872, 2007.
+
+\bibitem[BAR09]{BenAsher2009}
 Yosi Ben~Asher and Nadav Rotem.
 \newblock The effect of unrolling and inlining for python bytecode
   optimizations.
 \newblock In {\em Proceedings of SYSTOR 2009: The Israeli Experimental Systems
   Conference}, SYSTOR '09, pages 14:1--14:14, New York, NY, USA, 2009. ACM.
+
+\bibitem[Ber07]{Bertolino2007}
+Antonia Bertolino.
+\newblock Software testing research: Achievements, challenges, dreams.
+\newblock In {\em 2007 Future of Software Engineering}, FOSE '07, pages
+  85--103, Washington, DC, USA, 2007. IEEE Computer Society.
+
+\bibitem[Bot01]{MutationGA}
+Leonardo Bottaci.
+\newblock A genetic algorithm fitness function for mutation testing, April
+  2001.
+
+\bibitem[BV11]{TiobeDec11}
+TIOBE~Software BV.
+\newblock {TIOBE Programming Community Index for December 2011}.
+\newblock
+  \url{http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html}, 2011.
+\newblock [Online; accessed 7-January-2012].
 
 \bibitem[CKK{\etalchar{+}}05]{Cheon2005}
 Yoonsik Cheon, Myoung~Yee Kim, Myoung~Yee Kim, Ashaveena Perum, and Ashaveena
@@ -22,12 +48,87 @@ Yoonsik Cheon, Myoung~Yee Kim, Myoung~Yee Kim, Ashaveena Perum, and Ashaveena
   Software Engineering Research and Practice}, pages 290--295. CSREA Press,
   2005.
 
+\bibitem[DLL{\etalchar{+}}09]{Dara2009}
+Rozita Dara, Shimin Li, Weining Liu, Angi Smith-Ghorbani, and Ladan Tahvildari.
+\newblock Using dynamic execution data to generate test cases.
+\newblock {\em Software Maintenance, IEEE International Conference on},
+  0:433--436, 2009.
+
+\bibitem[Edv99]{Edvardsson99asurvey}
+Jon Edvardsson.
+\newblock A survey on automatic test data generation, 1999.
+
 \bibitem[GR08]{Gupta2008}
 Nirmal~Kumar Gupta and Mukesh~Kumar Rohil.
 \newblock Using genetic algorithm for unit testing of object oriented software.
 \newblock In {\em Proceedings of the 1st International Conference on Emerging
   Trends in Engineering and Technology (ICETET '08)}, pages 308--313. IEEE,
   July 2008.
+
+\bibitem[Har00]{Harrold00}
+Mary~Jean Harrold.
+\newblock Testing: A roadmap.
+\newblock In {\em In The Future of Software Engineering}, pages 61--72. ACM
+  Press, 2000.
+
+\bibitem[HK08]{Han2008}
+Seung-Hee Han and Yong-Rae Kwon.
+\newblock An empirical evaluation of test data generation techniques.
+\newblock {\em J. Computing Science and Engineering}, Sep 2008.
+
+\bibitem[Inc87]{InceDC1987}
+D.~C. Ince.
+\newblock {The Automatic Generation of Test Data}.
+\newblock {\em The Computer Journal}, 30(1):63--69, 1987.
+
+\bibitem[Jac10]{PyModel}
+Jonathan Jacky.
+\newblock Pymodel: Model-based testing in python.
+\newblock \url{http://staff.washington.edu/jon/pymodel/www/}, March 2010.
+
+\bibitem[Kei11]{ChromeBugBounties}
+Gregg Keizer.
+\newblock {Computerworld News Article: Security - Google pays record \$26K in
+  Chrome bug bounties}.
+\newblock
+  \url{http://www.computerworld.com/s/article/9221186/Google_pays_record_26K_in_Chrome_bug_bounties},
+  2011.
+\newblock [Online; accessed 6-January-2012].
+
+\bibitem[KHC{\etalchar{+}}05]{Korel2005}
+Bogdan Korel, Mark Harman, S.~Chung, P.~Apirukvorapinit, R.~Gupta, and
+  Q.~Zhang.
+\newblock Data dependence based testability transformation in automated test
+  generation.
+\newblock In {\em Proceedings of the 16th IEEE International Symposium on
+  Software Reliability Engineering}, pages 245--254, Washington, DC, USA, 2005.
+  IEEE Computer Society.
+
+\bibitem[Kor90]{Korel1990}
+B.~Korel.
+\newblock Automated software test data generation.
+\newblock {\em IEEE Trans. Softw. Eng.}, 16:870--879, August 1990.
+
+\bibitem[LMH09]{Lakhotia2009}
+Kiran Lakhotia, Phil McMinn, and Mark Harman.
+\newblock Automated test data generation for coverage: Haven't we solved this
+  problem yet?
+\newblock In {\em Proceedings of the 2009 Testing: Academic and Industrial
+  Conference - Practice and Research Techniques}, TAIC-PART '09, pages 95--104,
+  Washington, DC, USA, 2009. IEEE Computer Society.
+
+\bibitem[McM04]{McMinn2004}
+Phil McMinn.
+\newblock Search-based software test data generation: a survey: Research
+  articles.
+\newblock {\em Softw. Test. Verif. Reliab.}, 14:105--156, June 2004.
+
+\bibitem[MFT11]{Mairhofer2011}
+Stefan Mairhofer, Robert Feldt, and Richard Torkar.
+\newblock Search-based software testing and test data generation for a dynamic
+  programming language.
+\newblock In {\em Proceedings of the Genetic and Evolutionary Computation
+  Conference (GECCO)}, pages 1859--1866. ACM, 2011.
 
 \bibitem[MMSW97]{Michael1997}
 C.~C. Michael, G.~E. McGraw, M.~A. Schatz, and C.~C. Walton.
@@ -36,15 +137,52 @@ C.~C. Michael, G.~E. McGraw, M.~A. Schatz, and C.~C. Walton.
   software engineering (formerly: KBSE)}, ASE '97, pages 307--, Washington, DC,
   USA, 1997. IEEE Computer Society.
 
-\bibitem[Pym10]{Pymodel2010}
-Pymodel: Model-based testing in python.
-\newblock \url{http://staff.washington.edu/jon/pymodel/www/}, March 2010.
+\bibitem[Mur07]{Murrill2007}
+Branson~W. Murrill.
+\newblock Automated test data generation and reliability assessment for
+  software in high assurance systems.
+\newblock {\em High-Assurance Systems Engineering, IEEE International Symposium
+  on}, 0:409--410, 2007.
+
+\bibitem[Nta88]{Ntafos1988}
+S.~C. Ntafos.
+\newblock A comparison of some structural testing strategies.
+\newblock {\em IEEE Trans. Softw. Eng.}, 14:868--874, June 1988.
+
+\bibitem[Pet04]{Pep20ZenPython}
+Tim Peters.
+\newblock {PEP 20 -- The Zen of Python}.
+\newblock \url{http://www.python.org/dev/peps/pep-0020/}, 2004.
+\newblock [Online; accessed 7-January-2012].
+
+\bibitem[PLEB07]{Pacheco2007}
+Carlos Pacheco, Shuvendu~K. Lahiri, Michael~D. Ernst, and Thomas Ball.
+\newblock Feedback-directed random test generation.
+\newblock In {\em In ICSE}. IEEE Computer Society, 2007.
+
+\bibitem[PM87]{Prather1987}
+R.~E. Prather and J.~P. Myers, Jr.
+\newblock The path prefix software testing strategy.
+\newblock {\em IEEE Trans. Softw. Eng.}, 13:761--766, July 1987.
 
 \bibitem[Reg11]{AlexGroceSep2011}
 Alex Groce \& Chaoqiang Zhang \& Eric Eide \& Yang Chen \&~John Regehr.
 \newblock Swarm testing.
 \newblock In {\em Swarm Testing}. Oregon State University, Corvallis, OR;
   University of Utah, Sep 2011.
+
+\bibitem[RU99]{Rothermel99testcase}
+Gregg Rothermel and Roland~H. Untch.
+\newblock Test case prioritization: An empirical study.
+\newblock In {\em In Proceedings of the International Conference on Software
+  Maintenance}, pages 179--188, 1999.
+
+\bibitem[SD01]{Sy2001}
+Nguyen~Tran Sy and Yves Deville.
+\newblock Automatic test data generation for programs with integer and float
+  variables.
+\newblock In {\em In 16th IEEE International Conference on Automated Software
+  Engineering(ASE01}, pages 3--21, 2001.
 
 \bibitem[SG06]{Seesing2006}
 Arjan Seesing and Hans-Gerhard Gross.
@@ -55,10 +193,38 @@ Arjan Seesing and Hans-Gerhard Gross.
 \newblock Special Issue Section on Evaluation of Novel Approaches to Software
   Engineering Guest Editors: Pericles Loucopoulos and Kalle Lyytinen.
 
-\bibitem[Whi01]{Whitehead2001}
-R.~Whitehead.
-\newblock {\em Leading a software development team: a developer's guide to
-  successfully leading people and projects}.
-\newblock The SEI Series in Software Engineering. Addison-Wesley, 2001.
+\bibitem[SN]{MutantGene}
+Selvakumar Subramanian and Ramaraj Natarajan.
+\newblock A tool for generation and minimization of test suite by mutant gene
+  algorithm.
+
+\bibitem[TCM{\etalchar{+}}98]{Tracey1998}
+Nigel Tracey, John Clark, Keith Mander, John Mcdermid, and Heslington York.
+\newblock An automated framework for structural test-data generation.
+\newblock In {\em Proceedings of the International Conference on Automated
+  Software Engineering; IEEE}, 1998.
+
+\bibitem[TCMM02]{Tracey2002}
+Nigel Tracey, John Clark, John McDermid, and Keith Mander.
+\newblock {\em A search-based automated test-data generation framework for
+  safety-critical systems}, pages 174--213.
+\newblock Springer-Verlag New York, Inc., New York, NY, USA, 2002.
+
+\bibitem[TK]{Tahbildar}
+Hitesh Tahbildar and Bichitra Kalita.
+\newblock Automated software test data generation: Direction of research.
+
+\bibitem[ZLM03]{Zhao2003}
+R.~Zhao, M.R. Lyu, and Yinghua Min.
+\newblock Domain testing based on character string predicate [software
+  testing].
+\newblock In {\em Test Symposium, 2003. ATS 2003. 12th Asian}, pages 96 -- 101,
+  nov. 2003.
+
+\bibitem[ZW01]{ZhangW01}
+Jian Zhang and Xiaoxu Wang.
+\newblock A constraint solver and its application to path feasibility analysis.
+\newblock {\em International Journal of Software Engineering and Knowledge
+  Engineering}, 11(2):139--156, 2001.
 
 \end{thebibliography}

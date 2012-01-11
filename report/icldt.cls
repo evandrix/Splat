@@ -1,9 +1,7 @@
-%%
 %% This is file `icldt.cls',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
-%%
 %% icldt.dtx  (with options: `class')
 %% 
 %% ///////////////////////////////////////////////////////////////////
@@ -41,10 +39,7 @@
 %% ///////////////////////////////////////////////////////////////////
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{icldt}
-    [2011/01/29 v2.0 Imperial College London Dissertation Template]
-
-
-
+    [2011/01/29 v2.0 Imperial College London Thesis Template]
 \newcommand*{\@supervisor}{}
 \newcommand*{\@university}{}
 \newcommand*{\@college}{Imperial College London}
@@ -74,7 +69,6 @@
  \renewcommand{\@declaration}{%
  I herewith certify that all material in this dissertation which
  is not my own work has been properly acknowledged.}}
-\DeclareOption{doublespacing}{\AtBeginDocument{\doublespacing}}
 \DeclareOption{onehalfspacing}{\AtBeginDocument{\onehalfspacing}}
 \DeclareOption{titlepagenumber=off}{%
  \AtEndOfClass{\renewcommand{\titlepagestyle}{empty}}}
@@ -84,12 +78,11 @@
 \DeclareOption{11pt}{\PassOptionsToClass{\CurrentOption}{scrreprt}}
 \DeclareOption{oneside}{\PassOptionsToClass{\CurrentOption}{scrreprt}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrreprt}}
-\ExecuteOptions{onehalfspacing,titlepagenumber=on,imperial,PhD,declaration=off,paper=a4,pagesize=auto,11pt,oneside}
+\ExecuteOptions{onehalfspacing,titlepagenumber=on,imperial,PhD,declaration=off,pagesize=11pt,oneside}
 \ProcessOptions\relax
-\LoadClass[pagesize=auto]{scrreprt}
+\LoadClass[]{scrreprt}
 \RequirePackage{setspace}
-\RequirePackage[left=4.2cm,right=4.2cm,top=2.97cm,bottom=5.94cm]%
- {geometry}
+\RequirePackage[top=3cm,left=3cm,right=3cm,bottom=3.5cm]{geometry}
 \newcommand*{\supervisor}[1]{\gdef\@supervisor{#1}}
 \newcommand*{\college}[1]{\gdef\@college{#1}}
 \newcommand*{\department}[1]{\gdef\@department{#1}}
@@ -142,16 +135,6 @@
  }\fi
 \end{titlepage}
 
-}
-\newcommand{\makededication}{
- \ifx\@dedication\@empty \else
- \clearpage
- \thispagestyle{plain}
- \null\vfill
- {\centering \Large \@dedication \par}
- \vskip \z@ \@plus3fill
- \cleardoublepage
- \fi
 }
 \renewenvironment{abstract}{%
 \chapter*{Abstract}\thispagestyle{plain}}{\cleardoublepage}

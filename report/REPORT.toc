@@ -17,31 +17,36 @@
 \contentsline {subsubsection}{Business requirements}{10}{subsubsection*.8}
 \contentsline {section}{\numberline {2.3}Implementations}{10}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Static method}{10}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Dynamic method}{10}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.2}Dynamic method}{11}{subsection.2.3.2}
 \contentsline {subsection}{\numberline {2.3.3}Hybrid}{11}{subsection.2.3.3}
 \contentsline {section}{\numberline {2.4}Overview}{11}{section.2.4}
 \contentsline {section}{\numberline {2.5}Current state of the art}{12}{section.2.5}
-\contentsline {section}{\numberline {2.6}Challenges}{12}{section.2.6}
-\contentsline {subsection}{\numberline {2.6.1}Parameter instantiation}{12}{subsection.2.6.1}
+\contentsline {section}{\numberline {2.6}Features of Python}{12}{section.2.6}
+\contentsline {section}{\numberline {2.7}Challenges}{12}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Parameter instantiation}{12}{subsection.2.7.1}
 \contentsline {subsubsection}{Lazy instantiation}{13}{subsubsection*.9}
 \contentsline {subsubsection}{Runtime in-memory manipulation}{13}{subsubsection*.10}
 \contentsline {subsubsection}{Random testing}{13}{subsubsection*.11}
-\contentsline {subsection}{\numberline {2.6.2}Optimising search space coverage}{13}{subsection.2.6.2}
-\contentsline {subsection}{\numberline {2.6.3}Testing a dynamically typed language}{13}{subsection.2.6.3}
-\contentsline {subsection}{\numberline {2.6.4}Non-terminating program executions}{14}{subsection.2.6.4}
-\contentsline {subsection}{\numberline {2.6.5}Early detection of path infeasibility}{14}{subsection.2.6.5}
-\contentsline {subsection}{\numberline {2.6.6}Improving code coverage}{14}{subsection.2.6.6}
-\contentsline {section}{\numberline {2.7}Summary}{14}{section.2.7}
-\contentsline {chapter}{\numberline {3}\textsc {Pyrulan}}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}Specification}{15}{section.3.1}
-\contentsline {section}{\numberline {3.2}Approach}{16}{section.3.2}
-\contentsline {section}{\numberline {3.3}Architecture}{17}{section.3.3}
-\contentsline {section}{\numberline {3.4}Algorithm outline}{17}{section.3.4}
-\contentsline {chapter}{\numberline {4}Evaluation / Discussion}{18}{chapter.4}
-\contentsline {chapter}{\numberline {5}Conclusion \& Future Work}{19}{chapter.5}
-\contentsline {chapter}{\numberline {6}Project Plan}{20}{chapter.6}
-\contentsline {section}{\numberline {6.1}Estimated timetable}{20}{section.6.1}
-\contentsline {section}{\numberline {6.2}Possible extensions}{20}{section.6.2}
-\contentsline {chapter}{Bibliography}{24}{chapter*.12}
-\contentsline {chapter}{\numberline {A}Figures}{25}{appendix.A}
-\contentsline {chapter}{\numberline {B}Code listings}{26}{appendix.B}
+\contentsline {subsection}{\numberline {2.7.2}Optimising search space coverage}{13}{subsection.2.7.2}
+\contentsline {subsection}{\numberline {2.7.3}Testing a dynamically typed language}{14}{subsection.2.7.3}
+\contentsline {subsection}{\numberline {2.7.4}Non-terminating program executions}{14}{subsection.2.7.4}
+\contentsline {subsection}{\numberline {2.7.5}Early detection of path infeasibility}{14}{subsection.2.7.5}
+\contentsline {subsection}{\numberline {2.7.6}Improving code coverage}{14}{subsection.2.7.6}
+\contentsline {section}{\numberline {2.8}Summary}{15}{section.2.8}
+\contentsline {chapter}{\numberline {3}Research}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}Specification}{16}{section.3.1}
+\contentsline {section}{\numberline {3.2}Approach}{17}{section.3.2}
+\contentsline {section}{\numberline {3.3}Algorithm}{18}{section.3.3}
+\contentsline {section}{\numberline {3.4}Summary}{18}{section.3.4}
+\contentsline {chapter}{\numberline {4}\textsc {Pyrulan}}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Architecture}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Examples}{19}{section.4.2}
+\contentsline {section}{\numberline {4.3}Summary}{19}{section.4.3}
+\contentsline {chapter}{\numberline {5}Evaluation}{20}{chapter.5}
+\contentsline {section}{\numberline {5.1}Summary}{20}{section.5.1}
+\contentsline {chapter}{\numberline {6}Conclusion \& Future Work}{21}{chapter.6}
+\contentsline {chapter}{\numberline {7}Project Plan}{22}{chapter.7}
+\contentsline {section}{\numberline {7.1}Estimated timeline (by weeks)}{22}{section.7.1}
+\contentsline {section}{\numberline {7.2}Possible extensions}{23}{section.7.2}
+\contentsline {chapter}{Bibliography}{27}{chapter*.12}
+\contentsline {chapter}{\numberline {A}Code listings}{28}{appendix.A}

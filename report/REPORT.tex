@@ -180,11 +180,10 @@
 \begin{document}
 	\include{titlepage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\begin{abstract}
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae velit. Aenean malesuada adipiscing sem. Quisque ligula mauris, posuere sed, elementum id, suscipit et, urna. Phasellus suscipit tristique nisl. Vivamus ac urna. Pellentesque egestas facilisis velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi eu augue. Vestibulum congue placerat sem. Integer eget urna id risus suscipit eleifend. Etiam at est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent orci. Suspendisse potenti. Morbi egestas, justo vel cursus eleifend, dui leo dapibus ante, vitae pretium purus massa sed enim. Vivamus eu libero in nulla sagittis aliquam. Quisque semper quam id dui. Nulla facilisi.
-	
+\begin{abstract}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae velit. Aenean malesuada adipiscing sem. Quisque ligula mauris, posuere sed, elementum id, suscipit et, urna. Phasellus suscipit tristique nisl. Vivamus ac urna. Pellentesque egestas facilisis velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi eu augue. Vestibulum congue placerat sem. Integer eget urna id risus suscipit eleifend. Etiam at est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent orci. Suspendisse potenti. Morbi egestas, justo vel cursus eleifend, dui leo dapibus ante, vitae pretium purus massa sed enim. Vivamus eu libero in nulla sagittis aliquam. Quisque semper quam id dui. Nulla facilisi.	
 %	\hfill --- Pyrulan
-	\end{abstract}
+\end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\include{acknowledgement}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -234,7 +233,7 @@ This is primarily because Python is an open source, general purpose, multi-parad
 
 At the heart of the language design philosophy \cite{Pep20ZenPython}, there should be one-- and preferably only one --obvious way to do it. The importance of readability promotes a \emph{clean, concise and elegant syntax}, advantageous to easily demonstrate proof of concepts.
 
-For instance, Python code is reads more fluently than C\#, as depicted below:
+For instance, the Python code snippet reads more fluently than its C\# counterpart:
 
 \begin{tabularx}{\textwidth}{X X}
 \underline{Sample C\# code} & \underline{Equivalent Python code} \\
@@ -256,26 +255,27 @@ Apart from the fundamental testing infrastructure toolset of \textsf{unittest}, 
 Within the context given above, this project makes the following key contributions:
 
 \begin{itemize}
-	\item A discussion of the possible ways considered for automated testing, focusing on test data generation only using information at runtime
+	\item A discussion of the possible ways considered for automated software testing, focusing on test data generation by only using information gathered at runtime
 	\item A motivating example describing automated lazy testing in Python
-	\item Implementation as a Python module to automatically generate high coverage test suites, primarily for Python libraries like Django web framework, NumPy/SciPy, wxPython
-	\item Investigating feasibility of the lazy testing technique, as illustrated by Irulan for Haskell \cite{Allwood2011}
+	\item Implementation as a Python module to automatically generate high coverage test suites, primarily evaluated against Python libraries like Django web framework, NumPy/SciPy, wxPython
+	\item Investigating effectiveness of the lazy testing technique, as illustrated by \textsc{Irulan} in Haskell \cite{Allwood2011}, for Python
 	\item Further advance the work in the field of automated software testing, especially for dynamic languages
 \end{itemize}
 
-In order to accomplish these goals, we take advantage of the main features of the Python language, ie. ..., together with its extensive repository, the Python Package Index (PyPI). To this end, ...
+To this end,, we take advantage of the main features of the Python language, ie. strong introspection and reflective capabilities, together with its extensive tool support, the Python Package Index (PyPI) repository.
 
 The concepts discussed in this paper are concretely demonstrated in a tool called \textsc{Pyrulan}, a high coverage test suite generator for Python library code, written in Python. This tool has successfully been applied to some of the most popular frameworks, and achieved the initial objective of consistently high test code coverage, discovering several bugs in the process as well. The tool has also been extended to conducted property and regression testing, where reports on a sample of case studies are included.
 
 \section{Report organisation}
-The rest of this paper is structured as follows. Firstly, relevant background material is reviewed in Chapter \ref{ch:background}. Thereafter, the hybrid combination of algorithms and techniques used to automatically generate tests are formally introduced in Chapter ?. These ideas presented here are then implemented in the tool \textsc{Pyrulan}, constituting the subject of Chapter ?. This is accompanied by a detailed description of its software design architecture, together with several worked examples for clarification. Summarising, the success of the project is discussed in Chapter ?, before some final conclusions are drawn and suggestions are given to possible future work in Chapter ?.
+The rest of this paper is structured as follows. Firstly, relevant background material is reviewed in Chapter \ref{ch:background}. Thereafter, the various algorithms and techniques used to automatically generate tests are formally introduced in Chapter \ref{ch:research}. These ideas presented here are then implemented in the tool \textsc{Pyrulan}, constituting the subject of Chapter \ref{ch:pyrulan}. This is accompanied by a detailed description of its software design architecture, together with several worked examples for clarification. Summarising, the success of the project is discussed in Chapter \ref{ch:eval}, before some final conclusions are drawn and suggestions are given to possible future work in Chapter \ref{ch:conclusion}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background}
 \label{ch:background}
 \section{Introduction}
-This part of the paper is intended to provide an overview and discussion of the relevant literature to this project, forming the basis for the reader to follow later content. Firstly, Section \ref{sect:research} reviews the general field of automated software testing. Section \ref{sect:current-state} deals with the papers that inspired and influenced the project. Relevant characteristics of dynamically typed programming languages, with special focus on Python, are then discussed in Section \ref{sect:python-features}. Finally, the associated technical difficulties are highlighted in Section \ref{sect:challenges}.
+This part of the paper is intended to provide an overview and discussion of the relevant literature to this project, forming the basis for the reader to follow later content. Firstly, Sections \ref{sect:basics} to \ref{sect:overview} review the general field of automated software testing. Section \ref{sect:current-state} deals with the papers that inspired and influenced this project. Relevant characteristics of dynamically typed programming languages, with special focus on Python, are then discussed in Section \ref{sect:python-features}. Finally, the associated technical difficulties are highlighted in Section \ref{sect:challenges}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Basic concepts}
+\label{sect:basics}
 Software testing delivers quality assurance in the product to the customer. It verifies that software bugs are absent, as far as verification that implementation complies with original client specification goes. The following terms commonly found in \emph{automated test data generation research} are defined below.
 
 \subsection{Definition of terms}
@@ -372,14 +372,19 @@ There are three relevant reference survey papers \cite{McMinn2004} \cite{Han2008
 
 At present, there is only minimal work done surrounding unit test generation in Python, namely, the most recent static analysis tools such as \href{http://pythoscope.org/tutorial}{\textsf{pythoscope}} v0.4.3 (Feb 2010) and \href{http://code.google.com/p/pytestsgenerator}{\textsf{pytestsgenerator}} v0.2 (Feb 2009) - only accepts Python source code. The closest unit test generator in a dynamic language is \textsc{RuTeG} \cite{Mairhofer2011}, which uses evolutionary algorithms to automatically create unit tests in Ruby. With respect to the idea of lazy instantiation, \textsc{Irulan} \cite{Allwood2011} is the tool written to demonstrate this concept in Haskell.
 
-Irulan has four key objectives to achieve, which this project intends to do similarly, where possible:
+\textsc{Irulan} has four key objectives to achieve, which this project intends to do similarly, where possible:
 \begin{enumerate}[1.]
 	\item Automatic inference constructors and functions to generate test data
 	\item Needed narrowing / lazy instantiation
 	\item Inspection of elements inside returned data structures
 	\item Efficiently handle polymorphism by (lazily) instantiating all possible instances
 \end{enumerate}
-
+...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Features of Python}
+\label{sect:python-features}
+...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Challenges}
 \label{sect:challenges}
 There are several facets of complexity to this problem, which this work hopes to tackle.
@@ -428,7 +433,8 @@ Achieving consistently high code coverage over a wide range of programs (not to 
 \section{Summary}
 In this section, the relevant background literature and theory for this project has been discussed. In order to demonstrate the idea of automated lazy testing, an example demonstration has been developed, using some of the features that were mentioned in this chapter. This example is the subject of the next chapter.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{\textsc{Pyrulan}}
+\chapter{Research}
+\label{ch:research}
 \section{Specification}
 The strategy in this project emphasises mainly on dynamic test data generation, where intermediate runtime data is gathered, represented in some suitable form, and used to guide subsequent iterations.
 
@@ -485,7 +491,9 @@ Some notable aspects of the proposed solution:
 
 A preliminary sample of the bytecode investigation for simple language constructs can be found in Appendix~\ref{IsPrime}.
 
-The key deliverable from this project will be unit test suites, in terms of a language-neutral Domain Specific Language (DSL), or JSON, consisting of various assertions, capture expressions, and value assignments. This affords flexibility in later system extensions to target other dynamic programming languages. An API may be exposed if there are reusable components, eg. algorithms, developed in this tool. It is also planned to provide visualisation of this process, in the form of a GUI frontend, powered by wxPython/GTK.
+The key deliverable from this project will be unit test suites, in terms of a language-neutral Domain Specific Language (DSL), or JSON, consisting of various assertions, capture expressions, and value assignments. This affords flexibility in later system extensions to target other dynamic programming languages.
+
+An API may be exposed if there are reusable components, eg. algorithms, developed in this tool. It is also planned to provide visualisation of this process, in the form of a GUI frontend, powered by wxPython/GTK.
 
 The resulting end product can be applied to regression testing as well, to report changes in behaviour across different versions, as software evolves over time.
 
@@ -507,7 +515,13 @@ Detailed below as follows are the selection of Python resources for various purp
 	\item \emph{fuzzing tools?}
 	\item \emph{supporting tools} - virtualenv/pip
 \end{enumerate}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Algorithm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{\textsc{Pyrulan}}
+\label{ch:pyrulan}
 \section{Architecture}
 \begin{center}
 \begin{tikzpicture}
@@ -557,9 +571,12 @@ Detailed below as follows are the selection of Python resources for various purp
 \end{tikzpicture}
 \end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Algorithm outline}
+\section{Examples}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Evaluation / Discussion}
+\section{Summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Evaluation}
+\label{ch:eval}
 \begin{comment}
 \begin{itemize}
 	\item How to measure success?
@@ -581,34 +598,70 @@ Experimental evaluation entails the following:
 	\item generality of output - extensions to generating unit tests for programs in other languages
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion \& Future Work}
+\label{ch:conclusion}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae velit. Aenean malesuada adipiscing sem. Quisque ligula mauris, posuere sed, elementum id, suscipit et, urna. Phasellus suscipit tristique nisl. Vivamus ac urna. Pellentesque egestas facilisis velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi eu augue. Vestibulum congue placerat sem. Integer eget urna id risus suscipit eleifend. Etiam at est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent orci. Suspendisse potenti. Morbi egestas, justo vel cursus eleifend, dui leo dapibus ante, vitae pretium purus massa sed enim. Vivamus eu libero in nulla sagittis aliquam. Quisque semper quam id dui. Nulla facilisi.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Project Plan}
 
-\begin{tikzpicture}[snake=zigzag, line before snake = 5mm, line after snake = 5mm,shift={(current page.center)}]
-\draw (0,0) -- (0,-2);
-\draw[snake] (0,-2) -- (0,-4);
-\draw (0,-4) -- (0,-5);
-\draw[snake] (0,-5) -- (0,-7);
-\foreach \x in {0,1,2,4,5,7}
+\section{Estimated timeline (by weeks)}
+\begin{comment}
+	Key milestones, and fallback positions
+\end{comment}
+\begin{tikzpicture}[snake=zigzag, line before snake = 5mm, line after snake = 5mm, shift={(current page.center)},scale=.7]
+\draw (0,0) -- (0,-16);
+\draw[snake] (0,-16) -- (0,-19);
+\draw (0,-19) -- (0,-24);
+
+\foreach \x in {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23,24}
    \draw (3pt,-\x cm) -- (-3pt,-\x cm);
 
-%draw nodes
-\draw (0,0) node[left=3pt] {$ 0 $} node[right=3pt] {$   $};
-\draw (0,-1) node[left=3pt] {$ 1 $} node[right=3pt] {$ 10 $};
-\draw (0,-2) node[left=3pt] {$ 2 $} node[right=3pt] {$ 20 $};
-\draw (0,-3) node[left=3pt] {$  $} node[right=3pt] {$  $};
-\draw (0,-4) node[left=3pt] {$ 5 $} node[right=3pt] {$ 50 $};
-\draw (0,-5) node[left=3pt] {$ 6 $} node[right=3pt] {$ 60 $};
-\draw (0,-6) node[left=3pt] {$  $} node[right=3pt] {$  $};
-\draw (0,-7) node[left=3pt] {$ n $} node[right=3pt] {$ 10n $};
+% nodes
+\draw (0,0) node[left=3pt] {2012} node[right=3pt] {};
+\draw (0,-1) node[left=3pt] {18 Jan} node[right=3pt] {\textbf{Project outline report deadline}};
+\draw (0,-2) node[left=3pt] {} node[right=3pt] {};	% 23 Jan
+\draw (0,-3) node[left=3pt] {} node[right=3pt] {};	% 30 Jan
+\draw (0,-4) node[left=3pt] {8 Feb} node[right=3pt] {\textbf{Project review meeting deadline}};
+\draw (0,-5) node[left=3pt] {} node[right=3pt] {};	% 13 Feb
+\draw (0,-6) node[left=3pt] {} node[right=3pt] {};	% 20 Feb
+\draw (0,-7) node[left=3pt] {} node[right=3pt] {};	% 27 Feb
+\draw (0,-8) node[left=3pt] {5 Mar} node[right=3pt] {<Final report draft I>};
+\draw (0,-9) node[left=3pt] {} node[right=3pt] {};	% 12 Mar
+\draw (0,-10) node[left=3pt] {} node[right=3pt] {};	% 19 Mar
+\draw (0,-11) node[left=3pt] {} node[right=3pt] {};	% 26 Mar
+\draw (0,-12) node[left=3pt] {2 Apr} node[right=3pt] {<Final report draft II>};
+\draw (0,-13) node[left=3pt] {} node[right=3pt] {};	% 9 Apr
+\draw (0,-14) node[left=3pt] {} node[right=3pt] {};	% 16 Apr
+\draw (0,-15) node[left=3pt] {} node[right=3pt] {};	% 23 Apr
+\draw (0,-16) node[left=3pt] {30 Apr} node[right=3pt] {};
+\draw (0,-19) node[left=3pt] {18 May} node[right=3pt] {};
+\draw (0,-21) node[left=3pt] {4 Jun} node[right=3pt] {<Final report draft III>};
+\draw (0,-23) node[left=3pt] {19 Jun} node[right=3pt] {\textbf{Final report deadline}};
+\draw (0,-24) node[left=3pt] {25/26 Jun} node[right=3pt] {\textbf{Project presentation}};
+
+% edges
+\draw [decorate,decoration={brace},xshift=-4pt]
+	(.3,-1.1) -- (.3,-3.9) node [black,midway,right=3pt] {\makecell[l]{Fix project report\\Schedule review meeting}};
+\draw [decorate,decoration={brace},xshift=-4pt]
+	(.4,-16) -- (.4,-19) node [black,midway,right=3pt] {Department examinations};
 \end{tikzpicture}
-
-\section{Estimated timetable}
-Key milestones, and fallback positions
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Possible extensions}
-Relative priority? Rationale?
+\begin{comment}
+	Relative priority? Rationale?
+\end{comment}
+The following is a simple non-exhaustive enumeration of 'could-haves', if time permits:
+\begin{itemize}
+	\item An API to allow for other developers to contribute to the development of this tool, and make use of the algorithms contained therein in isolation
+	\item Comprehensive documentation on the internal workings and usage of the tool, with examples provided as well
+	\item Visualisation for the tool via a user-friendly GUI frontend, powered by wxPython /GTK
+	\item Improve sophistication of the tool to generate more robust and thorough tests, and also test code containing more complex interaction of language constructs
+	\item Optimise efficiency of tool in test generation
+	\item Benchmark tool across a wider range of different Python frameworks and libraries
+	\item Explore other techniques and algorithms to attempt to improve overall test code coverage
+\end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -617,7 +670,7 @@ Relative priority? Rationale?
 \bibliography{FYP}\addcontentsline{toc}{chapter}{Bibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\chapter{Figures}
+%\chapter{Figures}
 \chapter{Code listings}
 \lstinputlisting[language=python,label=IsPrime,caption=Sample Python Bytecode]{isprime.py}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

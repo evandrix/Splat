@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  12 JAN 2012 22:06
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  12 JAN 2012 23:24
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1083,42 +1083,6 @@ File: pgfcalendar.code.tex 2007/07/23 v2.10 (rcs-revision 1.11)
 \pgfcalendarcurrentjulian=\count169
 )))
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarysnakes.code.tex
-File: tikzlibrarysnakes.code.tex 2008/02/05 v2.10 (rcs-revision 1.6)
-
-
-Package tikz Warning: Snakes have been superseded by decorations. Please use th
-e decoration libraries instead of the snakes library on input line 14.
-
-
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarydecorations.pathmorphing.code.tex
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarydecorations.code.tex
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/modules/pgfmoduledecoration
-s.code.tex
-\pgfdecoratedcompleteddistance=\dimen206
-\pgfdecoratedremainingdistance=\dimen207
-\pgfdecoratedinputsegmentcompleteddistance=\dimen208
-\pgfdecoratedinputsegmentremainingdistance=\dimen209
-\pgf@decorate@distancetomove=\dimen210
-\pgf@decorate@repeatstate=\count170
-\pgfdecorationsegmentamplitude=\dimen211
-\pgfdecorationsegmentlength=\dimen212
-)
-\tikz@lib@dec@box=\box77
-)
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/decorations/pgfli
-brarydecorations.pathmorphing.code.tex))
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarydecorations.pathreplacing.code.tex
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/decorations/pgfli
-brarydecorations.pathreplacing.code.tex))
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarydecorations.shapes.code.tex
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/decorations/pgfli
-brarydecorations.shapes.code.tex)))
-(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibrarycalc.code.tex
 File: tikzlibrarycalc.code.tex 2009/09/04 v2.10 (rcs-revision 1.6)
 )
@@ -1137,7 +1101,7 @@ File: tikzlibraryarrows.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.
 code.tex
 File: pgflibraryarrows.code.tex 2008/10/27 v2.10 (rcs-revision 1.9)
-\arrowsize=\dimen213
+\arrowsize=\dimen206
 ))
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibrarychains.code.tex
@@ -1151,6 +1115,29 @@ File: tikzlibraryshapes.geometric.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
 shapes.geometric.code.tex
 File: pgflibraryshapes.geometric.code.tex 2008/06/26 v2.10 (rcs-revision 1.1)
 ))
+(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibrarydecorations.pathreplacing.code.tex
+(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibrarydecorations.code.tex
+(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/modules/pgfmoduledecoration
+s.code.tex
+\pgfdecoratedcompleteddistance=\dimen207
+\pgfdecoratedremainingdistance=\dimen208
+\pgfdecoratedinputsegmentcompleteddistance=\dimen209
+\pgfdecoratedinputsegmentremainingdistance=\dimen210
+\pgf@decorate@distancetomove=\dimen211
+\pgf@decorate@repeatstate=\count170
+\pgfdecorationsegmentamplitude=\dimen212
+\pgfdecorationsegmentlength=\dimen213
+)
+\tikz@lib@dec@box=\box77
+)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/decorations/pgfli
+brarydecorations.pathreplacing.code.tex))
+(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
+s/tikzlibrarydecorations.pathmorphing.code.tex
+(/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/decorations/pgfli
+brarydecorations.pathmorphing.code.tex))
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibraryshapes.code.tex
 File: tikzlibraryshapes.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
@@ -1688,44 +1675,44 @@ LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
 ] [17] [18]
 Chapter 4.
 LaTeX Font Info:    Font shape `T1/ppl/bx/sc' in size <24.88> not available
-(Font)              Font shape `T1/ppl/b/sc' tried instead on input line 523.
+(Font)              Font shape `T1/ppl/b/sc' tried instead on input line 524.
 
-Overfull \hbox (0.59232pt too wide) in paragraph at lines 539--539
+Overfull \hbox (0.59232pt too wide) in paragraph at lines 541--541
  [][][][]\T1/ppl/m/n/10.95 Normalised
  []
 
 
-Overfull \hbox (2.02039pt too wide) in paragraph at lines 571--572
+Overfull \hbox (2.02039pt too wide) in paragraph at lines 573--574
  [] 
  []
 
 [19
 
-]
+] [20]
 Chapter 5.
 
-Overfull \hbox (4.36986pt too wide) in paragraph at lines 595--596
+Overfull \hbox (4.36986pt too wide) in paragraph at lines 599--600
 \T1/ppl/m/n/10.95 web frame-work, NumPy/S-ciPy (Nu-meric / Sci-entific Py-thon 
 util-it-ies), Twis-ted event-
  []
 
-[20
-
-]
-Chapter 6.
 [21
 
 ]
-Chapter 7.
+Chapter 6.
 [22
 
-] (./REPORT.bbl [23]
+]
+Chapter 7.
+[23
+
+] (./REPORT.bbl [24]
 Underfull \hbox (badness 2393) in paragraph at lines 37--42
 \T1/ppl/m/n/10.95 2011.  [][]$\T1/pcr/m/n/10.95 http : / / www . tiobe . com / 
 index . php / content / paperinfo /
  []
 
-[24
+[25
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 90--97
@@ -1733,39 +1720,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 90--97
 hrome _ bug _
  []
 
-[25] [26]) [27]
+[26] [27]) [28]
 Appendix A.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 675.
+(Font)              scaled to size 10.42007pt on input line 680.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 675.
+(Font)              scaled to size 7.91925pt on input line 680.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 675.
+(Font)              scaled to size 10.42007pt on input line 680.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 675.
+(Font)              scaled to size 7.91925pt on input line 680.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 675--675
+Overfull \hbox (6.0pt too wide) in paragraph at lines 680--680
 [][][][][][][] 
  []
 
-(./isprime.py [28
+(./isprime.py [29
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 677.
- [29]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 677.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 682.
+ [30]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 682.
  (./REPORT.aux (./titlepage.aux) (./acknowledgement.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 677.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 677.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 682.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 682.
 Package rerunfilecheck Info: File `REPORT.out' has not changed.
 (rerunfilecheck)             Checksum: 5571F6DB61313BABEAEEF2D947F0D291;2867.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 677.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 682.
  ) 
 Here is how much of TeX's memory you used:
- 26780 strings out of 493633
- 491185 string characters out of 3143378
- 766513 words of memory out of 3000000
- 29166 multiletter control sequences out of 15000+200000
+ 26655 strings out of 493633
+ 486222 string characters out of 3143378
+ 763281 words of memory out of 3000000
+ 29049 multiletter control sequences out of 15000+200000
  50627 words of font info for 102 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
  65i,16n,71p,805b,1937s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1781,10 +1768,10 @@ ype1/urw/palatino/uplb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/ur
 w/palatino/uplr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/palat
 ino/uplr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/palatino/upl
 ri8a.pfb>
-Output written on REPORT.pdf (29 pages, 212741 bytes).
+Output written on REPORT.pdf (30 pages, 214371 bytes).
 PDF statistics:
- 680 PDF objects out of 1000 (max. 8388607)
- 632 compressed objects within 7 object streams
- 244 named destinations out of 1000 (max. 500000)
+ 684 PDF objects out of 1000 (max. 8388607)
+ 635 compressed objects within 7 object streams
+ 245 named destinations out of 1000 (max. 500000)
  357 words of extra memory for PDF output out of 10000 (max. 10000000)
 

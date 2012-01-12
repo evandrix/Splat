@@ -30,7 +30,7 @@
 \usepackage{turnstile}
 \usepackage{mathtools,extarrows}
 \usepackage{tikz}					% figure drawing library
-\usetikzlibrary{calendar,snakes,calc,trees,positioning,arrows,chains,shapes.geometric,%
+\usetikzlibrary{calendar,calc,trees,positioning,arrows,chains,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
 \usepackage{tikz-qtree}
@@ -431,7 +431,7 @@ The paper \cite{Tahbildar} claims one of the most time consuming task of automat
 Achieving consistently high code coverage over a wide range of programs (not to mention running within reasonable time and space) via generated test cases ultimately defines the extent of success of this project. This allows for effective fault detection, which may be of different types. An alternative measurement of code coverage improvement involves identifying error prone regions of code where more rigorous testing would prove beneficial \cite{Ntafos1988} \cite{InceDC1987}. There already exists other empirical studies for code coverage in different test data generation algorithms documented, providing some competitive standards to match up to \cite{Han2008} \cite{Rothermel99testcase} \cite{Lakhotia2009}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-In this section, the relevant background literature and theory for this project has been discussed. In order to demonstrate the idea of automated lazy testing, an example demonstration has been developed, using some of the features that were mentioned in this chapter. This example is the subject of the next chapter.
+In this chapter, the relevant background literature and theory to understand this project has been explained in sufficient detail. The next chapter presents the theoretical contribution of this project to the field, including the problem specification, approach taken, and algorithms and techniques used.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Research}
 \label{ch:research}
@@ -519,10 +519,12 @@ Detailed below as follows are the selection of Python resources for various purp
 \section{Algorithm}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
+In this chapter, the current research work has been highlighted. In order to demonstrate the idea of automated lazy testing in Python, an example usage of the tool is provided, using the ideas found in this chapter. The structure of this tool, and the examples, is the subject of the next chapter.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{\textsc{Pyrulan}}
 \label{ch:pyrulan}
 \section{Architecture}
+The software design architecture is outlined below:
 \begin{center}
 \begin{tikzpicture}
   [node distance=1cm,
@@ -572,8 +574,10 @@ Detailed below as follows are the selection of Python resources for various purp
 \end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Examples}
+...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
+In this chapter, the working automated testing tool has been shown, but exactly how well does it actually perform against current standards? This notion will be made more precise, both quantitatively and qualitatively, in the next chapter focusing on the evaluation of this work.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evaluation}
 \label{ch:eval}
@@ -599,6 +603,7 @@ Experimental evaluation entails the following:
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
+The results achieved and comparison of desired outcomes with original expectations are examined here in this chapter. To finish off, the next chapter summarises this entire paper and hints at what might be possible future research directions in this area of automated software testing.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion \& Future Work}
 \label{ch:conclusion}
@@ -610,9 +615,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae veli
 \begin{comment}
 	Key milestones, and fallback positions
 \end{comment}
-\begin{tikzpicture}[snake=zigzag, line before snake = 5mm, line after snake = 5mm, shift={(current page.center)},scale=.7]
+\begin{tikzpicture}[shift={(current page.center)},scale=.7]
 \draw (0,0) -- (0,-16);
-\draw[snake] (0,-16) -- (0,-19);
+\draw[decorate,decoration={snake,pre length=5mm, post length=5mm}] (0,-16) -- (0,-19);
 \draw (0,-19) -- (0,-24);
 
 \foreach \x in {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23,24}
@@ -657,8 +662,8 @@ The following is a simple non-exhaustive enumeration of 'could-haves', if time p
 	\item An API to allow for other developers to contribute to the development of this tool, and make use of the algorithms contained therein in isolation
 	\item Comprehensive documentation on the internal workings and usage of the tool, with examples provided as well
 	\item Visualisation for the tool via a user-friendly GUI frontend, powered by wxPython /GTK
-	\item Improve sophistication of the tool to generate more robust and thorough tests, and also test code containing more complex interaction of language constructs
-	\item Optimise efficiency of tool in test generation
+	\item Improve sophistication of the tool to generate more robust and thorough tests, test code containing more complex interaction of language constructs, or deal with new language features in Python 3000
+	\item Optimise efficiency of tool in test generation, by compiling on a faster Python implementation for instance, or scaling parallel search
 	\item Benchmark tool across a wider range of different Python frameworks and libraries
 	\item Explore other techniques and algorithms to attempt to improve overall test code coverage
 \end{itemize}

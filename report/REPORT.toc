@@ -41,12 +41,12 @@
 \contentsline {chapter}{\numberline {4}\textsc {Pyrulan}}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}Architecture}{19}{section.4.1}
 \contentsline {section}{\numberline {4.2}Examples}{19}{section.4.2}
-\contentsline {section}{\numberline {4.3}Summary}{19}{section.4.3}
-\contentsline {chapter}{\numberline {5}Evaluation}{20}{chapter.5}
-\contentsline {section}{\numberline {5.1}Summary}{20}{section.5.1}
-\contentsline {chapter}{\numberline {6}Conclusion \& Future Work}{21}{chapter.6}
-\contentsline {chapter}{\numberline {7}Project Plan}{22}{chapter.7}
-\contentsline {section}{\numberline {7.1}Estimated timeline (by weeks)}{22}{section.7.1}
-\contentsline {section}{\numberline {7.2}Possible extensions}{23}{section.7.2}
-\contentsline {chapter}{Bibliography}{27}{chapter*.12}
-\contentsline {chapter}{\numberline {A}Code listings}{28}{appendix.A}
+\contentsline {section}{\numberline {4.3}Summary}{20}{section.4.3}
+\contentsline {chapter}{\numberline {5}Evaluation}{21}{chapter.5}
+\contentsline {section}{\numberline {5.1}Summary}{21}{section.5.1}
+\contentsline {chapter}{\numberline {6}Conclusion \& Future Work}{22}{chapter.6}
+\contentsline {chapter}{\numberline {7}Project Plan}{23}{chapter.7}
+\contentsline {section}{\numberline {7.1}Estimated timeline (by weeks)}{23}{section.7.1}
+\contentsline {section}{\numberline {7.2}Possible extensions}{24}{section.7.2}
+\contentsline {chapter}{Bibliography}{28}{chapter*.12}
+\contentsline {chapter}{\numberline {A}Code listings}{29}{appendix.A}

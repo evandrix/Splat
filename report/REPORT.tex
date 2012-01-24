@@ -2,8 +2,8 @@
 % 	FYP Report - Lee Wei Yeong (lwy08)	%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{icldt}
-\def \supervisor {Prof. Susan Eisenbach}
-\def \secondmarker {}
+\def \supervisor   {Prof. Susan Eisenbach}
+\def \secondmarker {Dr. Tristan Allwood}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath, amssymb, amsthm} % AMS packages
 \usepackage{graphicx}                 % Packages for graphics and color
@@ -262,7 +262,7 @@ Within the context given above, this project makes the following key contributio
 	\item Further advance the work in the field of automated software testing, especially for dynamic languages
 \end{itemize}
 
-To this end,, we take advantage of the main features of the Python language, ie. strong introspection and reflective capabilities, together with its extensive tool support, the Python Package Index (PyPI) repository.
+To this end, we take advantage of the main features of the Python language, ie. strong introspection and reflective capabilities, together with its extensive tool support, the Python Package Index (PyPI) repository.
 
 The concepts discussed in this paper are concretely demonstrated in a tool called \textsc{Pyrulan}, a high coverage test suite generator for Python library code, written in Python. This tool has successfully been applied to some of the most popular frameworks, and achieved the initial objective of consistently high test code coverage, discovering several bugs in the process as well. The tool has also been extended to conducted property and regression testing, where reports on a sample of case studies are included.
 
@@ -368,9 +368,46 @@ Another interesting paper is the idea of testability transformations \cite{Korel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Current state of the art}
 \label{sect:current-state}
-There are three relevant reference survey papers \cite{McMinn2004} \cite{Han2008} \cite{Tahbildar} describing a high level overview of software testing techniques.
+These reference survey papers \cite{McMinn2004} \cite{Han2008} \cite{Tahbildar} provide a high level overview of software testing techniques.
 
-At present, there is only minimal work done surrounding unit test generation in Python, namely, the most recent static analysis tools such as \href{http://pythoscope.org/tutorial}{\textsf{pythoscope}} v0.4.3 (Feb 2010) and \href{http://code.google.com/p/pytestsgenerator}{\textsf{pytestsgenerator}} v0.2 (Feb 2009) - only accepts Python source code. The closest unit test generator in a dynamic language is \textsc{RuTeG} \cite{Mairhofer2011}, which uses evolutionary algorithms to automatically create unit tests in Ruby. With respect to the idea of lazy instantiation, \textsc{Irulan} \cite{Allwood2011} is the tool written to demonstrate this concept in Haskell.
+The closest automated unit test generator in a dynamic language is \textsc{RuTeG} \cite{Mairhofer2011}, which uses evolutionary algorithms on Ruby source code to automatically create unit tests in Ruby. Apart from the description in the paper, there is no source code available online to try it out.
+
+With respect to automated test generation in Python, there is only minimal work done. The most recent tools, such as \href{http://pythoscope.org/tutorial}{\textsf{pythoscope}} v0.4.3 (Feb 2010) and \href{http://code.google.com/p/pytestsgenerator}{\textsf{pytestsgenerator}} v0.2 (Feb 2009), perform static analysis on Python source code, as opposed to dynamic testing on Python bytecode.
+
+\subsection{Pythoscope}
+Pythoscope is an open source unit test generator for Python code. It is able to create additional test cases for user-specified points of entry, and also appends new test cases, thus allowing the user to safely modify and extend generated test cases. An example usage is provided below to illustrate this application in action:
+
+\includegraphics[scale=.46]{pythoscope.png}
+
+\subsection{Python Tests Generator}
+This automated test case generator creates unit tests for Python modules. The authors Vijakumar and Karthikeyan developed this tool on 32-bit Linux. Its purpose is to simplify usage of the existing PyUnit framework, and generate logical test cases for classes and methods. It also consists of a WxPython GUI, in addition to the CLI. The application is packaged for distribution using the \textsf{distutils} module.
+
+According to accompanying documentation, this tool is intended to accomplish the following objectives:
+\begin{itemize}
+	\item Read a specified python module
+	\item List the Classes, Functions and Properties of that module (for the user's selection)
+	\item Drill down the Classes for methods and properties
+	\item Generate basic set of test cases for each class or method selected
+\end{itemize}
+
+The predetermined logic for the test cases to be generated include:
+\begin{itemize}
+	\item Number of arguments
+	\item Valid arguments
+	\item Invalid arguments
+	\item Custom logic
+\end{itemize}
+
+An example demonstration of the software follows:
+
+\lstinputlisting[language=python,label=SourceCode,caption=Sample input Python program]{sample.py}
+
+\lstinputlisting[language=python,label=GeneratedTests,caption=Generated unit test suite]{generated_tests.py}
+
+\lstinputlisting[caption=Results of test execution]{output.txt}
+
+\subsection{\textsc{Irulan}}
+As for implementing the idea of lazy instantiation, \textsc{Irulan} \cite{Allwood2011} is the canonical tool written to demonstrate this concept in Haskell.
 
 \textsc{Irulan} has four key objectives to achieve, which this project intends to do similarly, where possible:
 \begin{enumerate}[1.]
@@ -379,7 +416,100 @@ At present, there is only minimal work done surrounding unit test generation in 
 	\item Inspection of elements inside returned data structures
 	\item Efficiently handle polymorphism by (lazily) instantiating all possible instances
 \end{enumerate}
+
+A sample execution to discover errors in the following code snippet:
+\definecolor{gray_ulisses}{gray}{0.55}
+\definecolor{castanho_ulisses}{rgb}{0.71,0.33,0.14}
+\definecolor{preto_ulisses}{rgb}{0.41,0.20,0.04}
+\definecolor{green_ulises}{rgb}{0.2,0.75,0}
+\lstdefinelanguage{HaskellUlisses} {
+	basicstyle=\ttfamily\normalsize,
+	sensitive=true,
+	morecomment=[l][\color{gray_ulisses}\ttfamily\normalsize]{--},
+	morecomment=[s][\color{gray_ulisses}\ttfamily\normalsize]{\{-}{-\}},
+	morestring=[b]",
+	stringstyle=\color{red},
+	showstringspaces=false,
+	numberstyle=\normalsize,
+	numberblanklines=true,
+	showspaces=false,
+	breaklines=true,
+	showtabs=false,
+	emph=
+	{[1]
+		FilePath,IOError,abs,acos,acosh,all,and,any,appendFile,approxRational,asTypeOf,asin,
+		asinh,atan,atan2,atanh,basicIORun,break,catch,ceiling,chr,compare,concat,concatMap,
+		const,cos,cosh,curry,cycle,decodeFloat,denominator,digitToInt,div,divMod,drop,
+		dropWhile,either,elem,encodeFloat,enumFrom,enumFromThen,enumFromThenTo,enumFromTo,
+		error,even,exp,exponent,fail,filter,flip,floatDigits,floatRadix,floatRange,floor,
+		fmap,foldl,foldl1,foldr,foldr1,fromDouble,fromEnum,fromInt,fromInteger,fromIntegral,
+		fromRational,fst,gcd,getChar,getContents,getLine,head,id,inRange,index,init,intToDigit,
+		interact,ioError,isAlpha,isAlphaNum,isAscii,isControl,isDenormalized,isDigit,isHexDigit,
+		isIEEE,isInfinite,isLower,isNaN,isNegativeZero,isOctDigit,isPrint,isSpace,isUpper,iterate,
+		last,lcm,length,lex,lexDigits,lexLitChar,lines,log,logBase,lookup,map,mapM,mapM_,max,
+		maxBound,maximum,maybe,min,minBound,minimum,mod,negate,not,notElem,null,numerator,odd,
+		or,ord,otherwise,pi,pred,primExitWith,print,product,properFraction,putChar,putStr,putStrLn,quot,
+		quotRem,range,rangeSize,read,readDec,readFile,readFloat,readHex,readIO,readInt,readList,readLitChar,
+		readLn,readOct,readParen,readSigned,reads,readsPrec,realToFrac,recip,rem,repeat,replicate,return,
+		reverse,round,scaleFloat,scanl,scanl1,scanr,scanr1,seq,sequence,sequence_,show,showChar,showInt,
+		showList,showLitChar,showParen,showSigned,showString,shows,showsPrec,significand,signum,sin,
+		sinh,snd,span,splitAt,sqrt,subtract,succ,sum,tail,take,takeWhile,tan,tanh,threadToIOResult,toEnum,
+		toInt,toInteger,toLower,toRational,toUpper,truncate,uncurry,undefined,unlines,until,unwords,unzip,
+		unzip3,userError,words,writeFile,zip,zip3,zipWith,zipWith3,listArray,doParse
+	},
+	emphstyle={[1]\color{blue}},
+	emph=
+	{[2]
+		Bool,Char,Double,Either,Float,IO,Integer,Int,Maybe,Ordering,Rational,Ratio,ReadS,ShowS,String,
+		Word8,InPacket
+	},
+	emphstyle={[2]\color{castanho_ulisses}},
+	emph=
+	{[3]
+		case,class,data,deriving,do,else,if,import,in,infixl,infixr,instance,let,
+		module,of,primitive,then,type,where
+	},
+	emphstyle={[3]\color{preto_ulisses}\textbf},
+	emph=
+	{[4]
+		quot,rem,div,mod,elem,notElem,seq
+	},
+	emphstyle={[4]\color{castanho_ulisses}\textbf},
+	emph=
+	{[5]
+		EQ,False,GT,Just,LT,Left,Nothing,Right,True,Show,Eq,Ord,Num
+	},
+	emphstyle={[5]\color{preto_ulisses}\textbf}
+}
+\begin{lstlisting}[language=HaskellUlisses,frame=single]
+module IntTreeExample where
+data IntTree
+	= Leaf
+	| Branch IntTree Int IntTree
+insert :: Int -> IntTree -> IntTree
+insert n Leaf = Branch Leaf n Leaf
+insert n (Branch left x right)
+	| n < x = Branch (insert n left) x right
+	| n > x = Branch left x (insert n right)
+\end{lstlisting}
+
+produces the following output:
+\begin{lstlisting}[language=HaskellUlisses,frame=single]
+$ irulan --ints='[0,1]' --enable-case-statements -a --maximumRuntime=1 source IntTreeExample
 ...
+insert 1 (Branch ? 1 ?1) ==> !
+IntTreeExample.hs:(8,0)-(11,41): Non-exhaustive patterns in function insert
+insert 0 (Branch ? 0 ?1) ==> !
+IntTreeExample.hs:(8,0)-(11,41): Non-exhaustive patterns in function insert
+case insert 0 (Branch (Branch ? 0 ?1) 1 ?2) of
+Branch x _ _ -> x ==> !
+IntTreeExample.hs:(8,0)-(11,41): Non-exhaustive patterns in function insert
+case case insert 0 (Branch (Branch (Branch ? 0 ?1) 1 ?2) 1 ?3) of
+Branch x _ _ -> x of
+Branch x _ _ -> x ==> !
+IntTreeExample.hs:(8,0)-(11,41): Non-exhaustive patterns in function insert
+...
+\end{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Features of Python}
 \label{sect:python-features}
@@ -401,7 +531,7 @@ There are several possible ways to conducting the search for such corner cases. 
 Therefore, the task here is to come up with a more efficient way of prioritising pathological boundary parameter value generation, under real time and space constraints. Some leading intuition follows.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Lazy instantiation}
-	It might be reasonable to begin with ``lazy instantiation" \cite{Allwood2011}, where dummy nullified objects are passed in initially, and test data are only generated for return values when the methods on them are actually invoked. This supposes multiple runs through the same code block, and using feedback from previous iteration to direct future execution. A \href{https://github.com/evandrix/Pyrulan}{prototype} of this is available together with the original project proposal.
+It might be reasonable to begin with ``lazy instantiation" \cite{Allwood2011}, where dummy nullified objects are passed in initially, and test data are only generated for return values when the methods on them are actually invoked. This supposes multiple runs through the same code block, and using feedback from previous iteration to direct future execution. A \href{https://github.com/evandrix/Pyrulan}{prototype} of this is available together with the original project proposal.
 
 \subsubsection{Runtime in-memory manipulation}
 It is also envisioned that the dynamic language features of Python be exploited in order to rapidly generate useful test data. One idea is to manipulate and observe the behaviour of code blocks in memory at runtime, by monkeypatching or hotswapping code under test (CUT) for stubs, but with a hook to log incoming parameters during a sample execution, in order to determine their initial starting range \& types.
@@ -595,8 +725,8 @@ In this chapter, the working automated testing tool has been shown, but exactly 
 
 Experimental evaluation entails the following:
 \begin{enumerate}[i.]
-	\item comparison with existing work, eg. PyTestsGenerator (2009)
-	\item benchmark against popular Python libraries - Google App Engine (GAE), Django web framework, NumPy/SciPy (Numeric / Scientific Python utilities), Twisted event-driven networking engine, PyPi package index
+	\item comparison with existing work, eg. Pythoscope (2010), PyTestsGenerator (2009)
+	\item benchmark against popular Python libraries - Django web framework, NumPy/SciPy (Numeric / Scientific Python utilities), Twisted event-driven networking engine, PyPi package index
 	\item measure quality of test cases generated using metrics - code coverage (statement, path, branch), Linear Code Sequence And Jump (LCSAJ), bugs, crash discovery (pathological inputs)
 	\item performance and efficiency - runtime and space complexity
 	\item generality of output - extensions to generating unit tests for programs in other languages

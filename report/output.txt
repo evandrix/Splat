@@ -1,0 +1,8 @@
+test_1_TestClassMethod_WithoutArgs_Pass_With_Only_Valid_Arguments (__main__.PyUnitframework) ... TestClassMethod
+ok
+test_2_TestClassMethod_WithArgs_Fail_With_Arg (__main__.PyUnitframework) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.003s
+
+OK

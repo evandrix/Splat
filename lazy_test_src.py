@@ -21,6 +21,6 @@ class MyObject(object):
         return 'MyObject(%s)' % self.name
 
 def foo(myobj, klass1, klass2, n):
-#    klass1.func1()
+    klass1.func1()
     klass2.func2(1, 2, 3, 4)    
     print "myobj:", myobj.__str__(), "n:", n

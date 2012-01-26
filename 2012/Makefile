@@ -1,6 +1,6 @@
 all: clean
 
 clean:
-	rm -rf *.pyc
+	rm -rf *.py{c,o,d,z}
 
 .PHONY: clean

@@ -1,4 +1,5 @@
 Fabric==1.3.4
+byteplay==0.2
 fusil==1.4
 ipython==0.11
 py==1.4.5

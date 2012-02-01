@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 def get_db():
     db = getattr(get_db, 'db', db_connection())
     get_db.db = db

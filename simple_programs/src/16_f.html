@@ -1,0 +1,87 @@
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css"><div class=codearea><pre class=src>1: import csv
+2: # write stocks data as comma-separated values
+3: writer = csv.writer(open('stocks.csv', 'wb', buffering=0))
+4: writer.writerows([
+5:     ('GOOG', 'Google, Inc.', 505.24, 0.47, 0.09),
+6:     ('YHOO', 'Yahoo! Inc.', 27.38, 0.33, 1.22),
+7:     ('CNET', 'CNET Networks, Inc.', 8.62, -0.13, -1.49)
+8: ])
+9: # read stocks data, print status messages
+10: stocks = csv.reader(open('stocks.csv', 'rb'))
+11: status_labels = {-1: 'down', 0: 'unchanged', 1: 'up'}
+12: for ticker, name, price, change, pct in stocks:
+13:     status = status_labels[cmp(float(change), 0.0)]
+14:     print '%s is %s (%s%%)' % (name, status, pct)
+</div><pre class=bytecode>  1           0 LOAD_CONST               0 (-1)
+              3 LOAD_CONST               1 (None)
+              6 IMPORT_NAME              0 (csv)
+              9 STORE_NAME               0 (csv)
+  4          12 LOAD_NAME                0 (csv)
+             15 LOAD_ATTR                1 (writer)
+             18 LOAD_NAME                2 (open)
+             21 LOAD_CONST               2 ('stocks.csv')
+             24 LOAD_CONST               3 ('wb')
+             27 LOAD_CONST               4 ('buffering')
+             30 LOAD_CONST               5 (0)
+             33 CALL_FUNCTION          258
+             36 CALL_FUNCTION            1
+             39 STORE_NAME               1 (writer)
+  5          42 LOAD_NAME                1 (writer)
+             45 LOAD_ATTR                3 (writerows)
+  6          48 LOAD_CONST              28 (('GOOG', 'Google, Inc.', 505.24, 0.47, 0.09))
+  7          51 LOAD_CONST              29 (('YHOO', 'Yahoo! Inc.', 27.38, 0.33, 1.22))
+  8          54 LOAD_CONST              30 (('CNET', 'CNET Networks, Inc.', 8.62, -0.13, -1.49))
+             57 BUILD_LIST               3
+             60 CALL_FUNCTION            1
+             63 POP_TOP             
+ 12          64 LOAD_NAME                0 (csv)
+             67 LOAD_ATTR                4 (reader)
+             70 LOAD_NAME                2 (open)
+             73 LOAD_CONST               2 ('stocks.csv')
+             76 LOAD_CONST              21 ('rb')
+             79 CALL_FUNCTION            2
+             82 CALL_FUNCTION            1
+             85 STORE_NAME               5 (stocks)
+ 13          88 BUILD_MAP                3
+             91 LOAD_CONST              22 ('down')
+             94 LOAD_CONST               0 (-1)
+             97 STORE_MAP           
+             98 LOAD_CONST              23 ('unchanged')
+            101 LOAD_CONST               5 (0)
+            104 STORE_MAP           
+            105 LOAD_CONST              24 ('up')
+            108 LOAD_CONST              25 (1)
+            111 STORE_MAP           
+            112 STORE_NAME               6 (status_labels)
+ 14         115 SETUP_LOOP              72 (to 190)
+            118 LOAD_NAME                5 (stocks)
+            121 GET_ITER            
+        >>  122 FOR_ITER                64 (to 189)
+            125 UNPACK_SEQUENCE          5
+            128 STORE_NAME               7 (ticker)
+            131 STORE_NAME               8 (name)
+            134 STORE_NAME               9 (price)
+            137 STORE_NAME              10 (change)
+            140 STORE_NAME              11 (pct)
+ 15         143 LOAD_NAME                6 (status_labels)
+            146 LOAD_NAME               12 (cmp)
+            149 LOAD_NAME               13 (float)
+            152 LOAD_NAME               10 (change)
+            155 CALL_FUNCTION            1
+            158 LOAD_CONST              26 (0.0)
+            161 CALL_FUNCTION            2
+            164 BINARY_SUBSCR       
+            165 STORE_NAME              14 (status)
+ 16         168 LOAD_CONST              27 ('%s is %s (%s%%)')
+            171 LOAD_NAME                8 (name)
+            174 LOAD_NAME               14 (status)
+            177 LOAD_NAME               11 (pct)
+            180 BUILD_TUPLE              3
+            183 BINARY_MODULO       
+            184 PRINT_ITEM          
+            185 PRINT_NEWLINE       
+            186 JUMP_ABSOLUTE          122
+        >>  189 POP_BLOCK           
+        >>  190 LOAD_CONST               1 (None)
+            193 RETURN_VALUE        
+</pre>

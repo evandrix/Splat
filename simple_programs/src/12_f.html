@@ -1,0 +1,36 @@
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css"><div class=codearea><pre class=src>1: class BankAccount(object):
+2:     def __init__(self, initial_balance=0):
+3:         self.balance = initial_balance
+4:     def deposit(self, amount):
+5:         self.balance += amount
+6:     def withdraw(self, amount):
+7:         self.balance -= amount
+8:     def overdrawn(self):
+9:         return self.balance < 0
+10: my_account = BankAccount(15)
+11: my_account.withdraw(5)
+12: print my_account.balance
+</div><pre class=bytecode>  1           0 LOAD_CONST               0 ('BankAccount')
+              3 LOAD_NAME                0 (object)
+              6 BUILD_TUPLE              1
+              9 LOAD_CONST               1 (<code object BankAccount at 0x103cd78b0, file "12.py", line 1>)
+             12 MAKE_FUNCTION            0
+             15 CALL_FUNCTION            0
+             18 BUILD_CLASS         
+             19 STORE_NAME               1 (BankAccount)
+ 10          22 LOAD_NAME                1 (BankAccount)
+             25 LOAD_CONST               2 (15)
+             28 CALL_FUNCTION            1
+             31 STORE_NAME               2 (my_account)
+ 11          34 LOAD_NAME                2 (my_account)
+             37 LOAD_ATTR                3 (withdraw)
+             40 LOAD_CONST               3 (5)
+             43 CALL_FUNCTION            1
+             46 POP_TOP             
+ 12          47 LOAD_NAME                2 (my_account)
+             50 LOAD_ATTR                4 (balance)
+             53 PRINT_ITEM          
+             54 PRINT_NEWLINE       
+             55 LOAD_CONST               4 (None)
+             58 RETURN_VALUE        
+</pre>

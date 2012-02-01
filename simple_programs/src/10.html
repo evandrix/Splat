@@ -1,0 +1,72 @@
+  1           0 LOAD_CONST               0 (-1)
+              3 LOAD_CONST               1 (('localtime',))
+              6 IMPORT_NAME              0 (time)
+              9 IMPORT_FROM              1 (localtime)
+             12 STORE_NAME               1 (localtime)
+             15 POP_TOP             
+
+  3          16 BUILD_MAP                6
+             19 LOAD_CONST               2 ('Sleeping')
+             22 LOAD_CONST               3 (8)
+             25 STORE_MAP           
+
+  4          26 LOAD_CONST               4 ('Commuting')
+             29 LOAD_CONST               5 (9)
+             32 STORE_MAP           
+
+  5          33 LOAD_CONST               6 ('Working')
+             36 LOAD_CONST               7 (17)
+             39 STORE_MAP           
+
+  6          40 LOAD_CONST               4 ('Commuting')
+             43 LOAD_CONST               8 (18)
+             46 STORE_MAP           
+
+  7          47 LOAD_CONST               9 ('Eating')
+             50 LOAD_CONST              10 (20)
+             53 STORE_MAP           
+
+  8          54 LOAD_CONST              11 ('Resting')
+             57 LOAD_CONST              12 (22)
+             60 STORE_MAP           
+             61 STORE_NAME               2 (activities)
+
+ 10          64 LOAD_NAME                1 (localtime)
+             67 CALL_FUNCTION            0
+             70 STORE_NAME               3 (time_now)
+
+ 11          73 LOAD_NAME                3 (time_now)
+             76 LOAD_ATTR                4 (tm_hour)
+             79 STORE_NAME               5 (hour)
+
+ 13          82 SETUP_LOOP              56 (to 141)
+             85 LOAD_NAME                6 (sorted)
+             88 LOAD_NAME                2 (activities)
+             91 LOAD_ATTR                7 (keys)
+             94 CALL_FUNCTION            0
+             97 CALL_FUNCTION            1
+            100 GET_ITER            
+        >>  101 FOR_ITER                31 (to 135)
+            104 STORE_NAME               8 (activity_time)
+
+ 14         107 LOAD_NAME                5 (hour)
+            110 LOAD_NAME                8 (activity_time)
+            113 COMPARE_OP               0 (<)
+            116 POP_JUMP_IF_FALSE      101
+
+ 15         119 LOAD_NAME                2 (activities)
+            122 LOAD_NAME                8 (activity_time)
+            125 BINARY_SUBSCR       
+            126 PRINT_ITEM          
+            127 PRINT_NEWLINE       
+
+ 16         128 BREAK_LOOP          
+            129 JUMP_ABSOLUTE          101
+            132 JUMP_ABSOLUTE          101
+        >>  135 POP_BLOCK           
+
+ 18         136 LOAD_CONST              13 ('Unknown, AFK or sleeping!')
+            139 PRINT_ITEM          
+            140 PRINT_NEWLINE       
+        >>  141 LOAD_CONST              14 (None)
+            144 RETURN_VALUE        

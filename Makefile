@@ -1,11 +1,9 @@
 all: run
 
 run:
-	python -m compileall lazy_test_src.py
-	mv lazy_test_src.pyc lazy_test.pyc
-	python introspection.py
+	python prototype.py
 
 clean:
-	rm -rf *.pyc
+	rm -rf *.py{c,o,d,z}
 
 .PHONY: clean

@@ -1,0 +1,41 @@
+  1           0 LOAD_CONST               0 (8)
+              3 STORE_NAME               0 (BOARD_SIZE)
+
+  3           6 LOAD_CONST               1 ('BailOut')
+              9 LOAD_NAME                1 (Exception)
+             12 BUILD_TUPLE              1
+             15 LOAD_CONST               2 (<code object BailOut at 0x1052de930, file "20.py", line 3>)
+             18 MAKE_FUNCTION            0
+             21 CALL_FUNCTION            0
+             24 BUILD_CLASS         
+             25 STORE_NAME               2 (BailOut)
+
+  6          28 LOAD_CONST               3 (<code object validate at 0x1052de730, file "20.py", line 6>)
+             31 MAKE_FUNCTION            0
+             34 STORE_NAME               3 (validate)
+
+ 13          37 LOAD_CONST               4 (<code object add_queen at 0x1052de7b0, file "20.py", line 13>)
+             40 MAKE_FUNCTION            0
+             43 STORE_NAME               4 (add_queen)
+
+ 26          46 LOAD_NAME                4 (add_queen)
+             49 BUILD_LIST               0
+             52 CALL_FUNCTION            1
+             55 STORE_NAME               5 (queens)
+
+ 27          58 LOAD_NAME                5 (queens)
+             61 PRINT_ITEM          
+             62 PRINT_NEWLINE       
+
+ 28          63 LOAD_CONST               5 ('\n')
+             66 LOAD_ATTR                6 (join)
+             69 LOAD_CONST               6 (<code object <genexpr> at 0x1052de830, file "20.py", line 28>)
+             72 MAKE_FUNCTION            0
+             75 LOAD_NAME                5 (queens)
+             78 GET_ITER            
+             79 CALL_FUNCTION            1
+             82 CALL_FUNCTION            1
+             85 PRINT_ITEM          
+             86 PRINT_NEWLINE       
+             87 LOAD_CONST               7 (None)
+             90 RETURN_VALUE        

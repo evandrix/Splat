@@ -1,0 +1,65 @@
+  7           0 LOAD_CONST               0 ('<html><body><table>\n<tr><th>amt</th><th>unit</th><th>item</th></tr>\n<tr><td>24</td><td>slices</td><td>baguette</td></tr>\n<tr><td>2+</td><td>tbsp</td><td>olive oil</td></tr>\n<tr><td>1</td><td>cup</td><td>tomatoes</td></tr>\n<tr><td>1</td><td>jar</td><td>pesto</td></tr>\n</table></body></html>')
+              3 STORE_NAME               0 (dinner_recipe)
+
+ 10           6 LOAD_CONST               1 (-1)
+              9 LOAD_CONST               2 (None)
+             12 IMPORT_NAME              1 (xml.etree.ElementTree)
+             15 LOAD_ATTR                2 (etree)
+             18 LOAD_ATTR                3 (ElementTree)
+             21 STORE_NAME               2 (etree)
+
+ 11          24 LOAD_NAME                2 (etree)
+             27 LOAD_ATTR                4 (fromstring)
+             30 LOAD_NAME                0 (dinner_recipe)
+             33 CALL_FUNCTION            1
+             36 STORE_NAME               5 (tree)
+
+ 17          39 LOAD_NAME                6 (set)
+             42 LOAD_CONST               3 ('olive oil')
+             45 LOAD_CONST               4 ('pesto')
+             48 BUILD_LIST               2
+             51 CALL_FUNCTION            1
+             54 STORE_NAME               7 (pantry)
+
+ 18          57 SETUP_LOOP              98 (to 158)
+             60 LOAD_NAME                5 (tree)
+             63 LOAD_ATTR                8 (getiterator)
+             66 LOAD_CONST               5 ('tr')
+             69 CALL_FUNCTION            1
+             72 GET_ITER            
+        >>   73 FOR_ITER                81 (to 157)
+             76 STORE_NAME               9 (ingredient)
+
+ 19          79 LOAD_NAME                9 (ingredient)
+             82 UNPACK_SEQUENCE          3
+             85 STORE_NAME              10 (amt)
+             88 STORE_NAME              11 (unit)
+             91 STORE_NAME              12 (item)
+
+ 20          94 LOAD_NAME               12 (item)
+             97 LOAD_ATTR               13 (tag)
+            100 LOAD_CONST               6 ('td')
+            103 COMPARE_OP               2 (==)
+            106 POP_JUMP_IF_FALSE       73
+            109 LOAD_NAME               12 (item)
+            112 LOAD_ATTR               14 (text)
+            115 LOAD_NAME                7 (pantry)
+            118 COMPARE_OP               7 (not in)
+            121 POP_JUMP_IF_FALSE       73
+
+ 21         124 LOAD_CONST               7 ('%s: %s %s')
+            127 LOAD_NAME               12 (item)
+            130 LOAD_ATTR               14 (text)
+            133 LOAD_NAME               10 (amt)
+            136 LOAD_ATTR               14 (text)
+            139 LOAD_NAME               11 (unit)
+            142 LOAD_ATTR               14 (text)
+            145 BUILD_TUPLE              3
+            148 BINARY_MODULO       
+            149 PRINT_ITEM          
+            150 PRINT_NEWLINE       
+            151 JUMP_ABSOLUTE           73
+            154 JUMP_ABSOLUTE           73
+        >>  157 POP_BLOCK           
+        >>  158 LOAD_CONST               2 (None)
+            161 RETURN_VALUE        

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 class Fruit:
     def __init__(self, sort):
         self.sort = sort
@@ -5,11 +8,9 @@ class Fruit:
 class Fruits:
     def __init__(self):
         self.sorts = {}
- 
     def get_fruit(self, sort):
         if sort not in self.sorts:
             self.sorts[sort] = Fruit(sort)
- 
         return self.sorts[sort]
  
 if __name__ == '__main__':

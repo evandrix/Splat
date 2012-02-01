@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 class clazz1:
     def func1(self):
@@ -10,13 +11,10 @@ class clazz2:
         print 'class#2', self, x
 
 class MyObject(object):
-    """Example for dis."""
-
+    """ Example for dis. """
     CLASS_ATTRIBUTE = 'some value'
-
     def __init__(self, name, age, address):
         self.name = name
-
     def __str__(self):
         return 'MyObject(%s)' % self.name
 

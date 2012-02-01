@@ -1,0 +1,43 @@
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css"><div class=codearea><pre class=src>1: import itertools
+2: def iter_primes():
+3:      # an iterator of all numbers between 2 and +infinity
+4:      numbers = itertools.count(2)
+5:      # generate primes forever
+6:      while True:
+7:          # get the first number from the iterator (always a prime)
+8:          prime = numbers.next()
+9:          yield prime
+10:          # this code iteratively builds up a chain of
+11:          # filters...slightly tricky, but ponder it a bit
+12:          numbers = itertools.ifilter(prime.__rmod__, numbers)
+13: for p in iter_primes():
+14:     if p > 1000:
+15:         break
+16:     print p
+</div><pre class=bytecode>  1           0 LOAD_CONST               0 (-1)
+              3 LOAD_CONST               1 (None)
+              6 IMPORT_NAME              0 (itertools)
+              9 STORE_NAME               0 (itertools)
+  3          12 LOAD_CONST               2 (<code object iter_primes at 0x10bbee930, file "18.py", line 3>)
+             15 MAKE_FUNCTION            0
+             18 STORE_NAME               1 (iter_primes)
+ 17          21 SETUP_LOOP              38 (to 62)
+             24 LOAD_NAME                1 (iter_primes)
+             27 CALL_FUNCTION            0
+             30 GET_ITER            
+        >>   31 FOR_ITER                27 (to 61)
+             34 STORE_NAME               2 (p)
+ 18          37 LOAD_NAME                2 (p)
+             40 LOAD_CONST               3 (1000)
+             43 COMPARE_OP               4 (>)
+             46 POP_JUMP_IF_FALSE       53
+ 19          49 BREAK_LOOP          
+             50 JUMP_FORWARD             0 (to 53)
+ 20     >>   53 LOAD_NAME                2 (p)
+             56 PRINT_ITEM          
+             57 PRINT_NEWLINE       
+             58 JUMP_ABSOLUTE           31
+        >>   61 POP_BLOCK           
+        >>   62 LOAD_CONST               1 (None)
+             65 RETURN_VALUE        
+</pre>

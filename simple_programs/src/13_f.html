@@ -1,0 +1,41 @@
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css"><div class=codearea><pre class=src>1: import unittest
+2: def median(pool):
+3:     copy = sorted(pool)
+4:     size = len(copy)
+5:     if size % 2 == 1:
+6:         return copy[(size - 1) / 2]
+7:     else:
+8:         return (copy[size/2 - 1] + copy[size/2]) / 2
+9: class TestMedian(unittest.TestCase):
+10:     def testMedian(self):
+11:         self.failUnlessEqual(median([2, 9, 9, 7, 9, 2, 4, 5, 8]), 7)
+12: if __name__ == '__main__':
+13:     unittest.main()
+</div><pre class=bytecode>  1           0 LOAD_CONST               0 (-1)
+              3 LOAD_CONST               1 (None)
+              6 IMPORT_NAME              0 (unittest)
+              9 STORE_NAME               0 (unittest)
+  2          12 LOAD_CONST               2 (<code object median at 0x10d67e930, file "13.py", line 2>)
+             15 MAKE_FUNCTION            0
+             18 STORE_NAME               1 (median)
+  9          21 LOAD_CONST               3 ('TestMedian')
+             24 LOAD_NAME                0 (unittest)
+             27 LOAD_ATTR                2 (TestCase)
+             30 BUILD_TUPLE              1
+             33 LOAD_CONST               4 (<code object TestMedian at 0x10d67e7b0, file "13.py", line 9>)
+             36 MAKE_FUNCTION            0
+             39 CALL_FUNCTION            0
+             42 BUILD_CLASS         
+             43 STORE_NAME               3 (TestMedian)
+ 12          46 LOAD_NAME                4 (__name__)
+             49 LOAD_CONST               5 ('__main__')
+             52 COMPARE_OP               2 (==)
+             55 POP_JUMP_IF_FALSE       71
+ 13          58 LOAD_NAME                0 (unittest)
+             61 LOAD_ATTR                5 (main)
+             64 CALL_FUNCTION            0
+             67 POP_TOP             
+             68 JUMP_FORWARD             0 (to 71)
+        >>   71 LOAD_CONST               1 (None)
+             74 RETURN_VALUE        
+</pre>

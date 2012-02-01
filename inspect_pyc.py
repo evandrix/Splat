@@ -1,14 +1,10 @@
 #! /usr/bin/env python
 """inspect_pyc module
-
 This is a refactor of a recipe from Ned Batchelder's blog.  He has
 given me permission to publish this.  You can find the post at the
 following URL:
-
   http://nedbatchelder.com/blog/200804/the_structure_of_pyc_files.html
-
 You may use this module as a script: "./inspect_pyc.py <PYC_FILE>".
-
 """
 
 import dis, marshal, struct, sys, time, types, warnings
@@ -69,7 +65,6 @@ def show_bytecode(code, level=0):
 
 def show_code(code, level=0):
     indent = INDENT*level
-
     for name in dir(code):
         if not name.startswith("co_"):
             continue
@@ -91,18 +86,14 @@ def show_code(code, level=0):
 def show_file(filename):
     filename, magic, unixtime, timestamp, code = unpack_pyc(filename)
     magic = "0x(%s)" % to_hexstr(magic)
-
-    print("  ## inspecting pyc file ##")
     print("filename:     %s" % filename)
     print("magic number: %s" % magic)
     print("timestamp:    %s (%s)" % (unixtime, timestamp))
     print("code")
     show_code(code, level=1)
-    print("  ## done inspecting pyc file ##")
-
 
 if __name__ == "__main__":
-    USAGE = "  usage: %s <PYC FILENAME>" % sys.argv[0]
+    USAGE = "  usage: %s <file.pyc>" % sys.argv[0]
     if len(sys.argv) == 1:
         sys.exit("Error: Too few arguments\n%s" % USAGE)
     if len(sys.argv) > 2:

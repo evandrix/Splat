@@ -1,9 +1,9 @@
 Fabric==1.3.4
 byteplay==0.2
 fusil==1.4
-ipython==0.11
-py==1.4.5
+ipython==0.12
+py==1.4.6
 pycrypto==2.5
 python-ptrace==0.6.3
-ssh==1.7.11
 readline==6.2.1
+ssh==1.7.11

@@ -1,0 +1,671 @@
+filename:     program.pyc
+magic number: 0x(03 f3 0d 0a)
+timestamp:    1328213472 (Thu Feb  2 20:11:12 2012)
+code
+   co_argcount:        0
+   co_cellvars:        ()
+   co_filename:        'program.py'
+   co_firstlineno:     4
+   co_flags:           0x00040
+   co_freevars:        ()
+   co_lnotab:          '\x13\r\x16\x04\x16\x0b\x13\r\x16\x10\t\x07\x0c\x01\x0c\x01\r\x01'
+   co_name:            '<module>'
+   co_names:           ('class1', 'class2', 'object', 'class3', 'class4', 'BankAccount', 'foo', '__name__', 'my_account', 'withdraw', 'balance')
+   co_nlocals:         0
+   co_stacksize:       3
+   co_varnames:        ()
+   co_consts
+      0 'class1'
+      1 (code object)
+         co_argcount:        0
+         co_cellvars:        ()
+         co_filename:        'program.py'
+         co_firstlineno:     4
+         co_flags:           0x00042
+         co_freevars:        ()
+         co_lnotab:          '\x06\x01\t\x04\t\x04'
+         co_name:            'class1'
+         co_names:           ('__name__', '__module__', 'func1', 'func2', 'func3')
+         co_nlocals:         0
+         co_stacksize:       1
+         co_varnames:        ()
+         co_consts
+            0 (code object)
+               co_argcount:        0
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     5
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02'
+               co_name:            'func1'
+               co_names:           ()
+               co_nlocals:         0
+               co_stacksize:       1
+               co_varnames:        ()
+               co_consts
+                  0 ' basic print function of class - no self arg '
+                  1 'class1.func1()'
+                  2 None
+               co_code
+                  64 01 00 47 48 64 02 00 53
+                  disassembled:
+                    7           0 LOAD_CONST               1 ('class1.func1()')
+                                3 PRINT_ITEM          
+                                4 PRINT_NEWLINE       
+                                5 LOAD_CONST               2 (None)
+                                8 RETURN_VALUE        
+                  
+            1 (code object)
+               co_argcount:        1
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     9
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02'
+               co_name:            'func2'
+               co_names:           ()
+               co_nlocals:         1
+               co_stacksize:       1
+               co_varnames:        ('self',)
+               co_consts
+                  0 ' basic print function of class - with self arg '
+                  1 'class1.func2()'
+                  2 None
+               co_code
+                  64 01 00 47 48 64 02 00 53
+                  disassembled:
+                   11           0 LOAD_CONST               1 ('class1.func2()')
+                                3 PRINT_ITEM          
+                                4 PRINT_NEWLINE       
+                                5 LOAD_CONST               2 (None)
+                                8 RETURN_VALUE        
+                  
+            2 (code object)
+               co_argcount:        1
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     13
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02'
+               co_name:            'func3'
+               co_names:           ()
+               co_nlocals:         1
+               co_stacksize:       1
+               co_varnames:        ('self',)
+               co_consts
+                  0 ' basic function of class - return constant value '
+                  1 4
+               co_code
+                  64 01 00 53
+                  disassembled:
+                   15           0 LOAD_CONST               1 (4)
+                                3 RETURN_VALUE        
+                  
+         co_code
+            65 00 00 5a 01 00 64 00 00 84 00 00 5a 02 00 64
+            01 00 84 00 00 5a 03 00 64 02 00 84 00 00 5a 04
+            00 52 53
+            disassembled:
+              4           0 LOAD_NAME                0 (__name__)
+                          3 STORE_NAME               1 (__module__)
+            
+              5           6 LOAD_CONST               0 (<code object func1 at 0x10f5eb6b0, file "program.py", line 5>)
+                          9 MAKE_FUNCTION            0
+                         12 STORE_NAME               2 (func1)
+            
+              9          15 LOAD_CONST               1 (<code object func2 at 0x10f5eb630, file "program.py", line 9>)
+                         18 MAKE_FUNCTION            0
+                         21 STORE_NAME               3 (func2)
+            
+             13          24 LOAD_CONST               2 (<code object func3 at 0x10f5eb330, file "program.py", line 13>)
+                         27 MAKE_FUNCTION            0
+                         30 STORE_NAME               4 (func3)
+                         33 LOAD_LOCALS         
+                         34 RETURN_VALUE        
+            
+      2 'class2'
+      3 (code object)
+         co_argcount:        0
+         co_cellvars:        ()
+         co_filename:        'program.py'
+         co_firstlineno:     17
+         co_flags:           0x00042
+         co_freevars:        ()
+         co_lnotab:          '\x06\x01\x06\x01'
+         co_name:            'class2'
+         co_names:           ('__name__', '__module__', '__doc__')
+         co_nlocals:         0
+         co_stacksize:       1
+         co_varnames:        ()
+         co_consts
+            0 ' test class inheritance - class2 -> class1 '
+         co_code
+            65 00 00 5a 01 00 64 00 00 5a 02 00 52 53
+            disassembled:
+             17           0 LOAD_NAME                0 (__name__)
+                          3 STORE_NAME               1 (__module__)
+            
+             18           6 LOAD_CONST               0 (' test class inheritance - class2 -> class1 ')
+                          9 STORE_NAME               2 (__doc__)
+            
+             19          12 LOAD_LOCALS         
+                         13 RETURN_VALUE        
+            
+      4 'class3'
+      5 (code object)
+         co_argcount:        0
+         co_cellvars:        ()
+         co_filename:        'program.py'
+         co_firstlineno:     21
+         co_flags:           0x00042
+         co_freevars:        ()
+         co_lnotab:          '\x06\x01\x06\x01\t\x05'
+         co_name:            'class3'
+         co_names:           ('__name__', '__module__', '__doc__', 'func1', 'func2')
+         co_nlocals:         0
+         co_stacksize:       2
+         co_varnames:        ()
+         co_consts
+            0 ' class object '
+            1 (code object)
+               co_argcount:        2
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     23
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02\x05\x01'
+               co_name:            'func1'
+               co_names:           ()
+               co_nlocals:         2
+               co_stacksize:       1
+               co_varnames:        ('self', 'a')
+               co_consts
+                  0 ' single argument function '
+               co_code
+                  7c 01 00 47 48 7c 01 00 53
+                  disassembled:
+                   25           0 LOAD_FAST                1 (a)
+                                3 PRINT_ITEM          
+                                4 PRINT_NEWLINE       
+                  
+                   26           5 LOAD_FAST                1 (a)
+                                8 RETURN_VALUE        
+                  
+            2 5
+            3 (code object)
+               co_argcount:        3
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     28
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02'
+               co_name:            'func2'
+               co_names:           ()
+               co_nlocals:         3
+               co_stacksize:       2
+               co_varnames:        ('self', 'a', 'b')
+               co_consts
+                  0 ' two argument function, with second default(=5) argument '
+                  1 60
+               co_code
+                  7c 01 00 7c 02 00 17 64 01 00 17 53
+                  disassembled:
+                   30           0 LOAD_FAST                1 (a)
+                                3 LOAD_FAST                2 (b)
+                                6 BINARY_ADD          
+                                7 LOAD_CONST               1 (60)
+                               10 BINARY_ADD          
+                               11 RETURN_VALUE        
+                  
+         co_code
+            65 00 00 5a 01 00 64 00 00 5a 02 00 64 01 00 84
+            00 00 5a 03 00 64 02 00 64 03 00 84 01 00 5a 04
+            00 52 53
+            disassembled:
+             21           0 LOAD_NAME                0 (__name__)
+                          3 STORE_NAME               1 (__module__)
+            
+             22           6 LOAD_CONST               0 (' class object ')
+                          9 STORE_NAME               2 (__doc__)
+            
+             23          12 LOAD_CONST               1 (<code object func1 at 0x10f5eb830, file "program.py", line 23>)
+                         15 MAKE_FUNCTION            0
+                         18 STORE_NAME               3 (func1)
+            
+             28          21 LOAD_CONST               2 (5)
+                         24 LOAD_CONST               3 (<code object func2 at 0x10f5eb8b0, file "program.py", line 28>)
+                         27 MAKE_FUNCTION            1
+                         30 STORE_NAME               4 (func2)
+                         33 LOAD_LOCALS         
+                         34 RETURN_VALUE        
+            
+      6 'class4'
+      7 (code object)
+         co_argcount:        0
+         co_cellvars:        ()
+         co_filename:        'program.py'
+         co_firstlineno:     32
+         co_flags:           0x00042
+         co_freevars:        ()
+         co_lnotab:          '\x06\x01\x06\x01\t\x05'
+         co_name:            'class4'
+         co_names:           ('__name__', '__module__', '__doc__', '__init__')
+         co_nlocals:         0
+         co_stacksize:       1
+         co_varnames:        ()
+         co_consts
+            0 ' non-inheritance class '
+            1 (code object)
+               co_argcount:        3
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     34
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02\t\x01'
+               co_name:            '__init__'
+               co_names:           ('a', 'b')
+               co_nlocals:         3
+               co_stacksize:       2
+               co_varnames:        ('self', 'a', 'b')
+               co_consts
+                  0 ' multiple params class constructor '
+                  1 None
+               co_code
+                  7c 01 00 7c 00 00 5f 00 00 7c 02 00 7c 00 00 5f
+                  01 00 64 01 00 53
+                  disassembled:
+                   36           0 LOAD_FAST                1 (a)
+                                3 LOAD_FAST                0 (self)
+                                6 STORE_ATTR               0 (a)
+                  
+                   37           9 LOAD_FAST                2 (b)
+                               12 LOAD_FAST                0 (self)
+                               15 STORE_ATTR               1 (b)
+                               18 LOAD_CONST               1 (None)
+                               21 RETURN_VALUE        
+                  
+            2 (code object)
+               co_argcount:        4
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     39
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x02\t\x01\t\x01'
+               co_name:            '__init__'
+               co_names:           ('a', 'b', 'c')
+               co_nlocals:         4
+               co_stacksize:       2
+               co_varnames:        ('self', 'a', 'b', 'c')
+               co_consts
+                  0 ' (overloaded) multiple params class constructor '
+                  1 None
+               co_code
+                  7c 01 00 7c 00 00 5f 00 00 7c 02 00 7c 00 00 5f
+                  01 00 7c 03 00 7c 00 00 5f 02 00 64 01 00 53
+                  disassembled:
+                   41           0 LOAD_FAST                1 (a)
+                                3 LOAD_FAST                0 (self)
+                                6 STORE_ATTR               0 (a)
+                  
+                   42           9 LOAD_FAST                2 (b)
+                               12 LOAD_FAST                0 (self)
+                               15 STORE_ATTR               1 (b)
+                  
+                   43          18 LOAD_FAST                3 (c)
+                               21 LOAD_FAST                0 (self)
+                               24 STORE_ATTR               2 (c)
+                               27 LOAD_CONST               1 (None)
+                               30 RETURN_VALUE        
+                  
+         co_code
+            65 00 00 5a 01 00 64 00 00 5a 02 00 64 01 00 84
+            00 00 5a 03 00 64 02 00 84 00 00 5a 03 00 52 53
+            disassembled:
+             32           0 LOAD_NAME                0 (__name__)
+                          3 STORE_NAME               1 (__module__)
+            
+             33           6 LOAD_CONST               0 (' non-inheritance class ')
+                          9 STORE_NAME               2 (__doc__)
+            
+             34          12 LOAD_CONST               1 (<code object __init__ at 0x10f5eb9b0, file "program.py", line 34>)
+                         15 MAKE_FUNCTION            0
+                         18 STORE_NAME               3 (__init__)
+            
+             39          21 LOAD_CONST               2 (<code object __init__ at 0x10f5eba30, file "program.py", line 39>)
+                         24 MAKE_FUNCTION            0
+                         27 STORE_NAME               3 (__init__)
+                         30 LOAD_LOCALS         
+                         31 RETURN_VALUE        
+            
+      8 'BankAccount'
+      9 (code object)
+         co_argcount:        0
+         co_cellvars:        ()
+         co_filename:        'program.py'
+         co_firstlineno:     45
+         co_flags:           0x00042
+         co_freevars:        ()
+         co_lnotab:          '\x06\x01\x06\x01\x06\x02\x0c\x02\t\x02\t\x02\t\x03'
+         co_name:            'BankAccount'
+         co_names:           ('__name__', '__module__', '__doc__', 'CLASS_ATTRIBUTE', '__init__', 'deposit', 'withdraw', 'overdrawn', '__str__')
+         co_nlocals:         0
+         co_stacksize:       2
+         co_varnames:        ()
+         co_consts
+            0 ' Real trivial toy example '
+            1 'some value'
+            2 0
+            3 (code object)
+               co_argcount:        2
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     49
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x01'
+               co_name:            '__init__'
+               co_names:           ('balance',)
+               co_nlocals:         2
+               co_stacksize:       2
+               co_varnames:        ('self', 'initial_balance')
+               co_consts
+                  0 None
+               co_code
+                  7c 01 00 7c 00 00 5f 00 00 64 00 00 53
+                  disassembled:
+                   50           0 LOAD_FAST                1 (initial_balance)
+                                3 LOAD_FAST                0 (self)
+                                6 STORE_ATTR               0 (balance)
+                                9 LOAD_CONST               0 (None)
+                               12 RETURN_VALUE        
+                  
+            4 (code object)
+               co_argcount:        2
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     51
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x01'
+               co_name:            'deposit'
+               co_names:           ('balance',)
+               co_nlocals:         2
+               co_stacksize:       3
+               co_varnames:        ('self', 'amount')
+               co_consts
+                  0 None
+               co_code
+                  7c 00 00 04 6a 00 00 7c 01 00 37 02 5f 00 00 64
+                  00 00 53
+                  disassembled:
+                   52           0 LOAD_FAST                0 (self)
+                                3 DUP_TOP             
+                                4 LOAD_ATTR                0 (balance)
+                                7 LOAD_FAST                1 (amount)
+                               10 INPLACE_ADD         
+                               11 ROT_TWO             
+                               12 STORE_ATTR               0 (balance)
+                               15 LOAD_CONST               0 (None)
+                               18 RETURN_VALUE        
+                  
+            5 (code object)
+               co_argcount:        2
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     53
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x01'
+               co_name:            'withdraw'
+               co_names:           ('balance',)
+               co_nlocals:         2
+               co_stacksize:       3
+               co_varnames:        ('self', 'amount')
+               co_consts
+                  0 None
+               co_code
+                  7c 00 00 04 6a 00 00 7c 01 00 38 02 5f 00 00 64
+                  00 00 53
+                  disassembled:
+                   54           0 LOAD_FAST                0 (self)
+                                3 DUP_TOP             
+                                4 LOAD_ATTR                0 (balance)
+                                7 LOAD_FAST                1 (amount)
+                               10 INPLACE_SUBTRACT    
+                               11 ROT_TWO             
+                               12 STORE_ATTR               0 (balance)
+                               15 LOAD_CONST               0 (None)
+                               18 RETURN_VALUE        
+                  
+            6 (code object)
+               co_argcount:        1
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     55
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x01'
+               co_name:            'overdrawn'
+               co_names:           ('balance',)
+               co_nlocals:         1
+               co_stacksize:       2
+               co_varnames:        ('self',)
+               co_consts
+                  0 None
+                  1 0
+               co_code
+                  7c 00 00 6a 00 00 64 01 00 6b 00 00 53
+                  disassembled:
+                   56           0 LOAD_FAST                0 (self)
+                                3 LOAD_ATTR                0 (balance)
+                                6 LOAD_CONST               1 (0)
+                                9 COMPARE_OP               0 (<)
+                               12 RETURN_VALUE        
+                  
+            7 (code object)
+               co_argcount:        1
+               co_cellvars:        ()
+               co_filename:        'program.py'
+               co_firstlineno:     58
+               co_flags:           0x00043
+               co_freevars:        ()
+               co_lnotab:          '\x00\x01'
+               co_name:            '__str__'
+               co_names:           ('__name__', 'balance')
+               co_nlocals:         1
+               co_stacksize:       2
+               co_varnames:        ('self',)
+               co_consts
+                  0 None
+                  1 '%s(%d)'
+               co_code
+                  64 01 00 74 00 00 16 7c 00 00 6a 01 00 66 02 00
+                  53
+                  disassembled:
+                   59           0 LOAD_CONST               1 ('%s(%d)')
+                                3 LOAD_GLOBAL              0 (__name__)
+                                6 BINARY_MODULO       
+                                7 LOAD_FAST                0 (self)
+                               10 LOAD_ATTR                1 (balance)
+                               13 BUILD_TUPLE              2
+                               16 RETURN_VALUE        
+                  
+         co_code
+            65 00 00 5a 01 00 64 00 00 5a 02 00 64 01 00 5a
+            03 00 64 02 00 64 03 00 84 01 00 5a 04 00 64 04
+            00 84 00 00 5a 05 00 64 05 00 84 00 00 5a 06 00
+            64 06 00 84 00 00 5a 07 00 64 07 00 84 00 00 5a
+            08 00 52 53
+            disassembled:
+             45           0 LOAD_NAME                0 (__name__)
+                          3 STORE_NAME               1 (__module__)
+            
+             46           6 LOAD_CONST               0 (' Real trivial toy example ')
+                          9 STORE_NAME               2 (__doc__)
+            
+             47          12 LOAD_CONST               1 ('some value')
+                         15 STORE_NAME               3 (CLASS_ATTRIBUTE)
+            
+             49          18 LOAD_CONST               2 (0)
+                         21 LOAD_CONST               3 (<code object __init__ at 0x10f5ebb30, file "program.py", line 49>)
+                         24 MAKE_FUNCTION            1
+                         27 STORE_NAME               4 (__init__)
+            
+             51          30 LOAD_CONST               4 (<code object deposit at 0x10f5ebbb0, file "program.py", line 51>)
+                         33 MAKE_FUNCTION            0
+                         36 STORE_NAME               5 (deposit)
+            
+             53          39 LOAD_CONST               5 (<code object withdraw at 0x10f5ebc30, file "program.py", line 53>)
+                         42 MAKE_FUNCTION            0
+                         45 STORE_NAME               6 (withdraw)
+            
+             55          48 LOAD_CONST               6 (<code object overdrawn at 0x10f5ebcb0, file "program.py", line 55>)
+                         51 MAKE_FUNCTION            0
+                         54 STORE_NAME               7 (overdrawn)
+            
+             58          57 LOAD_CONST               7 (<code object __str__ at 0x10f5ebd30, file "program.py", line 58>)
+                         60 MAKE_FUNCTION            0
+                         63 STORE_NAME               8 (__str__)
+                         66 LOAD_LOCALS         
+                         67 RETURN_VALUE        
+            
+      10 (code object)
+         co_argcount:        3
+         co_cellvars:        ()
+         co_filename:        'program.py'
+         co_firstlineno:     61
+         co_flags:           0x00043
+         co_freevars:        ()
+         co_lnotab:          '\x00\x02\n\x01\n\x01\t\x01'
+         co_name:            'foo'
+         co_names:           ('func1', 'func2', 'BankAccount', '__str__')
+         co_nlocals:         4
+         co_stacksize:       1
+         co_varnames:        ('class1', 'class2', 'n', 'bank_account')
+         co_consts
+            0 ' lazy instantiation test for global function '
+            1 None
+         co_code
+            7c 00 00 6a 00 00 83 00 00 01 7c 01 00 6a 01 00
+            83 00 00 01 74 02 00 83 00 00 7d 03 00 7c 03 00
+            6a 03 00 83 00 00 47 48 64 01 00 53
+            disassembled:
+             63           0 LOAD_FAST                0 (class1)
+                          3 LOAD_ATTR                0 (func1)
+                          6 CALL_FUNCTION            0
+                          9 POP_TOP             
+            
+             64          10 LOAD_FAST                1 (class2)
+                         13 LOAD_ATTR                1 (func2)
+                         16 CALL_FUNCTION            0
+                         19 POP_TOP             
+            
+             65          20 LOAD_GLOBAL              2 (BankAccount)
+                         23 CALL_FUNCTION            0
+                         26 STORE_FAST               3 (bank_account)
+            
+             66          29 LOAD_FAST                3 (bank_account)
+                         32 LOAD_ATTR                3 (__str__)
+                         35 CALL_FUNCTION            0
+                         38 PRINT_ITEM          
+                         39 PRINT_NEWLINE       
+                         40 LOAD_CONST               1 (None)
+                         43 RETURN_VALUE        
+            
+      11 '__main__'
+      12 15
+      13 5
+      14 None
+      15 ()
+      16 ()
+   co_code
+      64 00 00 64 0f 00 64 01 00 84 00 00 83 00 00 59
+      5a 00 00 64 02 00 65 00 00 66 01 00 64 03 00 84
+      00 00 83 00 00 59 5a 01 00 64 04 00 65 02 00 66
+      01 00 64 05 00 84 00 00 83 00 00 59 5a 03 00 64
+      06 00 64 10 00 64 07 00 84 00 00 83 00 00 59 5a
+      04 00 64 08 00 65 02 00 66 01 00 64 09 00 84 00
+      00 83 00 00 59 5a 05 00 64 0a 00 84 00 00 5a 06
+      00 65 07 00 64 0b 00 6b 02 00 72 a1 00 65 05 00
+      64 0c 00 83 01 00 5a 08 00 65 08 00 6a 09 00 64
+      0d 00 83 01 00 01 65 08 00 6a 0a 00 47 48 6e 00
+      00 64 0e 00 53
+      disassembled:
+        4           0 LOAD_CONST               0 ('class1')
+                    3 LOAD_CONST              15 (())
+                    6 LOAD_CONST               1 (<code object class1 at 0x10f5eb2b0, file "program.py", line 4>)
+                    9 MAKE_FUNCTION            0
+                   12 CALL_FUNCTION            0
+                   15 BUILD_CLASS         
+                   16 STORE_NAME               0 (class1)
+      
+       17          19 LOAD_CONST               2 ('class2')
+                   22 LOAD_NAME                0 (class1)
+                   25 BUILD_TUPLE              1
+                   28 LOAD_CONST               3 (<code object class2 at 0x10f5eb7b0, file "program.py", line 17>)
+                   31 MAKE_FUNCTION            0
+                   34 CALL_FUNCTION            0
+                   37 BUILD_CLASS         
+                   38 STORE_NAME               1 (class2)
+      
+       21          41 LOAD_CONST               4 ('class3')
+                   44 LOAD_NAME                2 (object)
+                   47 BUILD_TUPLE              1
+                   50 LOAD_CONST               5 (<code object class3 at 0x10f5eb930, file "program.py", line 21>)
+                   53 MAKE_FUNCTION            0
+                   56 CALL_FUNCTION            0
+                   59 BUILD_CLASS         
+                   60 STORE_NAME               3 (class3)
+      
+       32          63 LOAD_CONST               6 ('class4')
+                   66 LOAD_CONST              16 (())
+                   69 LOAD_CONST               7 (<code object class4 at 0x10f5ebab0, file "program.py", line 32>)
+                   72 MAKE_FUNCTION            0
+                   75 CALL_FUNCTION            0
+                   78 BUILD_CLASS         
+                   79 STORE_NAME               4 (class4)
+      
+       45          82 LOAD_CONST               8 ('BankAccount')
+                   85 LOAD_NAME                2 (object)
+                   88 BUILD_TUPLE              1
+                   91 LOAD_CONST               9 (<code object BankAccount at 0x10f5ebdb0, file "program.py", line 45>)
+                   94 MAKE_FUNCTION            0
+                   97 CALL_FUNCTION            0
+                  100 BUILD_CLASS         
+                  101 STORE_NAME               5 (BankAccount)
+      
+       61         104 LOAD_CONST              10 (<code object foo at 0x10f5ebe30, file "program.py", line 61>)
+                  107 MAKE_FUNCTION            0
+                  110 STORE_NAME               6 (foo)
+      
+       68         113 LOAD_NAME                7 (__name__)
+                  116 LOAD_CONST              11 ('__main__')
+                  119 COMPARE_OP               2 (==)
+                  122 POP_JUMP_IF_FALSE      161
+      
+       69         125 LOAD_NAME                5 (BankAccount)
+                  128 LOAD_CONST              12 (15)
+                  131 CALL_FUNCTION            1
+                  134 STORE_NAME               8 (my_account)
+      
+       70         137 LOAD_NAME                8 (my_account)
+                  140 LOAD_ATTR                9 (withdraw)
+                  143 LOAD_CONST              13 (5)
+                  146 CALL_FUNCTION            1
+                  149 POP_TOP             
+      
+       71         150 LOAD_NAME                8 (my_account)
+                  153 LOAD_ATTR               10 (balance)
+                  156 PRINT_ITEM          
+                  157 PRINT_NEWLINE       
+                  158 JUMP_FORWARD             0 (to 161)
+              >>  161 LOAD_CONST              14 (None)
+                  164 RETURN_VALUE        
+      

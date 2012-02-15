@@ -56,15 +56,20 @@ class BankAccount(object):
         return self.balance < 0
 
     def __str__(self):
-        return '%s(%d)' % __name__, self.balance
+# buggy version
+        return '%s(%d)' % (__name__, self.balance)
+#        return '%s(%d)' % (__name__, self.balance)
 
 def foo(class1, class2, n):
     """ lazy instantiation test for global function """
-    class1.func1()
     class2.func2()
-    bank_account = BankAccount()
-    print bank_account.__str__()
+    class1.func3()               # incorrect function
+    bank_account = BankAccount(n) # purposely leave out param
+#    class1.func1()               # incorrect function
+#    bank_account = BankAccount() # purposely leave out param
+    print bank_account
 
+# foo(class1(), class2(), 5)
 if __name__ == "__main__":
     my_account = BankAccount(15)
     my_account.withdraw(5)

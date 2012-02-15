@@ -21,4 +21,3 @@ class TestProgram:
 #    def test_case_2(self):
 #        self.assert_(1 == 1)
 #        self.assertEquals(1,1)
-

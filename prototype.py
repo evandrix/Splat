@@ -138,6 +138,17 @@ def run(functions):
                         arglist[idx].__dict__[missing_fn] = None
 
                     continue
+                    
+                    tb = sys.exc_info()[2]
+                    stack = []
+
+                    while tb:
+                        stack.append(tb.tb_frame)
+                        tb = tb.tb_next
+
+                    traceback.print_exc()
+                    print "Locals by frame, innermost last"
+                    
                     from byteplay import Code
                     from pprint import pprint
                     code = Code.from_code(arglist[idx].__dict__[missing_fn].func_code)

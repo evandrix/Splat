@@ -45,7 +45,6 @@ class class4():
 class BankAccount(object):
     """ Real trivial toy example """
     CLASS_ATTRIBUTE = 'some value'
-
     def __init__(self, initial_balance=0):
         self.balance = initial_balance
     def deposit(self, amount):
@@ -54,17 +53,14 @@ class BankAccount(object):
         self.balance -= amount
     def overdrawn(self):
         return self.balance < 0
-
     def __str__(self):
-# buggy version
         return '%s(%d)' % (__name__, self.balance)
-#        return '%s(%d)' % (__name__, self.balance)
 
-def foo(class1, class2, n):
+def foo(class1, class2, n, d='default', *vargs, **kwargs):
     """ lazy instantiation test for global function """
     class2.func2()
-    class1.func3()               # incorrect function
-    bank_account = BankAccount(n) # purposely leave out param
+    class1.func3()
+    bank_account = BankAccount(n)
 #    class1.func1()               # incorrect function
 #    bank_account = BankAccount() # purposely leave out param
     print bank_account

@@ -5,9 +5,8 @@ from part2_auxiliary import *
 MAX_ITERATIONS=1024
 #############################################################################
 def test_function(fn):
-    print '\t%s.%s()...' % (MODULE_UNDER_TEST.__name__,name)
-    print '\t', getargspec(fn)
-    print
+    print '*** \t%s.%s()...' % (MODULE_UNDER_TEST.__name__,name)
+    print '*** \t%s' % str(getargspec(fn))
     args, varargs, keywords, defaults = getargspec(fn)
 
     # case 1: Nones
@@ -17,7 +16,6 @@ def test_function(fn):
     except (AttributeError) as ae:
         print OKGREEN + 'Missing field on argument' + ENDC + ':', ae
         generate_tests("all_Nones", fn, arglist, ae)
-    print
 
     # case 2: Custom wrapper parameter objects
     def f_noarg():
@@ -61,7 +59,7 @@ def test_function(fn):
         except TypeError as e:
             assert 'last_instantiated' in param_states
             obj, attr, index = param_states['last_instantiated']
-            print '>> ' + OKGREEN + 'TypeError' + ENDC + ':', e, (obj,attr,index,param_value_seq[index])
+            #print '>> ' + OKGREEN + 'TypeError' + ENDC + ':', e, (obj,attr,index,param_value_seq[index])
             err_param = re.split('^%d format: a number is required, not MyParam([0-9]+)$', e.message)[1:-1]
             if len(err_param):
                 # TypeError encountered with this specific error message
@@ -110,13 +108,14 @@ def test_function(fn):
         except Exception as e:
             print "Unhandled exception:", e
         else:
+            print
             break
 
-    print
-    print "Discovered parameters in %d/%d iterations..." % (num_iterations,MAX_ITERATIONS)
+    print ">> Discovered parameters in %d / %d iterations..." % (num_iterations,MAX_ITERATIONS)
     print param_states
     print arglist
     print param_instantiated
+    print
 #############################################################################
 if __name__ == "__main__":
     try:
@@ -125,6 +124,9 @@ if __name__ == "__main__":
         print >> sys.stderr, "Module %s cannot be imported" % MODULE_UNDER_TEST
     print ">> Testing global functions..."
     functions = getmembers(MODULE_UNDER_TEST, isfunction)
-    test_function([fn for name,fn in functions if name == 'foo'][0])
+    
+    for name,fn in functions:
+        test_function(fn)    
+
     del MODULE_UNDER_TEST   # cleanup
     sys.exit(0)

@@ -65,6 +65,17 @@ def foo(class1, class2, n, d='default', *vargs, **kwargs):
 #    bank_account = BankAccount() # purposely leave out param
     print bank_account
 
+def foo1(class1, class2, n, d='default', *vargs, **kwargs):
+    class2.func2()
+    class1.func1()
+    class1.func3()
+    bank_account = BankAccount(n)
+    print bank_account
+
+def foo2(class1, class2, n, d='default', *vargs, **kwargs):
+    bank_account = BankAccount()    # purposely leave out param
+    print bank_account
+
 # foo(class1(), class2(), 5)
 if __name__ == "__main__":
     my_account = BankAccount(15)

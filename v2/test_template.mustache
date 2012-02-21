@@ -23,7 +23,7 @@ class TestProgram(unittest.TestCase):
         self.assertEqual(1, (2-1), "Sample Subtraction Test")
 
     {{#all_tests}}
-    def test_{{name}}(self{{params}}):
+    def test_{{function_name}}_{{name}}(self{{params}}):
         {{stmts}}
     {{/all_tests}}
 

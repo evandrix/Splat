@@ -119,7 +119,8 @@ def generate_tests(testname, function, arglist, result, *vargs, **kwargs):
         def __init__(self, module):
             self.module = module
     class UnitTestObject(object):
-        def __init__(self, name, params, stmts):
+        def __init__(self, function_name, name, params, stmts):
+            self.function_name = function_name
             self.name = name
             self.params = None if params is None else (', ' + params)
             self.stmts = '\n'.join(stmts)
@@ -127,7 +128,7 @@ def generate_tests(testname, function, arglist, result, *vargs, **kwargs):
     context = {
         'module_name': MODULE_UNDER_TEST,
         'all_imports': None,
-        'all_tests': [ UnitTestObject(testname, None, [stmt]) ]
+        'all_tests': [ UnitTestObject(function, testname, None, [stmt]) ]
     }
 
     # read template

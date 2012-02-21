@@ -93,13 +93,18 @@ def create_param_obj(value):
 
 #############################################################################
 # Generating unit test suite
-def generate_tests(testname, function, arglist, result):
+def generate_tests(testname, function, arglist, result, *vargs, **kwargs):
+    
+    # sanity check on number of arguments
+    args, varargs, keywords, defaults = getargspec(function)
+    assert len(arglist) == len(args)
+
     stmt = ""
     if isinstance(result, Exception):
         result = result.__class__.__name__
 
-        if hasattr(function, '__call__'):
-            function = function.func_name
+        assert hasattr(function, '__call__')
+        function = function.func_name
         
         stmt = "self.assertRaises(%s, %s, *%s)" % (result,function,arglist)
 

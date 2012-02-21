@@ -109,7 +109,7 @@ def generate_tests(testname, function, arglist, result, *vargs, **kwargs):
         stmt = "self.assertRaises(%s, %s, *%s)" % (result,function,arglist)
 
     print ">> UNITTEST: *%s => %s" % (arglist, result)
-    print ">> Writing out unit test suite to file..."
+    print ">> Writing out unit test suite to file...",
 
     import simplejson
     import pyparsing    # S-Expr
@@ -140,4 +140,4 @@ def generate_tests(testname, function, arglist, result, *vargs, **kwargs):
     print >> fout, pystache.render(template, context)
     fout.close()
     del fout
-    print ">> ...done!"
+    print ">> done!"

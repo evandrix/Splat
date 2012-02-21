@@ -54,7 +54,7 @@ class BankAccount(object):
     def overdrawn(self):
         return self.balance < 0
     def __str__(self):
-        return '%s(%d)' % (__name__, self.balance)
+        return '%s(%d)' % (self.__class__.__name__, self.balance)
 
 def foo(class1, class2, n, d='default', *vargs, **kwargs):
     """ lazy instantiation test for global function """

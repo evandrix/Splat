@@ -14,7 +14,8 @@ classes = getmembers(MODULE_UNDER_TEST, isclass)
 # methods within classes
 for label, klass in classes:
     print "\t", label, klass
-    print "\t\t", getmembers(klass, ismethod)
+    for item in getmembers(klass, ismethod):
+        print "\t\t", item
 print
 #############################################################################
 # Top level functions
@@ -28,9 +29,9 @@ print
 print ">> Verifying class types..."
 for label, klass in classes:
     if type(klass) is types.TypeType:
-        print "\tNew user-defined class:", klass
+        print "\tNEW-STYLE:", klass
     elif type(klass) is types.ClassType:
-        print "\tUser-defined old-style classes:", klass
+        print "\tOLD-STYLE:", klass
 print
 #############################################################################
 print >> sys.stderr, FAIL + \

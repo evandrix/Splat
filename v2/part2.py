@@ -15,7 +15,7 @@ def test_function(fn):
         fn(*arglist)
     except (AttributeError) as ae:
         print OKGREEN + 'Missing field on argument' + ENDC + ':', ae
-        generate_tests(arglist, ae)
+        generate_tests("all_Nones", fn, arglist, ae)
     print
 
     # case 2: Custom wrapper parameter objects

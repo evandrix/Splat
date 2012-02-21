@@ -91,6 +91,48 @@ def create_param_obj(value):
             return self.__class__.__name__ #+ str(self.value)
     return MyParam(value)
 
-def generate_tests(arglist, result):
-    result = type(result) if isinstance(result, Exception) else result
-    print ">> UNITTEST: %s\t(expected: %s)" % (arglist, result)
+#############################################################################
+# Generating unit test suite
+def generate_tests(testname, function, arglist, result):
+    stmt = ""
+    if isinstance(result, Exception):
+        result = result.__class__.__name__
+
+        if hasattr(function, '__call__'):
+            function = function.func_name
+        
+        stmt = "self.assertRaises(%s, %s, *%s)" % (result,function,arglist)
+
+    print ">> UNITTEST: *%s => %s" % (arglist, result)
+    print ">> Writing out unit test suite to file..."
+
+    import simplejson
+    import pyparsing    # S-Expr
+    import pystache
+
+    class ImportObject(object):
+        def __init__(self, module):
+            self.module = module
+    class UnitTestObject(object):
+        def __init__(self, name, params, stmts):
+            self.name = name
+            self.params = None if params is None else (', ' + params)
+            self.stmts = '\n'.join(stmts)
+
+    context = {
+        'module_name': MODULE_UNDER_TEST,
+        'all_imports': None,
+        'all_tests': [ UnitTestObject(testname, None, [stmt]) ]
+    }
+
+    # read template
+    template_file = open("test_template.mustache", "r")
+    template      = template_file.read()
+    template_file.close()
+
+    # write out unit test suite
+    fout = open("test_%s.py" % MODULE_UNDER_TEST, "w")
+    print >> fout, pystache.render(template, context)
+    fout.close()
+    del fout
+    print ">> ...done!"

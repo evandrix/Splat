@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# run nosetests for an entire directory of tests: `nosetests -v -s -w tests`
+
+import os
+import sys
+import time
+import re
+from pprint import pprint
+import random
+import unittest
+from {{module_name}} import *
+{{#all_imports}}
+import {{module}}
+{{/all_imports}}
+
+class TestProgram(unittest.TestCase):
+    def setUp(self):
+        print "setup"
+    def tearDown(self):
+        print "teardown"
+    def testDefault(self):
+        self.assertEqual(1, (2-1), "Sample Subtraction Test")
+
+    {{#all_tests}}
+    def test_{{name}}(self{{params}}):
+        {{stmts}}
+    {{/all_tests}}
+
+if __name__ == '__main__':
+    unittest.main()

@@ -16,9 +16,11 @@ import {{module}}
 
 class TestProgram(unittest.TestCase):
     def setUp(self):
-        print "setup"
+        #print "setup"
+        return
     def tearDown(self):
-        print "teardown"
+        #print "teardown"
+        return
     def testDefault(self):
         self.assertEqual(1, (2-1), "Sample Subtraction Test")
 

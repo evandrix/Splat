@@ -61,9 +61,8 @@ def foo(class1, class2, n, d='default', *vargs, **kwargs):
     class2.func2()
     class1.func3()
     bank_account = BankAccount(n)
-#    class1.func1()               # incorrect function
-#    bank_account = BankAccount() # purposely leave out param
     print bank_account
+    return n+3
 
 def foo1(class1, class2, n, d='default', *vargs, **kwargs):
     class2.func2()

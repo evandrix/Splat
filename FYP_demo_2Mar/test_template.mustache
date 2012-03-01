@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# run nosetests for an entire directory of tests: `nosetests -v -s -w tests`
+# run nosetests for directory 'tests': `nosetests -v -s -w tests`
 
 import os
 import sys
 import time
 import re
-from pprint import pprint
+import pprint
 import random
 import unittest
 from {{module_name}} import *
@@ -14,20 +14,32 @@ from {{module_name}} import *
 import {{module}}
 {{/all_imports}}
 
+class DevNull(object):
+    def __init__(self, *writers):
+        self.writers = writers
+    def write(self, text):
+       return
+                
 class TestProgram(unittest.TestCase):
     def setUp(self):
-        #print "setup"
-        return
+        # suppress program output
+        sys.stdout = DevNull(sys.stdout)
+        sys.stderr = DevNull(sys.stderr)
     def tearDown(self):
         #print "teardown"
         return
-    def testDefault(self):
-        self.assertEqual(1, (2-1), "Sample Subtraction Test")
 
-    {{#all_tests}}
-    def test_{{function_name}}_{{name}}(self{{params}}):
-        {{stmts}}
-    {{/all_tests}}
+    def assertNotRaised(self, function, *args, **kwargs):
+        with self.assertRaises(Exception):
+            try:
+                function(*args, **kwargs)
+            except:
+                pass
+            else:
+                raise Exception
 
+{{#all_tests}}
+    def test_{{fn_name}}_{{test_name}}(self{{add_params}}): {{stmts}}
+{{/all_tests}}
 if __name__ == '__main__':
     unittest.main()

@@ -1,16 +1,3 @@
-def test_function(fn):
-    print '*** \t%s.%s()...' % (MODULE_UNDER_TEST.__name__,name)
-    print '*** \t%s' % str(getargspec(fn))
-    args, varargs, keywords, defaults = getargspec(fn)
-
-    # case 1: Nones
-    arglist = [None] * len(args)    # correct # of args
-    try:
-        fn(*arglist)
-    except (AttributeError) as ae:
-        print OKGREEN + 'Missing field on argument' + ENDC + ':', ae
-        generate_tests("all_Nones", fn, arglist, ae)
-
     # case 2: Custom wrapper parameter objects
     def f_noarg():
         return

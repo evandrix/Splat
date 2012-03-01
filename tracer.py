@@ -131,7 +131,7 @@ if __name__ == "__main__":
             function(*arg)
         except Exception as e:
             pass
-        print "(Byte)code coverage: %d/%d instructions (%.2f%%)" % (num_lines_executed,total_lines, num_lines_executed/float(total_lines)*100)
+        print "(Byte)code coverage: %d/%d instruction%s (%.2f%%)" % (num_lines_executed,total_lines, 's' if num_lines_executed > 1 else '', num_lines_executed/float(total_lines)*100)
     sys.settrace(None)
     print
 

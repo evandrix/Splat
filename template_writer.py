@@ -24,7 +24,6 @@ class UnitTestObject(object):
             self.add_params = None
         else:
             self.add_params = ', ' + add_params
-        print stmts
         self.stmts      = ''.join(map(lambda l: '\n\t\t' + l, stmts)) + '\n'
     def __str__(self):
         return self.__repr__()

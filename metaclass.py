@@ -28,7 +28,7 @@ class MetaParam(type):
         #print meta
         #print bases
         #pprint(dct)
-        return super(MyMeta, meta).__new__(meta, name, bases, dct)
+        return super(MetaParam, meta).__new__(meta, name, bases, dct)
     def __init__(cls, name, bases, dct):
         """
             called when metaclass is constructed
@@ -38,7 +38,7 @@ class MetaParam(type):
         #print cls
         #print bases
         #pprint(dct)
-        super(MyMeta, cls).__init__(name, bases, dct)
+        super(MetaParam, cls).__init__(name, bases, dct)
     def __call__(cls, *vargs, **kwargs):
         """
             called when instance is instantiated
@@ -56,7 +56,7 @@ def create_metaparam(index):
                 controls creation of new instance
                 used for subclassing immutable type, eg. str,int,unicode,tuple
             """
-            return super(MyParam, cls).__new__(cls, args)
+            return super(Param, cls).__new__(cls, args)
         def __init__(self, index):
             """
                 controls initialisation of new instance

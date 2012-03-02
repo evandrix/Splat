@@ -8,6 +8,7 @@ import time
 import re
 import pprint
 import random
+import types
 import unittest
 from {{module_name}} import *
 {{#all_imports}}
@@ -19,17 +20,24 @@ class DevNull(object):
         self.writers = writers
     def write(self, text):
        return
+def f_noarg(self):
+   return
+def f_varg(self, *args, **kwargs):
+   return
                 
 class TestProgram(unittest.TestCase):
     def setUp(self):
-        # suppress program output
+        # suppress program output streams
         sys.stdout = DevNull(sys.stdout)
         sys.stderr = DevNull(sys.stderr)
+        # reference module under test
+        self.{{module_name}} = __import__('{{module_name}}')
     def tearDown(self):
-        #print "teardown"
-        return
+        sys.stdout = sys.__stdout__
+        sys.stderr = sys.__stderr__
+        del self.{{module_name}}
 
-    def assertNotRaised(self, function, *args, **kwargs):
+    def assertNotRaises(self, function, *args, **kwargs):
         with self.assertRaises(Exception):
             try:
                 function(*args, **kwargs)

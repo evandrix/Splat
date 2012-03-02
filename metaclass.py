@@ -5,12 +5,13 @@
 #
 
 # Custom AttributeError (obj, attr)
-class MetaAttributeError(Exception):
+class MetaAttributeError(AttributeError):
     target_object = missing_attr = None
 
     def __init__(self, target_object, missing_attr):
         self.target_object = target_object
         self.missing_attr  = missing_attr
+        self.parent_exception = AttributeError
 
     def __str__(self):
         return repr(self)
@@ -21,7 +22,7 @@ class MetaAttributeError(Exception):
 # Custom metaclass parameter object (closure)
 class MetaParam(type):
     def __repr__(cls):
-        return c.__name__
+        return cls.__name__
     def __new__(meta, name, bases, dct):
         """ controls (class) object creation """
         #print "Allocating memory for class", name

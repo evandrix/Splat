@@ -22,21 +22,21 @@
 \contentsline {section}{\numberline {2.4}Overview}{11}{section.2.4}
 \contentsline {section}{\numberline {2.5}Current state of the art}{12}{section.2.5}
 \contentsline {subsection}{\numberline {2.5.1}Pythoscope}{12}{subsection.2.5.1}
-\contentsline {subsection}{\numberline {2.5.2}Python Tests Generator}{12}{subsection.2.5.2}
-\contentsline {subsection}{\numberline {2.5.3}\textsc {Irulan}}{14}{subsection.2.5.3}
-\contentsline {section}{\numberline {2.6}Features of Python}{15}{section.2.6}
-\contentsline {section}{\numberline {2.7}Challenges}{15}{section.2.7}
-\contentsline {subsection}{\numberline {2.7.1}Parameter instantiation}{15}{subsection.2.7.1}
+\contentsline {subsection}{\numberline {2.5.2}Python Tests Generator}{13}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}\textsc {Irulan}}{15}{subsection.2.5.3}
+\contentsline {section}{\numberline {2.6}Features of Python}{16}{section.2.6}
+\contentsline {section}{\numberline {2.7}Challenges}{16}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Function argument instantiation}{16}{subsection.2.7.1}
 \contentsline {subsubsection}{Lazy instantiation}{16}{subsubsection*.9}
-\contentsline {subsubsection}{Runtime in-memory manipulation}{16}{subsubsection*.10}
-\contentsline {subsubsection}{Random testing}{16}{subsubsection*.11}
-\contentsline {subsection}{\numberline {2.7.2}Optimising search space coverage}{16}{subsection.2.7.2}
+\contentsline {subsubsection}{Runtime in-memory manipulation}{17}{subsubsection*.10}
+\contentsline {subsubsection}{Random testing}{17}{subsubsection*.11}
+\contentsline {subsection}{\numberline {2.7.2}Optimising search space coverage}{17}{subsection.2.7.2}
 \contentsline {subsection}{\numberline {2.7.3}Testing a dynamically typed language}{17}{subsection.2.7.3}
-\contentsline {subsection}{\numberline {2.7.4}Non-terminating program executions}{17}{subsection.2.7.4}
-\contentsline {subsection}{\numberline {2.7.5}Early detection of path infeasibility}{17}{subsection.2.7.5}
-\contentsline {subsection}{\numberline {2.7.6}Improving code coverage}{17}{subsection.2.7.6}
+\contentsline {subsection}{\numberline {2.7.4}Non-terminating program executions}{18}{subsection.2.7.4}
+\contentsline {subsection}{\numberline {2.7.5}Early detection of path infeasibility}{18}{subsection.2.7.5}
+\contentsline {subsection}{\numberline {2.7.6}Improving code coverage}{18}{subsection.2.7.6}
 \contentsline {section}{\numberline {2.8}Summary}{18}{section.2.8}
-\contentsline {chapter}{\numberline {3}Research}{19}{chapter.3}
+\contentsline {chapter}{\numberline {3}Contributions}{19}{chapter.3}
 \contentsline {section}{\numberline {3.1}Specification}{19}{section.3.1}
 \contentsline {section}{\numberline {3.2}Approach}{20}{section.3.2}
 \contentsline {section}{\numberline {3.3}Algorithm}{21}{section.3.3}

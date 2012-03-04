@@ -231,7 +231,7 @@ The Python programming language contains a variety of interesting features which
 
 This is primarily because Python is an open source, general purpose, multi-paradigm, cross-platform compatible, dynamically typed language, offering duck typing, and in active development and support. It also provides \emph{excellent builtin introspection and reflection capabilities}, to inspect and manipulate code at runtime.
 
-At the heart of the language design philosophy \cite{Pep20ZenPython}, there should be one-- and preferably only one --obvious way to do it. The importance of readability promotes a \emph{clean, concise and elegant syntax}, advantageous to easily demonstrate proof of concepts.
+At the heart of the language design philosophy \cite{Pep20ZenPython}, there should be one -- and preferably only one -- obvious way to do things. The importance of readability promotes a \emph{clean, concise and elegant syntax}, which makes demonstrating 'proof of concept' code easy.
 
 For instance, the Python code snippet reads more fluently than its C\# counterpart:
 
@@ -249,7 +249,7 @@ if 'e' in 'hello':^^J
 \ \ \ return True^^J
 \end{lstlisting}
 \end{tabularx}
-Apart from the fundamental testing infrastructure toolset of \textsf{unittest}, \textsf{doctest} and \textsf{py.test} offered in Python, there is limited availability of testing support tools built on top of this. Many of these either target outdated versions of Python, or are discontinued. There are even fewer of such tools for automated testing, for instance, \textsf{pythoscope} and \textsf{pytestsgenerator}, which generate tests by performing static code analysis, and a lack of any automated dynamic test case generators at all.
+Python features a fundamental testing infrastructure toolset based on \textsf{unittest}, \textsf{doctest} and \textsf{py.test}. However, there is limited availability of testing support tools built on top of those. Many of these either target outdated versions of Python, or are discontinued. There are some tools for automated testing, for instance, \textsf{pythoscope} and \textsf{pytestsgenerator}, which generate tests by performing static code analysis. However there are no tools which perform dynamic test case generation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Project contributions}
 Within the context given above, this project makes the following key contributions:
@@ -276,7 +276,7 @@ This part of the paper is intended to provide an overview and discussion of the 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Basic concepts}
 \label{sect:basics}
-Software testing delivers quality assurance in the product to the customer. It verifies that software bugs are absent, as far as verification that implementation complies with original client specification goes. The following terms commonly found in \emph{automated test data generation research} are defined below.
+Software testing delivers quality assurance in the product to the customer. It verifies that software bugs are absent, as far as the verification that implementation complies with original client specification goes. The following terms commonly found in \emph{automated test data generation research} are defined below.
 
 \subsection{Definition of terms}
 \subsubsection{General testing}
@@ -300,24 +300,28 @@ Software testing delivers quality assurance in the product to the customer. It v
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Validation criteria}
 Software is usually checked for whether it meets certain functional, non-functional and business related requirements.
-
+\textcolor{red}{
 \subsubsection{Functional requirements}
 Functional requirements are associated with specific product features and functionality.
-
+}
 \subsubsection{Non-functional requirements}
 Non-functional requirements refer to product quality, in terms of constraints placed on attributes like speed, efficiency, reliability, safety and scalability. This is an area where automation excels in, over manual testing, and thus also becomes the key focus of this paper.
-
+\textcolor{red}{
 \subsubsection{Business requirements}
 Business requirements reflect customer concerns, with respect to fulfilling the demands of daily work processes.
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementations}
+
+\textcolor{red}{<Missing introductory paragraph: specifics - implementation of what? overview of the different methods?>}
+
 \subsection{Static method}
 This method generate tests without executing the software, generally via symbolic execution to solve for constraints on input variables. The static approach to test case generation derives a test case that will traverse a chosen path, as it satisfies that path predicate.
 
 This paper \cite{Tahbildar} mentions the problem of infeasible path detection in case of loops with a variable number of iterations, and claims that it is weaker than the dynamic method at gathering type information, hence it is useful only for straight forward code. The main difficulty in this technique is solving non-linear constraints.
 
 \subsection{Dynamic method}
-Instead of using variable substitution, software under test is executed (frequently more than one pass), with some selected input. Code instrumentation will monitor and report if program execution follows an intended path. Search methods can be varied to pursue more "interesting" paths. Variables are then updated each time before the next execution, until this goal is achieved, at which point, the associated test case is generated.
+Instead of using variable substitution, the software under test is executed (frequently using more than one pass) with some selected input. Code instrumentation will monitor and report if program execution follows an intended path. Search methods can be varied to pursue more "interesting" paths. Variables are then updated each time before the next execution, until this goal is achieved, at which point, the associated test case is generated.
 
 According to the paper \cite{Tahbildar}, the authors note that research has attempted to combine symbolic reasoning with dynamic execution, or modifying inputs by heuristic function minimisation techniques. However, problems such as scalability and non-termination of infeasible paths arise from this approach.
 
@@ -363,7 +367,7 @@ The following diagram \cite{McMinn2004} outlines the different kinds of software
 			}
 		};
 \end{tikzpicture}
-
+\textcolor{red}{Are you going to talk about these different types of testing? Where do you fit into this diagram?}
 Another interesting paper is the idea of testability transformations \cite{Korel2005}, where source code is refactored to facilitate software testing, like unrolling loops for example.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Current state of the art}
@@ -378,7 +382,7 @@ With respect to automated test generation in Python, there is only minimal work 
 Pythoscope is an open source unit test generator for Python code. It is able to create additional test cases for user-specified points of entry, and also appends new test cases, thus allowing the user to safely modify and extend generated test cases. An example usage is provided below to illustrate this application in action:
 
 \includegraphics[scale=.46]{pythoscope.png}
-
+\textcolor{red}{Not test, but stub! How well does it work? How is it evaluated?}
 \subsection{Python Tests Generator}
 This automated test case generator creates unit tests for Python modules. The authors Vijakumar and Karthikeyan developed this tool on 32-bit Linux. Its purpose is to simplify usage of the existing PyUnit framework, and generate logical test cases for classes and methods. It also consists of a WxPython GUI, in addition to the CLI. The application is packaged for distribution using the \textsf{distutils} module.
 
@@ -407,15 +411,16 @@ An example demonstration of the software follows:
 \lstinputlisting[caption=Results of test execution]{output.txt}
 
 \subsection{\textsc{Irulan}}
-As for implementing the idea of lazy instantiation, \textsc{Irulan} \cite{Allwood2011} is the canonical tool written to demonstrate this concept in Haskell.
+As for implementing the idea of \textcolor{red}{lazy instantiation: No previous explanation of term}, \textsc{Irulan} \cite{Allwood2011} is the canonical tool written to demonstrate this concept in Haskell.
 
 \textsc{Irulan} has four key objectives to achieve, which this project intends to do similarly, where possible:
 \begin{enumerate}[1.]
-	\item Automatic inference constructors and functions to generate test data
+	\item Automatic inference of constructors and functions to generate test data
 	\item Needed narrowing / lazy instantiation
 	\item Inspection of elements inside returned data structures
-	\item Efficiently handle polymorphism by (lazily) instantiating all possible instances
+	\item Efficient handling polymorphism by (lazily) instantiating all possible instances
 \end{enumerate}
+\textcolor{red}{How does your tool relate?}
 
 A sample execution to discover errors in the following code snippet:
 \definecolor{gray_ulisses}{gray}{0.55}
@@ -513,25 +518,25 @@ IntTreeExample.hs:(8,0)-(11,41): Non-exhaustive patterns in function insert
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Features of Python}
 \label{sect:python-features}
-...
+to be completed
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Challenges}
 \label{sect:challenges}
 There are several facets of complexity to this problem, which this work hopes to tackle.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Parameter instantiation}
-Parameters refer to primitives, data structures like lists, maps or trees, and objects. Depending on available resources, scope might be restricted to only certain numeric types or specific functions, eg. methods invoking \texttt{strcmp()}.
+\subsection{Function argument instantiation}
+Function arguments include primitives, data structures like lists, maps or trees, and objects\textcolor{red}{How are these (treated) different?}. Depending on available resources, scope might be restricted to only certain numeric types or specific functions, eg. methods invoking \texttt{strcmp()}\textcolor{red}{ - ambiguous}.
 
 This is especially applicable not only to class constructors when creating appropriate objects, but also automatically generating initial user input.
 
-It is vital to ensure that an exhaustive search is not performed, because there would quickly be an exponential blow up, especially in functions with multiple input arguments, as well as being inefficient, due to many meaningless test cases.
+It is vital to ensure that an exhaustive search \textcolor{red}{for what?} is not performed, because there would quickly be an exponential blow up, especially in functions with multiple input arguments, as well as being inefficient, due to many meaningless test cases.
 
-There are several possible ways to conducting the search for such corner cases. Previous algorithms range from \naive systematic enumeration of all possible values to variants of random testing.
+There are several possible ways to conduct the search for such corner cases. Previous algorithms range from \naive systematic enumeration of all possible values to variants of random testing.
 
 Therefore, the task here is to come up with a more efficient way of prioritising pathological boundary parameter value generation, under real time and space constraints. Some leading intuition follows.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Lazy instantiation}
-It might be reasonable to begin with ``lazy instantiation" \cite{Allwood2011}, where dummy nullified objects are passed in initially, and test data are only generated for return values when the methods on them are actually invoked. This supposes multiple runs through the same code block, and using feedback from previous iteration to direct future execution. A \href{https://github.com/evandrix/Pyrulan}{prototype} of this is available together with the original project proposal.
+It might be reasonable to begin with ``lazy instantiation"\cite{Allwood2011}, where dummy nullified objects are passed in initially, and test data are only generated for return values when the methods on them are actually invoked. This supposes multiple runs through the same code block, and using feedback from previous iteration to direct future execution. A \href{https://github.com/evandrix/Pyrulan}{prototype} of this is available together with the original project proposal.
 
 \subsubsection{Runtime in-memory manipulation}
 It is also envisioned that the dynamic language features of Python be exploited in order to rapidly generate useful test data. One idea is to manipulate and observe the behaviour of code blocks in memory at runtime, by monkeypatching or hotswapping code under test (CUT) for stubs, but with a hook to log incoming parameters during a sample execution, in order to determine their initial starting range \& types.
@@ -542,7 +547,7 @@ On a related note, a cross-cutting concern such as logging may be implemented us
 Apart from random testing with feedback RANDOOP \cite{Pacheco2007}, and preferring configuration diversity over a single optimal test configuration in Swarm Testing \cite{AlexGroceSep2011}, another suggestion is to inspect stack frames of previous executions to grasp a better initial starting point for generating parameters.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Optimising search space coverage}
-The suggestion to parallelise the search space for interesting values over the entire range of integers for example, is to use the General Purpose Graphics Processing Unit (GPGPU) toolkit like Nvidia's CUDA, HADOOP, or Node.js, of which its feasibility still needs to be determined.
+The suggestion to parallelise the search space for interesting values over the entire range of integers for example, is to use the General Purpose Graphics Processing Unit (GPGPU) toolkit like Nvidia's CUDA, HADOOP, or \textcolor{red}{Node.js - not parallel}, of which its feasibility still needs to be determined.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Testing a dynamically typed language}
 Much of the body of work in the software testing community concerns testing against static languages, rather than dynamic languages, or even Python in particular.
@@ -563,21 +568,22 @@ Achieving consistently high code coverage over a wide range of programs (not to 
 \section{Summary}
 In this chapter, the relevant background literature and theory to understand this project has been explained in sufficient detail. The next chapter presents the theoretical contribution of this project to the field, including the problem specification, approach taken, and algorithms and techniques used.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Research}
+\chapter{Contributions}
 \label{ch:research}
+\textcolor{red}{<Missing introductory paragraph>}
 \section{Specification}
-The strategy in this project emphasises mainly on dynamic test data generation, where intermediate runtime data is gathered, represented in some suitable form, and used to guide subsequent iterations.
+The strategy in this project emphasises dynamic test data generation, where intermediate runtime data is gathered, represented in some suitable form, and used to guide subsequent testing iterations.
 
-It assumes that the CUT is unobsfucated, so reverse engineering and code reconstruction lies out of the scope of this investigation.
+Our strategy assumes that the CUT is not obsfucated, so reverse engineering and code reconstruction lies out of the scope of this investigation.
 
-Moreover, we are dealing only with Object Oriented Programming (OOP) style Python programs, ie. involving classes and objects.
+Moreover, we are dealing only with Object Oriented (OO) style Python programs, ie. those involving classes and objects.
 
 As an simplifying assumption, the CUT here is limited to contain at most one program entry point. If the CUT is found not to contain a main entry point, then tests are generated for the individual classes and functions separately, as discovered by the runtime engine.
 
 In addition, test cases should be generated without requiring any user input.
 
 \subsection*{Example}
-Given a basic standard complete implementation of class \textsf{LinkedList}, with a sample prototype of method signatures detailed below:
+Given a basic standard complete implementation of class \textsf{LinkedList}, with a sample of prototype of method signatures detailed below:
 
 \lstset{language=Python}          % Set your language
 \begin{lstlisting}[frame=single]  % Start your code-block
@@ -781,7 +787,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae veli
 	(.3,-1.1) -- (.3,-3.9) node [black,midway,right=3pt] {\makecell[l]{Fix project report\\Schedule review meeting}};
 \draw [decorate,decoration={brace},xshift=-4pt]
 	(.4,-16) -- (.4,-19) node [black,midway,right=3pt] {Department examinations};
+\draw [decorate,decoration={brace},xshift=-4pt]
+	(6.4,-20) -- (6.4,-22) node [black,midway,right=3pt] {Evaluation};
 \end{tikzpicture}
+\textcolor{red}{<Missing research milestones>}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Possible extensions}
 \begin{comment}

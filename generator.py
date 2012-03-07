@@ -97,7 +97,9 @@ class Generator(object):
         print "** Testing top-level functions in '{0}' **".format(self.target.__name__)
         all_tests = []
         for name,function in functions:
+            print function, self.test_function(function)
             all_tests.extend(self.test_function(function))
+
 
         tmpl_writer = TemplateWriter(self.target)
         tmpl_writer.run(all_tests)

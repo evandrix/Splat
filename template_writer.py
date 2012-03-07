@@ -13,13 +13,13 @@ from settings import *
 # Features:
 #    - given function, test name, & statements, generate unit test suite
 #
-#
 TEMPLATE_FILENAME = "test_template.mustache"
 
 class UnitTestObject(object):
     def __init__(self, fn_name, test_name, stmts, add_params=None):
         self.fn_name    = fn_name
         self.test_name  = test_name
+        self.add_params = None
         if add_params is not None:
             self.add_params = ', ' + add_params
         self.stmts      = ''.join(map(lambda l: '\n\t\t' + l, stmts)) + '\n'

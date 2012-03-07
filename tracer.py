@@ -42,15 +42,13 @@ def trace_bytecode(frame, event, arg):
     # establish variables
     co       = frame.f_code
     lineno   = frame.f_lineno
-#    filename = co.co_filename
-    filename = frame.f_globals["__file__"]
+    filename = frame.f_globals["__file__"] #co.co_filename
     if filename.endswith(".pyc") or filename.endswith(".pyo"):
         filename = filename[:-1]
     name     = co.co_name #frame.f_globals["__name__"]
-#    line     = linecache.getline(filename, lineno) # fails w/o src
     # unused
-    #frame.f_locals
-    #co.co_varnames[:co.co_argcount]
+    frame.f_locals
+    co.co_varnames[:co.co_argcount]
 
     # event filtering
     if event == 'line':

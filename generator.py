@@ -56,15 +56,16 @@ class Generator(object):
 
     ########################################################################
     def run(self):
-        print "** Instrumenting Python bytecode **"
+        print "** Instrumenting Python bytecode"
         assert os.path.exists(self.target.__file__), \
             '{0} not found'.format(self.target.__file__)
         import instrumentor
         exit_code = instrumentor.Instrumentor(self.target.__name__).run()
-        # reload module - del sys.modules[self.target.__name__]
+        # reload module => del sys.modules[self.target.__name__]
+        # must reload all dependent modules manually!
         reload(self.target)
         #####################################################################
-        print "** Collecting class definitions (& methods within) **"
+        print "** Collecting class definitions (& methods within)"
         classes_states = {}
         classes = inspect.getmembers(self.target, inspect.isclass)
         for label, klass in classes:

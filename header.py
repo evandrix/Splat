@@ -26,6 +26,4 @@ class Writer(object):
             else:
                 w.write(OKBLUE + text + ENDC)
 sys.stdout = Writer(sys.stdout)
-#sys.stdout = sys.__stdout__
 sys.stderr = sys.__stderr__
-

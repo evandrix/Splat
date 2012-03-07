@@ -1,0 +1,39 @@
+[7/3/12] callable() vs. hasattr(obj, "__call__")
+-----------------------------------------------------------------------------
+If you use the python builtin "callable" instead of "hasattr(type_func, 
+'__call__')", then classes can be used as argument types, ie.
+class A:
+    pass
+callable(A) = True
+hasattr(A, "__call__") = False
+
+Example:
+>>> class P(property):
+...   def __get__(self, obj, cls):
+...     1/0
+>>> class C(object):
+...   __call__ = P()
+>>> c = C()
+>>> callable(c)
+True
+>>> hasattr(c, "__call__")
+False
+>>> c.__call__
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in __get__
+ZeroDivisionError: integer division or modulo by zero
+
+The reason is that hasattr() really calls getattr() and then discards the result / catches any exception, while callable() only examines the type's structure (callable() is lower level).
+
+built-in function is easier to read, better performance than attribute lookup, ie.
+$ python -m timeit "hasattr(None, '__call__')"
+1000000 loops, best of 3: 1.22 usec per loop
+$ ./python -m timeit "callable(None)"
+10000000 loops, best of 3: 0.176 usec per loop
+
+$ python -m timeit "hasattr(str, '__call__')"
+1000000 loops, best of 3: 0.326 usec per loop
+$ python -m timeit "callable(str)"
+1000000 loops, best of 3: 0.195 usec per loop
+_____________________________________________________________________________

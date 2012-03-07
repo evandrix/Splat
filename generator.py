@@ -47,17 +47,38 @@ def aspect_fmt_output(function, *vargs, **kwargs):
         sys.stdout = Writer(sys.__stdout__) # restore stdout
     return return_value
 #############################################################################
+class ClassType:
+    OLD, NEW = range(2)
+
 class Generator(object):
     def __init__(self, target):
         self.target = target
 
     def run(self):
-        print "** Testing top-level functions in '%s' **" \
-            % self.target.__name__
+        print "** Collecting class definitions (& methods within) **"
+        classes_states = {}
+        classes = inspect.getmembers(self.target, inspect.isclass)
+        for label, klass in classes:
+
+            # methods within classes            
+            methods_states = {}
+            for item in inspect.getmembers(klass, inspect.ismethod):
+                name, method = item
+                methods_states[name] = method            
+
+            # store class definition into dict()
+            if type(klass) is types.TypeType:
+                classes_states[label] = (ClassType.NEW, klass, methods_states)
+            elif type(klass) is types.ClassType:
+                classes_states[label] = (ClassType.OLD, klass, methods_states)            
+
+        print "** Testing top-level functions in '{0}' **".format(self.target.__name__)
         functions = inspect.getmembers(self.target, inspect.isfunction)
+
         all_tests = []
         for name,function in functions:
             all_tests.extend(self.test_function(function))
+
         tmpl_writer = TemplateWriter(self.target)
         tmpl_writer.run(all_tests)
 

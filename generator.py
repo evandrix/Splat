@@ -84,7 +84,7 @@ class Generator(object):
 
     ########################################################################
     def test_function(self, fn):
-        assert hasattr(fn, '__call__')
+        assert callable(fn)
         print "\t'%s': %s" % (fn.__name__, inspect.getargspec(fn))
         args, varargs, keywords, defaults = inspect.getargspec(fn)
         tests = []
@@ -145,7 +145,7 @@ class Generator(object):
                     for key in item.__dict__:
                         value = item.__dict__[key]
                         if not key.startswith("__") and key != 'index':
-                            if hasattr(value, '__call__'):
+                            if callable(value):
                                 stmt.append("%s.%s = types.MethodType(%s, %s, %s.__class__)" % (item,key,value.func_name,item,item))
                             else:
                                 stmt.append("%s.%s = %s" % (item,key,"''" if value == '' else value))
@@ -180,7 +180,7 @@ class Generator(object):
                 for key in item.__dict__:
                     value = item.__dict__[key]
                     if not key.startswith("__") and key != 'index':
-                        if hasattr(value, '__call__'):
+                        if callable(value):
                             stmt.append("%s.%s = types.MethodType(%s, %s, %s.__class__)" % (item,key,value.func_name,item,item))
                         else:
                             stmt.append("%s.%s = %s" % (item,key,"''" if value == '' else value))
@@ -211,7 +211,7 @@ class Generator(object):
                     for key in item.__dict__:
                         value = item.__dict__[key]
                         if not key.startswith("__") and key != 'index':
-                            if hasattr(value, '__call__'):
+                            if callable(value):
                                 stmt.append("%s.%s = types.MethodType(%s, %s, %s.__class__)" % (item,key,value.func_name,item,item))
                             else:
                                 stmt.append("%s.%s = %s" % (item,key,"''" if value == '' else value))
@@ -229,8 +229,8 @@ class Generator(object):
             return True
 
     def get_traceback_info(self):
-        exception_type, exception_value, tb = sys.exc_info()
-        code = py.code.Traceback(tb)[-1]
+        exception_type, exception_value, traceback = sys.exc_info()
+        code = py.code.Traceback(traceback)[-1]
         fn_name = code.name
         fn_frame = code.frame
         fn_code = fn_frame.code
@@ -239,12 +239,11 @@ class Generator(object):
 
     def get_bytecode_obj(self, obj, attr):
         # only applies to callables
-        if not hasattr(obj.__dict__[attr], '__call__'):
-            return
-        try:
-            code = Code.from_code(obj.__dict__[attr].func_code)
-        except:
-            return
+        if callable(obj.__dict__[attr]):
+            try:
+                self.code = Code.from_code(obj.__dict__[attr].func_code)
+            except:
+                return
 
     def handle_TypeError_require_number(self, err_param, arglist, obj, param_instantiated, param_states):
         # extract var from msg

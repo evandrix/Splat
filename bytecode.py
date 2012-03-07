@@ -12,6 +12,8 @@ from common import *    # decorators
 class Bytecode(object):
     def __init__(self, target):
         self.target = target
+        self.instructions = self.decompile()
+        self.disassembly  = self.disassemble()
 
     def decompile(self):
         """
@@ -66,16 +68,24 @@ class Bytecode(object):
                                  i_argument, i_arg_type, i_arg_value))
         return instructions
 
-    def pretty_print(self, instructions):
+    def debug_print(self, stream=sys.stdout):
+        pprint.pprint(self.disassembly, stream=stream)
+        print >> stream, "Length =", len(self.disassembly)
+        return self.disassembly
+
+    def pretty_print(self, stream=sys.stdout):
         """ print bytecode in human-readable format """
 
-        print '%5s %-20s %3s  %5s  %-20s  %s' % \
+        the_string = ""
+        the_string += '%5s %-20s %3s  %5s  %-20s  %s\n' % \
             ('OFFSET', 'INSTRUCTION', 'OPCODE', 'ARG', 'TYPE', 'VALUE')
-        for (offset, op, name, argument, argtype, argvalue) in instructions:
-            print '%5d  %-20s (%3d)  ' % (offset, name, op),
+        for (offset, op, name, argument, argtype, argvalue) in self.instructions:
+            the_string += '%5d  %-20s (%3d)  ' % (offset, name, op)
             if argument != None:
-              print '%5d  %-20s  (%s)' % (argument, argtype, argvalue),
-            print
+              the_string += '%5d  %-20s  (%s)' % (argument, argtype, argvalue)
+            the_string += '\n'
+        print >> stream, the_string
+        return the_string
 
     def disassemble(self):
         """
@@ -152,18 +162,3 @@ class Bytecode(object):
                     lambdas.add(const)
                     found.update(get_accessed_globals(const))
         return found
-
-@aspect_import_mut
-def run(*vargs, **kwargs):
-    co = kwargs['module'].foo.func_code
-    bytecode = Bytecode(co)
-    inst = bytecode.decompile()
-
-    # human-readable
-    bytecode.pretty_print(inst)
-    # programmatic
-    pprint.pprint(bytecode.disassemble())
-
-if __name__ == "__main__":
-    run()
-    sys.exit(0)

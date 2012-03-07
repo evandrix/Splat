@@ -54,34 +54,52 @@ class Generator(object):
     def __init__(self, target):
         self.target = target
 
+    ########################################################################
     def run(self):
+        print "** Instrumenting Python bytecode **"
+        assert os.path.exists(self.target.__file__), \
+            '{0} not found'.format(self.target.__file__)
+        import instrumentor
+        exit_code = instrumentor.Instrumentor(self.target.__name__).run()
+        # reload module - del sys.modules[self.target.__name__]
+        reload(self.target)
+        #####################################################################
         print "** Collecting class definitions (& methods within) **"
         classes_states = {}
         classes = inspect.getmembers(self.target, inspect.isclass)
         for label, klass in classes:
-
-            # methods within classes            
+            # methods within classes
             methods_states = {}
             for item in inspect.getmembers(klass, inspect.ismethod):
                 name, method = item
-                methods_states[name] = method            
-
+                methods_states[name] = method
             # store class definition into dict()
             if type(klass) is types.TypeType:
                 classes_states[label] = (ClassType.NEW, klass, methods_states)
             elif type(klass) is types.ClassType:
-                classes_states[label] = (ClassType.OLD, klass, methods_states)            
-
-        print "** Testing top-level functions in '{0}' **".format(self.target.__name__)
+                classes_states[label] = (ClassType.OLD, klass, methods_states)
+        #####################################################################
+        program_states = {}
+        program_states['classes'] = classes_states
+        functions_states = {}
+        import bytecode
         functions = inspect.getmembers(self.target, inspect.isfunction)
-
+        for name,function in functions:
+            fn_bytecode = bytecode.Bytecode(function.func_code)
+            # human-readable
+            #fn_bytecode.pretty_print(sys.stderr)
+            # programmatic
+            #fn_bytecode.debug_print(sys.stderr)
+            functions_states[name] = (function, fn_bytecode)
+        program_states['functions'] = functions_states
+        #####################################################################
+        print "** Testing top-level functions in '{0}' **".format(self.target.__name__)
         all_tests = []
         for name,function in functions:
             all_tests.extend(self.test_function(function))
 
         tmpl_writer = TemplateWriter(self.target)
         tmpl_writer.run(all_tests)
-
     ########################################################################
     def test_function(self, fn):
         assert callable(fn)
@@ -137,7 +155,7 @@ class Generator(object):
                 assert 'last_instantiated' in param_states
                 obj, attr, index = param_states['last_instantiated']
                 err_param = re.split('^%d format: a number is required, not Param([0-9]+)$', e.message)[1:-1]
-                
+
                 # transform arglist for assertion in test case
                 stmt = []
                 for item in arglist:
@@ -154,12 +172,12 @@ class Generator(object):
                 tests.append(UnitTestObject(function.__name__, str(iteration_no), stmt))
                 # generate test for this case
                 #print >> sys.__stderr__, 1, "#"+str(iteration_no), ':', e, map(todict, arglist)
-                
+
                 if len(err_param) == 1: # error message parsed correctly
                     self.handle_TypeError_require_number(err_param, arglist, obj, param_instantiated, param_states)
                 else:
                     self.handle_TypeError(obj, attr)
-            except MetaAttributeError as e:                
+            except MetaAttributeError as e:
                 if not self.handle_MetaAttrError(e, param_states, param_instantiated, arglist, function, tests, iteration_no):
                     return tests
             except Exception as e:
@@ -220,7 +238,7 @@ class Generator(object):
                 tests.append(UnitTestObject(function.__name__, str(iteration_no), stmt))
             # generate test for this case
             #print >> sys.__stderr__, 2, "#"+str(iteration_no), ':', e, map(todict, arglist)
-            
+
             next_param = PARAM_VALUE_SEQ[next_param_index]
             param_states[lookup_key] += 1
             param_states['last_instantiated'] = (obj, attr, next_param_index)

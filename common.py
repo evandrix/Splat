@@ -26,16 +26,20 @@ def todict(obj, classkey=None):
     else:
         return obj
 
+# fixed width binary representation
+# credits @ goo.gl/7udcK
+def _bin(x, width):
+    return ''.join(str((x>>i)&1) for i in xrange(width-1,-1,-1))
+
 @decorator
-def aspect_import_mut(f, *args, **kw):
+def aspect_import_mut(f, *args, **kwargs):
     """ import module & adds it into the keyword arg namespace """
 
     try:
-        the_module = __import__(MODULE_UNDER_TEST)
+        kwargs['module'] = __import__(MODULE_UNDER_TEST)
     except ImportError as e:
         print >> sys.stderr, "Module %s cannot be imported" % MODULE_UNDER_TEST
-    kw['module'] = the_module
-    return f(*args, **kw)
+    return f(*args, **kwargs)
 
 @decorator
 def aspect_timer(f, *args, **kw):

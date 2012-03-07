@@ -30,6 +30,8 @@ class Instrumentor(object):
     """
 
     def __init__(self, target):
+        if not target.endswith(".pyc"):
+            target += ".pyc"
         self.target = target
 
     def run(self):
@@ -123,20 +125,14 @@ class Instrumentor(object):
 
 @cli.app.CommandLineApp
 def main(app):
-   # sanitise input target
-  target = app.params.target
-  if isinstance(target, basestring) \
-    and not app.params.target.endswith(".pyc"):
-    target += ".pyc"
-
-  print "Instrumenting %s..." % target,
-  instrumentor = Instrumentor(target)
-  exit_code = instrumentor.run()
-  print ("done!" if exit_code else "already instrumented!")
+    target = app.params.target
+    print "Instrumenting %s..." % target,
+    instrumentor = Instrumentor(target)
+    exit_code = instrumentor.run()
+    print ("done!" if exit_code else "already instrumented!")
 
 if __name__ == "__main__":
-   # wrapper around argparse
-   main.add_param("-t", "--target",
+    # wrapper around argparse
+    main.add_param("-t", "--target",
         help="specify target python bytecode file (*.pyc)", required=True)
-   main.run()
-
+    main.run()

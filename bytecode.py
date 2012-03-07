@@ -26,7 +26,7 @@ class Bytecode(object):
         instructions = []
         n = len(code)
         i = e = 0
-        labls = [item for item in dis.findlabels(self.target)] # unused
+        labels = [item for item in dis.findlabels(code)]
         linestarts = [item for item in dis.findlinestarts(self.target)]
         while i < n:
             i_offset = [actual for rel,actual in linestarts if rel == i][0]
@@ -159,11 +159,11 @@ def run(*vargs, **kwargs):
     bytecode = Bytecode(co)
     inst = bytecode.decompile()
 
+    # human-readable
     bytecode.pretty_print(inst)
-    print
+    # programmatic
     pprint.pprint(bytecode.disassemble())
 
 if __name__ == "__main__":
     run()
     sys.exit(0)
-

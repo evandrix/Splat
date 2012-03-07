@@ -228,23 +228,6 @@ class Generator(object):
             param_instantiated.add(obj)
             return True
 
-    def get_traceback_info(self):
-        exception_type, exception_value, traceback = sys.exc_info()
-        code = py.code.Traceback(traceback)[-1]
-        fn_name = code.name
-        fn_frame = code.frame
-        fn_code = fn_frame.code
-        fn_lineno = code.lineno + 1
-        #print code.getfirstlinesource(), code.locals, code.relline
-
-    def get_bytecode_obj(self, obj, attr):
-        # only applies to callables
-        if callable(obj.__dict__[attr]):
-            try:
-                self.code = Code.from_code(obj.__dict__[attr].func_code)
-            except:
-                return
-
     def handle_TypeError_require_number(self, err_param, arglist, obj, param_instantiated, param_states):
         # extract var from msg
         err_param     = int(err_param[0])
@@ -278,8 +261,19 @@ class Generator(object):
                 (obj_err_param, None, next_param_index)
 
     def handle_TypeError(self, obj, attr):
-        self.get_traceback_info()
-        self.get_bytecode_obj(obj, attr)
+        # diagnostics #
+        # traceback info
+        exception_type, exception_value, traceback = sys.exc_info()
+        code = py.code.Traceback(traceback)[-1]
+        fn_frame = code.frame
+        print >> StringIO(), \
+            "(name, frame, code, lineno): (%s,%s,%s,%s)" % \
+            (code.name, fn_frame, fn_frame.code, code.lineno+1)
+
+        # function bytecode
+        if callable(obj.__dict__[attr]):
+            code = Code.from_code(obj.__dict__[attr].func_code)
+
         del obj.__dict__[attr]  # retry with next argument in list
 
 #############################################################################

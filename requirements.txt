@@ -7,6 +7,7 @@ fusil==1.4
 ipython==0.12
 logilab-astng==0.23.1
 logilab-common==0.57.1
+nose==1.1.2
 py==1.4.7
 pyCLI==2.0.3
 pycrypto==2.5

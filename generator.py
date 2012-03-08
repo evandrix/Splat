@@ -13,30 +13,49 @@ import pprint
 import byteplay
 import random
 import decorator
-from cStringIO import StringIO
-from common   import *  # AOP
-from header   import *  # enable colors
+import instrumentor
+import bytecode
+import tracer
+from cStringIO       import StringIO
+from common          import *  # AOP
+from header          import *  # enable colors
 from template_writer import *   # submodule support
-from metaclass import *
+from metaclass       import *
 
-MAX_ITERATIONS = 2**10
-
-# Mock parameters
-def f_noarg():
-    return
-def f_varg(*args, **kwargs):
-    return
+MAX_ITERATIONS  = 2**10
+def f_noarg(): return                   # Mock parameters
+def f_varg(*args, **kwargs): return
 PARAM_VALUE_SEQ = [ None, 0, 0.0, '', f_noarg, f_varg ]
+class ClassType:    OLD, NEW = range(2)
+
+# add tracing facility to function under test
+def add_tracer(function, *vargs, **kwargs):
+    cb    = byteplay.Code.from_code(function.func_code)
+    total = len([(op,arg) for op,arg in cb.code if op != byteplay.SetLineno])
+    tracer.NUM_LINES_EXECUTED = 0
+    sys.settrace(tracer.trace_bytecode)
+    try:
+        function(*vargs, **kwargs)
+    except Exception as e:
+        if function.aop_single_exec:
+            pass
+        else:
+            raise e
+    finally:
+        sys.settrace(None)
+        print "(Byte)code coverage: %d/%d instruction%s (%.2f%%)" % \
+            (tracer.NUM_LINES_EXECUTED,total,
+            's' if tracer.NUM_LINES_EXECUTED > 1 else '',
+            tracer.NUM_LINES_EXECUTED/float(total)*100)
 
 # Wrap function to catch Exception & print program output
-def aspect_fmt_output(function, *vargs, **kwargs):
+def add_formatter(function, *vargs, **kwargs):
     try:
         sys.stdout = StringIO()  # suppress stdout to string
         return_value = function(*vargs, **kwargs)
     except Exception as e:
         sys.stdout = sys.__stdout__
-        if function.newline:
-            print
+        if function.aop_newline:    print
         raise e # propagate Exception upwards
     else:
         # no Exception encountered
@@ -46,26 +65,22 @@ def aspect_fmt_output(function, *vargs, **kwargs):
     finally:
         sys.stdout = Writer(sys.__stdout__) # restore stdout
     return return_value
-#############################################################################
-class ClassType:
-    OLD, NEW = range(2)
 
 class Generator(object):
     def __init__(self, target):
         self.target = target
-
     ########################################################################
     def run(self):
-        print "** Instrumenting Python bytecode"
-        assert os.path.exists(self.target.__file__), \
-            '{0} not found'.format(self.target.__file__)
-        import instrumentor
-        exit_code = instrumentor.Instrumentor(self.target.__name__).run()
-        # reload module => del sys.modules[self.target.__name__]
-        # must reload all dependent modules manually!
+        PYC_NAME     = self.target.__name__
+        PYC_FILENAME = os.path.basename(self.target.__file__)
+
+        print "** Instrumenting Python bytecode '%s'" % PYC_FILENAME
+        assert os.path.exists(PYC_FILENAME), "'%s' not found" % PYC_FILENAME
+        instrumentor.Instrumentor(PYC_NAME).run()
         reload(self.target)
         #####################################################################
-        print "** Collecting class definitions (& methods within)"
+        print "** Collecting class definitions with methods & functions"
+        program_states = {}
         classes_states = {}
         classes = inspect.getmembers(self.target, inspect.isclass)
         for label, klass in classes:
@@ -79,41 +94,37 @@ class Generator(object):
                 classes_states[label] = (ClassType.NEW, klass, methods_states)
             elif type(klass) is types.ClassType:
                 classes_states[label] = (ClassType.OLD, klass, methods_states)
-        #####################################################################
-        program_states = {}
         program_states['classes'] = classes_states
         functions_states = {}
-        import bytecode
         functions = inspect.getmembers(self.target, inspect.isfunction)
         for name,function in functions:
+            tracer.TRACE_INTO.append(name)
             fn_bytecode = bytecode.Bytecode(function.func_code)
-            # human-readable
-            #fn_bytecode.pretty_print(sys.stderr)
-            # programmatic
-            #fn_bytecode.debug_print(sys.stderr)
+            #fn_bytecode.pretty_print(sys.stderr)   # human-readable
+            #fn_bytecode.debug_print(sys.stderr)    # programmatic
             functions_states[name] = (function, fn_bytecode)
         program_states['functions'] = functions_states
         #####################################################################
-        print "** Testing top-level functions in '{0}' **".format(self.target.__name__)
+        print "** Testing top-level functions in '%s' **" % PYC_NAME
         all_tests = []
         for name,function in functions:
-            print function, self.test_function(function)
-            all_tests.extend(self.test_function(function))
-
-
+            test_obj = self.test_function(function)
+            all_tests.extend(test_obj)
         tmpl_writer = TemplateWriter(self.target)
         tmpl_writer.run(all_tests)
     ########################################################################
     def test_function(self, fn):
         assert callable(fn)
-        print "\t'%s': %s" % (fn.__name__, inspect.getargspec(fn))
+        #print "\t'%s': %s" % (fn.__name__, inspect.getargspec(fn))
         args, varargs, keywords, defaults = inspect.getargspec(fn)
         tests = []
         #####################################################################
         # Case 1: Nones
         #####################################################################
-        fn.newline = True
-        function = decorator(aspect_fmt_output, fn)
+        fn.aop_newline     = True
+        fn.aop_single_exec = True
+        function = decorator(add_formatter, decorator(add_tracer, fn))
+
         print "[test-all-Nones]:\t",
         arglist = [None] * len(args)    # correct number of arguments supplied
         assert len(arglist) == len(args)
@@ -134,17 +145,22 @@ class Generator(object):
             statements.append("self.assertNotRaises(%s, *%s)" % \
                 (function.__name__, arglist))
             if return_value is None:
-                statements.append("self.assertIsNone(%s(*%s))" % (function.__name__, arglist))
+                statements.append("self.assertIsNone(%s(*%s))" % \
+                (function.__name__, arglist))
             else:
-                statements.append("self.assertEqual(%s(*%s), %r, 'function return value not equal')" % (function.__name__, arglist, return_value))
+                statements.append("self.assertEqual(%s(*%s), %r, %s)" % \
+                    (function.__name__, arglist, return_value,
+                    'function return value not equal'))
             tests.append(UnitTestObject(
                 function.__name__, "all_Nones", statements))
 
         #####################################################################
         # Case 2: Lazy instantiation
         #####################################################################
-        fn.newline = False
-        function = decorator(aspect_fmt_output, fn)
+        fn.aop_newline     = False
+        fn.aop_single_exec = False
+        function = decorator(add_formatter, decorator(add_tracer, fn))
+
         print "[test-all-params]:\t",
         param_states = {}           # dict() of param state info
         # tracks last instantiated parameter - (obj, attr, next_param_index)
@@ -287,14 +303,11 @@ class Generator(object):
         exception_type, exception_value, traceback = sys.exc_info()
         code = py.code.Traceback(traceback)[-1]
         fn_frame = code.frame
-        print >> StringIO(), \
-            "(name, frame, code, lineno): (%s,%s,%s,%s)" % \
+        print >> StringIO(), "(name, frame, code, lineno): (%s,%s,%s,%s)" % \
             (code.name, fn_frame, fn_frame.code, code.lineno+1)
-
         # function bytecode
         if callable(obj.__dict__[attr]):
             code = Code.from_code(obj.__dict__[attr].func_code)
-
         del obj.__dict__[attr]  # retry with next argument in list
 
 #############################################################################
@@ -307,3 +320,4 @@ def run(*vargs, **kwargs):
 if __name__ == "__main__":
     run()
     sys.exit(0)
+

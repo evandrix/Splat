@@ -5,7 +5,7 @@ from __future__ import with_statement
 import simplejson
 import pyparsing    # S-Expr
 import pystache
-import inspect
+import codecs
 from settings import *
 
 # Generator - template writer submodule #
@@ -48,10 +48,11 @@ class TemplateWriter(object):
 
     def read(self, template_file):
         """ Read in template test py file to populate """
-        with open(template_file, "r") as template:
+        with open(template_file, "rU") as template:
             return template.read()
 
     def write(self, data):
         """ Write out unit test suite into test_* py file """
-        with open("test_%s.py" % self.target.__name__, "w") as fout:
-            print >> fout, data
+        with codecs.open("test_%s.py" % self.target.__name__, "w", "utf-8") as fout:
+            print >> fout, data.unescape().replace("&#39;","'") #markupsafe fix
+

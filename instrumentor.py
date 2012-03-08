@@ -102,7 +102,7 @@ class Instrumentor(object):
                 lb_ranges  = [ord(code.co_lnotab[b*2]) \
                               for b in range(len(code.co_lnotab)/2)]
                 lb_ranges.append(n_bytes - sum(lb_ranges))
-                prev_lb    = -1 # invalid value
+                prev_lb    = 0
                 new_lnotab = ''
                 for lb in lb_ranges:
                     new_lnotab += self.SIGNATURE_BYTES

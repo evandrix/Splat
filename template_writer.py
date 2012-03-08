@@ -55,5 +55,8 @@ class TemplateWriter(object):
     def write(self, data):
         """ Write out unit test suite into test_* py file """
         with codecs.open("test_%s.py" % self.target.__name__, "w", "utf-8") as fout:
-            print >> fout, data.unescape().replace("&#39;","'") #markupsafe fix
+            if isinstance(data, markupsafe.Markup):
+                print >> fout, data.unescape().replace("&#39;","'")
+            else: #isinstance(data, 'unicode')
+                print >> fout, data
 

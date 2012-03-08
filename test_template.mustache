@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# run nosetests for directory 'tests': `nosetests -v -s -w tests`
-
+# run nosetests for directory 'tests': `nosetests -vsw tests`
 import os
 import sys
 import time
@@ -14,7 +13,6 @@ from {{module_name}} import *
 {{#all_imports}}
 import {{module}}
 {{/all_imports}}
-
 class DevNull(object):
     def __init__(self, *writers):
         self.writers = writers
@@ -24,7 +22,6 @@ def f_noarg(self):
    return
 def f_varg(self, *args, **kwargs):
    return
-                
 class TestProgram(unittest.TestCase):
     def setUp(self):
         # suppress program output streams
@@ -36,7 +33,6 @@ class TestProgram(unittest.TestCase):
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
         del self.{{module_name}}
-
     def assertNotRaises(self, function, *args, **kwargs):
         with self.assertRaises(Exception):
             try:
@@ -45,9 +41,8 @@ class TestProgram(unittest.TestCase):
                 pass
             else:
                 raise Exception
-
 {{#all_tests}}
-    def test_{{fn_name}}_{{test_name}}(self{{add_params}}): {{stmts}}
+{{prefix}}def test_{{fn_name}}_{{test_name}}(self{{add_params}}): {{stmts}}
 {{/all_tests}}
 if __name__ == '__main__':
     unittest.main()

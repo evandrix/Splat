@@ -17,6 +17,7 @@ TEMPLATE_FILENAME = "test_template.mustache"
 
 class UnitTestObject(object):
     def __init__(self, fn_name, test_name, stmts, add_params=None):
+        self.prefix     = '\t'  # prepend unit test definition
         self.fn_name    = fn_name
         self.test_name  = test_name
         self.add_params = None

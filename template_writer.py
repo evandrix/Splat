@@ -6,6 +6,7 @@ import simplejson
 import pyparsing    # S-Expr
 import pystache
 import codecs
+import markupsafe
 from settings import *
 
 # Generator - template writer submodule #

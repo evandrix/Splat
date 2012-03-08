@@ -16,6 +16,7 @@ import decorator
 import instrumentor
 import bytecode
 import tracer
+import trace
 from cStringIO       import StringIO
 from common          import *  # AOP
 from header          import *  # enable colors
@@ -47,6 +48,12 @@ def add_tracer(function, *vargs, **kwargs):
             (tracer.NUM_LINES_EXECUTED,total,
             's' if tracer.NUM_LINES_EXECUTED > 1 else '',
             tracer.NUM_LINES_EXECUTED/float(total)*100)
+
+        the_trace = trace.Trace(count=True, trace=True, outfile=None)
+        the_trace.runfunc(function, *vargs, **kwargs)
+        # save results
+        report_tracer = trace.Trace(count=False, trace=False, infile='trace_report.dat')
+        the_trace.results().write_results(show_missing=False, summary=False, coverdir='coverdir')
 
 # Wrap function to catch Exception & print program output
 def add_formatter(function, *vargs, **kwargs):

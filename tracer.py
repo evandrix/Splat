@@ -95,14 +95,3 @@ def trace_bytecode(frame, event, arg):
     #print >> sys.stderr, '[*]:\t>>%s()@(%s:%s)' % (name, filename, lineno)
     return # no recursion here
 
-if __name__ == "__main__":
-    ##########################################################################
-    # Part II                                                                #
-    ##########################################################################
-    tracer = trace.Trace(count=True, trace=True, outfile=None)
-    tracer.runfunc(function, A(),B(),3,'4')
-    # save results
-    report_tracer = trace.Trace(count=False, trace=False, infile='trace_report.dat')
-    results = tracer.results()
-    results.write_results(summary=True, coverdir='coverdir')
-

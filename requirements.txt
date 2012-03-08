@@ -12,7 +12,7 @@ pyCLI==2.0.3
 pycrypto==2.5
 pylint==0.25.1
 pyparsing==1.5.6
-pystache==0.3.1
+pystache==0.4.0
 python-ptrace==0.6.4
 readline==6.2.2
 simplejson==2.3.3

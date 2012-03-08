@@ -182,22 +182,12 @@ class Generator(object):
                 obj, attr, index = param_states['last_instantiated']
                 err_param = re.split('^%d format: a number is required, not Param([0-9]+)$', e.message)[1:-1]
 
-                # transform arglist for assertion in test case
-                stmt = []
-                for item in arglist:
-                    stmt.append("%s = type('',(object,), {})()" % (item))
-                    for key in item.__dict__:
-                        value = item.__dict__[key]
-                        if not key.startswith("__") and key != 'index':
-                            if callable(value):
-                                stmt.append("%s.%s = types.MethodType(%s, %s, %s.__class__)" % (item,key,value.func_name,item,item))
-                            else:
-                                stmt.append("%s.%s = %s" % (item,key,"''" if value == '' else value))
-                stmt.append("self.assertRaises(%s, %s, *%s)" % \
-                    (e.__class__.__name__, function.__name__, arglist))
-                tests.append(UnitTestObject(function.__name__, str(iteration_no), stmt))
-                # generate test for this case
-                #print >> sys.__stderr__, 1, "#"+str(iteration_no), ':', e, map(todict, arglist)
+                # 1: transform arglist to assertions in test case
+                fn_name  = function.__name__
+                stmts    = self.arglist_to_stmts(arglist, function, e)
+                test_obj = UnitTestObject(fn_name, str(iteration_no), stmts)
+                tests.append(test_obj)
+                #print>>sys.__stderr__, 1,"#"+str(iteration_no),':',e,map(todict, arglist)
 
                 if len(err_param) == 1: # error message parsed correctly
                     self.handle_TypeError_require_number(err_param, arglist, obj, param_instantiated, param_states)
@@ -213,29 +203,16 @@ class Generator(object):
             finally:
                 iteration_no += 1
 
-        # transform arglist for assertion in test case
-        is_primitive = lambda var: isinstance(var, (int, basestring, float, long, bool, tuple, list, dict))
-        stmt = []
-        for item in arglist:
-            if not is_primitive(item) and hasattr(item, '__class__') \
-                and isinstance(item.__class__, MetaParam) \
-                and hasattr(item, '__dict__'):
-                stmt.append("%s = type('',(object,), {})()" % (item))
-                for key in item.__dict__:
-                    value = item.__dict__[key]
-                    if not key.startswith("__") and key != 'index':
-                        if callable(value):
-                            stmt.append("%s.%s = types.MethodType(%s, %s, %s.__class__)" % (item,key,value.func_name,item,item))
-                        else:
-                            stmt.append("%s.%s = %s" % (item,key,"''" if value == '' else value))
+        # 0: transform arglist to assertions in test case
+        fn_name  = function.__name__
+        stmts    = self.arglist_to_stmts(arglist, function)
+        test_obj = UnitTestObject(fn_name, str(iteration_no), stmts)
+        tests.append(test_obj)
 
-        stmt.append("self.assertNotRaises(%s, *%s)" % \
-            (function.__name__, arglist))
-        tests.append(UnitTestObject(function.__name__, str(iteration_no), stmt))
-        # generate test for this case
-        #print >> sys.__stderr__, 0, map(todict, arglist)
         # summary statistics
-        print ">> Discovered parameters in %d/%d iteration%s (%.2f%%)\n" % (iteration_no, MAX_ITERATIONS, 's' if iteration_no > 1 else '', iteration_no/float(MAX_ITERATIONS)*100)
+        print ">> Discovered parameters in %d/%d iteration%s (%.2f%%)\n" % \
+            (iteration_no, MAX_ITERATIONS, 's' if iteration_no > 1 else '', \
+             iteration_no/float(MAX_ITERATIONS)*100)
         return tests
 
     def handle_MetaAttrError(self, e, param_states, param_instantiated, arglist, function, tests, iteration_no):
@@ -249,21 +226,12 @@ class Generator(object):
         else:
             if 'last_instantiated' not in param_states \
                 or obj != param_states['last_instantiated'][0]:
-                stmt = []
-                for item in arglist:
-                    stmt.append("%s = type('',(object,), {})()" % (item))
-                    for key in item.__dict__:
-                        value = item.__dict__[key]
-                        if not key.startswith("__") and key != 'index':
-                            if callable(value):
-                                stmt.append("%s.%s = types.MethodType(%s, %s, %s.__class__)" % (item,key,value.func_name,item,item))
-                            else:
-                                stmt.append("%s.%s = %s" % (item,key,"''" if value == '' else value))
-                stmt.append("self.assertRaises(%s, %s, *%s)" % \
-                    (e.parent_exception.__name__, function.__name__, arglist))
-                tests.append(UnitTestObject(function.__name__, str(iteration_no), stmt))
-            # generate test for this case
-            #print >> sys.__stderr__, 2, "#"+str(iteration_no), ':', e, map(todict, arglist)
+
+                # 2: transform arglist to assertions in test case
+                fn_name  = function.__name__
+                stmts    = self.arglist_to_stmts(arglist, function, e)
+                test_obj = UnitTestObject(fn_name, str(iteration_no), stmts)
+                tests.append(test_obj)
 
             next_param = PARAM_VALUE_SEQ[next_param_index]
             param_states[lookup_key] += 1
@@ -272,7 +240,8 @@ class Generator(object):
             param_instantiated.add(obj)
             return True
 
-    def handle_TypeError_require_number(self, err_param, arglist, obj, param_instantiated, param_states):
+    def handle_TypeError_require_number(self, \
+            err_param, arglist, obj, param_instantiated, param_states):
         # extract var from msg
         err_param     = int(err_param[0])
         sz_err_param  = 'Param%d' % err_param
@@ -316,6 +285,37 @@ class Generator(object):
         if callable(obj.__dict__[attr]):
             code = Code.from_code(obj.__dict__[attr].func_code)
         del obj.__dict__[attr]  # retry with next argument in list
+
+    def arglist_to_stmts(self, arglist, fn, e=None):
+        is_primitive = lambda var: isinstance(var, \
+            (int, basestring, float, long, bool, tuple, list, dict))
+        stmts = []
+        for item in arglist:
+            if not is_primitive(item) and hasattr(item, '__class__') \
+                and isinstance(item.__class__, MetaParam) \
+                and hasattr(item, '__dict__'):
+                stmts.append("%s = type('',(object,), {})()" % (item))
+                for key in item.__dict__:
+                    value = item.__dict__[key]
+                    if not key.startswith("__") and key != 'index':
+                        if callable(value):
+                            stmts.append( \
+                                "%s.%s = types.MethodType(%s, %s, %s.__class__)" % \
+                                (item,key,value.func_name,item,item))
+                        else:
+                            stmts.append("%s.%s = %s" % \
+                                (item,key,"''" if value == '' else value))
+        if e is None:
+            stmts.append("self.assertNotRaises(%s, *%s)" % \
+                (fn.__name__, arglist))
+        else:
+            if hasattr(e, 'parent_exception'):
+                stmts.append("self.assertRaises(%s, %s, *%s)" % \
+                    (e.parent_exception.__name__, fn.__name__, arglist))
+            else:
+                stmts.append("self.assertRaises(%s, %s, *%s)" % \
+                    (e.__class__.__name__, fn.__name__, arglist))
+        return stmts
 
 #############################################################################
 @aspect_import_mut

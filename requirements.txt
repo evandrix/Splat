@@ -1,5 +1,6 @@
 Fabric==1.4.0
 Genshi==0.6
+MarkupSafe==0.15
 byteplay==0.2
 decorator==3.3.2
 distribute==0.6.24

@@ -41,6 +41,7 @@ class TestProgram(unittest.TestCase):
                 pass
             else:
                 raise Exception
+
 {{#all_tests}}
 {{prefix}}def test_{{fn_name}}_{{test_name}}(self{{add_params}}): {{stmts}}
 {{/all_tests}}

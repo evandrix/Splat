@@ -3,7 +3,7 @@
 
 import sys
 import time
-from settings import *
+import settings
 from decorator import decorator
 
 def todict(obj, classkey=None):
@@ -34,17 +34,20 @@ def _bin(x, width):
 @decorator
 def aspect_import_mut(f, *args, **kwargs):
     """ import module & adds it into the keyword arg namespace """
-
     try:
-        kwargs['module'] = __import__(MODULE_UNDER_TEST)
+        if args:
+            module = args[0].strip()
+            if module.endswith(".pyc"):
+                module = module[:-len(".pyc")]
+            settings.MODULE_UNDER_TEST = module
+        kwargs['module'] = __import__(settings.MODULE_UNDER_TEST)
     except ImportError as e:
-        print >> sys.stderr, "Module %s cannot be imported" % MODULE_UNDER_TEST
+        print >> sys.stderr, "Module %s cannot be imported" % settings.MODULE_UNDER_TEST
     return f(*args, **kwargs)
 
 @decorator
 def aspect_timer(f, *args, **kw):
     """ adds timing aspect to function """
-
     t0 = time.time()
     f(*args, **kw)
     print >> sys.stderr, \

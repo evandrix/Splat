@@ -19,13 +19,13 @@ TEMPLATE_FILENAME = "test_template.mustache"
 
 class UnitTestObject(object):
     def __init__(self, fn_name, test_name, stmts, add_params=None):
-        self.prefix     = '\t'  # prepend unit test definition
+        self.prefix     = ' '*4  # prepend unit test definition
         self.fn_name    = fn_name
         self.test_name  = test_name
         self.add_params = None
         if add_params is not None:
             self.add_params = ', ' + add_params
-        self.stmts      = ''.join(map(lambda l: '\n\t\t' + l, stmts)) + '\n'
+        self.stmts      = ''.join(map(lambda l: '\n'+(' '*8) + l, stmts)) + '\n'
         self.stmts_list = stmts
     def __str__(self):
         return self.__repr__()
@@ -63,7 +63,7 @@ class TemplateWriter(object):
         if len(unpickled) > 0:
             assert isinstance(unpickled[0], dict)
 
-        output_filename = "test_%s" % self.target.__name__
+        output_filename = "test_%s" % context['module_name']
         self.write(pystache.render(template, context), output_filename+".py")
         self.write(pickled, output_filename+".json")
 

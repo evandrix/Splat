@@ -336,6 +336,5 @@ def run(*vargs, **kwargs):
     generator.run()
 
 if __name__ == "__main__":
-    run()
+    run(*sys.argv[1:])
     sys.exit(0)
-

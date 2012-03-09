@@ -31,7 +31,7 @@ class MetaParam(type):
         #print bases
         #pprint(dct)
         rv = type.__new__(cls, name, bases, dct)
-        registry[name] = rv
+        cls.registry[name] = rv
         return rv
     def __init__(cls, name, bases, dct):
         """

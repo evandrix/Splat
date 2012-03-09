@@ -3,6 +3,7 @@
 
 from __future__ import with_statement
 import simplejson
+import jsonpickle
 import pyparsing    # S-Expr
 import pystache
 import codecs
@@ -25,6 +26,7 @@ class UnitTestObject(object):
         if add_params is not None:
             self.add_params = ', ' + add_params
         self.stmts      = ''.join(map(lambda l: '\n\t\t' + l, stmts)) + '\n'
+        self.stmts_list = stmts
     def __str__(self):
         return self.__repr__()
     def __repr__(self):
@@ -46,18 +48,36 @@ class TemplateWriter(object):
     def run(self, test_objects):
         template = self.read(TEMPLATE_FILENAME)
         context = self.create_context(test_objects)
-        self.write(pystache.render(template, context))
+
+        attr_excluded = [ 'stmts', 'prefix' ]
+        json_test_objects = []
+        for obj in test_objects:
+            json_obj = {}
+            for attr in obj.__dict__:
+                if attr not in attr_excluded:
+                    json_obj[attr] = obj.__dict__[attr]
+            json_test_objects.append(json_obj)
+        pickled = jsonpickle.encode(json_test_objects, unpicklable=False)
+        unpickled = jsonpickle.decode(pickled)
+        assert isinstance(unpickled, list)
+        if len(unpickled) > 0:
+            assert isinstance(unpickled[0], dict)
+
+        output_filename = "test_%s" % self.target.__name__
+        self.write(pystache.render(template, context), output_filename+".py")
+        self.write(pickled, output_filename+".json")
 
     def read(self, template_file):
         """ Read in template test py file to populate """
+
         with open(template_file, "rU") as template:
             return template.read()
 
-    def write(self, data):
+    def write(self, data, filename):
         """ Write out unit test suite into test_* py file """
-        with codecs.open("test_%s.py" % self.target.__name__, "w", "utf-8") as fout:
+
+        with codecs.open(filename, "w", "utf-8") as fout:
             if isinstance(data, markupsafe.Markup):
                 print >> fout, data.unescape().replace("&#39;","'")
             else: #isinstance(data, 'unicode')
                 print >> fout, data
-

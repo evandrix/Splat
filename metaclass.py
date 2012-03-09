@@ -21,15 +21,18 @@ class MetaAttributeError(AttributeError):
 
 # Custom metaclass parameter object (closure)
 class MetaParam(type):
+    registry = {}
     def __repr__(cls):
         return cls.__name__
-    def __new__(meta, name, bases, dct):
+    def __new__(cls, name, bases, dct):
         """ controls (class) object creation """
         #print "Allocating memory for class", name
         #print meta
         #print bases
         #pprint(dct)
-        return super(MetaParam, meta).__new__(meta, name, bases, dct)
+        rv = type.__new__(cls, name, bases, dct)
+        registry[name] = rv
+        return rv
     def __init__(cls, name, bases, dct):
         """
             called when metaclass is constructed
@@ -47,6 +50,8 @@ class MetaParam(type):
             can also return another class' instance (if factory)
         """
         return type.__call__(cls, *vargs, **kwargs)
+    def __getitem__(cls, name):
+        return cls.registry[name]
 
 def create_metaparam(index):
     class Param(object):

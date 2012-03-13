@@ -1,0 +1,110 @@
+\begin{thebibliography}{BFGM06}
+
+\bibitem[BC07]{robbot}
+Robin Baumgarten and Simon Colton.
+\newblock Case-based player simulation for the commercial strategy game defcon.
+\newblock {\em CGames, 2007}, 2007.
+
+\bibitem[BFGM06]{ml-and-games}
+Michael Bowling, Johannes Furnkranz, Thore Graepel, and Ron Musick.
+\newblock Machine learning and games.
+\newblock 2006.
+
+\bibitem[Bry03]{bod}
+Joanna~J. Bryson.
+\newblock The behavior-oriented design of modular agent intelligence.
+\newblock {\em Lecture Notes in Computer Science}, 2592, January 2003.
+
+\bibitem[BT03]{ml-and-games2}
+Christian Bauckhage and Christian Thurau.
+\newblock Exploiting the fascination: Video games in machine learning research
+  and education.
+\newblock 2003.
+
+\bibitem[Cha07a]{btnextgenpart1}
+Alex~J. Champandard.
+\newblock Behavior trees for next-gen game ai part 1.
+\newblock \\\url{http://aigamedev.com/videos/behavior-trees-part1}, 2007.
+
+\bibitem[Cha07b]{understandingbts}
+Alex~J. Champandard.
+\newblock Understanding behavior trees.
+\newblock \\\url{http://aigamedev.com/hierarchical-logic/bt-overview}, 2007.
+
+\bibitem[Cha07c]{btdecorators}
+Alex~J. Champandard.
+\newblock Using decorators to improve behaviors.
+\newblock \\\url{http://aigamedev.com/hierarchical-logic/decorator}, 2007.
+
+\bibitem[Dil06]{actionprioritisation}
+Kevin Dill.
+\newblock Prioritizing actions in a goal-based rts ai.
+\newblock {\em AI Game Programming Wisdom}, 3, 2006.
+
+\bibitem[Gar06]{linearnorm}
+Sergio Garces.
+\newblock Extending {S}imple {W}eighted-{S}um {S}ystems.
+\newblock {\em A{I} {G}ame {P}rogramming {W}isdom 3}, 2006.
+
+\bibitem[Har06]{goal-directed-reasoning}
+Vernon Harmon.
+\newblock An economic apporach to goal-directed reasoning in an rts.
+\newblock {\em AI Game Programming Wisdom}, 3, 2006.
+
+\bibitem[Isl05]{isla}
+Damian Isla.
+\newblock Managing complexity in the halo 2 ai system.
+\newblock In {\em Proceedings of the Game Developers Conference}, 2005.
+
+\bibitem[Joh06]{goaltrees}
+Geraint Johnson.
+\newblock Goal trees.
+\newblock {\em AI Game Programming Wisdom}, 3, 2006.
+
+\bibitem[JOS02]{yaochu}
+Yaochu Jin, M.~Olhofer, and B.~Sendhoff.
+\newblock A framework for evolutionary optimization with approximate
+  fitnessfunctions.
+\newblock {\em Evolutionary Computation, IEEE Transactions}, 6, 2002.
+
+\bibitem[KBK07]{htn}
+John-Paul Kelly, Adi Botea, and Sven Koenig.
+\newblock Planning with hierarchical task networks in video games.
+\newblock 2007.
+
+\bibitem[Kre92]{robotics}
+Jurgen Kreuziger.
+\newblock Application of machine learning to robotics: An analysis.
+\newblock {\em ICARCV '92}, 1992.
+
+\bibitem[Lar02]{troll}
+Francois~Dominic Laramee.
+\newblock Genetic algorithms: Evolving the perfect troll.
+\newblock {\em AI Game Programming Wisdom}, 1, 2002.
+
+\bibitem[Mil06]{millington}
+Ian Millington.
+\newblock {\em Artificial Intelligence for Games (The Morgan Kaufmann Series in
+  Interactive 3D Technology)}.
+\newblock Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 2006.
+
+\bibitem[Mit97]{mitchell}
+Tom~M. Mitchell.
+\newblock {\em Artificial Intelligence: A Modern Aproach}.
+\newblock McGRAW-HILL, 1997.
+
+\bibitem[RN08]{strips}
+Stuart Russell and Peter Norvig.
+\newblock {\em Artificial Intelligence: A Modern Aproach}.
+\newblock Prentice Hall, 2nd edition, 2008.
+
+\bibitem[SB98]{td-gammon}
+R.~S. Sutton and A.~G. Barto.
+\newblock Course notes: Reinforcement learning i: An introduction, 1998.
+
+\bibitem[Tho06]{dalet}
+Dale Thomas.
+\newblock Encoding schemes and fitness functions for genetic algorithms.
+\newblock {\em AI Game Programming Wisdom}, 3, 2006.
+
+\end{thebibliography}

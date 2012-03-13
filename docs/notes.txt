@@ -1,3 +1,15 @@
+[13/3/12] callable() vs. hasattr(obj, "__call__")
+-----------------------------------------------------------------------------
+Compare both strings & int/float
+    [...
+        (LOAD_FAST, 'one'),
+        (LOAD_FAST, 2),
+        (COMPARE_OP, '==')
+    ...]
+
+- Mutate assignments, branches in module under test, and run against generated test suite,
+the larger percentage of test failures, the better quality of the generated test suite
+=============================================================================
 [7/3/12] callable() vs. hasattr(obj, "__call__")
 -----------------------------------------------------------------------------
 If you use the python builtin "callable" instead of "hasattr(type_func, 

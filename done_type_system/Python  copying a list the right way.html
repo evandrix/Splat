@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Python: copying a list the right way</title>
+<meta http-equiv="Content-Type" content="text/html;charset=US-ASCII">
+<meta charset='ascii'>
+<meta name='generator' content='weblog'>
+<link rel="alternate" type="application/atom+xml" title="Python: copying a list the right way - Feed" href="../feed.atom">
+<link rel='stylesheet' type='text/css' href='../stylesheets/style.css'>
+<!--[if lt IE 9]>
+<script src='../scripts/html5.js'></script>
+<![endif]-->
+</head>
+
+<body>
+<nav>
+    <ul id='menu'>
+        <li><a href='../index.html'>Home</a></li>
+        <li><a href='../about'>About</a></li>
+    </ul>
+    <form method='GET' action="http://www.google.com/search">
+        <input id='search' type="search" placeholder='Search...' name="q" maxlength="255" value="">
+        <input type="hidden" name="domains" value="henry.precheur.org">
+        <input type="hidden" name="sitesearch" value="henry.precheur.org">
+    </form>
+</nav>
+
+<h1 id='title'>Python: copying a list the right way</h1><p class='date' title='2009-02-11'>February 11 2009</p><div class='content'>
+<pre><code>new = old[:]
+</code></pre>
+
+<p>Those proficient in Python know what the previous line do. It copies the list
+<code>old</code> into <code>new</code>. This is confusing for beginners and should be avoided. Sadly
+the <code>[:]</code> notation is widely used, probably because most Python programmers
+don&#8217;t know a better way of copying lists.</p>
+
+<h3>A little bit of pythonic theory</h3>
+
+<p>First we need to understand how Python manages objects &amp; variables. Python
+doesn&#8217;t have variables like C. In C a variable is not just a name, it is a set
+of bits; a variable exists somewhere in memory. In Python <em>variables</em> are just
+tags attached to objects.</p>
+
+<p>Consider the following statement:</p>
+
+<pre><code>a = [1, 2, 3]
+</code></pre>
+
+<p>It means that <code>a</code> points to the list <code>[1, 2, 3]</code> we just created, but <code>a</code> is not
+the list. If we do:</p>
+
+<pre><code>b = a
+</code></pre>
+
+<p>We didn&#8217;t copy the list referenced by <code>a</code>. We just created a new tag <code>b</code> and
+attached it to the list pointed by <code>a</code>. Like in the picture below:</p>
+
+<p><img src="list1.png" alt="a and b reference the same list"></p>
+
+<p>If you modify <code>a</code>, you also modify <code>b</code>, since they point to the same list:</p>
+
+<pre><code>&gt;&gt;&gt; a.append(4)
+
+&gt;&gt;&gt; print a
+[1, 2, 3, 4]
+
+&gt;&gt;&gt; print b
+[1, 2, 3, 4]
+</code></pre>
+
+<p>The built-in function <code>id()</code> helps keeping track of all this. It returns the
+object&#8217;s unique id. This id is the object&#8217;s memory address.</p>
+
+<pre><code>&gt;&gt;&gt; id(a)
+3080501452L
+
+&gt;&gt;&gt; id(b)
+3080501452L
+
+&gt;&gt;&gt; c = []  # Create a new list
+&gt;&gt;&gt; id(c)
+3080609228L
+</code></pre>
+
+<p><code>a</code> and <code>b</code> really do point to the same memory address. <code>c</code> points to a new
+empty list, different from the one referenced by <code>a</code> and <code>b</code>.</p>
+
+<h3>Back to our list</h3>
+
+<p>Now we want to copy the list referenced by <code>a</code>. We need to create a new list to
+attach <code>b</code> to it.</p>
+
+<p><img src="list2.png" alt="a and b reference different lists"></p>
+
+<p>That bring use back to <code>new = old[:]</code>. The operator <code>[:]</code> returns a
+<a href="http://docs.python.org/glossary.html#term-slice">slice</a> of a sequence. Slicing
+a portion of a list: create a new list, and copy the portion of the original
+list into this new list.</p>
+
+<pre><code>&gt;&gt;&gt; a = [1, 2, 3, 4]
+&gt;&gt;&gt; a[1:3]
+[2, 3]
+
+&gt;&gt;&gt; id(a)
+3080104140L
+
+&gt;&gt;&gt; id(a[1:3])
+3080513612L
+</code></pre>
+
+<p>If you omit the first index, the slice starts at the beginning of the list; omit
+the second index, it stops at the end of the list.</p>
+
+<pre><code>&gt;&gt;&gt; a[:3]
+[1, 2, 3]
+
+&gt;&gt;&gt; a[1:]
+[2, 3, 4]
+</code></pre>
+
+<p>By calling <code>a[:]</code>, you get a slice of <code>a</code> starting from the beginning and
+finishing at the end. That&#8217;s a full copy of <code>a</code>. But <strong>it&#8217;s not the only way of
+copying lists</strong>. What about this one?</p>
+
+<pre><code>&gt;&gt;&gt; b = list(a)
+
+&gt;&gt;&gt; id(a)
+3080104140L
+
+&gt;&gt;&gt; id(b)
+3080520556L
+</code></pre>
+
+<p>Isn&#8217;t it better, less cryptic, and more pythonic? <code>a[:]</code> feels a bit too much
+like Perl. Unlike with the slicing notation, those who don&#8217;t know Python will
+understand that <code>b</code> contains a list.</p>
+
+<p><code>list()</code> is the <code>list</code> constructor. It will construct a new list based of the
+passed sequence. The sequence doesn&#8217;t necessarily need to be a list, it can be
+any kind of sequence.</p>
+
+<pre><code>&gt;&gt;&gt; my_tuple = (1, 2, 3)
+&gt;&gt;&gt; my_list = list(my_tuple)
+&gt;&gt;&gt; print my_list
+[1, 2, 3]
+</code></pre>
+
+<p>And it works with generators. <code>[:]</code> doesn&#8217;t work on generators since they are
+unsubscriptable &#8212;you can&#8217;t do generator[0], for example.</p>
+
+<pre><code>&gt;&gt;&gt; generator = (x * 3 for x in range(4))
+&gt;&gt;&gt; list(generator)
+[0, 3, 6, 9]
+</code></pre>
+
+<p>90% of the time <code>[:]</code> could be replaced by <code>list()</code>. Of course it won&#8217;t work for
+everything since the two are not strictly equivalent, but it is worth trying.
+Next time you see a <code>[:]</code> try to replace it with <code>list</code>, your code should be
+more readable. Do it, the devil is in the details.</p>
+</div>
+
+
+<footer><small>&copy; 2007-2011 Henry Pr&ecirc;cheur</small></footer>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20945988-1']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+[submodule "CPython"]
+    path = dist/CPython
+    url = git@github.com:evandrix/cpython2.7.3.git
+[submodule "Flycatcher"]
+    path = docs/distinguished/Flycatcher
+    url = git@github.com:jdd08/Flycatcher.git

@@ -1,4 +1,4 @@
-[13/3/12] callable() vs. hasattr(obj, "__call__")
+[13/3/12]
 -----------------------------------------------------------------------------
 Compare both strings & int/float
     [...
@@ -6,9 +6,17 @@ Compare both strings & int/float
         (LOAD_FAST, 2),
         (COMPARE_OP, '==')
     ...]
-
-- Mutate assignments, branches in module under test, and run against generated test suite,
+- mutate assignments, branches in module under test, and run against generated test suite,
 the larger percentage of test failures, the better quality of the generated test suite
+- assume Python code not compiled optimised (where asserts are removed in bytecode)
+- excludes Python C extension modules
+
+CALL_FUNCTION(argc)¶
+Calls a function. The low byte of argc indicates the number of positional parameters, the high byte the number of keyword parameters. On the stack, the opcode finds the keyword parameters first. For each keyword argument, the value is on top of the key. Below the keyword parameters, the positional parameters are on the stack, with the right-most parameter on top. Below the parameters, the function object to call is on the stack. Pops all function arguments, and the function itself off the stack, and pushes the return value.
+
+@ http://docs.python.org/dev/reference/executionmodel.html
+"block" A piece of Python program text that is executed as a unit. The following are blocks: a module, a function body and a class definition.
+
 =============================================================================
 [7/3/12] callable() vs. hasattr(obj, "__call__")
 -----------------------------------------------------------------------------

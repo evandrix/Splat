@@ -1,4 +1,0 @@
-
-.. automodule:: dexml.fields
-   :members:
-

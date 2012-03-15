@@ -299,7 +299,7 @@ class Generator(object):
 
     def arglist_to_stmts(self, arglist, fn, e=None):
         is_primitive = lambda var: isinstance(var, \
-            (int, basestring, float, long, bool, tuple, list, dict))
+            (int, float, long, complex, basestring, bool, tuple, list, dict))
         stmts = []
         for item in arglist:
             if not is_primitive(item) and hasattr(item, '__class__') \

@@ -46,10 +46,10 @@ def aspect_import_mut(f, *args, **kwargs):
     return f(*args, **kwargs)
 
 @decorator
-def aspect_timer(f, *args, **kw):
+def aspect_timer(f, *args, **kwargs):
     """ adds timing aspect to function """
     t0 = time.time()
-    f(*args, **kw)
+    f(*args, **kwargs)
     print >> sys.stderr, \
         ("*** Total time: %.3f seconds ***" % (time.time()-t0))
     return f

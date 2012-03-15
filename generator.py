@@ -20,7 +20,7 @@ import trace
 from cStringIO       import StringIO
 from common          import *  # AOP
 from header          import *  # enable colors
-from template_writer import *   # submodule support
+from template_writer import *  # submodule support
 from metaclass       import *
 
 MAX_ITERATIONS  = 2**10

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rm -rf test_*.{py,json} coverdir
-excluded=( 'program' 'fizzbuzz' 'factorial' 'simple' 'hanoi' )
+excluded=( 'program' 'fizzbuzz' 'factorial' 'simple' 'hanoi' 'fib' )
 for file in $(ls *.pyc)
 do
 	to_keep=false

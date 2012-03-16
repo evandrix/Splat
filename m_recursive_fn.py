@@ -9,17 +9,17 @@ import logging
 import numbers
 import jsonpickle
 import copy
+import settings
 from decorator       import decorator
 from pprint          import pprint
-from settings        import *
 from template_writer import *  # submodule support
 
 def update_frame_param(current, event):
     """ mutate & propagate trace_params down the stack frames """
 
     params = [
-        ("num_recursive_calls", lambda parent: parent+1),
-        (       "stack_frames", lambda parent: parent+[current]),
+        ("num_recursive_calls", lambda parent_val: parent_val+1),
+        (       "stack_frames", lambda parent_val: parent_val+[current]),
     ]
     parent = current.f_back
     if event == 'call':
@@ -104,17 +104,19 @@ def trace(frame, event, arg):
         if name not in frame.f_locals[TRACE_DICT]['function']: return
         if frame.f_locals[TRACE_DICT]['num_recursive_calls'] > sys.getrecursionlimit():
             raise RuntimeError("Maximum recursion depth reached")
+
         #print >> sys.stderr, '[call]: 0x%x=>0x%x, %s,%s\n%s\n%s' % \
         #    (id(frame.f_back), id(frame), caller.f_lineno,
         #    caller.f_lasti, frame.f_locals, arg)
         # potential for branching off different trace functions (!)
-        return current_func()
+        return trace
     elif event == 'return':
         update_frame_param(frame, event)
         #print >> sys.stderr, '[return]: 0x%x=>0x%x, %s,%s\n%s\n%s,%s' % \
         #    (id(frame), id(frame.f_back), frame.f_lineno,
         #    frame.f_lasti, frame.f_locals, arg, varnames)
 
+        # factorial / hanoi
         param = None
         for f_param in [ 'n', 'height' ]:
             if f_param in frame.f_locals:
@@ -123,20 +125,34 @@ def trace(frame, event, arg):
 
         # factorial
         if isinstance(arg, numbers.Number):
-            if isinstance(arg, int) and long(arg) > sys.maxint:
+            if isinstance(arg, int) and \
+                long(arg)>sys.maxint or long(arg)<settings.SYS_MININT:
                 arg = long(arg)
-            print "self.assertEquals(%d, %s(%s))" % (arg,name,param)
+            # generate unit test object + memoize!
+            if (arg,param) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
+                print "self.assertEqual(%d, %s(%s))" % (arg,name,param)
+                frame.f_locals[TRACE_DICT]["unit_test_objs"].append((arg,param))
 
         # hanoi
         if 'self' in frame.f_locals:
-            # use 'self' context to generate object for test initialisation
+            # construct object for test initialisation
             obj = frame.f_locals['self']
-            args,_,_,_       = inspect.getargspec(getattr(obj, name))
             obj_params,_,_,_ = inspect.getargspec(obj.__init__)
-            paramlist = [ obj.__dict__[param] if param in obj.__dict__ else None for param in obj_params[1:] ]
-            arglist = [ frame.f_locals[a] for a in args[1:] ]
-            print "obj = %s(%s)" % (obj.__class__.__name__,','.join(map(str,paramlist)))
-            print "self.assertEquals(%r, obj.%s(%s))" % (arg,name,','.join(map(str,arglist)))
+            paramlist = [obj.__dict__[param] \
+                if param in obj.__dict__ else None \
+                for param in obj_params[1:]]
+
+            # construct assertion on function return value
+            args,_,_,_       = inspect.getargspec(getattr(obj, name))
+            arglist = [ frame.f_locals[f_arg] for f_arg in args[1:] ]
+
+            # generate unit test object + memoize!
+            if (arg,arglist) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
+                print "obj = %s(%s)" % \
+                    (obj.__class__.__name__,','.join(map(str,paramlist)))
+                print "self.assertEqual(%r, obj.%s(%s))" % \
+                    (arg,name,','.join(map(str,arglist)))
+                frame.f_locals[TRACE_DICT]["unit_test_objs"].append((arg,arglist))
     elif event == 'exception':
         exc_type, exc_value, exc_traceback = arg
         print >> sys.stderr, "Exception event: %s" % arg
@@ -149,10 +165,35 @@ old_dir = __builtin__.dir
 def new_dir(*args, **kwargs):
     """ builtin dir() without __var__ clutter """
     return [a for a in old_dir(*args, **kwargs) if not a.startswith("__")]
+
 if __name__ == "__main__":
+    t0 = time.time()
     __builtin__.dir = new_dir
     from factorial import *
     from hanoi     import *
+    from fib       import *
+
+    sys._getframe().f_locals[TRACE_DICT] = {
+                   "function": factorial.func_name,
+        "num_recursive_calls": 0,
+               "stack_frames": [],
+             "unit_test_objs": [],
+    }
+    sys.settrace(trace)
+    for i in xrange(sys.maxint):
+       try:
+            factorial(i)
+       except Exception as e:
+            print >> sys.stderr, e.__class__.__name__+':', e.message
+            break
+    sys.settrace(None)
+    print
+    for k,v in sys._getframe().f_locals[TRACE_DICT].items():
+        if k in ["stack_frames", "unit_test_objs"]:
+            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
+        print k+':',v
+    print
+
     h = Hanoi(0x41414141, 'blah')   # only last declared class constructor counts
     sys._getframe().f_locals[TRACE_DICT] = {
                    "function": h.hanoi.func_name,
@@ -162,28 +203,37 @@ if __name__ == "__main__":
     }
     sys.settrace(trace)
     try:
-        h.hanoi(3)
+        h.hanoi(9) # 10 exceeds recursion depth
     except Exception as e:
         print >> sys.stderr, e.__class__.__name__+':', e.message
         pass
     sys.settrace(None)
     print
     for k,v in sys._getframe().f_locals[TRACE_DICT].items():
-        if k == "stack_frames":
-            v = '<hidden>'#'' => '.join(map(lambda f:'0x%x'%id(f), v))
+        if k in ["stack_frames", "unit_test_objs"]:
+            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
         print k+':',v
     print
-    sys.exit(0)
+
     sys._getframe().f_locals[TRACE_DICT] = {
-                   "function": factorial.func_name,
+                   "function": fib_recursive.func_name,
         "num_recursive_calls": 0,
-               "stack_frames": []
+               "stack_frames": [],
+             "unit_test_objs": [],
     }
     sys.settrace(trace)
-    for i in xrange(3,4,1):
+    for i in xrange(sys.maxint):
        try:
-            factorial(i)
+            fib_recursive(i)
        except Exception as e:
             print >> sys.stderr, e.__class__.__name__+':', e.message
-            continue
+            break
     sys.settrace(None)
+    print
+    for k,v in sys._getframe().f_locals[TRACE_DICT].items():
+        if k in ["stack_frames", "unit_test_objs"]:
+            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
+        print k+':',v
+    print
+
+    print "Time elapsed: %.3f seconds" % (time.time() - t0)

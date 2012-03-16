@@ -2,8 +2,9 @@ import multiprocessing
 import sys
 import time
 import logging
-#logger = multiprocessing.log_to_stderr()
-#logger.setLevel(logging.INFO)
+import settings
+logger = multiprocessing.log_to_stderr()
+logger.setLevel(logging.INFO)
 
 class TimeoutException(Exception):
     pass
@@ -22,11 +23,11 @@ class RunableProcessing(multiprocessing.Process):
         return self.queue.full()
     def result(self):
         return self.queue.get()
-def run(timeout, function, *args, **kwargs):
+def run(function, *args, **kwargs):
     now = time.time()
     proc = RunableProcessing(function, *args, **kwargs)
     proc.start()
-    proc.join(timeout)
+    proc.join(settings.RECURSION_TIMEOUT)
     if proc.is_alive():
         proc.terminate()    # always force_kill process
         runtime = int(time.time() - now)
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     lasti = 0
     for i in xrange(sys.maxint):
         try:
-            run(10, hanoi, i)
+            run(hanoi, i)
         except TimeoutException as e:
             print "last successful i: %d" % lasti
             break

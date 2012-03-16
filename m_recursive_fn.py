@@ -13,13 +13,16 @@ import settings
 from decorator       import decorator
 from pprint          import pprint
 from template_writer import *  # submodule support
+logger = multiprocessing.log_to_stderr()
+logger.setLevel(logging.INFO)
 
 def update_frame_param(current, event):
     """ mutate & propagate trace_params down the stack frames """
 
+    # can only store stack frame ids across processes due to PicklingError of frame object
     params = [
-        ("num_recursive_calls", lambda parent_val: parent_val+1),
-        (       "stack_frames", lambda parent_val: parent_val+[current]),
+        ("recursion_depth", lambda parent_val: parent_val+1),
+        (   "stack_frames", lambda parent_val: parent_val+[id(current)]),
     ]
     parent = current.f_back
     if event == 'call':
@@ -102,14 +105,15 @@ def trace(frame, event, arg):
         if name == 'write': return
         update_frame_param(frame, event)
         if name not in frame.f_locals[TRACE_DICT]['function']: return
-        if frame.f_locals[TRACE_DICT]['num_recursive_calls'] > sys.getrecursionlimit():
-            raise RuntimeError("Maximum recursion depth reached")
+        if frame.f_locals[TRACE_DICT]['recursion_depth'] > sys.getrecursionlimit():
+            #raise RuntimeError("Maximum recursion depth reached")
+            pass
 
         #print >> sys.stderr, '[call]: 0x%x=>0x%x, %s,%s\n%s\n%s' % \
         #    (id(frame.f_back), id(frame), caller.f_lineno,
         #    caller.f_lasti, frame.f_locals, arg)
         # potential for branching off different trace functions (!)
-        return trace
+        return current_func()
     elif event == 'return':
         update_frame_param(frame, event)
         #print >> sys.stderr, '[return]: 0x%x=>0x%x, %s,%s\n%s\n%s,%s' % \
@@ -130,7 +134,7 @@ def trace(frame, event, arg):
                 arg = long(arg)
             # generate unit test object + memoize!
             if (arg,param) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
-                print "self.assertEqual(%d, %s(%s))" % (arg,name,param)
+                print "self.assertEqual(%r, %s(%s))" % (arg,name,param)
                 frame.f_locals[TRACE_DICT]["unit_test_objs"].append((arg,param))
 
         # hanoi
@@ -160,80 +164,86 @@ def trace(frame, event, arg):
         print >> sys.stderr, "Unhandled event: '%s'" % event
     return
 
+class TimeoutException(Exception): pass
+class RunableProcessing(multiprocessing.Process):
+    def __init__(self, func, *args, **kwargs):
+        self.queue = multiprocessing.Queue(maxsize=1)
+        args = (func,) + args
+        multiprocessing.Process.__init__(self, target=self.run_func, args=args, kwargs=kwargs)
+    def run_func(self, func, *args, **kwargs):
+        sys._getframe().f_locals[TRACE_DICT] = kwargs['TRACE_DICT']
+        del kwargs['TRACE_DICT']
+        sys.settrace(trace)
+        try:
+            result = func(*args, **kwargs)
+            sys.settrace(None)
+            self.queue.put((True, (result, sys._getframe().f_locals[TRACE_DICT])))
+        except Exception as e:
+            self.queue.put((False, e))
+    def done(self):
+        return self.queue.full()
+    def result(self):
+        return self.queue.get()
+def run(function, *args, **kwargs):
+    now = time.time()
+    proc = RunableProcessing(function, *args, **kwargs)
+    proc.start()
+    proc.join(settings.RECURSION_TIMEOUT)
+    if proc.is_alive():
+        proc.terminate()    # always force_kill process
+        runtime = int(time.time() - now)
+        raise TimeoutException('timed out after {0} seconds'.format(runtime))
+    assert proc.done()
+    success, result = proc.result()
+    if success:
+        return result
+    else:
+        raise result
+
 import __builtin__
 old_dir = __builtin__.dir
 def new_dir(*args, **kwargs):
     """ builtin dir() without __var__ clutter """
     return [a for a in old_dir(*args, **kwargs) if not a.startswith("__")]
 
-if __name__ == "__main__":
+
+def test_recursive_func(function):
     t0 = time.time()
+    # TODO: need to make it work for function recursing on multiple parameters
+    trace_dict = {
+                   "function": function.func_name,
+            "recursion_depth": 0,
+               "stack_frames": [],
+             "unit_test_objs": [],
+    }
+    lasti = 0
+    for i in xrange(sys.maxint):
+        try:
+            result, trace_dict = run(function, i, TRACE_DICT=trace_dict) # 10 exceeds recursion depth
+        except TimeoutException as e:
+            print >> sys.stderr, e.__class__.__name__+':', e.message
+            break
+        except Exception as e:
+            print >> sys.stderr, e.__class__.__name__+':', e.message
+            break
+        else:
+            lasti += 1
+    print
+    print "Last successful iteration = %d" % lasti
+    for k,v in trace_dict.items():
+        if k in ["stack_frames", "unit_test_objs"]:
+            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
+        print k+':',v
+    print "Time elapsed: %.3f seconds" % (time.time() - t0)
+    print
+    return
+
+if __name__ == "__main__":
     __builtin__.dir = new_dir
     from factorial import *
     from hanoi     import *
     from fib       import *
-
-    sys._getframe().f_locals[TRACE_DICT] = {
-                   "function": factorial.func_name,
-        "num_recursive_calls": 0,
-               "stack_frames": [],
-             "unit_test_objs": [],
-    }
-    sys.settrace(trace)
-    for i in xrange(sys.maxint):
-       try:
-            factorial(i)
-       except Exception as e:
-            print >> sys.stderr, e.__class__.__name__+':', e.message
-            break
-    sys.settrace(None)
-    print
-    for k,v in sys._getframe().f_locals[TRACE_DICT].items():
-        if k in ["stack_frames", "unit_test_objs"]:
-            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
-        print k+':',v
-    print
-
-    h = Hanoi(0x41414141, 'blah')   # only last declared class constructor counts
-    sys._getframe().f_locals[TRACE_DICT] = {
-                   "function": h.hanoi.func_name,
-        "num_recursive_calls": 0,
-               "stack_frames": [],
-             "unit_test_objs": [],
-    }
-    sys.settrace(trace)
-    try:
-        h.hanoi(9) # 10 exceeds recursion depth
-    except Exception as e:
-        print >> sys.stderr, e.__class__.__name__+':', e.message
-        pass
-    sys.settrace(None)
-    print
-    for k,v in sys._getframe().f_locals[TRACE_DICT].items():
-        if k in ["stack_frames", "unit_test_objs"]:
-            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
-        print k+':',v
-    print
-
-    sys._getframe().f_locals[TRACE_DICT] = {
-                   "function": fib_recursive.func_name,
-        "num_recursive_calls": 0,
-               "stack_frames": [],
-             "unit_test_objs": [],
-    }
-    sys.settrace(trace)
-    for i in xrange(sys.maxint):
-       try:
-            fib_recursive(i)
-       except Exception as e:
-            print >> sys.stderr, e.__class__.__name__+':', e.message
-            break
-    sys.settrace(None)
-    print
-    for k,v in sys._getframe().f_locals[TRACE_DICT].items():
-        if k in ["stack_frames", "unit_test_objs"]:
-            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
-        print k+':',v
-    print
-
-    print "Time elapsed: %.3f seconds" % (time.time() - t0)
+    # only last declared class constructor counts
+    test_recursive_func(Hanoi(0x41414141, 'blah').hanoi)    
+    test_recursive_func(factorial)
+    test_recursive_func(fib_recursive)

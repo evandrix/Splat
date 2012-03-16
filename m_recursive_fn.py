@@ -133,9 +133,8 @@ def trace(frame, event, arg):
                 long(arg)>sys.maxint or long(arg)<settings.SYS_MININT:
                 arg = long(arg)
             # generate unit test object + memoize!
-            if (arg,param) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
-                print "self.assertEqual(%r, %s(%s))" % (arg,name,param)
-                frame.f_locals[TRACE_DICT]["unit_test_objs"].append((arg,param))
+            if id(param) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
+                frame.f_locals[TRACE_DICT]["unit_test_objs"][id(param)] = ["self.assertEqual(%r, %s(%s))" % (arg,name,param)]
 
         # hanoi
         if 'self' in frame.f_locals:
@@ -151,12 +150,8 @@ def trace(frame, event, arg):
             arglist = [ frame.f_locals[f_arg] for f_arg in args[1:] ]
 
             # generate unit test object + memoize!
-            if (arg,arglist) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
-                print "obj = %s(%s)" % \
-                    (obj.__class__.__name__,','.join(map(str,paramlist)))
-                print "self.assertEqual(%r, obj.%s(%s))" % \
-                    (arg,name,','.join(map(str,arglist)))
-                frame.f_locals[TRACE_DICT]["unit_test_objs"].append((arg,arglist))
+            if id(arglist) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
+                frame.f_locals[TRACE_DICT]["unit_test_objs"][id(arglist)] = ["obj = %s(%s)" % (obj.__class__.__name__,','.join(map(str,paramlist))), "self.assertEqual(%r, obj.%s(%s))" % (arg,name,','.join(map(str,arglist)))]
     elif event == 'exception':
         exc_type, exc_value, exc_traceback = arg
         print >> sys.stderr, "Exception event: %s" % arg
@@ -207,14 +202,14 @@ def new_dir(*args, **kwargs):
     return [a for a in old_dir(*args, **kwargs) if not a.startswith("__")]
 
 
-def test_recursive_func(function):
+def test_recursive_func(module, function):
     t0 = time.time()
     # TODO: need to make it work for function recursing on multiple parameters
     trace_dict = {
                    "function": function.func_name,
             "recursion_depth": 0,
                "stack_frames": [],
-             "unit_test_objs": [],
+             "unit_test_objs": {},
     }
     lasti = 0
     for i in xrange(sys.maxint):
@@ -234,16 +229,21 @@ def test_recursive_func(function):
         if k in ["stack_frames", "unit_test_objs"]:
             v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
         print k+':',v
+    
+    # transform into UnitTestObjects to write out unit test suite
+    all_tests = []
+    for key,value in trace_dict["unit_test_objs"].iteritems():
+        all_tests.append(UnitTestObject(function.__name__,key,value))
+    tmpl_writer = TemplateWriter(module)
+    tmpl_writer.run(all_tests)
     print "Time elapsed: %.3f seconds" % (time.time() - t0)
     print
     return
 
 if __name__ == "__main__":
     __builtin__.dir = new_dir
-    from factorial import *
-    from hanoi     import *
-    from fib       import *
+    import factorial, hanoi, fib
     # only last declared class constructor counts
-    test_recursive_func(Hanoi(0x41414141, 'blah').hanoi)    
-    test_recursive_func(factorial)
-    test_recursive_func(fib_recursive)
+    test_recursive_func(hanoi, hanoi.Hanoi(0x41414141, 'blah').hanoi)    
+    test_recursive_func(factorial, factorial.factorial)
+    test_recursive_func(fib, fib.fib_recursive)

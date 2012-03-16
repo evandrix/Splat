@@ -35,7 +35,7 @@ class UnitTestObject(object):
 
 class TemplateWriter(object):
     def __init__(self, target):
-        self.target = target
+        self.target = target    # <module object>
 
     def create_context(self, test_objects):
         context = {
@@ -46,6 +46,10 @@ class TemplateWriter(object):
         return context
 
     def run(self, test_objects):
+        assert isinstance(test_objects, list)
+        if len(test_objects) <= 0:  return
+        assert isinstance(test_objects[0], UnitTestObject)
+
         template = self.read(TEMPLATE_FILENAME)
         context = self.create_context(test_objects)
 

@@ -10,6 +10,7 @@ import numbers
 import jsonpickle
 import copy
 import settings
+import warnings
 from decorator       import decorator
 from pprint          import pprint
 from template_writer import *  # submodule support
@@ -247,3 +248,5 @@ if __name__ == "__main__":
     test_recursive_func(hanoi, hanoi.Hanoi(0x41414141, 'blah').hanoi)    
     test_recursive_func(factorial, factorial.factorial)
     test_recursive_func(fib, fib.fib_recursive)
+    warnings.warn("(test) possible infinite recursion")
+

@@ -1,3 +1,50 @@
+[22/3/12]
+-----------------------------------------------------------------------------
+code coverage analysis:
+    - fingerprint benchmarks modules
+        - sloccount
+        - coverage / tox
+        - mutation eg. (p)ester
+    - metric = LCSAJ
+- reloading modules
+TODO:
+    - Loops         m4,11,18
+    - Conditionals  fizzbuzz
+    - Recursion     fac, fib, hanoi, binsearch, gcd, merge/quicksort
+        - assume base + recursive case
+    - Generators
+    - Containers
+    - Objects
+Ideas
+    - context stack
+    - hunt for critical boundary values in bytecode to test, esp. numerics
+    - benchmarks:
+        - dexml, num/scipy, quixeychallenge
+        - compare with shipped tests, in terms of:
+            - coverage
+            - accuracy of fingerprinting test module
+
+eval vs. exec vs. compile
+@ http://goo.gl/gY5Pb
+1. exec
+    - statement, not expression (function in Py3k)
+    - compiles & immediately evaluates statements in a string
+    eg. exec 'if True: print 5\nprint 6; 5'
+
+2. eval
+    - evaluates an expression (NOT STATEMENT)
+    - and returns value expression produces
+    eg. eval('abs(%d)' % -100)
+
+3. compile(string, '', <mode>)
+    - lower level version of exec+eval
+    - does not execute or evaluate statements or expressions
+    - but returns a code object that can do it
+    <mode>
+        a. 'eval' - equivalent code object to 'eval(string)'; no statements, only single expression
+        b. 'exec' - equivalent code object to 'exec(string)'; statements+ allowed
+        c. 'single' - ignore everything except first statement (if/else considered one)
+
 [13/3/12]
 -----------------------------------------------------------------------------
 Compare both strings & int/float

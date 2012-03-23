@@ -11,9 +11,12 @@ html = lxml.html.parse(SIMPLE_URL)
 packages = html.xpath('//a/@href')
 max_pkg_width = len(str(len(packages)))
 max_pkg_name_width = max([len(p) for p in packages])
-print "Finished parsing index, found %d packages, width = %d chars" % (len(packages),max_pkg_name_width)
+print >> sys.stderr, "Finished parsing index, found %d packages, width = %d chars" % (len(packages),max_pkg_name_width)
 for i,a in enumerate(packages):
-    print "Processing: %s %s " %(str(i).rjust(max_pkg_width,' '),urllib.unquote_plus(a[:-1]).ljust(max_pkg_name_width,' ')),
+    sys.stderr.write('.')
+    print "%s " % (\
+    #(str(i).rjust(max_pkg_width,' '),
+    urllib.unquote_plus(a[:-1]).ljust(max_pkg_name_width,' ')),
     pkg_url  = ''.join([BASE_URL,a])
     try:
         pkg_html = lxml.html.parse(pkg_url)

@@ -1,30 +1,30 @@
 #!/usr/bin/env python
-
-import time
+#-*- coding: utf-8 -*-
 import sys
-import requests
-from BeautifulSoup import BeautifulSoup
-
+import time
+import lxml.html
+import urllib
+import scrapy
 BASE_URL   = 'http://pypi.python.org/pypi/'
 SIMPLE_URL = 'http://pypi.python.org/simple/'
-
-with open('packages.txt', 'w') as fout:
-    r = requests.get(SIMPLE_URL)
-    soup = BeautifulSoup(r.content)
-    for i, a in enumerate(soup('a')):
-        name = a.contents[0]
-        url = BASE_URL + a.attrs[0][1]
-        try:
-            r = requests.get(url)
-            package_soup = BeautifulSoup(r.content)
-            try:
-                values = (int(td.contents[0]) for td in package_soup('td', style='text-align: right;') if td.contents and td.contents[0].isdigit())
-            except:
-                values = [-1]
-        except:
-            values = [-2]
-        print sum(values), name
-        print >> fout, sum(values), name
-
-    print 'Fetched statistics from %d packages' % (i + 1)
-    print >> fout, 'Fetched statistics from %d packages' % (i + 1)
+html = lxml.html.parse(SIMPLE_URL)
+packages = html.xpath('//a/@href')
+max_pkg_width = len(str(len(packages)))
+max_pkg_name_width = max([len(p) for p in packages])
+print "Finished parsing index, found %d packages, width = %d chars" % (len(packages),max_pkg_name_width)
+for i,a in enumerate(packages):
+    print "Processing: %s %s " %(str(i).rjust(max_pkg_width,' '),urllib.unquote_plus(a[:-1]).ljust(max_pkg_name_width,' ')),
+    pkg_url  = ''.join([BASE_URL,a])
+    try:
+        pkg_html = lxml.html.parse(pkg_url)
+        sum = 0
+        for elem in pkg_html.xpath('//td[@style]/text()'):
+            if str(elem).isdigit():
+                sum += int(elem)
+        print sum,
+    except IOError as e:
+        continue
+    finally:
+        print
+        sys.stdout.flush()
+sys.exit(0)

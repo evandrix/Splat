@@ -20,3 +20,6 @@ python-ptrace==0.6.4
 readline==6.2.2
 simplejson==2.4.0
 ssh==1.7.13
+DecoratorTools==1.8
+PEAK==0.5a3
+BytecodeAssembler==0.6

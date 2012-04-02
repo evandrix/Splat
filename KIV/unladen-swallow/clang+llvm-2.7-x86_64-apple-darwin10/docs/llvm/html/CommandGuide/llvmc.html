@@ -1,0 +1,285 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvmc</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+<!--
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#options">OPTIONS</a></li>
+	<ul>
+
+		<li><a href="#built_in_options">Built-in Options</a></li>
+		<li><a href="#control_options">Control Options</a></li>
+	</ul>
+
+	<li><a href="#exit_status">EXIT STATUS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+</ul>
+
+-->
+
+
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p>llvmc - The LLVM Compiler Driver (WIP)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p><strong>llvmc</strong> [<em>options</em>] <em>filenames...</em></p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><strong>llvmc</strong> is a configurable driver for invoking other LLVM (and non-LLVM) tools
+in order to compile, optimize and link software for multiple languages. For
+those familiar with FSF's <strong>gcc</strong> tool, it is very similar.  Please note that
+<strong>llvmc</strong> is considered an experimental tool.</p>
+<p>
+</p>
+<hr />
+<h1><a name="options">OPTIONS</a></h1>
+<p>
+</p>
+<h2><a name="built_in_options">Built-in Options</a></h2>
+<p>LLVMC has some built-in options that can't be overridden in the
+configuration libraries.</p>
+<dl>
+<dt><strong><a name="o_filename" class="item"><strong>-o</strong> <em>filename</em></a></strong>
+
+<dd>
+<p>Output file name.</p>
+</dd>
+</li>
+<dt><strong><a name="x_language" class="item"><strong>-x</strong> <em>language</em></a></strong>
+
+<dd>
+<p>Specify the language of the following input files until the next <strong>-x</strong>
+option.</p>
+</dd>
+</li>
+<dt><strong><a name="load_plugin_name" class="item"><strong>-load</strong> <em>plugin_name</em></a></strong>
+
+<dd>
+<p>Load the specified plugin DLL. Example:
+-load&nbsp;$LLVM_DIR/Release/lib/LLVMCSimple.so.</p>
+</dd>
+</li>
+<dt><strong><a name="v_or_verbose" class="item"><strong>-v</strong> or <strong>--verbose</strong></a></strong>
+
+<dd>
+<p>Enable verbose mode, i.e. print out all executed commands.</p>
+</dd>
+</li>
+<dt><strong><a name="check_graph" class="item"><strong>--check-graph</strong></a></strong>
+
+<dd>
+<p>Check the compilation for common errors like mismatched output/input language
+names, multiple default edges and cycles. Because of plugins, these checks can't
+be performed at compile-time. Exit with code zero if no errors were found, and
+return the number of found errors otherwise. Hidden option, useful for debugging
+LLVMC plugins.</p>
+</dd>
+</li>
+<dt><strong><a name="view_graph" class="item"><strong>--view-graph</strong></a></strong>
+
+<dd>
+<p>Show a graphical representation of the compilation graph and exit. Requires that
+you have <em>dot</em> and <em>gv</em> programs installed. Hidden option, useful for
+debugging LLVMC plugins.</p>
+</dd>
+</li>
+<dt><strong><a name="write_graph" class="item"><strong>--write-graph</strong></a></strong>
+
+<dd>
+<p>Write a <em>compilation-graph.dot</em> file in the current directory with the
+compilation graph description in Graphviz format (identical to the file used by
+the <strong>--view-graph</strong> option). The <strong>-o</strong> option can be used to set the output file
+name. Hidden option, useful for debugging LLVMC plugins.</p>
+</dd>
+</li>
+<dt><strong><a name="save_temps" class="item"><strong>--save-temps</strong></a></strong>
+
+<dd>
+<p>Write temporary files to the current directory and do not delete them on
+exit. This option can also take an argument: the <em>--save-temps=obj</em> switch will
+write files into the directory specified with the <em>-o</em> option. The
+<em>--save-temps=cwd</em> and <em>--save-temps</em> switches are both synonyms for the
+default behaviour.</p>
+</dd>
+</li>
+<dt><strong><a name="temp_dir_directory" class="item"><strong>--temp-dir</strong> <em>directory</em></a></strong>
+
+<dd>
+<p>Store temporary files in the given directory. This directory is deleted on exit
+unless <em>--save-temps</em> is specified. If <em>--save-temps=obj</em> is also specified,
+<em>--temp-dir</em> is given the precedence.</p>
+</dd>
+</li>
+<dt><strong><a name="help" class="item"><strong>-help</strong></a></strong>
+
+<dd>
+<p>Print a summary of command-line options and exit.</p>
+</dd>
+</li>
+<dt><strong><a name="help_hidden" class="item"><strong>-help-hidden</strong></a></strong>
+
+<dd>
+<p>Print a summary of command-line options and exit. Print help even for
+options intended for developers.</p>
+</dd>
+</li>
+<dt><strong><a name="version" class="item"><strong>--version</strong></a></strong>
+
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+</li>
+<dt><strong><a name="_file" class="item"><strong>@</strong><em>file</em></a></strong>
+
+<dd>
+<p>Read command-line options from <em>file</em>. The options read are inserted
+in place of the original @<em>file</em> option. If <em>file</em> does not exist, or
+cannot be read, then the option will be treated literally, and not
+removed.</p>
+</dd>
+<dd>
+<p>Options in <em>file</em> are separated by whitespace. A whitespace character
+may be included in an option by surrounding the entire option in
+either single or double quotes. Any character (including a backslash)
+may be included by prefixing the character to be included with a
+backslash. The file may itself contain additional @<em>file</em> options;
+any such options will be processed recursively.</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<h2><a name="control_options">Control Options</a></h2>
+<p>By default, LLVMC is built with some standard configuration libraries
+that define the following options:</p>
+<dl>
+<dt><strong><a name="clang" class="item"><strong>-clang</strong></a></strong>
+
+<dd>
+<p>Use Clang instead of llvm-gcc.</p>
+</dd>
+</li>
+<dt><strong><a name="opt" class="item"><strong>-opt</strong></a></strong>
+
+<dd>
+<p>Enable optimization passes with <strong>opt</strong>. To pass options to the <strong>opt</strong> program
+use the <strong>-Wo,</strong> option.</p>
+</dd>
+</li>
+<dt><strong><a name="i_directory" class="item"><strong>-I</strong> <em>directory</em></a></strong>
+
+<dd>
+<p>Add a directory to the header file search path.</p>
+</dd>
+</li>
+<dt><strong><a name="l_directory" class="item"><strong>-L</strong> <em>directory</em></a></strong>
+
+<dd>
+<p>Add <em>directory</em> to the library search path.</p>
+</dd>
+</li>
+<dt><strong><a name="f_directory" class="item"><strong>-F</strong> <em>directory</em></a></strong>
+
+<dd>
+<p>Add <em>directory</em> to the framework search path.</p>
+</dd>
+</li>
+<dt><strong><a name="lname" class="item"><strong>-l</strong><em>name</em></a></strong>
+
+<dd>
+<p>Link in the library lib<em>name</em>.[bc | a | so].  This library should
+be a bitcode library.</p>
+</dd>
+</li>
+<dt><strong><a name="framework_name" class="item"><strong>-framework</strong> <em>name</em></a></strong>
+
+<dd>
+<p>Link in the library lib<em>name</em>.[bc | a | so].  This library should
+be a bitcode library.</p>
+</dd>
+</li>
+<dt><strong><a name="emit_llvm" class="item"><strong>-emit-llvm</strong></a></strong>
+
+<dd>
+<p>Output LLVM bitcode (with <strong>-c</strong>) or assembly (with <strong>-S</strong>) instead of native
+object (or assembly).  If <strong>-emit-llvm</strong> is given without either <strong>-c</strong> or <strong>-S</strong>
+it has no effect.</p>
+</dd>
+</li>
+<dt><strong><a name="wa" class="item"><strong>-Wa</strong></a></strong>
+
+<dd>
+<p>Pass options to assembler.</p>
+</dd>
+</li>
+<dt><strong><a name="wl" class="item"><strong>-Wl</strong></a></strong>
+
+<dd>
+<p>Pass options to linker.</p>
+</dd>
+</li>
+<dt><strong><a name="wo" class="item"><strong>-Wo</strong></a></strong>
+
+<dd>
+<p>Pass options to opt.</p>
+</dd>
+</li>
+<dt><strong><a name="wllc" class="item"><strong>-Wllc</strong></a></strong>
+
+<dd>
+<p>Pass options to llc (code generator).</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="exit_status">EXIT STATUS</a></h1>
+<p>If <strong>llvmc</strong> succeeds, it will exit with code 0.  Otherwise, if an
+error occurs, it will exit with a non-zero value. If one of the
+compilation tools returns a non-zero status, pending actions will be
+discarded and <strong>llvmc</strong> will return the same result code as the failing
+compilation tool.</p>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p><a href="././llvmgcc.html">llvm-gcc</a>, <a href="././llvmgxx.html">llvm-g++</a>, <a href="././llvm-as.html">llvm-as</a>,
+<a href="././llvm-dis.html">llvm-dis</a>, <a href="././llc.html">llc</a>, <a href="././llvm-link.html">llvm-link</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+</body>
+
+</html>

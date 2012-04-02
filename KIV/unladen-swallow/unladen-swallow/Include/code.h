@@ -1,0 +1,209 @@
+/* Definitions for bytecode */
+
+#ifndef Py_CODE_H
+#define Py_CODE_H
+
+#include "_llvmfunctionobject.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef WITH_LLVM
+/* Why we're watching a given dict. We malloc a list of PyObject*s to hold the
+   dicts being watched; these serve as indicies into that list. */
+typedef enum {
+    WATCHING_BUILTINS = 0,
+    WATCHING_GLOBALS,
+    WATCHING_SYS_MODULES,
+    NUM_WATCHING_REASONS,
+} ReasonWatched;
+#endif
+
+
+/* Bytecode object.  Keep this in sync with Util/PyTypeBuilder.h. */
+typedef struct PyCodeObject {
+    PyObject_HEAD
+    int co_argcount;		/* #arguments, except *args */
+    int co_nlocals;		/* #local variables */
+    int co_stacksize;		/* #entries needed for evaluation stack */
+    int co_flags;		/* CO_..., see below */
+    PyObject *co_code;		/* instruction opcodes */
+    PyObject *co_consts;	/* list (constants used) */
+    PyObject *co_names;		/* list of strings (names used) */
+    PyObject *co_varnames;	/* tuple of strings (local variable names) */
+    PyObject *co_freevars;	/* tuple of strings (free variable names) */
+    PyObject *co_cellvars;      /* tuple of strings (cell variable names) */
+    /* The rest doesn't count for hash/cmp */
+    PyObject *co_filename;	/* string (where it was loaded from) */
+    PyObject *co_name;		/* string (name, for reference) */
+    int co_firstlineno;		/* first source line number */
+    PyObject *co_lnotab;	/* string (encoding addr<->lineno mapping) See
+				   Objects/lnotab_notes.txt for details. */
+    void *co_zombieframe;       /* for optimization only (see frameobject.c) */
+    PyObject *co_weakreflist;   /* to support weakrefs to code objects */
+#ifdef WITH_LLVM
+    /* See
+       http://code.google.com/p/unladen-swallow/wiki/FunctionCallingConvention
+       for the calling convention. */
+    _LlvmFunction *co_llvm_function;
+    PyEvalFrameFunction co_native_function;
+    struct PyFeedbackMap *co_runtime_feedback;
+    /* True if interpretation will be done through the LLVM JIT. This exists
+       only for ease of testing; the flag that matters is f_use_jit on the
+       frame object, which is influenced by co_use_jit. */
+    char co_use_jit;
+    /* Stores which optimizations have been applied to this code
+       object.  Each level corresponds to an argument to
+       PyGlobalLlvmData::Optimize().  Starts at -1 for unoptimized
+       code. */
+    int co_optimization;
+    /* There are two kinds of guard failures: fatal failures (machine code is
+       invalid, requires recompilation) and non-fatal failures (unexpected
+       branch taken, machine code is still valid). If fatal guards are failing
+       repeatedly in the same code object, we shouldn't waste time repeatedly
+       recompiling this code. */
+    int co_fatalbailcount;
+    /* Measure of how hot this code object is. This is used to decide
+       which code objects are worth sending through LLVM. */
+    long co_hotness;
+    /* Keep track of which dicts this code object is watching. */
+    PyObject **co_watching;
+#endif
+} PyCodeObject;
+
+/* If co_fatalbailcount >= PY_MAX_FATAL_BAIL_COUNT, force this code to use the
+   eval loop forever after. See the comment on the co_fatalbailcount field
+   for more details. */
+#define PY_MAX_FATALBAILCOUNT 1
+
+/* The threshold for co_hotness before the code object is considered "hot". */
+#define PY_HOTNESS_THRESHOLD 100000
+
+/* Masks for co_flags above.  If you update these, consider updating the
+ * fast_function fast path in eval.cc.  */
+#define CO_OPTIMIZED    (1 << 0)
+#define CO_NEWLOCALS    (1 << 1)
+#define CO_VARARGS      (1 << 2)
+#define CO_VARKEYWORDS  (1 << 3)
+/* Is this a nested function? */
+#define CO_NESTED       (1 << 4)
+/* Is this function a generator? (aka, does it have a yield?) */
+#define CO_GENERATOR    (1 << 5)
+/* The CO_NOFREE flag is set if there are no free or cell variables.
+   This information is redundant, but it allows a single flag test
+   to determine whether there is any extra work to be done when the
+   call frame is setup.
+*/
+#define CO_NOFREE       (1 << 6)
+/* The CO_BLOCKSTACK flag is set if there are try/except blocks or with stmts.
+   If there aren't any of these constructs, we can omit all block stack
+   operations, which saves on codesize and JITting time. LLVM's optimizers can
+   usually eliminate all of this code if it's not needed, but we'd like to
+   avoid even generating the LLVM IR if possible.
+*/
+#define CO_BLOCKSTACK   (1 << 7)
+/* Indicates whether this code object uses the exec statement. */
+#define CO_USES_EXEC    (1 << 8)
+
+#if 0
+/* This is no longer used.  Stopped defining in 2.5, do not re-use. */
+#define CO_GENERATOR_ALLOWED       (1 << 12)
+#endif
+#define CO_FUTURE_DIVISION    	   (1 << 13)
+#define CO_FUTURE_ABSOLUTE_IMPORT  (1 << 14) /* do absolute imports by default */
+#define CO_FUTURE_WITH_STATEMENT   (1 << 15)
+#define CO_FUTURE_PRINT_FUNCTION   (1 << 16)
+#define CO_FUTURE_UNICODE_LITERALS (1 << 17)
+
+/* This should be defined if a future statement modifies the syntax.
+   For example, when a keyword is added.
+*/
+#if 1
+#define PY_PARSER_REQUIRES_FUTURE_KEYWORD
+#endif
+
+#define CO_MAXBLOCKS 20 /* Max static block nesting within a function */
+
+PyAPI_DATA(PyTypeObject) PyCode_Type;
+
+#define PyCode_Check(op) (Py_TYPE(op) == &PyCode_Type)
+#define PyCode_GetNumFree(op) (PyTuple_GET_SIZE((op)->co_freevars))
+
+/* Public interface */
+PyAPI_FUNC(PyCodeObject *) PyCode_New(
+	int, int, int, int, PyObject *, PyObject *, PyObject *, PyObject *,
+	PyObject *, PyObject *, PyObject *, PyObject *, int, PyObject *);
+        /* same as struct above */
+
+/* Return the line number associated with the specified bytecode index
+   in this code object.  Unless you want to be tied to the bytecode
+   format, try to use PyFrame_GetLineNumber() instead. */
+PyAPI_FUNC(int) PyCode_Addr2Line(PyCodeObject *, int);
+
+/* for internal use only */
+#define _PyCode_GETCODEPTR(co, pp) \
+	((*Py_TYPE((co)->co_code)->tp_as_buffer->bf_getreadbuffer) \
+	 ((co)->co_code, 0, (void **)(pp)))
+
+typedef struct _addr_pair {
+        int ap_lower;
+        int ap_upper;
+} PyAddrPair;
+
+/* Update *bounds to describe the first and one-past-the-last instructions in the
+   same line as lasti.  Return the number of that line.
+*/
+PyAPI_FUNC(int) _PyCode_CheckLineNumber(PyCodeObject* co,
+                                        int lasti, PyAddrPair *bounds);
+
+PyAPI_FUNC(PyObject*) PyCode_Optimize(PyObject *code, PyObject* consts,
+                                      PyObject *names, PyObject *lineno_obj);
+
+#ifdef WITH_LLVM
+/* Compile a given function to LLVM IR, and apply a set of optimization passes.
+   Returns -1 on error, 0 on succcess, 1 if codegen was refused. If a non-zero
+   status code is returned, callers may need to back out any changes they've
+   made, such as setting co_use_jit.
+
+   Some state from the code object, such as the co_watching field, may be used
+   during code generation to optimize the machine code.
+
+   This should eventually be able to *re*compile bytecode to LLVM IR. See
+   http://code.google.com/p/unladen-swallow/issues/detail?id=41. */
+PyAPI_FUNC(int) _PyCode_ToOptimizedLlvmIr(PyCodeObject *code, int opt_level);
+
+/* Register a code object to receive updates if its globals or builtins change.
+   If the globals or builtins change, co_use_jit will be set to 0; this causes
+   the machine code to bail back to the interpreter to continue execution.
+
+   Returns 0 on success, -1 on serious failure. "Serious failure" here means
+   something that we absolutely cannot recover from (out-of-memory is the big
+   one) and needs to be conveyed to the user. There are recoverable failure
+   modes (globals == NULL, builtins == NULL, etc) that merely disable the
+   optimization and return 0. */
+PyAPI_FUNC(int) _PyCode_WatchDict(PyCodeObject *code, ReasonWatched reason,
+                                  PyObject *dict);
+
+/* Stop watching a dict for changes. Returns 0 on success, -1 on failure. */
+PyAPI_FUNC(int) _PyCode_IgnoreDict(PyCodeObject *code, ReasonWatched reason);
+
+/* Internal helper function to get the number of dicts being watched. */
+PyAPI_FUNC(Py_ssize_t) _PyCode_WatchingSize(PyCodeObject *code);
+
+/* Ignore all dicts this code object is currently watching. */
+PyAPI_FUNC(void) _PyCode_IgnoreWatchedDicts(PyCodeObject *code);
+
+/* Perform any steps needed to mark a function's machine code as invalid.
+   Individual fatal guard failures may need to do extra work on their own to
+   clean up any special references/data they may have created, but calling this
+   function will ensure that `code`'s machine code equivalent will not be
+   called again. */
+PyAPI_FUNC(void) _PyCode_InvalidateMachineCode(PyCodeObject *code);
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* !Py_CODE_H */

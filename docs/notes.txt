@@ -1,7 +1,103 @@
+[30/3/12] Project review - checkpoint
+-----------------------------------------------------------------------------
+- regression testing + automatic crash finding + property testing
+
+i. lazy instantiation technique
+    to determine admissible types (including attributes - fields/methods - on objects) of each argument to function - objects are abstractly modelled as just dict(), essentially
+    ie. complete range of test surface?
+ii. now types are known, how to efficiently crawl this search space
+    in order to generate the minimal representative subset test suite?
+    - initially random
+    - use feedback from dynamic execution to refine test cases generated/prune search space
+    - gather insight from real life code libraries?
+iii. testing recursive functions (& later, the other kinds of constructs)
+
+- grand central dispatch parses list of bytecode into useful "breakpoint" nodes = mapped out all possible structures of the grammar - how can this be used?
+- NO: unfortunately test data generation cannot be nested, eg. if within while loop, tests generated for it cannot be "added" iteratively into parent "while" test cases
+
+- imagine function is a black box (with side effects), unit tests generated can only assert on return result values, and control type&value of input parameters, eg.
+    def foo(a):     # a is unused parameter in method
+        if False:
+            while True:
+                pass
+
+- Impossible to ascertain correctness, instead fingerprint by mapping as representative inputs
+- Assume well defined class under test
+
+benchmarking code coverage: mutation testing...
+How about mixing all types like class, recursion... into one file to benchmark?
+also explore testing extensions - helper classes/methods - see numpy/scipy eg.
+
+[29/3/12]
+-----------------------------------------------------------------------------
+- fuzzing / mutation testing
+    ie. fingerprint module under test with test suite generated
+    - modify source code of module under test & recompile
+    - compare strictness of result with manually written tests
+
+- Emulate stack
+    - bytecode call graph with node
+    - (id = hacked lineno, opcode, arg, # times node is visited, [outgoing children nodes])
+- figure out arguments to function call
+
+- testing recursive functions
+    - generate tests asserting depth of recursion
+
+[28/3/12]
+-----------------------------------------------------------------------------
+Paper outline
+    - Introduction & Overview
+    - Definition of relevant concepts
+    - Implementation
+    - Sample applications
+    - Conclusion
+
 [22/3/12]
 -----------------------------------------------------------------------------
+What if the module under test has dependencies? Dynamically create it!
+    http://bytes.com/topic/python/answers/433567-dynamically-add-class-modules
+    http://www.saltycrane.com/blog/2010/09/class-based-fabric-scripts-metaprogramming-hack/
+    http://stackoverflow.com/questions/301134/dynamic-module-import-in-python
+    http://stackoverflow.com/questions/2931950/dynamic-module-creation
+    http://technogeek.org/python-module.html
+    http://code.activestate.com/recipes/82234-importing-a-dynamically-generated-module/
+    http://www.b-list.org/weblog/2007/dec/03/making-magic/
+    http://www.penzilla.net/tutorials/python/modules/
+***
+isinstance()
+    - works on old-style classes
+    - need to know type before calling
+    - legit type-checking against a known class
+__class__
+    - works on old-style classes
+    - no need to know type before calling
+    - use for debugging: no idea what class the instance is
+issubclass()
+***
+method_missing proxy
+   @ http://langexplr.blogspot.com/2008/02/handling-call-to-missing-method-in_06.html
+   @ http://orestis.gr/blog/2007/12/10/python_getattr/
+
+tracing & profiling
+   @ http://www.doughellmann.com/PyMOTW/sys/tracing.html
+
+Python source code
+   @ http://svn.python.org/view/python/trunk/Python/compile.c?view=markup
+
+co_lnotab
+   @ http://svn.python.org/projects/python/trunk/Objects/lnotab_notes.txt
+
+hacking Python bytecode tracing
+   @ http://nedbatchelder.com/blog/200804/wicked_hack_python_bytecode_tracing.html
+
+str vs repr
+    %s specifier converts the object using str();
+    %r converts it using repr()
+>>> str(datetime.date.today())  '2011-05-14'
+>>> repr(d)                     'datetime.date(2011, 5, 14)'
+***
 code coverage analysis:
-    - fingerprint benchmarks modules
+    - fingerprint benchmark modules
         - sloccount
         - coverage / tox
         - mutation eg. (p)ester
@@ -24,8 +120,7 @@ Ideas
             - coverage
             - accuracy of fingerprinting test module
 
-eval vs. exec vs. compile
-@ http://goo.gl/gY5Pb
+eval vs. exec vs. compile @ http://goo.gl/gY5Pb
 1. exec
     - statement, not expression (function in Py3k)
     - compiles & immediately evaluates statements in a string

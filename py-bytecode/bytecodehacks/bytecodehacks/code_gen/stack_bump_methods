@@ -1,0 +1,159 @@
+# -*- python -*-
+
+#   Copyright 1999-2000 Michael Hudson mwh@python.net
+#
+#                        All Rights Reserved
+#
+#
+# Permission to use, copy, modify, and distribute this software and
+# its documentation for any purpose is hereby granted without fee,
+# provided that the above copyright notice appear in all copies and
+# that both that copyright notice and this permission notice appear in
+# supporting documentation.
+#
+# THE AUTHOR MICHAEL HUDSON DISCLAIMS ALL WARRANTIES WITH REGARD TO
+# THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+# AND FITNESS, IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL,
+# INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+# RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+# CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+# CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+STOP_CODE:
+    pass
+POP_TOP:
+    pop()
+ROT_TWO:
+ROT_THREE:
+    pass
+DUP_TOP:
+    push()
+UNARY_POSITIVE:
+UNARY_NEGATIVE:
+UNARY_NOT:
+UNARY_CONVERT:
+UNARY_INVERT:
+    pass
+BINARY_POWER:
+BINARY_MULTIPLY:
+BINARY_DIVIDE:
+BINARY_MODULO:
+BINARY_ADD:
+BINARY_SUBTRACT:
+BINARY_SUBSCR:
+BINARY_LSHIFT:
+BINARY_RSHIFT:
+BINARY_AND:
+BINARY_XOR:
+BINARY_OR:
+    pop()
+SLICE_0:
+    pass
+SLICE_1:
+    pop()
+SLICE_2:
+    pop()
+SLICE_3:
+    pop(2)
+STORE_SLICE_0:
+    pop(2)
+STORE_SLICE_1:
+    pop(3)
+STORE_SLICE_2:
+    pop(3)
+STORE_SLICE_3:
+    pop(4)
+DELETE_SLICE_0:
+    pop()
+DELETE_SLICE_1:
+    pop(2)
+DELETE_SLICE_2:
+    pop(2)
+DELETE_SLICE_3:
+    pop(3)
+STORE_SUBSCR:
+    pop(3)
+DELETE_SUBSCR:
+    pop(2)
+PRINT_EXPR:
+PRINT_ITEM:
+    pop()
+PRINT_NEWLINE:
+BREAK_LOOP:
+    pass
+LOAD_LOCALS:
+    push()
+RETURN_VALUE:
+    pop()
+EXEC_STMT:
+    pop(3)
+POP_BLOCK:
+    block_pop()
+END_FINALLY:
+    tracker.handle_end_finally() # grrr.
+BUILD_CLASS:
+    pop(3)
+STORE_NAME:
+    pop()
+DELETE_NAME:
+    pass
+UNPACK_TUPLE:
+UNPACK_LIST:
+    pop(self.arg)
+STORE_ATTR:
+    pop()
+DELETE_ATTR:
+STORE_GLOBAL:
+    pop()
+DELETE_GLOBAL:
+    pass
+LOAD_CONST:
+LOAD_NAME:
+    push()
+BUILD_TUPLE:
+BUILD_LIST:
+    pop(self.arg - 1)
+BUILD_MAP:
+    push()
+LOAD_ATTR:
+    pass
+COMPARE_OP:
+    pop()
+IMPORT_NAME:
+    push()
+IMPORT_FROM:
+    pass
+JUMP_FORWARD:
+JUMP_IF_FALSE:
+JUMP_IF_TRUE:
+JUMP_ABSOLUTE:
+    pass
+FOR_LOOP:
+    push() # XXX
+LOAD_GLOBAL:
+    push()
+SETUP_LOOP:
+    block_push()
+SETUP_EXCEPT:
+    block_push(3) # here be magic
+SETUP_FINALLY:
+    block_push(2) # here be magic
+LOAD_FAST:
+    push()
+STORE_FAST:
+    pop()
+DELETE_FAST:
+    pass
+SET_LINENO:
+    pass
+RAISE_VARARGS:
+    pop(self.arg)
+CALL_FUNCTION:
+    num_keyword_args =(self.arg&0xFF00) >> 8
+    num_regular_args = self.arg&0x00FF
+    pop(2*num_keyword_args + num_regular_args)
+MAKE_FUNCTION:
+    pop(1 + self.arg)
+BUILD_SLICE:
+    pop(self.arg - 1)
+

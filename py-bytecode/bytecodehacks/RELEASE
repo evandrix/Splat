@@ -1,0 +1,36 @@
+Well, it's April the first, so what better time than this to announce
+the release of a new version of bytecodehacks?
+
+Not all that much has changed in the code; a bug fix here and there.
+
+* The mechanism for calculating the co_stacklevel attribute of code
+  objects actually gets it right (at least in cases I have tested).
+
+* xapply.xapply has gotten *much* cleverer, and much hairier.  It now
+  supports such delights as keyword arguments, trimming the default
+  argument list correctly, assignments to arguments and handling
+  **-style arguments (but not *-style, yet).  It's approaching the
+  point of being actually useful (scary!).
+
+* there's the beginnings of a test suite.
+
+Administrivia, there's much more shaking up.
+
+* bytecodehacks now live on sourceforge; go here for links & stuff:
+
+    http://bytecodehacks.sourceforge.net
+
+  There's a mailing list, which I don't envision being very high
+  volume:
+
+    http://lists.sourceforge.net/mailman/listinfo/bytecodehacks-discuss
+
+  but I invite anyone who's interested to join.
+
+* bytecodehacks now has a license, based on the deliberately liberal
+  Python license; please read the file LICENSE for details.
+
+* Documentation is now being distributed separately; a new release
+  will follow shortly.
+
+As ever, all comments are welcome!

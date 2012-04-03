@@ -1,8 +1,7 @@
 import multiprocessing as mp
-from multiprocessing import Process
 from math import ceil, log
 
-class PoolProcess( Process ):
+class PoolProcess( mp.Process ):
     def __init__(self, rank, events, numproc, lock):
         mp.Process.__init__(self)
         self.rank = rank

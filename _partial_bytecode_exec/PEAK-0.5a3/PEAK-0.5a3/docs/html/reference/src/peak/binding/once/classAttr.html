@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: classAttr</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: classAttr</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/binding/once.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Class attribute binding</h3>
+<p>    This wrapper lets you create bindings which apply to a class, rather than
+    to its instances.  This can be useful for creating bindings in a base
+    class that will summarize metadata about subclasses.  Usage example:
+<pre>
+        class SomeClass(binding.Component):
+
+            CLASS_NAME = binding.classAttr(
+                binding.Make(
+                    lambda self: self.__name__.upper()
+                )
+            )
+
+        class aSubclass(SomeClass):
+            pass
+
+        assert SomeClass.CLASS_NAME == "SOMECLASS"
+        assert aSubclass.CLASS_NAME == "ASUBCLASS"
+</pre>
+</p>
+<p>    Class attributes will only work in subclasses of classes like
+    <code>binding.Component</code>, whose metaclass derives from <code>binding.Activator</code>.</p>
+<p>    Implementation note: class attributes actually cause a new metaclass to
+    be created on-the-fly to contain them.  The generated metaclass is named
+    for the class that contained the class attributes, and has the same
+    <code>__module__</code> attribute value.  So continuing the above example:
+<pre>
+        assert SomeClass.__class__.__name__ == 'SomeClassClass'
+        assert aSubClass.__class__.__name__ == 'SomeClassClass'
+</pre>
+</p>
+<p>    Notice that the generated metaclass is reused for subsequent
+    subclasses, as long as they don't define any new class attributes.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+object<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#__init__">__init__</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__init__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__init__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__init__ ( self,  binding )
+
+</pre></font>
+
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:38 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

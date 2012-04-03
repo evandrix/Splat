@@ -1,0 +1,122 @@
+<html><head><style>table,td {border-width:1px;border-collapse:collapse;border-style:solid;border-color:black;padding:5px}</style></head>
+<body><table><tr><td>Flag</td><td>Mnemonics</td><td>Description</td><td>Source code</td><td>Flags</td></tr>
+<tr>
+<td>0001h</td><td>OPTIMIZED</td><td>?</td>
+<td><pre>
+?
+</pre></td>
+<td><pre>
+?
+</pre></td>
+</tr>
+
+<tr>
+<td>0002h</td><td>NEWLOCALS</td><td>?</td>
+<td><pre>
+?
+</pre></td>
+<td><pre>
+?
+</pre></td>
+</tr>
+
+<tr>
+<td>0004h</td><td>VARARGS</td><td>Funcdef has ``"*" identifier''</td>
+<td><pre>
+def f(*a): pass
+</pre></td>
+<td><pre>
+f: (OPTIMIZED, NEWLOCALS, VARARGS, NOFREE)
+</pre></td>
+</tr>
+
+<tr>
+<td>0008h</td><td>VARKEYWORDS</td><td>Funcdef has ``"**" identifier''</td>
+<td><pre>
+def f(**a): pass
+</pre></td>
+<td><pre>
+f: (OPTIMIZED, NEWLOCALS, VARKEYWORDS, NOFREE)
+</pre></td>
+</tr>
+
+<tr>
+<td>0010h</td><td>NESTED</td><td>Function is nested</td>
+<td><pre>
+def f():
+        def g(): pass
+</pre></td>
+<td><pre>
+f: (OPTIMIZED, NEWLOCALS, NOFREE)
+g: (OPTIMIZED, NEWLOCALS, NOFREE, NESTED)
+</pre></td>
+</tr>
+
+<tr>
+<td>0020h</td><td>GENERATOR</td><td>Function is a generator</td>
+<td><pre>
+def f(): yield 1
+</pre></td>
+<td><pre>
+f: (GENERATOR, OPTIMIZED, NEWLOCALS, NOFREE)
+</pre></td>
+</tr>
+
+<tr>
+<td>0040h</td><td>NOFREE</td><td>No free and cell vars</td>
+<td><pre>
+def f():
+	a = 1
+	def g(): return a + 1
+	return g()
+</pre></td>
+<td><pre>
+&lt;module&gt;: (NOFREE)
+f: (OPTIMIZED, NEWLOCALS)
+g: (OPTIMIZED, NEWLOCALS, NESTED)
+</pre></td>
+</tr>
+
+<tr>
+<td>1000h</td><td>GENERATOR_ALLOWED</td><td>?</td>
+<td><pre>
+?
+</pre></td>
+<td><pre>
+?
+</pre></td>
+</tr>
+
+<tr>
+<td>2000h</td><td>FUTURE_DIVISION</td><td>Future division is enabled</td>
+<td><pre>
+from __future__ import division
+def f(): pass
+</pre></td>
+<td><pre>
+&lt;module&gt;: (FUTURE_DIVISION, NOFREE)
+f: (OPTIMIZED, NEWLOCALS, FUTURE_DIVISION, NOFREE)
+</pre></td>
+</tr>
+
+<tr>
+<td>4000h</td><td>FUTURE_ABSOLUTE_IMPORT</td><td>Future absolute import is enabled</td>
+<td><pre>
+from __future__ import absolute_import
+</pre></td>
+<td><pre>
+&lt;module&gt;: (NOFREE, FUTURE_ABSOLUTE_IMPORT)
+</pre></td>
+</tr>
+
+<tr>
+<td>8000h</td><td>FUTURE_WITH_STATEMENT</td><td>Future with statement is enabled</td>
+<td><pre>
+from __future__ import with_statement
+</pre></td>
+<td><pre>
+&lt;module&gt;: (NOFREE, FUTURE_WITH_STATEMENT)
+</pre></td>
+</tr>
+
+</table></body></html>

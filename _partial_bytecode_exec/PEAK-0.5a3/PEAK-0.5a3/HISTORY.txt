@@ -1,0 +1,286 @@
+Fixes and Enhancements since Version 0.5 alpha 1
+
+ Changed, Enhanced, or Newly Deprecated Features
+
+ - Added a 'shellcmd:'  URL scheme that returns a function that calls
+   'os.system()' on the body of the URL.  It's intended for use as a command
+   factory, as is needed by the 'URLChecker' periodic task.
+
+ - You can now define adapters from arbitrary types to 'binding.IBindingNode',
+   and thus be able to use them as part of a component hierarchy - without
+   needing to directly add 'getParentComponent()' or 'getComponentName()'
+   methods to them.
+
+ - Added experimental 'invoke.c' script for POSIX-ish platforms with funky
+   '#!' support, or lack thereof.
+
+   'invoke' is designed to be used like this::
+
+     #!/usr/local/bin/invoke peak somearg otherarg...
+
+   This should work on most sane platforms with a long-enough commandline.
+   (See "this page":http://homepages.cwi.nl/~aeb/std/hashexclam-1.html for
+   details on the insanely incompatible ways different Unixes interpret '#!'
+   lines.)
+
+   The script is not currently built or installed by setup.py.  On the
+   platforms it's targeted at, you should be able to build it with::
+
+     gcc -o invoke invoke.c
+
+   (Yes, it really is that simple of a script.)
+
+ - Added a ZConfig schema for 'running.commands.EventDriven' applications,
+   a ZConfig component definition for adaptive tasks, and a running shortcut
+   called 'EventDriven'.
+
+   It should now be possible to do this::
+
+     #!/usr/bin/env peak EventDriven
+
+   at the top of a ZConfig file formatted according to the new schema, and
+   have it run.  There are two periodic tasks that can be configured and
+   run from such a file: 'CleanupFiles' and 'URLChecker'.  'CleanupFiles' will
+   delete files matching a pattern that are older than a certain age, while
+   'URLChecker' will check to see if the target of a naming system URL is
+   up/available/working, and if not, runs a command to restart it.  As an
+   amusing demo, try specifying a 'file:' URL with a 'shellcmd:touch theFile'
+   to recreate the file, then add a 'CleanupFiles' that deletes the file the
+   checker looks for.  This can be hours (well, minutes) of exciting fun as you
+   watch the dueling daemons undoing each others' work.
+
+ - Added 'zconfig.schema' URL scheme that loads an enhanced ZConfig schema
+   object that can act as a command line interpreter using the 'peak' script.
+
+   To use it, run 'peak zconfig.schema:urlToSchema urlOfConfig'.  Or, add
+   a line like this::
+
+     #!/usr/bin/env peak zconfig.schema:pkgfile:some.package/schema.xml
+
+   to the top of a configuration file, and make the configuration file
+   executable.  Note that the schema specified must convert to an object
+   that's usable with the commands bootstrap framework.  Also note that
+   if you have a local PEAK_CONFIG file, you can add a 'peak.running.shortcuts'
+   entry to shorten the URL reference in your #! line.  E.g.::
+
+     #!/usr/bin/env peak mySchema
+
+   will suffice if you have defined 'peak.running.shortcuts.mySchema' as
+   'naming.LinkRef("zconfig.schema:pkgfile:some.package/schema.xml")'.
+
+   There is also a 'peak ZConfig urlOfSchema urlOfConfig' variant, that was
+   added to support putting '#!/usr/bin/env peak ZConfig' at the top of
+   schema files, but unfortunately that's not valid XML.
+
+ - Standardized file-based URL syntaxes (e.g logfiles and lockfiles) to
+   follow RFC 1738/2396, and Python 'urllib'.  This shouldn't affect much
+   besides the canonical forms of the URLs.  Added 'pkgfile:some.pkg/filepath'
+   URL syntax for ease of referring to files near modules.  (A convenience
+   intended mainly for referencing ZConfig schemas.)
+
+ - Added the UML 1.4 metamodel, and thus the ability to load UML 1.4
+   models encoded in XMI 1.1.
+
+ - Added support in the mof2py code generator for "unprefixing" enumerated
+   values, so that UML and other metamodels' enumerations work correctly
+   when loading from XMI.  Also, mof2py no longer emits 'config.setupModule()'
+   calls in generated code, as in practice they are not needed.
+
+ - Running 'peak test' from the command line is roughly equivalent to running
+   'unittest.py', except that the test suite defaults to the PEAK test suite.
+   You can, however run any test suite from the command line with a dotted
+   module/attribute path, e.g 'peak test foo.bar.test_suite'.
+
+ - 'binding.Acquire()' now accepts a 'default' value argument, and
+   'binding.New()' no longer accepts the 'bindToOwner' flag.
+
+ - There is a new 'binding.IComponentKey' interface that is used to implement
+   'IComponent.lookupComponent()'.  Now you can implement this interface,
+   or create an adapter for it, in order to make an object usable as an
+   argument to 'binding.lookupComponent()' - and therefore usable as a key
+   for 'binding.bindTo()' or 'binding.bindToSequence()'.  Not that it's
+   necessarily very useful to do so; you're probably better off simply
+   creating a naming scheme.  But it might be useful for lookups done
+   in the context of classes, since naming schemes aren't usable there.
+   (It was actually added in order to factor out all the type testing that
+   'lookupComponent' used to do, so it doesn't matter if it's useful for
+   much else.)
+
+ - PEAK has been refactored to avoid the use of 'isImplementedBy()' and
+   similar introspection, in favor of 'adapt()'.  As a result, some
+   'peak.naming' interfaces have changed.  This should not affect you
+   if you are only subclassing PEAK-provided naming components and not
+   implementing these interfaces "from scratch".  However, the various
+   'isAddress', 'isAddressClass', 'isResolver', and 'isName' APIs have
+   also been removed, as they were based on 'isImplementedBy()'.
+
+ - REMOVED ability to use '__implements__' and '__class_implements__' to
+   declare support for interfaces.  Use 'protocols.advise()' or a related
+   API to do this now.  The 'protocols' package is available automatically
+   from 'peak.api'.
+
+   Similarly, the ability  to use 'isImplementedBy()' with interfaces declared
+   by PEAK is REMOVED.  You can still use 'isImplementedBy()' with Zope
+   interfaces, of course, but we recommend you switch to 'adapt()', which
+   should work with both PEAK and Zope interfaces.
+
+ - Replaced all use of 'zope.interface' with 'protocols' package because
+   the 'protocols' package:
+
+   * is considerably smaller and simpler than 'zope.interface'
+
+   * produces Interface objects that can be inspected with the Python
+     'pydoc' and 'help()' tools
+
+   * supports and implements the PEP 246 'adapt()' protocol
+
+   * transparently supports transitive adaptation - i.e. if adapter AB
+     adapts from A to B, and adapter BC adapts from B to C, then an adapt(x,C)
+     where 'x' is an 'A', will be implemented as BC(AB(x)).
+
+   * Supports "open protocols" that allow you to "superclass" a protocol
+     to create a subset protocol; objects that support the first protocol
+     will automatically support the subset protocol.  For example, if one
+     person defines a "dictionary" protocol, someone else can create a
+     "read-only dictionary" protocol, and all objects supporting the
+     "dictionary protocol" will be considered to implement the "read-only
+     dictionary" protocol.
+
+   * can interoperate with other interface packages, including Zope's, but
+     does not require them
+
+   * works with module inheritance (for everything but moduleProvides(), and
+     we should get to that by 0.5a2)
+
+   * lets you use Interfaces as abstract base classes (i.e., you can
+     inherit from an interface and turn it into an implementation, and
+     you can define default attribute values or method implementations in
+     your interfaces
+
+   * Lets you mix interface declarations from any number of frameworks and
+     any number of interface types, in a single 'implements()' or
+     'classProvides()'
+
+   * uses adaptation as the fundamental approach to dealing with interfaces,
+     and avoids the use of 'isImplementedBy()'.  In the *rare* case that you
+     need to introspect rather than adapt, you can always call adapt() and
+     check the result.  (But introspection usually means that you're using
+     interfaces as a form of metadata; it's better to create an explicit
+     interface that provides the metadata you seek, and adapt to that
+     interface, than to use interfaces as data.)
+
+   Most of these features are unavailable in 'zope.interface', and some have
+   been declared by the Zope Pope to be unacceptable or undesirable features
+   for Zope interfaces.  (Others may be available in some form in future
+   versions of Zope X3.)  So, we no longer require or distribute
+   'zope.interface'.
+
+ - The signatures of the 'getObjectInstance()', 'getStateToBind()', and
+   'getURLContext()' methods in the 'peak.naming' package have changed, to
+   place the context or parent component as the first, non-optional argument.
+   (If you don't know what these methods are for, you don't need to do anything
+   about this, as they are part of the naming package's extensibility
+   framework.)
+
+ - 'binding.bindTo()' now accepts a 'default=' argument, whose value will be
+   used in case of a 'NameNotFound' error.
+
+ - DEPRECATED 'naming.ParsedURL'.  It will disappear in 0.5 alpha 3 or beta.
+   It is replaced by the new 'naming.URL.Base'.  The 'naming.URL' package
+   provides a new URL parsing framework based on 'peak.model'.  Upgrading from
+   'ParsedURL' to 'URL.Base' is trivial for ParsedURL subclasses that used
+   only the 'scheme' and 'body' fields, and in fact may not require any
+   changes except for the choice of base class.  Also, the 'retrieve()' method
+   of URLs is deprecated; please begin defining the 'getObjectInstance()'
+   method instead.  This is to cut down a bit on the number of ways that the
+   naming package spells the idea of retrieving something!
+
+   For more complex URL classes, the '__init__' methods go away, 'parse'
+   methods change slightly, and explicit field definitions (using
+   'model.structField' or similar) are required.  See PEAK's 'URL.Base'
+   subclasses for examples.  There is also a sophisticated parsing and
+   formatting framework (see the 'peak.naming.URL' and 'peak.util.fmtparse'
+   modules) that can be used in place of the old regex-based approach.
+
+ - Added 'peak.util.fmtparse', a parsing and formatting framework, and
+   integrated it with 'peak.model' so that any element type can have a
+   syntax for parsing from, or formatting to, a string.
+
+ - Added 'binding.whenAssembled(...)' as syntax sugar for
+   'binding.Once(...,activateUponAssembly=True)'.
+
+ - Removed 'LOG_XYZ' convenience functions from 'peak.api', and refactored
+   'peak.running.logs' to use a PEP 282-like interface, 'running.ILogger'.
+   Under the new scheme, messages must be sent to a specific entry point
+   (e.g. 'self.logger.warning("foo")').  Components can bind an attribute
+   directly to a logger object, or via configuration properties or utilities.
+   PEAK components that do logging all define a 'logger' attribute, bound
+   to a configuration property in the 'peak.logs' property namespace.  By
+   a default in 'peak.ini', 'peak.logs.*' is configured to output messages
+   of 'WARNING' priority or higher to 'sys.stderr'.
+
+   For compatibility with the PEP 282 logging package, a 'logging.logger:'
+   URL scheme has been added; looking up the URL '"logging.logger:foo.bar"'
+   is equivalent to 'logging.getLogger("foo.bar")', unless the 'logging'
+   package is not available, in which case the configuration property
+   'peak.logs.foo.bar' will be looked up in the target context of the
+   lookup.  Optionally, you can configure the 'logging.logger' URL scheme so
+   that it only uses PEAK loggers, and never uses the PEP 282 loggers.
+
+ - Added 'binding.metamethod()' wrapper for metaclass methods that might
+   not be accessible from their instances if the instances (classes) also
+   defined the method for *their* instances.  You must now use this wrapper
+   on any such metaclass-defined methods, as PEAK no longer works around
+   this via the 'x.__class__.foo(x,...)' trick that was used previously.
+   In particular, if you have metaclass definitions of 'getParentComponent',
+   '_getConfigData', 'getComponentName', or 'notifyUponAssembly', you need
+   to wrap them with 'binding.metamethod' now.
+
+ - Made 'NOT_GIVEN' and 'NOT_FOUND' recognizable by humans (they 'repr'
+   and 'str' to their names) and by Python (they can be pickled, and
+   when restored they come back as the same object).
+
+
+ Corrected Problems
+
+ - Fixed a problem in ZConfig 'schema.dtd'; I used 'PCDATA' where I should've
+   used 'CDATA'.
+
+ - Fixed a problem with 'binding.supertype()' not working correctly if the MRO
+   it was searching contained a "classic" class.  Now 'supertype()' skips any
+   classic classes it finds.  (It probably should be rewritten entirely.)
+
+ - Fixed misc. problems with 'fromZConfig()' component constructor
+
+ - Fixed source distributions missing essential setup files
+
+ - Fixed a problem with assembly events, where a parent component that didn't
+   need assembly notification, wouldn't ever notify its children of assembly
+   if they requested the notification after the parent had already received
+   it.
+
+ - Fixed a bug in automatic metaclass generation that caused extra unneeded
+   metaclasses to be generated.
+
+ - Fixed 'naming.lookup()' and related APIs not setting the parent component
+   of created objects without an explicitly supplied 'creationParent' keyword
+   argument.  This used to "sort of work" when we had implicit configuration
+   parents, but was broken when we went "all explicit" for 0.5 alpha 1.
+
+ - Fixed a problem where initializing single-valued immutable fields of
+  'peak.model' types did not perform type/value normalization.
+
+ - Fixed a problem where bindTo would use the attribute name as the
+   default value for a lookup, if the requested name/property/utility
+   was not found.
+
+ - Fixed 'mof2py' generator script not working
+
+ - Fixed model.Element not getting parent component set when passed as a
+   constructor argument.
+
+ - Fixed property/utility lookups not working correctly on model.*
+   objects.
+
+ - Fixed IndentedStream generating all-whitespace lines
+

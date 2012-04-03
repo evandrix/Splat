@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: interfaces</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: interfaces</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/protocols/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>Implement Interfaces and define the interfaces used by the package</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-__future__.html">__future__</a> <b>import</b> generators<br>
+<b>from</b> <a href="adapters.html">adapters</a> <b>import</b> <a href="../../protocols/adapters/composeAdapters.html#composeAdapters">composeAdapters</a>, <a href="../../protocols/adapters/updateWithSimplestAdapter.html#updateWithSimplestAdapter">updateWithSimplestAdapter</a>, <a href="../../protocols/adapters/NO_ADAPTER_NEEDED.html#NO_ADAPTER_NEEDED">NO_ADAPTER_NEEDED</a>, <a href="../../protocols/adapters/DOES_NOT_SUPPORT.html#DOES_NOT_SUPPORT">DOES_NOT_SUPPORT</a><br>
+<b>from</b> <a href="advice.html">advice</a> <b>import</b> <a href="../../protocols/advice/metamethod.html#metamethod">metamethod</a>, <a href="../../protocols/advice/classicMRO.html#classicMRO">classicMRO</a>, <a href="../../protocols/advice/mkRef.html#mkRef">mkRef</a><br>
+<b>import</b> <a href="api.html">api</a><br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-types.html">types</a> <b>import</b> InstanceType<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="interfaces/Attribute.html">Attribute</a></p></td><td valign="top" align="left">
+<p>Attribute declaration; should we get rid of this?</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IAdapterFactory.html">IAdapterFactory</a></p></td><td valign="top" align="left">
+<p>Callable that can adapt an object to a protocol</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IAdaptingProtocol.html">IAdaptingProtocol</a></p></td><td valign="top" align="left">
+<p>A protocol that potentially knows how to adapt some object to itself</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IConformingObject.html">IConformingObject</a></p></td><td valign="top" align="left">
+<p>An object that potentially knows how to adapt to a protocol</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IImplicationListener.html">IImplicationListener</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IOpenImplementor.html">IOpenImplementor</a></p></td><td valign="top" align="left">
+<p>Object/type that can be told how its instances adapt to protocols</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IOpenProtocol.html">IOpenProtocol</a></p></td><td valign="top" align="left">
+<p>A protocol that be told what it implies, and what supports it</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IOpenProvider.html">IOpenProvider</a></p></td><td valign="top" align="left">
+<p>An object that can be told how to adapt to protocols</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/IProtocol.html">IProtocol</a></p></td><td valign="top" align="left">
+<p>Object usable as a protocol by 'adapt()</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/Interface.html">Interface</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/InterfaceClass.html">InterfaceClass</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/Protocol.html">Protocol</a></p></td><td valign="top" align="left">
+<p>Generic protocol w/type-based adapter registry</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="interfaces/Variation.html">Variation</a></p></td><td valign="top" align="left">
+<p>A variation of a base protocol - &quot;inherits&quot; the base's adapters</p>
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:03 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

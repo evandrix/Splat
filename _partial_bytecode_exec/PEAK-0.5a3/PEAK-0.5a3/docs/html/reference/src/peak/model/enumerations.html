@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: enumerations</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: enumerations</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/model/enumerations.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>Enumeration support</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="elements.html">elements</a> <b>import</b> <a href="elements/PrimitiveTypeClass.html">PrimitiveTypeClass</a>, <a href="elements/PrimitiveType.html">PrimitiveType</a><br>
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> *<br>
+<b>from</b> peak.api <b>import</b> *<br>
+<b>from</b> peak.util.hashcmp <b>import</b> HashAndCompare<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#enums">enums</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="enums"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">enums&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+enums ( *values )
+
+</pre></font>
+
+<h3>A sequence of enumeration literals</h3>
+<p>    This function is a shortcut for creating a series of <code>model.enum()</code>
+    instances.  Examples:
+<pre>
+        class RGB(model.Enumeration):
+            red, green, blue = model.enums("R","G","B")
+
+        class Binary(model.Enumeration):
+            zero, one = model.enums(range(2))
+
+        class FooBar(model.Enumeration):
+            foo, bar = model.enums(2)
+</pre>
+</p>
+<p>    <code>model.enums()</code> accepts a series of arguments, and creates a <code>model.enum()</code>
+    for each one, returning the list (<code>RGB</code> example).  If only one argument is
+    supplied, and it's iterable, it is used as the input list.  Finally, if
+    only one argument is supplied, and it's not iterable, it is treated as a
+    count of empty <code>model.enum()</code> objects to be returned.  In the <code>FooBar</code>
+    example, this is equivalent to saying
+    <code>foo, bar = model.enum(), model.enum()</code>.</p>
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="enumerations/Enumeration.html">Enumeration</a></p></td><td valign="top" align="left">
+<p>An enumeration type</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="enumerations/EnumerationClass.html">EnumerationClass</a></p></td><td valign="top" align="left">
+<p>Metaclass for enumeration types</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="enumerations/ExtendedEnum.html">ExtendedEnum</a></p></td><td valign="top" align="left">
+<p>Enumeration that also parses integers</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="enumerations/enum.html">enum</a></p></td><td valign="top" align="left">
+<p>Define an enumeration literal</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="enumerations/enumDict.html">enumDict</a></p></td><td valign="top" align="left">
+<p>Define a dictionary of enumeration literals</p>
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:45 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

@@ -1,0 +1,499 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: IRelationVariable</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: IRelationVariable</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/query/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>A relation variable (RV) in relational algebra</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+Interface<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+
+            <table border="0" cellspacing="2" cellpadding="2" width="100%">
+              <tr>
+            <td align="LEFT" valign="TOP">
+<a href="#__call__">__call__</a><br>
+<a href="#__cmp__">__cmp__</a><br>
+<a href="#__getitem__">__getitem__</a><br>
+<a href="#__hash__">__hash__</a><br>
+<a href="#attributes">attributes</a><br>
+<a href="#clone">clone</a><br>
+</td>
+<td align="LEFT" valign="TOP">
+<a href="#getCondition">getCondition</a><br>
+<a href="#getDB">getDB</a><br>
+<a href="#getInnerRVs">getInnerRVs</a><br>
+<a href="#getOuterRVs">getOuterRVs</a><br>
+<a href="#getReferencedRVs">getReferencedRVs</a><br>
+<a href="#keys">keys</a><br>
+</td>
+</tr>
+            </table>
+            
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__call__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__call__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__call__ (
+        where=None,
+        join=(),
+        outer=(),
+        rename=(),
+        keep=(),
+        calc=(),
+        groupBy=(),
+        )
+
+</pre></font>
+
+<h3>Return a new RV based on select/project/join operations as follows:</h3>
+<dl>
+<dt>        <code>where</code></dt>
+<dd>specify a condition that all rows of the new RV must meet
+        (equivalent to the relational algebra <code>select</code> operation).</dd>
+<dt>        <code>join</code></dt>
+<dd>an iterable of RV's that will be inner-joined with this RV
+        (if no <code>where</code> is supplied, this is a cartesian product.)</dd>
+<dt>        <code>outer</code></dt>
+<dd>an iterable of RV's that will be outer-joined with this RV's
+        inner-joined portions.</dd>
+<dt>        <code>keep</code></dt>
+<dd>a sequence of the names of the columns that should be kept in
+        the new RV.  Supplying a non-empty value here is equivalent to the
+        relational algebra <code>project</code> operation.</dd>
+<dt>        <code>rename</code></dt>
+<dd>a sequence of <code>(oldName,newName)</code> tuples specifying columns
+        to be renamed.  The old columns are automatically &quot;kept&quot;, so if you
+        mix <code>rename</code> and <code>keep</code>, you do not need to list renamed columns in the
+        <code>keep</code> argument.</dd>
+<dt>        <code>calc</code></dt>
+<dd>a sequence of <code>(name,DV)</code> pairs specifying computed columns
+        to include in the new RV.  These columns are always added under the
+        given names, so <code>keep</code> and <code>rename</code> have no effect on the new columns.</dd>
+<dt>        <code>groupBy</code></dt>
+<dd>a sequence of the names of the columns that the resulting
+        RV should be summarized on.  These columns will be automatically
+        &quot;kept&quot;, so if you mix <code>groupBy</code> and <code>keep</code>, you do not need to list
+        group-by columns in the <code>keep</code> argument.  Note that when using
+        <code>groupBy</code>, you should only keep or calculate columns that represent
+        aggregates, or else an error will occur.</dd>
+</dl>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__cmp__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__cmp__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__cmp__ ( other )
+
+</pre></font>
+
+<p>Relation variables must be comparable to each other</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__getitem__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__getitem__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__getitem__ ( columnName )
+
+</pre></font>
+
+<p>Return the IRelationAttribute for the named column</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__hash__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__hash__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__hash__ ( other )
+
+</pre></font>
+
+<p>Relation variables must be hashable</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="attributes"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">attributes&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+attributes ()
+
+</pre></font>
+
+<p>Return a kjGraph mapping names-&gt;relation attributes</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="clone"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">clone&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+clone ()
+
+</pre></font>
+
+<p>Return a deepcopy()-like clone of the RV</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getCondition"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getCondition&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getCondition ()
+
+</pre></font>
+
+<p>Return any select() or join condition applying to this RV</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getDB"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getDB&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getDB ()
+
+</pre></font>
+
+<p>Return an object indicating the responsible DB, or None if mixed</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getInnerRVs"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getInnerRVs&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getInnerRVs ()
+
+</pre></font>
+
+<p>Return sequence of inner-join RV's, or (self,) if not a join</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getOuterRVs"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getOuterRVs&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getOuterRVs ()
+
+</pre></font>
+
+<p>Return sequence of outer-join RV's, or () if not outer join</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getReferencedRVs"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getReferencedRVs&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getReferencedRVs ()
+
+</pre></font>
+
+<p>Return sequence of all RVs used in this RV (eg: joins,subqueries)</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="keys"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">keys&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+keys ()
+
+</pre></font>
+
+<p>Return a sequence of column names</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:57 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

@@ -1,0 +1,246 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1' ?>
+<!DOCTYPE component SYSTEM '../../../ZConfig/doc/schema.dtd' >
+
+<component prefix="peak.tools.version">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <sectiontype name="Edit" datatype=".config.Editor.fromZConfig">
+
+    <description>
+        A pattern of changes that need to be applied to a set of files
+    </description>
+
+    <multikey
+        name="File" attribute="filenames" datatype="existing-file" required="yes">
+        <description>
+        Name of a file to be edited.  You may repeat this key to apply
+        the same set of changes to more than one file.
+        </description>
+    </multikey>
+
+
+    <multikey
+        name="Match" attribute="edits" datatype=".config.Match.fromString">
+        <description>
+        A string to be matched in the file.  The string may contain '%(item)s'
+        escapes that will be used to match or insert portions of a current
+        or updated version number.  If the string contains any punctuation, you
+        must surround it with single or double quotes.  You may supply more
+        than one Match line, in which case they must be listed in the same
+        order that they will occur in each edited file.
+
+        If any string listed by a Match line is not found in one of the edited
+        files, an error will occur, and no changes will be made to any of the
+        files.  (You can override this behavior for an individual string by
+        putting the word "optional" before the string you want to match, e.g.
+        "Match optional 'something I want to match'".
+        </description>
+    </multikey>
+
+  </sectiontype>
+
+
+
+
+
+
+
+  <sectiontype name="Module" datatype=".config.Module.fromZConfig">
+
+    <description>
+        A versionable entity within a software project; projects must have at
+        least one "module".
+
+        XXX A current limitation of the system is that no file may be used in
+        more than one Module, or even more than one Edit within the same
+        module!
+    </description>
+
+    <key name="Name" attribute="name" datatype="string" required="yes">
+        <description>The name of the module, e.g. "PEAK"</description>
+    </key>
+
+    <key name="Scheme" attribute="schemeName" datatype="string"
+         default="default">
+        <description>
+            The version numbering scheme used by this module.  If not
+            specified, it defaults to "default".  In any case, the scheme
+            must be defined by a "Scheme" section in the top-level
+            configuration.
+        </description>
+    </key>
+
+    <multisection name="*" type="Edit" attribute="editors" required="yes">
+        <description>
+            The edits needed to update the module's version.
+        </description>
+    </multisection>
+
+  </sectiontype>
+
+
+
+
+
+
+
+
+
+  <sectiontype name="Formats" datatype=".config.getFormats" keytype="string">
+
+    <description>
+        A collection of named formats for a numbering scheme.  Each key in
+        a Formats section is the name of a format.  Its value can be a 'remap',
+        'optional', or 'string'.  For example:
+
+          %lt;Formats%gt;
+          trailer   remap status "a%(build)s" "b%(build)s" "c%(build)s" "%(dot-maint)s"
+          dot-maint optional build ".%(build)s" ""
+          full      string "%(major)s.%(minor)s %(status)s %(build)s"
+          short     "%(major)s.%(minor)s%(trailer)s"
+          %lt;/Formats%gt;
+
+        This example defines two string formats ("full" and "short"), one
+        optional format ("dot-maint"), and one remap format ("trailer").
+        (Notice that if you want a string to contain spaces or nonalphabetic
+        characters, you must enclose it in single or double quotes.)
+
+        An 'remap' format is used to supply alternate names for a 'choice' part
+        in the numbering scheme.  The example above remaps a part called
+        'status' to use 'a', 'b', or 'c' in place of the original name.  This
+        is useful for abbreviations or language/spelling variants between
+        formats.  Notice that %() escapes can be used.
+
+        An 'optional' format is used to implement a simple choice, based on
+        whether another part or format is empty or zero.  In the example above,
+        the 'dot-maint' format will be either a '.' followed by the build
+        number, or an empty string if the 'build' part of the version number is
+        zero or empty.
+
+        A 'string' format is a format that begins with the word 'string' (as
+        in the "full" example above) or a quoted string (as in the "short"
+        example above).  String formats have any %() escapes converted to the
+        named parts or formats.  So, the version 1.2alpha3 would be rendered
+        as '1.2 alpha 3' in "full" format, and '1.2a3' in "short" format.
+        Meanwhile, version 1.9.0 would be rendered as '1.9 final 0' in "full"
+        format, and as simply '1.9' in "short" format.
+    </description>
+
+
+    <key name="+" attribute="formats" datatype="string" required="yes">
+        <description>
+            Each line in a Formats section consists of a format name, followed
+            by a definition.  See the description for the Formats section for
+            more information.
+        </description>
+    </key>
+
+  </sectiontype>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <sectiontype name="Scheme" datatype=".config.Scheme.fromZConfig">
+
+    <description>A version numbering scheme</description>
+
+    <key name="DefaultFormat" attribute="defaultFormat" datatype="string">
+        <description>
+        Name of the format that should be used when displaying a version number
+        that follows this scheme.  For example, if the scheme has a "full"
+        format defined, then one might use "DefaultFormat full" to declare that
+        the "full" format should be used when displaying a version number.
+        Note that if you specify a non-existent format, an error will occur
+        if you attempt to display a version number.
+
+        If you do not specify a default format, versions will be displayed in
+        a simple format that breaks out each part of the version number by
+        name.
+        </description>
+    </key>
+
+    <multikey name="part" attribute="partDefs" datatype="string" required="yes">
+        <description>
+        </description>
+    </multikey>
+
+    <section name="*" type="Formats" attribute="formatDefs" />
+
+  </sectiontype>
+
+
+</component>
+
+
+
+
+
+
+
+
+
+
+

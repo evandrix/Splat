@@ -1,0 +1,41 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1' ?>
+<!DOCTYPE schema SYSTEM '../../ZConfig/doc/schema.dtd' >
+
+<schema datatype=".commands.EventDriven.fromZConfig" prefix="peak.running">
+
+<import package="peak.running"/>
+
+<key name="StopAfter" attribute="stopAfter" datatype="time-interval">
+    <description>
+    After this many seconds, stop and exit the application as soon as the
+    active task completes.  Defaults to 0, which means never stop.
+    </description>
+</key>
+
+<key name="IdleTimeout" attribute="idleTimeout" datatype="time-interval">
+    <description>
+    Stop and exit the application as soon as it has been idle (i.e. no
+    'activityOccurred()' messages have been sent to the main loop) for this
+    many seconds.  Defaults to 0, which means don't check for activity.
+    </description>
+</key>
+
+<key name="RunAtLeast" attribute="runAtLeast" datatype="time-interval">
+    <description>
+    Wait this many seconds before enabling the 'IdleTimeout'.  Note that this
+    setting has no effect if 'IdleTimeout' is 0.  'RunAtLeats' defaults to
+    0, which means idle checking commences immediately.
+    </description>
+</key>
+
+<multisection name="*"
+              type="running.Task"
+              attribute="components"
+              required="yes">
+    <description>
+    An EventDriven application must include one or more sections describing
+    tasks.
+    </description>
+</multisection>
+
+</schema>

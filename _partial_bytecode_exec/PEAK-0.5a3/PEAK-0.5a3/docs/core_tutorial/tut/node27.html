@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.2.1.2 binding.Attribute - The Basis for all Bindings</title>
+<META NAME="description" CONTENT="2.2.1.2 binding.Attribute - The Basis for all Bindings">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node28.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node26.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node25.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node28.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node26.html">2.2.1.1 Deriving from binding.Component</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node28.html">2.2.1.3 Re-binding, Pre-binding, Un-binding,</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION004212000000000000000">
+2.2.1.2 <tt class="class">binding.Attribute</tt> - The Basis for all Bindings</A>
+</H3>
+
+<P>
+All PEAK bindings are created using the class <tt class="class">binding.Attribute</tt>, or a
+subclass thereof.  It provides the basic machinery needed to lazily compute an
+attribute "on-the-fly".  Here's a simple example of its use:
+
+<P>
+<dl><dd><pre class="verbatim">class Car(binding.Component):
+
+    def height(self):
+        baseHeight = self.roof.top - self.chassis.bottom
+        return self.wheels.radius + baseHeight
+
+    height = binding.Make(height)
+</pre></dl>
+
+<P>
+In this example, we want to compute the car's height based on various other
+attributes, but we only want to compute it once, and save the value thereafter.
+To do this, we define a function that takes three arguments: the object, its
+instance dictionary, and the name of the attribute being computed.  Most of the
+time, you'll only care about the first argument, which is the object for which
+the attribute is being computed.  It's rare that you'll need the instance
+dictionary or the attribute name, but if you need them, they're there.
+Normally, you'll just return the value you want the attribute to end up with.
+
+<P>
+Note, by the way, that there's no need for this function passed to
+<tt class="class">binding.Once</tt> to be a method, or for the parameters to have specific
+names.  If we continued the class above as follows:
+
+<P>
+<dl><dd><pre class="verbatim">    verticalCenter = binding.Once(lambda self: self.height/2)
+</pre></dl>
+
+<P>
+This would be a perfectly valid way to express the idea that the car's vertical
+center is half of its height.  It's also true that we could say:
+
+<P>
+<dl><dd><pre class="verbatim">    passengers = binding.Once(lambda: {})
+</pre></dl>
+
+<P>
+as another way of saying "<tt class="samp">binding.Make(dict)</tt>".  However, using
+"<tt class="samp">binding.Make(dict)</tt>" is more compact, and clearer as to intention.
+
+<P>
+By the way, although we've been only showing uses of <tt class="class">binding.Make</tt> with
+one argument (the function to be called), <tt class="class">binding.Make</tt> does actually
+take other arguments, such as a default attribute name, an ``offer as"
+specification (more on this later) and a docstring.  Check out the PEAK
+API Reference or the source code for more details.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node26.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node25.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node28.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node26.html">2.2.1.1 Deriving from binding.Component</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node28.html">2.2.1.3 Re-binding, Pre-binding, Un-binding,</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

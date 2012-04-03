@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: IEventLoop</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: IEventLoop</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/events/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="IScheduler.html">IScheduler</a><br>
+<ul>
+
+protocols.Interface<br>
+
+</ul>
+<a href="ISelector.html">ISelector</a><br>
+<ul>
+
+<a href="ISignalSource.html">ISignalSource</a><br>
+<ul>
+
+protocols.Interface<br>
+
+</ul>
+
+</ul>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#runUntil">runUntil</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="runUntil"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">runUntil&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+runUntil (
+        eventSource,
+        suppressErrors=False,
+        idle=sleep,
+        )
+
+</pre></font>
+
+<h3><code>tick()</code> repeatedly until <code>eventSource</code> fires, returning event</h3>
+<p>        If <code>suppressErrors</code> is true, this method will trap and log all errors
+        without allowing them to reach the caller.  Note that event loop
+        implementations based on Twisted <em>require</em> that <code>suppressErrors</code> be
+        used, and should raise a <code>NotImplementedError</code> if it is set to False.</p>
+<p>        Note that if the event loop's scheduler becomes empty (i.e., there are
+        no active tasks/callbacks remaining), and <code>eventSource</code> has not fired,
+        this method <em>may</em> raise <code>StopIteration</code> to indicate this.  If you would
+        prefer that <code>runUntil()</code> simply exit when that happens, just use the
+        event loop's <code>isEmpty</code> condition as part of an <code>events.AnyOf()</code>
+        condition passed into <code>runUntil()</code>.  Or, if you'd prefer that the event
+        loop continue indefinitely despite the lack of any active tasks (e.g.
+        in GUI programs), you may schedule something to be executed in the far
+        future, or use a task that looks something like:<p>            oneDay = eventLoop.sleep(86400)
+            while True:
+                yield oneDay; events.resume()</p>
+</p>
+<p>        Such a task will only execute once per day, but is sufficient to
+        ensure that <code>runUntil()</code> does not exit due to an empty schedule.  Note
+        that if you are using a Twisted reactor, you don't need to do this
+        as an event loop based on a Twisted reactor will only raise
+        <code>StopIteration</code> if <code>reactor.stop()</code> is called directly (i.e. not via
+        triggering of <code>eventSource</code>).</p>
+<p>        If <code>idle</code> is supplied, it is called with a single argument
+        representing a <code>float</code> number of seconds that the event loop intends
+        to be idle for, each time the event loop is idle.  The default
+        for <code>idle</code> is <code>time.sleep</code>, so that the process sleeps between
+        events.</p>
+<p>        Note that the <code>idle</code> function will probably never be called when there
+        are tasks waiting for I/O, when there are tasks that reschedule
+        themselves at short intervals, or when using Twisted.</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:00 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: permission</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: permission</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/security/permission.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>Permissions, Rules, and Interactions</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> *<br>
+<b>from</b> peak.api <b>import</b> *<br>
+<b>from</b> peak.binding.components <b>import</b> _Base<br>
+<b>from</b> protocols.advice <b>import</b> getFrameInfo, addClassAdvisor<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-types.html">types</a> <b>import</b> ClassType<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-weakref.html">weakref</a> <b>import</b> WeakKeyDictionary<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#allow">allow</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="allow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">allow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+allow ( basePerm=None,  **nameToPerm )
+
+</pre></font>
+
+<p>Use in the body of a class to declare permissions for attributes</p>
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="permission/AccessAttempt.html">AccessAttempt</a></p></td><td valign="top" align="left">
+<p>An attempt to access a protected object</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/Anybody.html">Anybody</a></p></td><td valign="top" align="left">
+<p>Allow anybody access</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/Denial.html">Denial</a></p></td><td valign="top" align="left">
+<p>Object representing denial of access</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/GuardedClassAdapter.html">GuardedClassAdapter</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/Interaction.html">Interaction</a></p></td><td valign="top" align="left">
+<p>Context for an access-controlled interaction (abstract base)</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/NamePermissionsAdapter.html">NamePermissionsAdapter</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/Nobody.html">Nobody</a></p></td><td valign="top" align="left">
+<p>Deny everyone access</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/Permission.html">Permission</a></p></td><td valign="top" align="left">
+<p>Base class for permissions</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/PermissionType.html">PermissionType</a></p></td><td valign="top" align="left">
+<p>A permission type (abstract and/or concrete)</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/RuleSet.html">RuleSet</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="permission/Universals.html">Universals</a></p></td><td valign="top" align="left"></td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:55 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

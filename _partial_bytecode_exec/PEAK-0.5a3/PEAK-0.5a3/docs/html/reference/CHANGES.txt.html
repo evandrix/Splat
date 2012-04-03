@@ -1,0 +1,691 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>PEAK API Reference</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">PEAK API Reference</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Fixes and Enhancements since Version 0.5 alpha 2</h3>
+<p> Changed, Enhanced, or Newly Deprecated Features</p>
+
+<ul>
+<li><p>Added <code>model.Repr</code> type, useful for doing eval/repr conversions of simple
+   Python types, and changed the N2 <code>htmldump</code> command to use it.</p></li>
+<li><p>Added <code>peak.util.mockets</code>, offering imitation socket services like
+   <code>socket()</code> and <code>select()</code>, allowing socket-based services to be tested
+   without using real sockets.</p></li>
+<li><p>Added limited support for two-phase commit of database connections to Sybase
+   and Oracle.  Changed Oracle &quot;outside transaction&quot; semantics to allow read
+   operations only, and added a property to set Oracle transactions to
+   &quot;serializable&quot; (which effectively requires two-phase commits).  Note that
+   the current version of DCOracle2 doesn't properly support two-phase commit
+   except for empty (no-op) transactions, which isn't very useful.  However, if
+   a later release of DCOracle2 works correctly and doesn't change its API, the
+   current PEAK driver should then work correctly.  In the meantime, the
+   cx_Oracle driver apparently <em>does</em> provide working support for two-phase
+   commits.  The controlling properties are of the form <code>DRIVER.twoPhaseCommit</code>
+   and <code>DRIVER.serializable</code>, where <code>DRIVER</code> is the name of the DBAPI driver
+   module, e.g. <code>Sybase.twoPhaseCommit</code> or <code>cx_Oracle.serializable</code>.</p></li>
+<li><p>Added properties to the command-line applications framework, allowing
+   non-command objects access to <code>stdin</code>, <code>stdout</code>, <code>argv</code> etc. from their
+   context.</p></li>
+<li><p>Added <code>[Named Services]</code> section parser to <code>peak.ini</code>.  This new section
+   type functions similarly to <code>[Component Factories]</code>, except that
+   the keys are property names rather than references to interfaces or other
+   component keys, and the values are an expression that creates the actual
+   instance, rather than the name of a factory for the service  This should be
+   helpful for configuring shared services that all implement the same
+   interface, such as SQL connection objects.<p>   Note that to look up a named service, you simply use the appropriate
+   property name, as usual.  The difference is that you are guaranteed to
+   always use the same <em>instance</em> of the service, within a given service area.</p>
+</p></li>
+<li><p>Added <code>peak serve</code> and <code>peak launch</code> commands, for running &quot;CGI&quot; apps in
+   a browser from the local machine.  For example, doing this:
+<pre>
+    PYTHONPATH=examples/trivial_cgi peak launch import:the_cgi.DemoCGI
+
+   from the base directory of a PEAK CVS checkout or source distribution will 
+   launch the 'trivial_cgi' demo program in a new or current browser window.
+   Any application runnable with 'peak CGI' should also be runnable with 
+   'peak serve' or 'peak launch', which makes it very useful for running
+   local browser-based apps or testing an application without CGI or FastCGI
+   available.  The modules that support this new functionality are
+   'peak.util.WSGIServer' (which implements a web server based on Python's
+   'BaseHTTPServer', that can run 'running.IRerunnableCGI' objects) and
+   'peak.tools.local_server' (which provides PEAK integration.)
+</pre>
+</p></li>
+<li><p>Added <code>peak.ddt</code> framework for Document-Driven Testing.  DDT can parse HTML
+   files to extract test descriptions from HTML tables, run the tests, and then
+   output an annotated version of the input document, illustrating the results
+   by e.g. coloring cells to highlight good/bad results.  To use it, you must
+   implement <code>ddt.ITableProcessor</code> components that know how to interpret the
+   table contents.</p></li>
+<li><p>Added <code>fd.file:</code> URL scheme, for URLs like <code>fd.file:stdin</code> that can be used
+   in place of <code>file:</code> URLs for many purposes.</p></li>
+<li><p>Added <code>model.ExtendedEnum</code>, for enumerations that also support arbitrary
+   integers.</p></li>
+<li><p>Added <code>events.IEventLoop</code> implementation and refactored <code>UntwistedReactor</code>
+   to use it.  <code>UntwistedReactor</code> is now nothing more than an adapter from
+   <code>events.IEventLoop</code> to <code>running.IBasicReactor</code>.  Added <code>twisted_support</code>
+   versions of <code>peak.events</code> interfaces (untested).</p></li>
+<li><p><code>running.ISignalManager</code> is now DEPRECATED; please use <code>events.ISignalSource</code>
+   instead.</p></li>
+<li><p>Added <code>events.ISignalSource</code>, that returns <code>events.Broadcaster</code> objects for
+   signals.  This allows you to yield to signals in an <code>events.Thread</code>, or
+   safely set one-time callbacks on them.</p></li>
+<li><p><code>running.IMainLoop</code> has been changed to use an <code>events.IReadable</code> for
+   the <code>lastActivity</code> attribute, and the <code>setExitCode</code> and <code>childForked</code>
+   methods have been replaced with an <code>exitWith()</code> method.</p></li>
+<li><p>The <code>peak.running.mainLoop.signalHandler</code> property has been replaced with
+   <code>peak.running.mainLoop.stopOnSignals</code>, which defaults to including SIGINT,
+   SIGTERM, and SIGBREAK.  If you need custom signal handling, please use
+   the event sources provided by an <code>events.ISignalSource</code>.</p></li>
+<li><p>Simplified configuration for using Twisted, roughly as proposed in
+   <a href="http://www.eby-sarna.com/pipermail/peak/2004-January/001125.html">this message.</a><p>   You can now configure a service area as using Twisted by setting its
+   <code>peak.events.isTwisted</code> property, or by depending upon the
+   <code>running.ITwistedReactor</code> interface, as long as it happens early enough.</p>
+<p>   If you need to make choices based on whether a Twisted reactor is being
+   used, you should use the <code>events.ifTwisted()</code> function.  If you would like
+   to try to force a service area to use a Twisted reactor, you may use
+   <code>events.makeTwisted()</code>.</p>
+</p></li>
+<li><p>Added automatic installation of <code>csv</code> module for Python &lt; 2.3.</p></li>
+<li><p>Added <code>peak.events</code> package, supporting a simple event-driven programming
+   microkernel, including event-driven &quot;ultralight&quot; threads powered by
+   generators.</p></li>
+<li><p>&quot;Global&quot; services defined by <code>[Component Factories]</code> sections now live in
+   the closest &quot;service area&quot; to the component that requests them.  A &quot;service
+   area&quot; is a parent component that implements <code>config.IServiceArea</code>, such as
+   a configuration root returned by <code>config.makeRoot()</code>.  Applications loaded
+   by the <code>peak runIni</code> command are now created in their own service area,
+   which means that settings in the .ini file being run will apply to services
+   the application uses.  (Because the application will have its own,
+   application-specific service instances, and they will use the configuration
+   loaded into the service area.)<p>   If you need to create your own service area, you can do so by mixing in
+   <code>config.ServiceArea</code> to your component class.  However, you should <em>not</em> do
+   this unless you know exactly what &quot;outside&quot; services you may need to use
+   from &quot;inside&quot; the newly created service area, so that you can explicitly
+   connect them &quot;into&quot; the service area.  (In short, if you don't know <em>why</em>
+   you're creating a service area, don't do it.)</p>
+</p></li>
+<li><p><code>config.Namespace()</code> objects now have a <code>keys()</code> method that can be used
+   when the namespace is bound to a context component.  It returns a list of
+   strings that may be used as keys for that namespace.  Example usage:
+<pre>
+    &gt;&gt;&gt; from peak.api import *
+    &gt;&gt;&gt; r=config.makeRoot()
+    &gt;&gt;&gt; ns=config.Namespace('peak.naming.schemes',r)
+    &gt;&gt;&gt; ns.keys()
+    ['https', 'smtp', 'logfile', 'psycopg', 'pkgfile', 'unix.dg', 'win32.dde',
+    'sybase', 'timer', 'lockfile', 'pgsql', 'fd.socket', 'uuid', 'tcp', 'file',
+    'gadfly', 'http', 'logger', 'icb', 'cxoracle', 'udp', 'winflockfile',
+    'import', 'logging.logger', 'nulllockfile', 'nis', 'shlockfile',
+    'zconfig.schema', 'flockfile', 'shellcmd', 'dcoracle2', 'config', 'ftp',
+    'unix', 'ldap', 'sqlite', 'mockdb']
+    &gt;&gt;&gt; ns['ldap']
+    'peak.storage.LDAP:ldapURL'
+</pre>
+</p></li>
+<li><p>Log events don't use a positional <code>message</code> argument any more, and
+   loggers aren't responsible for interpolating message arguments any more.
+   The new signature is <code>Event(parent, msg=msg, args=args, ...)</code>.  Loggers
+   also now tell events what logger name they are, via the <code>ident</code> keyword.</p></li>
+<li><p>The logging system now uses a property namespace, <code>peak.logging.levels</code>, to
+   obtain log level names and values.  The various <code>logs.LEVEL</code> constants are
+   now DEPRECATED.  Please use the <code>getLevelFor()</code> method of the nearest
+   <code>logs.ILoggingService</code> instead.  Also note that URL schemes such as
+   <code>logfile:</code> no longer convert their level names to numbers, since the
+   level names are only meaningful in the context of a logging service.</p></li>
+<li><p>Support for integration with the Python 2.3/PEP 282 logging module has been
+   scaled back.  There are too many globalisms and dependencies there.  When we
+   add plugin-based log configuration, it should be possible to use the logging
+   package's handlers and formatters with the PEAK logging services.  At that
+   point, you'll be able to replace <code>logging.getLogger</code> and
+   <code>logging.getLevelName</code> with the corresponding methods of a PEAK logging
+   service, if you need to force non-PEAK packages to use PEAK's logging.</p></li>
+<li><p>Logs are now accessed via a <code>logs.ILoggingService</code> instance.  The <code>logger:</code>
+   URL scheme automatically accesses the nearest such service.  For backward
+   compatibility, the old <code>peak.logs</code> namespace is still used to supply the
+   actual loggers.  This will be gradually replaced with a plugin-based
+   mechanism.</p></li>
+<li><p>Added <code>binding.PluginKeys</code> and <code>binding.PluginsFor</code>.  These are component
+   keys that can be used to <code>Obtain</code> plugins registered within a property
+   namespace.  <code>PluginKeys</code> obtains a list of the plugins' configuration keys,
+   while <code>PluginsFor</code> obtains a list of the actual plugins.</p></li>
+<li><p>Replaced <code>peak.config.registries.EigenRegistry</code> with
+   <code>peak.config.registries.ImmutableConfig</code>.  The only use we had for
+   <code>EigenRegistry</code> was to keep track of <code>offerAs</code> settings within classes, and
+   it didn't need all the extra complexity of eigenstate management.  The new,
+   more-specialized class is shorter, simpler, and easier to use.</p></li>
+<li><p>Added <code>config.iterKeys()</code> which iterates over all available configuration
+   keys in a given namespace (just property names for now).  The <code>config:</code>
+   namespace is now a <code>naming.IReadContext</code>, so you can navigate it with the
+   <code>n2</code> command, and do things like <code>ls -l config:peak.naming.schemes</code> to list
+   all configured naming schemes.</p></li>
+<li><p>Added <code>config.parentProviding()</code> and <code>config.parentsProviding()</code>, which
+   find the first (or all) parent components of a given component that support
+   a given protocol.</p></li>
+<li><p>Renamings/refactorings/deprecations in 'peak.config':<dl>
+<dt>    <code>config.getProperty</code></dt>
+<dd>use <code>config.lookup()</code> instead</dd>
+<dt>    <code>config.findUtility</code></dt>
+<dd>use <code>config.lookup()</code> instead</dd>
+<dt>    <code>config.findUtilities</code></dt>
+<dd>use <code>config.iterValues()</code> instead</dd>
+<dt>    <code>config.IPropertyMap</code></dt>
+<dd>use <code>config.IConfigMap</code> or <code>config.IConfigurable</code></dd>
+<dt>    <code>config.PropertyMap</code></dt>
+<dd>use <code>config.ConfigMap</code> instead</dd>
+<dt>    <code>config.setPropertyFor</code></dt>
+<dd>DEPRECATED, see source for replacement code.</dd>
+<dt>    <code>config.setRuleFor</code></dt>
+<dd>DEPRECATED, see source for replacement code.</dd>
+<dt>    <code>config.setDefaultFor</code></dt>
+<dd>DEPRECATED, see source for replacement code.</dd>
+<dt>    <code>config.instancePerComponent</code></dt>
+<dd>DEPRECATED, use factories instead.</dd>
+<dt>    <code>config.IConfigurationRoot</code></dt>
+<dd>interface has changed; <code>propertyNotFound</code> is
+    no longer a method, and <code>noMoreUtilities</code> is now <code>noMoreValues</code>.</dd>
+<dt>    <code>exceptions.PropertyNotFound</code></dt>
+<dd>use <code>exceptions.NameNotFound</code> instead.</dd>
+<dt>    <code>exceptions.OutOfScope</code></dt>
+<dd>REMOVED; it was not actually used in PEAK.</dd>
+</dl>
+<p>   In all cases, the old interface, class, or function is DEPRECATED and will
+   go away in the alpha 4 release cycle.  Please take particular note of the
+   fact that <code>IConfigMap</code> offers virtually none of the convenience
+   methods provided by <code>IPropertyMap</code>, so adjust your code accordingly.  Note
+   also that even though there are plenty of references to <code>IPropertyMap</code>
+   remaining in PEAK itself, these are strictly to provide backward
+   compatibility.  Once we enter the alpha 4 release cycle, these will go away.</p>
+</p></li>
+<li><p>Added <code>config.MultiKey()</code> and <code>config.UnionOf()</code> configuration key classes,
+   to generalize existing specialty keys such as <code>ProviderOf</code> and <code>FactoryFor</code>.
+   (The latter two are now defined in terms of the former two.)  Also, made
+   classes and types usable as configuration keys.  This was needed for the
+   above generalization, but also makes many other class-lookup concepts
+   possible.  (Note that there may be some slight changes to the effective
+   registration and lookup order of these and other configuration keys as of
+   this change, as there were some previous errors and/or ambiguities to the
+   lookup order that were not covered by the test suite.)</p></li>
+<li><p>Added &quot;[Import on Demand]&quot; section type to .ini files, allowing you to
+   define shortcuts for modules that you frequently reference in your
+   configuration.  This lets you replace e.g. <code>importString("foo.bar.baz:Spam")</code>
+   with <code>foo_baz.Spam</code> in expressions, by adding something like this:
+<pre>
+    [Import on Demand]
+    foo_bar = "foo.bar.baz"
+
+   to your configuration.  The defined shortcut is then available for the
+   remainder of that configuration file, and in any .ini files included from
+   the current file.  See 'peak.ini' for an example and more info.
+</pre>
+</p></li>
+<li><p>Logging-related interfaces have been moved into the <code>peak.running.logs</code>
+   module.  So, what used to be <code>running.ILogger</code> is now <code>logs.ILogger</code>.</p></li>
+<li><p>Log events now use a standard component construction signature, and the
+   class used for event objects is now configurable as the factory for
+   <code>logs.ILogEvent</code>.  (See &quot;[Component Factories]&quot; in <code>peak.ini</code>.)</p></li>
+<li><p>By popular demand, <code>logs.ILogger</code> (and its default implementation) now
+   includes <code>trace()</code>, <code>notice()</code>, <code>alert()</code> and <code>emergency()</code> methods that use
+   the corresponding <code>syslog</code> priority levels.  <code>logs.IBasicLogger</code> has been
+   added, to reflect the narrower interface provided by PEP 282, and there is
+   an adapter that can extend PEP 282 loggers with the other methods.</p></li>
+<li><p>The <code>logging.logger:</code> URL scheme has been simplified to <code>logger:</code>.  Please
+   convert your scripts and configuration files, as the longer form will go
+   away in the alpha 4 development cycle.</p></li>
+<li><p>Added <code>commands.lookupCommand()</code> to look up a command shortcut or URL, ala
+   the <code>peak</code> script or <code>commands.Bootstrap</code> class.  Also added various
+   <code>commands.ErrorSubcommand</code> subclasses to make it easier to issue errors
+   from/for subcommands.</p></li>
+<li><p>Added <code>peak.core</code> as a minimal subset of <code>peak.api</code>.  <code>peak.core</code> offers
+   only &quot;core&quot; API packages and primitives, not the full set of available
+   framework APIs.  <code>peak.api</code> will continue to expand as frameworks are added,
+   but <code>peak.core</code> will stay as small as practical.  (<code>peak.exceptions</code> may in
+   fact end up being removed from <code>peak.core</code>, or at least renamed.)</p></li>
+<li><p>Added <code>peak.util.symbol</code> module, to contain <code>NOT_GIVEN</code>, <code>NOT_FOUND</code>, and
+   the <code>Symbol</code> class used to create them.</p></li>
+<li><p><code>peak.running.tools</code> was promoted to <code>peak.tools</code>.  <code>peak.running.supervisor</code>
+   was also moved to <code>peak.tools.supervisor</code>, and a new <code>peak help</code> command was
+   added in <code>peak.tools.api_help</code>.</p></li>
+<li><p>Replaced the &quot;[Provide Utilities]&quot; section of .ini files with &quot;[Component
+   Factories]&quot;.  The new section type is easier to use, much more versatile,
+   and does all registration and imports lazily.  See the <code>peak.ini</code> file for
+   docs.  &quot;[Provide Utilities]&quot; and <code>config.ProvideInstance()</code> are now
+   DEPRECATED, so please convert ASAP.</p></li>
+<li><p><code>binding.Make()</code> now accepts configuration keys, using them to look up a
+   factory object that's then invoked to create the attribute.  This makes it
+   a lot easier to define a component with its own transaction service
+   or other normally &quot;global&quot; component.  It also makes it easier to globally
+   specify a factory class for some interface.  Factories are looked up under
+   the <code>config.FactoryFor(key)</code> configuration key.  (See below.)</p></li>
+<li><p>Added <code>config.FactoryFor(key)</code>, a <code>config.IConfigKey</code> implementation that
+   provides a configuration namespace for factories.<p>   When you use <code>binding.Make(ISomething)</code>, it's roughly equivalent to:
+<pre>
+        binding.Make(
+            lambda self,d,a:
+                binding.lookupComponent(
+                    self, config.FactoryFor(ISomething),
+                    adaptTo = binding.IRecipe
+                )(self,d,a)
+        )
+</pre>
+</p>
+<p>   That is, the <code>config.FactoryFor(ISomething)</code> is looked up and invoked.</p>
+</p></li>
+<li><p>Added <code>config.CreateViaFactory(key)</code>, a <code>config.IRule</code> implementation that
+   creates an implementation of <code>key</code>, by looking up <code>config.FactoryFor(key)</code>
+   and invoking it.</p></li>
+<li><p>Added <code>config.ruleForExpr(name,expr)</code>, that returns a <code>config.IRule</code> that
+   computes the Python expression in the string <code>expr</code>.  This is the mechanism
+   used by configuration files to create rules, factored out into an API call
+   so that configuration extensions can use it, too.</p></li>
+<li><p>The <code>referencedType</code> of a <code>model.StructuralFeature</code> can now be any
+   <code>binding.IComponentKey</code>, not just a type or a string.  Types are also now
+   implicitly component keys, which means you can use <code>binding.Obtain(SomeType)</code>
+   to look up <code>SomeType</code>.  (Right now, this is no different than using <code>SomeType</code>
+   without the <code>binding.Obtain()</code>, but in future releases this will use a
+   &quot;class replacement service&quot; to allow easy replacement of model and other
+   collaborator classes, while implementing AOP-like features.)</p></li>
+<li><p>Added <code>naming.Indirect(key)</code>, a <code>binding.IComponentKey</code> that can be used to
+   do an indirect lookup via another <code>IComponentKey</code> (such as a name).<p>   Using <code>naming.Indirect()</code>, you can replace code like this:
+<pre>
+        socket = binding.Obtain(
+            lambda self: self.lookupComponent(self.socketURL),
+            adaptTo=[IListeningSocket]
+        )
+</pre>
+</p>
+<p>   with code like this:
+<pre>
+        socket = binding.Obtain(
+            naming.Indirect('socketURL'), adaptTo=[IListeningSocket]
+        )
+</pre>
+</p>
+</p></li>
+<li><p>Added <code>peak.tools.supervisor</code>, a mini-framework for pre-forking,
+   multiprocess servers, such as for FastCGI.  The framework includes a ZConfig
+   schema for process supervisors, and support for automatically forking new
+   children (up to a predefined maximum, with a minimum interval between
+   launches) when a socket has pending connections and all of its child
+   processes are busy.  With this setup, you can take more advantage of
+   multiprocessor machines for CPU-intensive services.</p></li>
+<li><p>Standardized these characteristics of name and address syntax:
+<ul>
+<li><p><code>//</code> at the beginning of URL bodies is <em>mandatory</em> when the URL begins
+     with an &quot;authority&quot; as described by RFC 2396.  When the URL is not
+     required to contain an authority (e.g. <code>peak.storage.SQL.GenericSQL_URL</code>),
+     the <code>//</code> is <em>optional</em>, and the canonical form of the URL will not include
+     it.</p></li>
+<li><p>Standardized names for RFC 2396 fields: <code>user</code>, <code>passwd</code>, <code>host</code>, and
+     <code>port</code>.</p></li>
+
+</ul>
+</p></li>
+<li><p>Added <code>peak.metamodels.ASDL</code>, a metamodel for the Zephyr Abstract Syntax
+   Description Language.  ASDL is a convenient way to describe a domain model
+   for an abstract syntax tree (AST), and the models generated with the new
+   ASDL tool can be combined with concrete syntax to create a complete parsing
+   solution for &quot;mini languages&quot;, possibly including the Python language
+   itself.  (Future versions of the Python and Jython compilers are likely to
+   use AST models based on ASDL, and in the current Python CVS sandbox there's
+   already an ASDL model of Python's AST available.)</p></li>
+<li><p>Enhanced <code>fmtparse</code> and <code>peak.model</code> to allow using types as syntax rules
+   for parsing, including abstract types.  An abstract type's syntax is the
+   union (using <code>fmtparse.Alternatives</code>) of the syntaxes of its subclasses
+   (as specified by <code>mdl_subclassNames</code>).</p></li>
+<li><p>Added <code>IMainLoop.exitWith()</code> method, to allow reactor-driven components to
+   control the mainloop's exit code.</p></li>
+<li><p>Added <code>IBasicReactor.crash()</code>, which forces an immediate reactor loop exit,
+   ignoring pending scheduled calls.</p></li>
+<li><p>Added <code>peak.running.commands.runMain()</code>, a convenience function for starting
+   an application's &quot;main&quot; command, that also makes it easy for forked child
+   processes to exit and replace the parent process' &quot;main&quot;.  The <code>peak</code> script
+   has now been shortened to:
+<pre>
+       from peak.running import commands
+       commands.runMain( commands.Bootstrap )
+
+   so it's now much easier to create alternative startup scripts, if you need
+   to, or to add an 'if __name__=="__main__"' clause to a module.
+</pre>
+</p></li>
+<li><p>Added <code>peak.util.mockdb</code>, a &quot;mock object&quot; implementation of a DBAPI 2.0
+   driver module.  <code>mockdb</code> connections can be told to <code>expect()</code> queries
+   and <code>provide()</code> data to their callers, and will raise AssertionErrors when
+   they are used in a way that doesn't conform to your supplied expectations.
+   This is intended to be used for unit testing components that depend on
+   a database connection: you can verify that they send the right SQL, and
+   you can provide them with dummy data to use.  There is also a <code>mockdb:</code> URL
+   and peak.storage driver, so you can easily use a mock DB connection in place
+   of a real one within a PEAK application, for testing purposes.  Note,
+   however, that <code>peak.util.mockdb</code> is a DBAPI 2.0 driver in itself, and thus
+   can also be used to test DBAPI usage outside of PEAK.</p></li>
+<li><p>SQL connection objects now provide an <code>appConfig</code> attribute that is a
+   driver-specific <code>config.Namespace()</code>.  This allows you to easily set up
+   configuration properties that are driver-specific.  For example, you could
+   use properties to configure driver-specific SQL snippets, then access them
+   via the connection's <code>appConfig</code> namespace.  The namespaces are of the form
+   <code>DRIVER.appConfig</code>, where <code>DRIVER</code> is the name of the DBAPI module for that
+   connection type (e.g. <code>pgdb</code>, <code>cx_Oracle</code>, etc.).</p></li>
+<li><p>Added <code>config.Namespace()</code> convenience class for redirecting property
+   lookups from one namespace to another.  See the docstring and <code>peak.ini</code> for
+   usage examples.  <code>PropertyName.of()</code> now returns <code>Namespace</code> instances
+   instead of <code>PropertySet</code> instances.</p></li>
+<li><p>DEPRECATED the <code>config.PropertySet</code> class; please convert to using
+   <code>config.Namespace</code>, as <code>PropertySet</code> will disappear in the 0.5alpha4 release
+   cycle.</p></li>
+<li><p>SQL connection objects now get their type converters from a distinct
+   property namespace for each DBAPI driver.  For example a driver using the
+   <code>cx_Oracle</code> module will get its type converters from the
+   <code>cx_Oracle.sql_types</code> property namespace, instead of <code>peak.sql_types</code>.  For
+   backward compatibility, these driver-specific namespaces are set up to
+   fall back to <code>peak.sql_types</code> for their defaults.  Type converter
+   construction has also been improved, to eliminate conversion overhead
+   completely when no conversions are required for a specific query.  Also,
+   SQL connections now offer a method that will create a row conversion
+   function for a given result description and optional postprocessing
+   function.  This new method should now be used in place of direct access to
+   the <code>typeMap</code> attribute of connection objects.</p></li>
+<li><p>Added <code>binding.Require</code>, <code>binding.Obtain</code>, <code>binding.Make</code>, and
+   <code>binding.Delegate</code>.  <em>ALL</em> other binding types are now DEPRECATED, and will
+   go away before 0.5 beta is released:<dl>
+<dt>   <code>requireBinding("info")</code></dt>
+<dd>use <code>Require("info")</code></dd>
+<dt>   <code>delegateTo("attr")</code></dt>
+<dd>use <code>Delegate("attr")</code></dd>
+<dt>   <code>New(type)</code></dt>
+<dd>use <code>Make(type)</code></dd>
+<dt>   <code>New("module.type")</code></dt>
+<dd>use <code>Make("module.type")</code></dd>
+<dt>   <code>bindTo(key)</code></dt>
+<dd>use <code>Obtain(key)</code></dd>
+<dt>   <code>Constant(value)</code></dt>
+<dd>use <code>Make(lambda: value)</code></dd>
+<dt>   <code>Acquire(key)</code></dt>
+<dd>use <code>Obtain(key, offerAs=[key,])</code></dd>
+<dt>   <code>Copy(value)</code></dt>
+<dd>use <code>Make(lambda: &lt;expr to copy value&gt;)</code></dd>
+<dt>   <code>whenAssembled(func)</code></dt>
+<dd>use <code>Make(func, uponAssembly=True)</code></dd>
+<dt>   <code>bindSequence(key1,key2,...)</code></dt>
+<dd>use <code>Obtain([key1,key,...])</code></dd>
+<dt>   <code>bindToProperty(x,y)</code></dt>
+<dd>use <code>Obtain(PropertyName(x),default=y)</code></dd>
+<dt>   <code>bindToParent()</code></dt>
+<dd>use <code>Obtain("..")</code></dd>
+<dt>   <code>bindToSelf()</code></dt>
+<dd>use <code>Obtain(".")</code></dd>
+<dt>   <code>bindToUtilities()</code></dt>
+<dd>no replacement; let me know if you're using this.</dd>
+</dl>
+<p>   Note that <code>Make</code> and <code>Obtain</code> also support sequences of recipes and keys,
+   and in those cases will produce a sequence of the results from those recipes
+   or keys.  Also, <code>Make</code> will accept no-argument and one-argument callables,
+   where <code>Once</code> always required three-argument functions.  This should make it
+   a lot easier to write short binding functions.</p>
+<p>   Also, note that the <code>activateUponAssembly</code> keyword is now <code>uponAssembly</code>,
+   and <code>isVolatile</code> is now <code>noCache</code>.  (The old names will work as keyword
+   arguments until the alpha 4 development cycle begins.)  The
+   <code>binding.IActiveDescriptor</code> interface also changed as a result of this.
+   Last, but not least, a <code>binding.IRecipe</code> interface was added, to support the
+   new <code>binding.Make</code> type.</p>
+</p></li>
+<li><p>Added a <code>lockName</code> attribute to <code>runnning.AdaptiveTask</code>, and a <code>LockURL</code>
+   setting to its ZConfig schema.  This allows a lockfile URL to be specified
+   for adaptive tasks that need exclusive access to some resource while
+   running.</p></li>
+<li><p>A list or tuple of <code>IComponentKey</code> instances is now treated as a single
+   component key, that returns a tuple of the values returned by each
+   constituent component key.  This means that <code>binding.Obtain()</code> and
+   <code>lookupComponent()</code> can now accept a list or tuple of component keys.  This
+   makes <code>bindSequence()</code> obsolete, so <code>bindSequence()</code> is now DEPRECATED.
+   <code>binding.bindSequence(key1,key2,...)</code> can now be replaced with
+   <code>binding.Obtain([key1,key,...])</code>, and will produce the same results.</p></li>
+<li><p><code>naming.IBasicContext.lookup()</code> and <code>naming.lookup()</code> now accept a <code>default</code>
+   argument, similar to that used by <code>lookupComponent()</code> and most other
+   lookup-like APIs in PEAK.  This change was made so that component lookups
+   don't need to rely on catching <code>exceptions.NameNotFound</code> errors to tell them
+   when to use the default value.  This could hide <code>NameNotFound</code> errors that
+   were actually from a broken component somewhere in the lookup process.  (In
+   general, it's probably a bad idea to have an exception that's used for both
+   control flow and real errors!)</p></li>
+<li><p>Added new <code>version</code> tool that automatically edits files to update version
+   information in them.  Just execute the <code>version</code> file in the main PEAK
+   source directory.  (Use <code>--help</code> for help.)  You can use this tool with your
+   own projects by creating <code>version</code> and <code>version.dat</code> files in your project
+   directory, similar to the ones used by PEAK.  The <code>version</code> file is a ZConfig
+   file that describes your project's version numbering scheme(s), formats,
+   and the files that need to be edited, while the <code>version.dat</code> file contains
+   the current version number values.  Source for the tool, including the
+   configuration file schema, is in the <code>peak.tools.version</code> package.
+   (Error handling and documentation, alas, are still minimal.)</p></li>
+<li><p>Added new <code>Alias</code> command in <code>peak.running.commands</code>.  An <code>Alias</code> instance
+   can be used as a <code>peak.running.shortcut</code> property that expands to another
+   command with arbitrary arguments inserted before the original command's
+   arguments.  Thus, one might alias <code>mycommand</code> to <code>runIni somefile --option</code>,
+   similar to command aliases in many shells.</p></li>
+<li><p><code>naming.IName</code> is now derived from <code>binding.IComponentKey</code>, so names and
+   addresses must now support the <code>findComponent()</code> method.  All PEAK name and
+   address types provide support for this.</p></li>
+<li><p>The <code>lookup()</code> method of <code>binding.IComponentKey</code> is now called
+   <code>findComponent()</code>, to better distinguish it from <code>lookup()</code> in
+   <code>naming.IBasicContext</code>, which does something very different.</p></li>
+<li><p><code>binding.Obtain()</code> (formerly <code>binding.bindTo()</code> and <code>binding.bindSequence()</code>)
+   now pre-adapt their arguments to <code>IComponentKey</code>, to speed up lookups at
+   runtime, and to ensure that errors due to an unusable parameter type occur
+   at class creation time instead of waiting until lookup time.</p></li>
+<li><p>There's a new <code>peak.storage.files</code> module, with handy classes like
+   <code>EditableFile</code>.  <code>EditableFile</code> is a class that lets you edit the contents
+   of a file &quot;in place&quot;, with atomic replacement of the original at transaction
+   commit.  If the transaction is aborted, the original file is left unchanged.</p></li>
+<li><p><code>peak.running.scheduler.UntwistedReactor</code> now supports a configuration
+   property (<code>peak.running.reactor.checkInterval</code>) to determine how long it
+   should run <code>select()</code> calls for, when there are no scheduled tasks.</p></li>
+<li><p><code>peak.running.commands.AbstractCommand</code> now offers a <code>_run()</code> method that
+   can be overridden in subclasses, instead of <code>run()</code>.  If you override the
+   new <code>_run()</code> method instead, you get the advantage of automatic handling
+   for invocation errors and <code>SystemExit</code> exceptions, provided for you by the
+   <code>run()</code> method.</p></li>
+<li><p>There is now a <code>storage.DMFor(class)</code> function that returns a configuration
+   key for registering or looking up data managers by class.  You can use the
+   returned key in a binding's <code>offerAs</code> list, or as the target of a <code>bindTo()</code>
+   or <code>lookupComponent()</code>.  The key is constructed using
+   <code>config.ProviderOf(storage.IDataManager,class)</code>.</p></li>
+<li><p>You can now register utilities that are keyed by the combination of an
+   interface and one or more classes, using <code>config.ProviderOf(iface,*classes)</code>
+   as a configuration key.  Providers are registered under an <code>(iface,klass)</code>
+   tuple for each specified class, and looked up using the MRO order of the
+   class specified for lookup.  In other words, searching for a provider will
+   find a provider for the requested class, or one of its base classes, with
+   precedence given to the more-specific provider.  This is primarily intended
+   for services like data managers and Specialists.</p></li>
+<li><p>It's now possible to extend .ini file parsing with custom section types,
+   and PEAK defines its own built-in section types using this extension
+   mechanism.  Custom section types must include at least one space, (e.g.
+   <code>[My Section]</code>) or they will be treated as a plain property name.
+   See the <code>peak.config.iniFile.sectionParsers</code> section in <code>peak.ini</code> for
+   more details, along with the <code>config.ISettingParser</code> and <code>config.IIniParser</code>
+   interfaces.</p></li>
+<li><p>When creating a <code>PropertyName()</code>, it's now possible to force conversion of
+   invalid characters to <code>_</code>, using the <code>PropertyName.fromString()</code>
+   constructor.  (Note that the input must be a plain-ASCII string.)  Unless
+   you request that wildcards (<code>?</code> and <code>*</code>) be kept, they will also be
+   converted to <code>_</code> characters.  This can be convenient for converting things
+   like filenames or text that might contain spaces, to property names.</p></li>
+<li><p>It's now possible to declare an attribute as offering a wildcard property;
+   such lookups now follow the same rules as other wildcard property lookups.
+   The <code>config.IConfigKey</code> interface has been changed to cleanly support
+   implied keys at both registration and lookup time, so you can implement
+   your own key types that work the way interfaces or property names do for
+   configuration lookups.</p></li>
+<li><p>The <code>EigenRegistry</code> class has been moved from <code>peak.util.EigenData</code> to
+   <code>peak.config.registries</code>, as it hasn't really been useful outside PEAK for
+   a while now.</p></li>
+<li><p>.ini files now support &quot;smart property&quot; objects (<code>config.ISmartProperty</code>).
+   If a property rule defined in an .ini file evaluates at runtime to an object
+   that implements <code>ISmartProperty</code>, the object will be given a chance to
+   compute a value for the property, in place of being used itself.  This helps
+   to simplify definition of complex property rules in .ini files, by allowing
+   the use of helper classes.  Also, <code>naming.LinkRef</code> and <code>naming.Reference</code>
+   (indirectly) support this interface, so you can now use them in .ini files
+   to refer to an object via the naming system.  (Previously, <code>naming.LinkRef</code>
+   wouldn't do the right thing unless the property was looked up via a
+   <code>config:</code> URL, and <code>naming.Reference</code> didn't exist.)</p></li>
+<li><p><code>peak.util.imports.whenImported()</code> can now be used even when the specified
+   module has already been loaded.</p></li>
+<li><p>The naming system no longer has <code>objectFactories</code> and <code>stateFactories</code> as
+   utilities; they have been replaced with new mechanisms involving adaptation.
+   Previously, addresses had a <code>retrieve()</code> method that could be used to
+   retrieve the object defined by the address.  Now, to retrieve an object for
+   an address, you must either define a context that processes the address, or
+   the address must have a <code>defaultFactory</code> attribute, which provides a name
+   to be imported to get an <code>IObjectFactory</code> that can construct the referenced
+   object.  (This is simpler than it sounds; for URLs that reference
+   ManagedConnections, for example, all you need to do is provide the fully
+   qualified name of the connection class.)<p>   Meanwhile, writable naming contexts must have a <code>serializationProtocol</code>
+   attribute, specifying what interface an object should be adapted to before
+   attempting to store it in that context.</p>
+<p>   The naming system no longer processes the <code>creationName</code> keyword argument;
+   this is now considered the sole responsibility of <code>peak.binding</code>.  The
+   <code>IComponent.lookupComponent()</code> method still accepts the keyword argument,
+   and attribute bindings still handle the creation name transparently.  It is
+   just not available via naming system APIs, and naming contexts no longer
+   have to deal with it.</p>
+<p>   The naming system base classes no longer use <code>attrs</code> as an input parameter
+   or return value.  If you've subclassed anything from <code>peak.naming.contexts</code>,
+   note that your <code>_get()</code> methods should now just return the lookup value,
+   rather than a <code>state,attrs</code> tuple.  For most naming contexts, this just
+   means you should change <code>return foo, None</code> statements to just <code>return foo</code>.</p>
+</p></li>
+<li><p>Property definition rules in an .ini file can now refer to <code>rulePrefix</code> and
+   <code>ruleSuffix</code> variables.  <code>rulePrefix</code> is a &quot;.&quot;-terminated string,
+   representing the name the rule was defined with.  For example, if the
+   rule was defined for <code>"foo.bar.*"</code>, then <code>rulePrefix</code> will be <code>"foo.bar."</code><p>   The <code>ruleSuffix</code> will be the portion of the <code>propertyName</code> that follows
+   <code>rulePrefix</code>.  So, if looking up property <code>"foo.bar.baz"</code>, then the
+   <code>"foo.bar.*"</code> rule will execute with a <code>ruleSuffix</code> of <code>"baz"</code>.  This should
+   make it easier to work with hierarchical property namespaces.</p>
+</p></li>
+<li><p>Added simple example scripts and small applications in the <code>examples</code>
+   directory.</p></li>
+<li><p>There is a new command-line namespace introspection tool, <code>n2</code>, which
+   can be accessed by running <code>peak n2</code>.  Type <code>peak n2 -h</code> for help.</p></li>
+<li><p>The PEAK_CONFIG environment variable can now list multiple files, separated
+   by the platform's <code>os.pathsep</code> (e.g. <code>:</code> on Unix, <code>;</code> on Windows).</p></li>
+<li><p>It's no longer necessary to provide a <code>_defaultState()</code> implementation
+   for an EntityDM: a default implementation is now supplied.</p></li>
+<li><p>Added automatic installation of <code>datetime</code> package for Python &lt; 2.3.</p></li>
+<li><p>CGI support has been moved from <code>peak.running.zpublish</code> into
+   <code>peak.running.commands</code> (for &quot;raw&quot; CGI/FastCGI) and <code>peak.web</code> (for the
+   PEAK high-level publishing framework).  You can use <code>peak CGI someName</code> to
+   adapt <code>someName</code> to a <code>running.IRerunnableCGI</code> and run it as a CGI/FastCGI.</p></li>
+<li><p>There is now a <code>peak.security</code> package, available from <code>peak.api</code> as
+   <code>security</code>.  It provides permission management functions: you can define
+   abstract permissions by subclassing <code>security.Permission</code>, then create
+   permission checking rules by subclassing <code>security.RuleSet</code>, and declare
+   the permissions needed to access attributes of a class with
+   <code>security.allow()</code>.  The test suite demonstrates a complex application
+   ruleset with dynamic, data-driven permissions.</p></li>
+<li><p>There is now an interface for "Active Descriptors":
+   <code>binding.IActiveDescriptor</code>.  <code>peak.binding</code> now uses this interface to
+   identify active descriptors, so you can now create your own.  (Previously,
+   <code>peak.binding</code> used <code>isinstance()</code> to detect active descriptors.)</p></li>
+<li><p>REMOVED 'naming.ParsedURL'; it was deprecated as of 0.5 alpha 2.</p></li>
+<li><p>The <code>provides</code> keyword argument to various <code>peak.binding</code> APIs has been
+   renamed to <code>offerAs</code>, and it must be a sequence of configuration keys.
+   (Previously, it accepted either a single key or a tuple of keys.)
+   The signature of <code>binding.Constant()</code> was changed as well; the first
+   positional argument is now the constant value, and <code>offerAs</code> is now a
+   keyword argument.  (Previously, <code>provides</code> was the first positional argument
+   of <code>binding.Constant()</code>.)  The <code>registerProvider()</code> method of
+   <code>config.IConfigurable()</code> also now accepts only a single configuration key,
+   as does <code>EigenRegistry.register()</code>.<p>   Also, all <code>peak.binding</code> APIs now only accept positional parameters for
+   items unique to that API.  Items common to multiple APIs (such as <code>offerAs</code>,
+   <code>doc</code>, <code>attrName</code>, etc.) should now be supplied as keyword arguments.</p>
+<p>   Bindings also now automatically &quot;suggest&quot; the containing object as a parent
+   component for the contained object, whenever a value is assigned to them or
+   computed.  If a non-None <code>adaptTo</code> is set on the binding, the value assigned
+   or computed will be adapted to the specified protocol before the parent
+   component is suggested.  <code>binding.New()</code> no longer relies on the
+   <code>IComponentFactory</code> interface, but instead uses the new adapt/suggest
+   mechanisms.</p>
+<p>   Previously, parent components were only &quot;suggested&quot; when a binding was set
+   via component constructor keyword arguments.  Now, this is done at any time
+   bindings are set, but <em>not</em> for non-binding keyword arguments.  In other
+   words, ordinary attributes of a component do not receive &quot;suggested parent&quot;
+   notices, even when set via constructor keyword arguments.  If you want an
+   attribute to do this, you must define the attribute with the binding API;
+   e.g. via <code>requireBinding()</code> or <code>binding.Constant()</code>.  If you do <em>not</em> want
+   a binding to suggest a parent component, use <code>suggestParent=False</code> in the
+   binding definition.</p>
+</p></li>
+
+</ul>
+<h4> Corrected Problems</h4>
+
+<ul>
+<li><p><code>peak.running.commands.CGICommand</code> could become confused on certain BSD
+    variants (such as Mac OS/X), and assume it was running under FastCGI, even
+    if it wasn't.  (Because the operating systems in question use socket pairs
+    to implement pipes.)</p></li>
+<li><p>Fixed some problems with the test suite when running under Python 2.3.
+    PEAK itself worked fine, but the test suite was bitten by two minor
+    semantic changes that took effect in 2.3, resulting in lots of error
+    messages about ModuleType needing a parameter, and a test failure for
+    <code>checkClassInfo</code> in the <code>FrameInfoTest</code> test class.</p></li>
+<li><p>Transaction participants that raised an error in their <code>abortTransaction()</code>
+    method, would not receive a <code>finishTransaction()</code> call, the error was
+    passed through to the transaction service's caller, and later participants
+    might not have received an <code>abortTransaction()</code> message either.</p></li>
+<li><p>SQL connections didn't close their cursors before aborting a transaction</p></li>
+<li><p>The logging system would raise an error if a log message with no arguments
+    contained a <code>%</code> sign.</p></li>
+<li><p>There was a typo in peak.naming.arithmetic that caused homogeneous non-URL
+    name subtraction to fail.</p></li>
+<li><p>The default reactor supplied in <code>peak.running.scheduler</code> would consume
+    CPU continuously if it was waiting for I/O and no tasks were scheduled.</p></li>
+<li><p>The <code>peak.util.imports.whenImported</code> function didn't work.</p></li>
+
+</ul>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:38 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

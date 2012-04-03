@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>PEAK API Reference</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">PEAK API Reference</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>High-level Package Status Information as of 1/24/04</h3>
+<dl>
+<dt> binding</dt>
+<dd>very stable now, needs some more docs (what PEAK package doesn't?),
+ might need to add some more metadata capabilities later, but really nothing
+ significant is missing.</dd>
+<dt> config</dt>
+<dd>mostly stable. Plugins and iterability of configuration are still
+ hotspots, and the &quot;service area&quot; concept isn't quite solid yet.  Likely, there
+ will need to be a notion of &quot;service categories&quot; as well as areas, so that you
+ can specify what categories of service a component uses, to ensure that
+ autocreated components are homed at the nearest service area that has services
+ of that category.</dd>
+<dt> ddt</dt>
+<dd>quite a bit more to do, but likely to be finished pretty quickly.  In
+ addition to Row and Action bases, I'd like to create some web runners to allow
+ you to run tests from a browser, e.g. via a local web server, or via
+ CGI/FastCGI in a remote server</dd>
+<dt> events</dt>
+<dd>Still some refactoring to go, mostly in the area of conditions and
+ derived event sources, but also wrt &quot;scheduled threads&quot;.  As it's turning out,
+ I'm liking &quot;scheduled threads&quot; less and less, apart from their ability to fire
+ an event after crashing.  There's also a question of allowing threads' last
+ yielded result to be offered as an event source, such that threads themselves
+ become &quot;broadcaster&quot; event sources.</dd>
+<dt> exceptions</dt>
+<dd>I'd actually like to rename this to <code>errors</code>, or else move the
+ exceptions themselves back to individual packages' <code>interface</code> modules.
+ <code>exceptions</code> actually conflicts with the name of a standard library module.</dd>
+<dt> metamodels</dt>
+<dd>this is purely an experimental thing, even though it was a
+ pretty central idea for TransWarp.  It has fairly little practical value at
+ present compared to its spinoff, <code>peak.model</code>, or really compared to virtually
+ anything else in PEAK!</dd>
+<dt> model</dt>
+<dd>will probably suffer a major upheaval again, due to the coming
+ collision of <code>peak.events</code> and <code>peak.query</code> with this space.  Look for model
+ objects to become behavioral shells over <code>events.Value</code> objects that hold the
+ actual data, tied to <code>peak.query</code> relvars.  Business rules, temporal rules,
+ constraint validation, and GUI programming should be well-integrated or at
+ least integratable. (Imagine a DM launching microthreads that monitor the
+ integrity of business objects as they're modified by the UI...)</dd>
+<dt> naming</dt>
+<dd>mostly stable. It's hard to think of anything I'd change
+ significantly in its current functioning, although there are definitely some
+ areas for future expansion as far as writable and searchable contexts and
+ serialization.</dd>
+<dt> net</dt>
+<dd>this is practically empty, but a big growth area in the coming year, as
+ we will likely be adding socket services, SMTP, HTTP, Spread, and other
+ goodies, building on the back of peak.events.</dd>
+<dt> query</dt>
+<dd>also near empty, also a big growth area. We need to integrate what's
+ already there with cursors, with a better mechanism for managing column data
+ types, and develop an API for managing writes while integrating with
+ <code>peak.events</code>. (So that e.g. we can have tools that scan external data sources
+ and issue events when new data becomes available, things change, etc.)</dd>
+<dt> running</dt>
+<dd>lots of junk in here, although <code>commands</code> is really quite good, and
+ <code>logs</code> is getting there.  It still seems to me that lockfiles need to
+ integrate with events somehow, though I'm not yet sure how. I kind of wonder
+ if we wouldn't be better off disbanding this package, moving commands and logs
+ to the top level, and migrating much of the rest to <code>peak.events</code> and
+ <code>peak.naming.factories</code>.  Of particular note is the fact that although there's
+ a <code>peak.running.api</code>, all it contains is a link to <code>commands</code> for backward
+ compatibility!</dd>
+<dt> security</dt>
+<dd>seems quite solid, but it hasn't seen a lot of use yet, so it's
+ really hard to say for certain.</dd>
+<dt> storage</dt>
+<dd>big growth area, but mostly stable at the center. Likely areas of
+ change include cursor metadata and how DM's work and are used.  Both are
+ likely to be impacted significantly by <code>peak.events</code> and <code>peak.query</code>, to
+ support business rules and other observers as well as conceptual queries and
+ declarative data transformations.</dd>
+<dt> tools</dt>
+<dd>each tool is a package unto itself, with different goals and rates of
+ change; not much can be said here.</dd>
+<dt> util</dt>
+<dd>another container package with a bunch of stuff in it.  <code>fmtparse</code> and
+ <code>readline_stack</code> are &quot;cruisin' for a bruisin'&quot;, which is to say they might get
+ major overhauls done or be replaced with something else.  <code>signature</code> and
+ <code>dispatch</code> are likely growth areas, but perhaps not in 2004.</dd>
+<dt> web</dt>
+<dd>this is seriously incomplete. You <em>could</em> create applications with it,
+ but there are lots of areas where you'll have to &quot;roll your own&quot; versions of
+ services that really ought to be bundled. How soon this changes depends a lot
+ on when/whether we end up needing it for any at-work projects.</dd>
+</dl>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:38 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

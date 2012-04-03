@@ -1,32 +1,65 @@
-[30/3/12] Project review - checkpoint
+[2/4/12] Project review - checkpoint
 -----------------------------------------------------------------------------
-- regression testing + automatic crash finding + property testing
+Objectives:
+    - regression testing
+        - impossible to ascertain correctness without program specification given!
+        - instead fingerprint by mapping as representative inputs
+    - automatic crash finding (infinite loops/recursion)
+    * specification compliance/property testing
+    @ function level granularity
 
-i. lazy instantiation technique
-    to determine admissible types (including attributes - fields/methods - on objects) of each argument to function - objects are abstractly modelled as just dict(), essentially
-    ie. complete range of test surface?
-ii. now types are known, how to efficiently crawl this search space
-    in order to generate the minimal representative subset test suite?
+    - assume functions & classes/objects
+    - assume well-defined
+    - assume test functions return values
+    - ignore oldstyle classes, ie. `object in inspect.getmro(c)`   => since going to be deprecated in Py3k
+    - ignore testing eval/exec/compile
+    ? prints/raw_inputs
+    ? if module under test
+        - imports other modules - test in isolation?
+        - contains annotations
+
+Part I: lazy instantiation technique
+    - determine admissible types of function arguments
+        => includes object attributes, ie. fields/methods
+        => objects = dict()
+    - ie. complete range of test surface
+
+Part II: optimising test generation (Control Flow G/Control Dependence G/Data Dependence G)
+    - build DDG of input method parameters
+    - generate the minimal representative subset test suite
+        - is this right? what constitutes a "good" set of tests?
+        - if two test cases exercise the same 'basis path', reducible?
+        - eventually target LCSAJ metric
+        - insight from real life code libraries?
+    - guiding search direction
     - initially random
     - use feedback from dynamic execution to refine test cases generated/prune search space
-    - gather insight from real life code libraries?
+        ? how
+
+Part III: Evaluation
+    - can control input function arguments
+        - reusing function arguments, eg. f(obj1, obj2) <- construct obj2 using obj1 to pass in as parameter
+    - can assert output function results (or the lack of =None)
+        - self.assert*
+        + existence & types of attributes
+        + recursive functions: at each depth of recursion (input) => (output)
+    ? helper classes/methods - see numpy/scipy
+    ? additional parameters in generated test methods
+    - mixing all types like class, recursion... into one file to identify & benchmark
+    - mutation testing
+***
 iii. testing recursive functions (& later, the other kinds of constructs)
+- grand central dispatch parses list of bytecode into useful "breakpoint" nodes
+    = mapped out all possible structures of the grammar - how can this be used?
+- NO: unfortunately test data generation cannot be nested,
+    eg. if within while loop, tests generated for it cannot be "added" iteratively into parent "while" test cases
 
-- grand central dispatch parses list of bytecode into useful "breakpoint" nodes = mapped out all possible structures of the grammar - how can this be used?
-- NO: unfortunately test data generation cannot be nested, eg. if within while loop, tests generated for it cannot be "added" iteratively into parent "while" test cases
-
-- imagine function is a black box (with side effects), unit tests generated can only assert on return result values, and control type&value of input parameters, eg.
+- imagine function is a black box (with side effects), unit tests generated can only assert on return result values,
+and control type&value of input parameters, eg.
     def foo(a):     # a is unused parameter in method
         if False:
             while True:
                 pass
-
-- Impossible to ascertain correctness, instead fingerprint by mapping as representative inputs
-- Assume well defined class under test
-
-benchmarking code coverage: mutation testing...
-How about mixing all types like class, recursion... into one file to benchmark?
-also explore testing extensions - helper classes/methods - see numpy/scipy eg.
 
 [29/3/12]
 -----------------------------------------------------------------------------

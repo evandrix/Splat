@@ -1,0 +1,386 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: IndentedStream</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: IndentedStream</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/util/IndentedStream.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Adapter that adds indentation management to a write stream</h3>
+<p>        Basic Usage:
+<pre>
+            &gt;&gt;&gt; f = IndentedStream(sys.stdout)
+            &gt;&gt;&gt; f.write('{
+'); f.push(1); f.write('foo;
+'); f.pop();                 f.write('}
+');
+</pre>
+</p>
+<p>        Outputs:
+<pre>
+            {
+                foo;
+            }
+</pre>
+</p>
+<p>        IndentedStreams have a indent level stack which keeps track of
+        each new margin size; push sets a new margin (relative or absolute
+        by spaces or tabs), and pop restores the last set margin.  Text written
+        is split on line breaks and indented as needed.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#__getattr__">__getattr__</a><br>
+<a href="#__init__">__init__</a><br>
+<a href="#_indent">_indent</a><br>
+<a href="#_setspaces">_setspaces</a><br>
+<a href="#pop">pop</a><br>
+<a href="#push">push</a><br>
+<a href="#setMargin">setMargin</a><br>
+<a href="#setTabWidth">setTabWidth</a><br>
+<a href="#write">write</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__getattr__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__getattr__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__getattr__ ( self,  name )
+
+</pre></font>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__init__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__init__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__init__ (
+        self,
+        stream=None,
+        tabwidth=4,
+        )
+
+</pre></font>
+
+<p>Create an indented stream from an existing stream</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="_indent"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">_indent&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+_indent ( self )
+
+</pre></font>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="_setspaces"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">_setspaces&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+_setspaces ( self )
+
+</pre></font>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="pop"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">pop&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+pop ( self )
+
+</pre></font>
+
+<p>Restore the most recently saved margin - underflow is ignored</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="push"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">push&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+push (
+        self,
+        *args,
+        *kw,
+        )
+
+</pre></font>
+
+<h3>Save the current margin, and optionally set a new one</h3>
+<p>            This method optionally accepts all the same parameters as
+            <code>setMargin()</code>, so that you can save the current margin and set a new
+            one all in one step.  If no arguments, just saves the current
+            margin.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="setMargin"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">setMargin&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+setMargin (
+        self,
+        tabs=0,
+        indent=0,
+        outdent=0,
+        absolute=None,
+        absTabs=None,
+        )
+
+</pre></font>
+
+<h3>Set current margin using relative or absolute spaces or tabs</h3>
+<p>            Examples:
+<pre>
+                f=IndentedStream(sys.stdout,tabwidth=8)
+                f.setMargin(1)           # indent by 8 spaces (current tab width)
+                f.setMargin(-1)          # outdent by 8 spaces
+                f.setMargin(indent=4)    # indent by 4 spaces (could outdent=-4)
+                f.setMargin(outdent=4)   # outdent by 4 spaces (could indent=-4)
+                f.setMargin(absolute=20) # set margin to 20 spaces
+                f.setMargin(absTabs=3)   # set margin to 3 * current tab width
+</pre>
+</p>
+<p>            Note that <code>setMargin()</code> does not save the current margin; if you
+            need it to be saved, use <code>push()</code> instead, which will take the same
+            arguments.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="setTabWidth"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">setTabWidth&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+setTabWidth ( self,  tabwidth )
+
+</pre></font>
+
+<p>Change current tab stop width</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="write"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">write&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+write ( self,  data )
+
+</pre></font>
+
+<p>Write <code>data</code> to stream, indenting as needed</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:52 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

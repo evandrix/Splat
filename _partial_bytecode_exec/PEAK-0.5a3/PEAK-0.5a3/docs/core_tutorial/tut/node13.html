@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>1.3.1.2 NOT_GIVEN and NOT_FOUND</title>
+<META NAME="description" CONTENT="1.3.1.2 NOT_GIVEN and NOT_FOUND">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node14.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node12.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node11.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node14.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node12.html">1.3.1.1 Interfaces and Exceptions</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node11.html">1.3.1 Package Layout and</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node14.html">1.3.1.3 PEAK's Major Subpackages</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION003312000000000000000">
+1.3.1.2 NOT_GIVEN and NOT_FOUND</A>
+</H3>
+
+<P>
+Some PEAK API's use the special objects "<tt class="samp">NOT_GIVEN</tt>" and "<tt class="samp">NOT_FOUND</tt>"to represent special kinds of ``null" values.  "<tt class="samp">NOT_FOUND</tt>" is often
+used as a return value that signifies a desired item was ``not found" in a
+cache, registry, or other mapping.  This is often done in preference to
+raising a <tt class="exception">KeyError</tt> for both performance and semantic clarity.  A
+<tt class="exception">KeyError</tt> could have been caused by some failure internal to an
+object, while returning "<tt class="samp">NOT_FOUND</tt>" indicates the method was successfully
+executed, but the item was simply not found.
+
+<P>
+"<tt class="samp">NOT_GIVEN</tt>" is rarely used as a return value; its primary purpose is to be
+a default value for argument(s) to a function or method.  It's used in place of
+"<tt class="samp">None</tt>" as a default value, when the argument could legitimately have a
+value of "<tt class="samp">None</tt>" or even "<tt class="samp">NOT_FOUND</tt>".  A function can tell whether a
+value was supplied, by whether the argument is the "<tt class="samp">NOT_GIVEN</tt>" object.
+You'll probably never need to supply this value to a PEAK API call, or
+return it from a method, but you may find it useful in defining your own APIs.
+
+<P>
+Note that you should only compare "<tt class="samp">NOT_GIVEN</tt>" and "<tt class="samp">NOT_FOUND</tt>" using
+the Python "<tt class="samp">is</tt>" operator, e.g. "<tt class="samp">if someParam is NOT_GIVEN:
+doSomething()</tt>".
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node12.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node11.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node14.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node12.html">1.3.1.1 Interfaces and Exceptions</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node11.html">1.3.1 Package Layout and</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node14.html">1.3.1.3 PEAK's Major Subpackages</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: once</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: once</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/binding/once.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p><code>Once</code> objects and classes</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-__future__.html">__future__</a> <b>import</b> generators<br>
+<b>from</b> _once <b>import</b> *<br>
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> <a href="interfaces/IAttachable.html">IAttachable</a>, <a href="interfaces/IActiveDescriptor.html">IActiveDescriptor</a>, <a href="interfaces/IRecipe.html">IRecipe</a><br>
+<b>from</b> peak.api <b>import</b> NOT_FOUND, protocols, adapt<br>
+<b>from</b> peak.config.interfaces <b>import</b> IConfigKey<br>
+<b>from</b> peak.util.imports <b>import</b> importObject, importString<br>
+<b>from</b> peak.util.signature <b>import</b> ISignature, getPositionalArgs<br>
+<b>from</b> <a href="../../../protocols/index.html">protocols</a> <b>import</b> <a href="../../protocols/interfaces/IOpenProvider.html">IOpenProvider</a>, <a href="../../protocols/interfaces/IOpenImplementor.html">IOpenImplementor</a>, NO_ADAPTER_NEEDED<br>
+<b>from</b> protocols.advice <b>import</b> metamethod, getMRO<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-types.html">types</a> <b>import</b> ClassType<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-warnings.html">warnings</a> <b>import</b> warn<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#Copy">Copy</a><br>
+<a href="#_callableAsRecipe">_callableAsRecipe</a><br>
+<a href="#_configKeyAsRecipe">_configKeyAsRecipe</a><br>
+<a href="#getInheritedRegistries">getInheritedRegistries</a><br>
+<a href="#suggestParentComponent">suggestParentComponent</a><br>
+<a href="#supertype">supertype</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Copy"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">Copy&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+Copy ( obj,  **kw )
+
+</pre></font>
+
+<p>DEPRECATED: Use <code>Make(lambda: copy(obj))</code> or <code>Make(lambda: expr)</code></p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="_callableAsRecipe"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">_callableAsRecipe&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+_callableAsRecipe ( func,  protocol )
+
+</pre></font>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="_configKeyAsRecipe"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">_configKeyAsRecipe&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+_configKeyAsRecipe ( ob,  proto )
+
+</pre></font>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getInheritedRegistries"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getInheritedRegistries&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getInheritedRegistries ( klass,  registryName )
+
+</pre></font>
+
+<p>Minimal set of <code>registryName</code> registries in reverse MRO order</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="suggestParentComponent"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">suggestParentComponent&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+suggestParentComponent (
+        parent,
+        name,
+        child,
+        )
+
+</pre></font>
+
+<h3>Suggest to <code>child</code> that it has <code>parent</code> and <code>name</code></h3>
+<p>    If <code>child</code> does not support <code>IAttachable</code> and is a container that derives
+    from <code>tuple</code> or <code>list</code>, all of its elements that support <code>IAttachable</code>
+    will be given a suggestion to use <code>parent</code> and <code>name</code> as well.  Note that
+    this means it would not be a good idea to use this on, say, a 10,000
+    element list (especially if the objects in it aren't components), because
+    this function has to check all of them.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="supertype"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">supertype&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+supertype ( supertype,  subtype )
+
+</pre></font>
+
+<h3>Workaround for <code>super()</code> not handling metaclasses well</h3>
+<p>    Note that this will <em>skip</em> any classic classes in the MRO!</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+TypeError( "Not sub/supertypes:", supertype, subtype )<br>
+
+</td></tr>
+</table>
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="once/Activator.html">Activator</a></p></td><td valign="top" align="left">
+<p>Descriptor metadata management</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/ActiveClass.html">ActiveClass</a></p></td><td valign="top" align="left">
+<p>Metaclass for classes that are themselves components</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/Attribute.html">Attribute</a></p></td><td valign="top" align="left">
+<p>Descriptor for Component Attribute Bindings</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/AttributeClass.html">AttributeClass</a></p></td><td valign="top" align="left">
+<p>Help attribute classes keep class docs separate from instance docs</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/ComponentSetupWarning.html">ComponentSetupWarning</a></p></td><td valign="top" align="left">
+<p>Large iterator passed to suggestParentComponent</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/Descriptor.html">Descriptor</a></p></td><td valign="top" align="left">
+<p>Attribute descriptor with lazy initialization and caching</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/Make.html">Make</a></p></td><td valign="top" align="left">
+<p>Make(recipe)' - Construct a value and cache it</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/Singleton.html">Singleton</a></p></td><td valign="top" align="left">
+<p>Class whose instances are itself, with all attributes at class level</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/SingletonClass.html">SingletonClass</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="once/_MultiRecipe.html">_MultiRecipe</a></p></td><td valign="top" align="left">
+<p>ADAPTER: Sequence(IRecipe) --&gt; IRecipe</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/_SequenceAsAttachable.html">_SequenceAsAttachable</a></p></td><td valign="top" align="left">
+<p>Set parent component for all members of a list/tuple</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/_StringAsRecipe.html">_StringAsRecipe</a></p></td><td valign="top" align="left">
+<p>ADAPTER: string (import spec) --&gt; IRecipe</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/_TypeAsRecipe.html">_TypeAsRecipe</a></p></td><td valign="top" align="left">
+<p>ADAPTER: type | class --&gt; IRecipe</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="once/classAttr.html">classAttr</a></p></td><td valign="top" align="left">
+<p>Class attribute binding</p>
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:38 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

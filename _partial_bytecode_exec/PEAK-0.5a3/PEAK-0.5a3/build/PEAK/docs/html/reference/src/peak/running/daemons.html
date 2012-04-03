@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: daemons</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: daemons</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/running/daemons.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-__future__.html">__future__</a> <b>import</b> generators<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-bisect.html">bisect</a> <b>import</b> insort_left<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-glob.html">glob</a> <b>import</b> glob<br>
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> *<br>
+<b>from</b> <a href="lockfiles.html">lockfiles</a> <b>import</b> <a href="lockfiles/NullLockFile.html">NullLockFile</a><br>
+<b>import</b> os.path<br>
+<b>from</b> peak.api <b>import</b> *<br>
+<b>from</b> peak.naming.interfaces <b>import</b> IStreamFactory<br>
+<b>from</b> peak.storage.interfaces <b>import</b> IManagedConnection<br>
+<b>import</b> <a href="http://www.python.org/doc/current/lib/module-time.html">time</a><br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="daemons/AdaptiveTask.html">AdaptiveTask</a></p></td><td valign="top" align="left">
+<p>Periodic task that adapts its polling interval based on its workload</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="daemons/FileCleaner.html">FileCleaner</a></p></td><td valign="top" align="left">
+<p>Periodically remove stale files from a directory</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="daemons/ManagedConnectionAsCheckableResource.html">ManagedConnectionAsCheckableResource</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="daemons/StreamFactoryAsCheckableResource.html">StreamFactoryAsCheckableResource</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="daemons/TaskQueue.html">TaskQueue</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="daemons/URLChecker.html">URLChecker</a></p></td><td valign="top" align="left">
+<p>Check if specified resource is up and running; try to restart if not</p>
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:49 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

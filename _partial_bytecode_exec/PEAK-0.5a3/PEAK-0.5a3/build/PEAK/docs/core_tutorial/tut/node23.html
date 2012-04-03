@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.1.2.2 Services, Elements, and Features</title>
+<META NAME="description" CONTENT="2.1.2.2 Services, Elements, and Features">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node24.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node22.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node21.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node24.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node22.html">2.1.2.1 Why compose and</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node21.html">2.1.2 Applications = Components</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node24.html">2.2 Specifying Attributes Using</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION004122000000000000000">
+2.1.2.2 Services, Elements, and Features</A>
+</H3>
+
+<P>
+So what's an application made of?  The PEAK approach describes application
+components in terms of their lifecycles and roles, as follows:
+
+<P>
+<DL>
+<DT><STRONG>Services</STRONG></DT>
+<DD>
+<BR>
+Similar in concept to ``singletons", Services are ``well-known" instance objects
+which exist for the lifetime of the application.  For example, a database
+connection object in an application could be a service component, and so could
+a top-level window in a GUI application.  J2EE ``session beans" and
+``message-driven beans" are also good examples of service components.  (Note:
+don't confuse this general concept of services with the Zope 3 concept of a
+``Service"; the latter is an example of the former, but not necessarily the
+other way around.)
+
+<P>
+</DD>
+<DT><STRONG>Elements</STRONG></DT>
+<DD>
+<BR>
+Elements are typically ``problem-domain" objects or their proxies in
+the user interface.  They are created and destroyed by other Elements or
+by the application's Services.  Typical Elements might be ``business objects"
+such as customers and sales, but of course any object that is the actual
+subject of the application's purpose would be considered an Element.  In a
+mail filtering program, for example, e-mail messages, mailboxes, and
+``sender whitelist" objects would be considered Elements.
+
+<P>
+</DD>
+<DT><STRONG>Features</STRONG></DT>
+<DD>
+<BR>
+Features are ``solution-domain" objects used to compose Elements, and less
+often, to compose Services.  Features are typically used to represent
+the properties, methods, associations, user interface views, database fields,
+and other ``features" of a problem-domain Element.  Feature objects are often
+used as a class attribute in an Element's class, and shared between instances.
+PEAK makes extensive use of feature objects to implement labor-saving
+techniques such as generative programming.
+
+<P>
+</DD>
+</DL>
+
+<P>
+This breakdown of application components is called the
+<b>Service-Element-Feature (SEF) Pattern</b>.  PEAK makes it easy to create
+components of each kind, but this pattern certainly isn't limited to PEAK.
+You'll find Services, Elements, and Features in almost any object-based
+application, regardless of language or platform.  But, the pattern is often
+implemented in a rather haphazard fashion, and without the benefit of explicit
+``wiring" between components.
+
+<P>
+When you design an application using the SEF Pattern, your top-level
+application object is itself a Service.  You construct that service from
+lower-level services, such as database connections, object managers,
+and maybe even a top-level window object for a GUI application.  If your
+application is to be web-based, or you're constructing a middle-tier
+subsystem, perhaps it will be composed of web services or the equivalent
+of J2EE session beans.
+
+<P>
+The top-level application object may provide various methods or ``value-added"
+services on top of its subcomponents' services, or it may just serve to start
+them up in an environment that defines their mutual collaborators.  You may
+find later that what you thought was an ``application" component, is really
+just another service that you want to use as part of a larger application.
+Fortunately, it's easy to change a PEAK component's bindings and
+incorporate it into a larger system.
+
+<P>
+Defining the Elements of your application design is also fairly
+straightforward.  Elements are the subject of what your application
+<i>does</i>.  A business application might have Customer elements, a web
+server might handle Page elements, and a hard drive utility might manipulate
+Partition elements.
+
+<P>
+Features, on the other hand, are usually provided by frameworks, and
+incorporated into your application's Elements to create a specific kind of
+application.  For example, a GUI framework might provide visual features that
+allow mapping Element properties to input fields in a window.
+
+<P>
+While PEAK does or will provide many Element and Feature base classes you can
+use to build your applications, these facilities are outside the scope of
+this tutorial, which focuses primarily on assembling an application's Service
+components.  However, some of the techniques you'll learn here will be as
+applicable to Element and Feature objects as they are to Service components.
+
+<P>
+So, let's get started on actually <i>using</i> PEAK to build some
+components, shall we?
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node22.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node21.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node24.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node22.html">2.1.2.1 Why compose and</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node21.html">2.1.2 Applications = Components</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node24.html">2.2 Specifying Attributes Using</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

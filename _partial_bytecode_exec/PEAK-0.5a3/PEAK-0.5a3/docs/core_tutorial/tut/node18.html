@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.1.1 Composing vs. Connecting</title>
+<META NAME="description" CONTENT="2.1.1 Composing vs. Connecting">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node17.html">
+<LINK REL="next" HREF="node19.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node17.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node17.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node19.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node17.html">2.1 Component-Based Applications</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node17.html">2.1 Component-Based Applications</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node19.html">2.1.1.1 Implementing Components in</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004110000000000000000">
+2.1.1 Composing vs. Connecting</A>
+</H2>
+
+<P>
+Imagine a car.  It's composed from a variety of parts: the wheels, engine,
+battery, frame, and so on.  Some of these parts are also composed of parts:
+the engine has a block, cylinders, pistons, spark plugs, and so on.
+
+<P>
+Each part in this ``component assembly" can be a part of only one larger part:
+its <b>parent component</b>.  The hubcaps are part of the wheels,
+and so they can't also be part of the engine.  (They wouldn't fit there in
+any case, but that's beside the point.)  Consider that screws or bolts may
+be used in many parts of the car: each is part of only one other part of
+the car, although more than one of the same <i>kind</i> of part may be used
+in other places.  In the UML (Unified Modelling Language) and in PEAK, this
+kind of parent-child ``assembly" relationship  is called <b>composition</b>:
+a component is being ``composed" by assembling other components.
+
+<P>
+But in the UML and in real life, this isn't the only way of building things
+with components.  It would be very inefficient if every light and accessory
+in your car had to have its own, independent electrical system.  Ways of
+<i>sharing</i> components are needed.  In the car, wires, pipes, hoses, and
+shafts serve to <i>connect</i> the services provided by shared components to
+the places where they are needed.  Note that such connections may be between
+components at any level: wires carry electricity to every electrical part, no
+matter how big or small.  In some cases, wires go to a major subsystem, which
+then has internal wires to carry electricity inward to its parts, or to carry
+signals between its parts.  In  the UML, these kind of ``shared" or
+``peer-to-peer" connections are called <b>associations</b>.
+
+<P>
+
+<p><hr>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></a>
+
+<UL CLASS="ChildLinks">
+<LI><A href="node19.html">2.1.1.1 Implementing Components in Python and PEAK</a>
+<LI><A href="node20.html">2.1.1.2 Component Interfaces</a>
+</ul>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node17.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node17.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node19.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node17.html">2.1 Component-Based Applications</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node17.html">2.1 Component-Based Applications</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node19.html">2.1.1.1 Implementing Components in</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: IExecutable</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: IExecutable</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/running/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Object which can be executed as a &quot;main program&quot; or &quot;subcommand&quot;</h3>
+<p>    Certain <code>peak.running</code> facilities require the use of an &quot;executable&quot;
+    object.  Executable objects are objects which implement one of the
+    following interfaces (listed in descending preference order):</p>
+
+<ul>
+<li><p><code>ICmdLineAppFactory</code> - supports I/O redirection, environment override,
+      command line arguments, and returned exit level</p></li>
+<li><p><code>IRerunnable</code> - supports I/O redirection, environment override,
+      command line arguments, and returned exit level</p></li>
+<li><p><code>ICmdLineApp</code> - redirection and overrides are attempted via <code>sys</code> and
+      <code>os</code> but not guaranteed to work; <code>run()</code> return value is used as
+      exit level.</p></li>
+<li><p>Any object callable with no arguments; redirection and overrides are
+      attempted via <code>sys</code> and <code>os</code> but not guaranteed to work; return value
+      of called object used as exit level.</p></li>
+
+</ul>
+<p>    Objects which implement any of these interfaces can be invoked as
+    subcommands by <code>peak.running.commands</code> classes like <code>Bootstrap</code> and
+    <code>IniInterpreter</code>.  Notice that callables and <code>ICmdLineApp</code> instances
+    can't be completely controlled by their invoker, so if you want to
+    create a component that can have its I/O redirected by a controlling
+    component, you should create an <code>IRerunnable</code> or <code>ICmdLineAppFactory</code>.</p>
+<p>    Note that <code>IExecutable</code> is an &quot;abstract interface&quot; for documentation
+    purposes only.  Declaring that you implement <code>IExecutable</code> directly
+    is meaningless; you must implement one of the three explicit
+    sub-interfaces or be a callable object to be &quot;executable&quot;.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+Interface<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:49 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

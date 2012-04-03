@@ -45,5 +45,11 @@ class TestProgram(unittest.TestCase):
 {{#all_tests}}
 {{prefix}}def test_{{fn_name}}_{{test_name}}(self{{add_params}}): {{stmts}}
 {{/all_tests}}
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestProgram))
+    return suite
 if __name__ == '__main__':
     unittest.main()
+    #unittest.TextTestRunner(verbosity=2).run(suite())
+

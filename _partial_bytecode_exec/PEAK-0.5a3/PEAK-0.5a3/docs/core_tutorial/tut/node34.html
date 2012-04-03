@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.3.1.1 How Hierarchies Are Assembled</title>
+<META NAME="description" CONTENT="2.3.1.1 How Hierarchies Are Assembled">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="next" HREF="node35.html">
+<LINK REL="previous" HREF="node33.html">
+<LINK REL="up" HREF="node33.html">
+<LINK REL="next" HREF="node35.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node33.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node33.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node35.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node33.html">2.3.1 Inspecting Component Hierarchies</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node33.html">2.3.1 Inspecting Component Hierarchies</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node35.html">2.3.1.2 Names and Paths</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION004311000000000000000">
+2.3.1.1 How Hierarchies Are Assembled</A>
+</H3>
+
+<P>
+Perhaps you've been wondering how the objects know what objects are their
+parents.  In the process of answering that question, we'll pass through
+lots of interesting or important points along the way.
+
+<P>
+The short answer to how an object knows what its parent is, is that you
+tell it.  The constructor for <tt class="class">binding.Component</tt> takes as its very first
+argument, the object which should be its parent.
+
+<P>
+In our examples above, however, we never passed a parent into a constructor.
+We created the <tt class="class">Car</tt> instance and <tt class="class">Transport</tt> instance without
+supplying a parent component.  So those instances were created without a
+parent, which is why when we inspect them, they show up as parentless or
+<b>root components</b>.
+
+<P>
+In PEAK, a root component is any object without a parent.  Only objects whose
+classes provide a <tt class="function">getParentComponent</tt> method can have parents, and
+even then they are only considered to have a parent if that method returns
+something other than "<tt class="samp">None</tt>".  Classes without such a method, such as
+Python built-in types, are almost always root components.  For example:
+
+<P>
+<dl><dd><pre class="verbatim">&gt;&gt;&gt; print binding.getParentComponent(123456)
+None
+&gt;&gt;&gt; print binding.getRootComponent([1,2,3])
+[1, 2, 3]
+&gt;&gt;&gt; print binding.getComponentPath("a string")
+/
+&gt;&gt;&gt; print binding.lookupComponent("some string", "upper")
+&lt;built-in method upper of str object at 0x00F26100&gt;
+</pre></dl>
+
+<P>
+As you can see, the inspection functions provided by <tt class="module">peak.binding</tt>
+will work with just about any kind of object, and will provide results
+consistent with the interpretation that objects without a <tt class="function">getParentComponent</tt> method are root components.
+
+<P>
+Notice also that an object doesn't have to be based on <tt class="class">binding.Component</tt>
+to work in a component hierarchy; all it needs is a <tt class="function">getParentComponent</tt> method defined in its class.  For example:
+
+<P>
+<dl><dd><pre class="verbatim">&gt;&gt;&gt; class myGUIControl:
+        def getParentComponent(self):
+            return self.parentWindow
+
+&gt;&gt;&gt; aControl = myGUIControl()
+&gt;&gt;&gt; aControl.parentWindow = "just a demo"
+&gt;&gt;&gt; print binding.getParentComponent(aControl)
+just a demo
+</pre></dl>
+
+<P>
+This, by the way, is one of the reasons why it's better to use <tt class="module">peak.binding</tt> functions to inspect components instead of calling their
+<tt class="function">getParentComponent</tt> or other methods directly.  <tt class="function">binding.getParentComponent</tt> has code to handle the case where an object has no
+<tt class="function">getParentComponent</tt> method.  Similarly, other inspection functions
+gracefully handle the absence of appropriate support by the object:
+
+<P>
+<dl><dd><pre class="verbatim">&gt;&gt;&gt; print binding.getComponentName(aControl)
+None
+&gt;&gt;&gt; print binding.getComponentPath(aControl)
+/*
+</pre></dl>
+
+<P>
+Notice that since we didn't provide any special support in our example GUI
+control class for component names, the <tt class="module">peak.binding</tt> system considers
+it not to have a name.  And unknown names show up as "<tt class="samp">'*'</tt>" in component
+path segments.
+
+<P>
+Of course, if we wanted to support our hypothetical GUI controls having
+component names, we would need only to add a <tt class="function">getComponentName</tt>
+method to its class.
+
+<P>
+But how do we know what methods to add, and what values they should accept
+or return?  The <tt class="module">peak.binding</tt> framework defines an <b>interface</b>,
+<tt class="class">binding.IBindingNode</tt>, that defines what methods the binding framework
+calls on objects that it expects to be nodes in a component tree.  The
+<tt class="class">binding.IBindingNode</tt> interface looks basically like this:
+
+<P>
+<dl><dd><pre class="verbatim">class IBindingNode(config.IConfigSource):
+
+    """Minimum requirements to join a component hierarchy"""
+
+    def getParentComponent():
+        """Return the parent component of this object, or 'None'"""
+
+    def getComponentName():
+        """Return this component's name relative to its parent, or 'None'"""
+
+    def notifyUponAssembly(child):
+        """Call 'child.uponAssembly()' when component knows its root"""
+</pre></dl>
+
+<P>
+By convention, interface names in Python are usually begun with a captial
+``I", to help distinguish them from regular classes.  Also by convention,
+methods are described from the <i>caller's</i> perspective, so "<tt class="samp">self</tt>"arguments are not included in method definitions.
+
+<P>
+So, the <tt class="class">binding.IBindingNode</tt> interface tells us that to implement the
+Binding Node interface, we need a <tt class="function">getParentComponent</tt> method and a
+<tt class="function">getComponentName</tt> method, neither of which takes any parameters, and
+whose return values are as documented.
+
+<P>
+This interface also inherits from <tt class="class">config.IConfigSource</tt>, which defines
+some additional methods that a binding component should implement.  We'll
+look at those in the coming chapter on the configuration system.  Notice
+that this does <i>not</i> mean a component has to inherit from <tt class="class">IConfigSource</tt>!  It simply means that a class which promises to implement the
+<tt class="class">binding.IBindingNode</tt> interface is also promising to implement the
+<tt class="class">config.IConfigSource</tt> interface as well.
+
+<P>
+Did our example <tt class="class">myGUIControl</tt> class promise to implement <tt class="class">binding.IBindingNode</tt>?  No.  We didn't declare that it does, nor did it inherit
+from a class that declares support for the interface.  So, it's not promising
+to implement the full <tt class="class">IBindingNode</tt> interface.  This is acceptable
+because <tt class="module">peak.binding</tt> verifies the presence of needed methods
+automatically, and it isn't required that a component implement all of the
+<tt class="class">IBindingNode</tt> methods.  Most other interfaces however, <i>must</i> be
+explicitly promised by a class in order for the functionality to work.
+(See the <tt class="module">protocols</tt> package documentation for more information about
+declaring support for an interface.)
+
+<P>
+The <tt class="class">binding.IComponentFactory</tt> interface is a good example of this.
+<tt class="class">IComponentFactory</tt> is the interface which defines how component
+constructors work - at least if they're to be supported by <tt class="module">peak.binding</tt>!
+
+<P>
+Let's take a look at the <tt class="class">binding.IComponentFactory</tt> interface in more
+detail.
+
+<P>
+<dl><dd><pre class="verbatim">class IComponentFactory(Interface):
+
+    """Class interface for creating bindable components"""
+
+    def __call__(parentComponent, componentName=None, **attrVals):
+        """Create a new component
+
+        The default constructor signature of a binding component is
+        to receive an parent component to be bound to, an optional name
+        relative to the parent, and keyword arguments which will be
+        placed in the new object's dictionary, to override the specified
+        bindings.
+
+        Note that some component factories (such as 'binding.Component')
+        may be more lenient than this interface requires, by allowing you to
+        omit the 'parentComponent' argument.  But if you do not know this is
+        true for the object you are calling, you should assume the parent
+        component is required."""
+</pre></dl>
+
+<P>
+Notice that this interface describes a <tt class="function">__call__</tt> method.  This
+doesn't mean that you'll need a <tt class="function">__call__</tt> method on your object
+instances or in your class.  It simply means that an object that provides
+the interface should be callable.  Because <tt class="class">IComponentFactory</tt> is an
+interface for functions or classes, the <tt class="function">__call__</tt> method simply
+documents what behavior the function (or class constructor) should have.
+
+<P>
+XXX show how to implement in a class, __init__, __class_implements__, etc.
+
+<P>
+XXX IComponent interface;  setParentComponent
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node33.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node33.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node35.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node33.html">2.3.1 Inspecting Component Hierarchies</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node33.html">2.3.1 Inspecting Component Hierarchies</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node35.html">2.3.1.2 Names and Paths</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

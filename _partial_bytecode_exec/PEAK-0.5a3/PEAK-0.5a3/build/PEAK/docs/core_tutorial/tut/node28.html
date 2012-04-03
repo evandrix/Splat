@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.2.1.3 Re-binding, Pre-binding, Un-binding, and Persistence</title>
+<META NAME="description" CONTENT="2.2.1.3 Re-binding, Pre-binding, Un-binding, and Persistence">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node29.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node27.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node25.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node29.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node27.html">2.2.1.2 binding.Attribute - The</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node29.html">2.2.2 Creating Attribute Bindings</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION004213000000000000000">
+2.2.1.3 Re-binding, Pre-binding, Un-binding, and Persistence</A>
+</H3>
+
+<P>
+We've mentioned over and over that attribute bindings are computed only once,
+but that's not precisely true.  It's actually possible for them to be computed
+zero times, or many times, if we set or delete the attribute the binding
+defines.
+
+<P>
+You may have wondered, ``how does a binding know whether it's been computed or
+not?"  It knows because there is an entry in the object's dictionary for that
+attribute name.  (Notice, by the way, that this means objects without
+dictionaries can't get much use out of bindings.)
+
+<P>
+But what if there's something already in the dictionary?  Or what if you remove
+the value from the dictionary?  Well, it's pretty much as you'd expect.  If you
+set a value for an attribute, then the binding will not compute a value.  If
+you delete the attribute, and try to access it, the binding will recompute the
+value.  This behavior can actually be quite useful in the context of
+transactions: many PEAK transactional components delete certain bindings at the
+conclusion of a transaction, allowing them to be recomputed in the next
+transaction.
+
+<P>
+PEAK also makes use of the ability to override a binding by manually setting
+a value for an attribute.  For example, most PEAK component classes'
+<tt class="method">__init__</tt> methods accept keyword arguments which can override attributes
+which would otherwise be determined by bindings.  This is especially useful in
+conjunction with the <tt class="class">binding.requireBinding</tt> class, which simply
+raises an error when you try to access the attribute.  It's a handy way of
+specifying that a component must have the attribute, and that a subclass or
+instance must supply the value.
+
+<P>
+By the way, it's important to note that bindings do <i>not</i> participate in
+persistence, as they directly alter the associated object's dictionary,
+bypassing the normal ``set attribute" machinery.  You should carefully
+consider the use of attribute bindings in persistent objects, as to how they
+will interact with your persistence machinery (e.g. whether they should be
+saved or not) and whether you will want to code them in such a way as to
+consider the object ``changed" when an attribute is computed.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node27.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node25.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node29.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node27.html">2.2.1.2 binding.Attribute - The</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node29.html">2.2.2 Creating Attribute Bindings</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

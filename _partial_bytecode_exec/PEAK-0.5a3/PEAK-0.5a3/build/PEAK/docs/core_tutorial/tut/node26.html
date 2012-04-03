@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.2.1.1 Deriving from binding.Component</title>
+<META NAME="description" CONTENT="2.2.1.1 Deriving from binding.Component">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="next" HREF="node27.html">
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node27.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node25.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node25.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node27.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node27.html">2.2.1.2 binding.Attribute - The</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION004211000000000000000">
+2.2.1.1 Deriving from <tt class="class">binding.Component</tt></A>
+</H3>
+
+<P>
+As we've already seen, attribute bindings can be made to work with
+``old-style" or ``classic" Python classes.  There are some drawbacks to that,
+however.  Most visibly, it's necessary to specify an attribute binding's
+name in its definition, as we saw in our example, i.e.
+"<tt class="samp">passengers = binding.Make(dict, attrName='passengers')</tt>".
+
+<P>
+However, if we derive our class from <tt class="class">binding.Component</tt>, we no longer
+have to do this:
+
+<P>
+<dl><dd><pre class="verbatim">&gt;&gt;&gt; class Car(binding.Component):
+        passengers = binding.Make(dict)
+
+&gt;&gt;&gt; aCar=Car()
+&gt;&gt;&gt; print aCar.passengers
+{}
+</pre></dl>
+
+<P>
+Now, it's sufficient to use "<tt class="samp">binding.Make(dict)</tt>" to define the attribute.
+What would happen if we did this <i>without</i> <tt class="class">binding.Component</tt>?
+
+<P>
+<dl><dd><pre class="verbatim">&gt;&gt;&gt; class Car(object):     # new-style class error messages are more helpful
+        passengers = binding.Make(dict)
+
+&gt;&gt;&gt; aCar=Car()
+&gt;&gt;&gt; print aCar.passengers
+Traceback (most recent call last):
+  File "&lt;pyshell#13&gt;", line 1, in ?
+    print aCar.passengers
+  File "C:\cygwin\home\pje\PEAK\src\peak\binding\once.py", line 420, in __get__
+    return self._installedDescr(ob.__class__).__get__(ob,typ)
+  File "C:\cygwin\home\pje\PEAK\src\peak\binding\once.py", line 449, in _installedDescr
+    self.usageError()
+  File "C:\cygwin\home\pje\PEAK\src/peak/binding/_once.pyx", line 125, in _once.BaseDescriptor.usageError
+    raise TypeError(
+TypeError: Binding was used in a type which does not support active
+bindings, but a valid attribute name was not supplied
+</pre></dl>
+
+<P>
+Ouch!  It doesn't work, because PEAK can't tell what name the attribute
+has without help from either you or the base class.  (Actually, it's the
+metaclass, not the base class, but that's not important right now).  There
+are some circumstances where PEAK will try to guess the attribute name for you,
+such as when you use a class or a  function to define an attribute binding, but
+for the most part you must either have a base class (such as
+<tt class="class">binding.Component</tt>) whose metaclass supports activating bindings, or else
+you must supply the attribute name yourself when defining the binding.
+
+<P>
+So, if you plan to use attribute bindings in your program, it's probably best
+to subclass <tt class="class">binding.Component</tt>; it'll save you a lot of typing!  Most
+PEAK framework classes for ``service" components derive from <tt class="class">binding.Component</tt> already.
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node25.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node25.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node27.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node25.html">2.2.1 Binding Fundamentals</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node27.html">2.2.1.2 binding.Attribute - The</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

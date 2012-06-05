@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: ActionChecker</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: ActionChecker</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/ddt/processors.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Test a domain object using a &quot;script&quot; of actions</h3>
+<p>    This <code>ModelChecker</code> subclass reads actions from a table with three or
+    more columns.  The first cell in each row is a &quot;command&quot;, such as &quot;start&quot;,
+    &quot;enter&quot;, &quot;press&quot;, or &quot;check&quot;, that is used to look up a method on the
+    action processor itself.  The invoked method can then use the remaining
+    cells from the row to obtain its arguments.  See the docs for the <code>start</code>,
+    <code>enter</code>, <code>press</code>, and <code>check</code> methods for more details.</p>
+<p>    Note that tables used with <code>ActionChecker</code> must <em>not</em> include column
+    headings, as <code>ActionChecker</code> does not parse them.  (As a result, it also
+    has no need for a <code>columnSuffix</code> attribute or <code>parseHeader()</code> method.)</p>
+<p>    Unlike <code>ModelChecker</code>, <code>ActionChecker</code> should not be given a specific
+    <code>targetClass</code> to use.  Instead, the <code>start</code> command is used to create an
+    instance of a specified class, which is then used until another <code>start</code>
+    command is executed.  Also, <code>ActionChecker</code> does not use the
+    <code>columnSuffixes</code> attribute, because it does not parse column headings.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="ModelChecker.html">ModelChecker</a><br>
+<ul>
+
+<a href="MethodChecker.html">MethodChecker</a><br>
+<ul>
+
+<a href="AbstractProcessor.html">AbstractProcessor</a><br>
+<ul>
+
+binding.Component<br>
+
+</ul>
+
+</ul>
+
+</ul>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#check">check</a><br>
+<a href="#enter">enter</a><br>
+<a href="#getCommand">getCommand</a><br>
+<a href="#mapCell">mapCell</a><br>
+<a href="#press">press</a><br>
+<a href="#processRow">processRow</a><br>
+<a href="#processRows">processRows</a><br>
+<a href="#start">start</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="check"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">check&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+check ( self,  cells )
+
+</pre></font>
+
+<p>Look up a field name, and check if value matches</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="enter"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">enter&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+enter ( self,  cells )
+
+</pre></font>
+
+<p>Look up a field name, and then set it to value</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getCommand"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getCommand&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getCommand ( self,  text )
+
+</pre></font>
+
+<h3>Lookup <code>text</code> as a method of this processor</h3>
+<p>        You can override this if you want to use a different strategy for
+        obtaining commands.  The returned command must be a callable that
+        takes one parameter: a list of cells.  The cells the command receives
+        will be the remainder of the row that contained the command; typically
+        this means <code>row.cells[1:]</code>.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="mapCell"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">mapCell&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+mapCell (
+        self,
+        mapperCell,
+        mappedCell,
+        mapMethod,
+        )
+
+</pre></font>
+
+<p>Convenience method for two-argument mapping commands</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="press"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">press&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+press ( self,  cells )
+
+</pre></font>
+
+<p>Invoke specified method/button/whatever</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="processRow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">processRow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+processRow (
+        self,
+        row,
+        rows,
+        )
+
+</pre></font>
+
+<p>Process a row using <code>self.getCommand(firstCell.text)(otherCells)</code></p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="processRows"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">processRows&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+processRows ( self,  rows )
+
+</pre></font>
+
+<p>Just process rows; no column headings are required or wanted.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="start"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">start&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+start ( self,  cells )
+
+</pre></font>
+
+<p>Obtain an instance of the specified type and use it from here on</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:01 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

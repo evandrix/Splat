@@ -1,0 +1,3280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.5.3" />
+<meta name="description" content="Python bindings for LLVM" />
+<meta name="keywords" content="llvm python compiler backend bindings" />
+<link rel="stylesheet" href="style/xhtml11.css" type="text/css" />
+<link rel="stylesheet" href="style/xhtml11-quirks.css" type="text/css" />
+<link rel="stylesheet" href="style/layout.css" type="text/css" />
+<script type="text/javascript">
+/*<![CDATA[*/
+window.onload = function(){generateToc(2)}
+/*]]>*/
+</script>
+<script type="text/javascript" src="js/toc.js"></script>
+<title>llvm-py User Guide - llvm-py</title>
+</head>
+<body>
+<div id="layout-banner">
+  <div id="layout-title">llvm-py</div>
+  <div id="layout-description">Python Bindings for LLVM</div>
+</div>
+<table>
+<tr valign="top">
+<td id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="examples.html">Examples</a></div>
+  <div>&#187;<a href="download.html">Download</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="contribute.html">Contribute</a></div>
+  <div>&#187;<a href="license.html">License</a></div>
+  <div>&#187;<a href="about.html">About</a></div>
+</td>
+<td>
+<div id="toc" style="float: right; display: none">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>llvm-py User Guide</h1>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>llvm-py provides Python bindings for LLVM. This document explains how
+you can setup and use it. A working knowledge of Python and a basic idea
+of LLVM is assumed.</p></div>
+</div>
+</div>
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="http://www.llvm.org/">LLVM</a> (Low-Level Virtual Machine) provides enough
+infrastructure to use it as the backend for your compiled, or
+JIT-compiled language. It provides extensive optimization support, and
+static and dynamic (JIT) backends for many platforms. See the website at
+<a href="http://www.llvm.org/">http://www.llvm.org/</a> to discover more.</p></div>
+<div class="paragraph"><p>Python bindings for LLVM provides a gentler learning curve for working
+with the LLVM APIs. It should also be easier to create working
+prototypes and experimental languages using this medium.</p></div>
+<div class="paragraph"><p>Together with <a href="http://clang.llvm.org/">clang</a> or
+<a href="http://llvm.org/cmds/llvmgcc.html">llvm-gcc</a> it also a provides a means
+to quickly instrument C and C++ sources. For e.g., llvm-gcc can be used to
+generate the LLVM assembly for a given C source file, which can then be
+loaded and manipulated (adding profiling code to every function, say) using
+a llvm-py based Python script.</p></div>
+<div class="paragraph"><div class="title">License</div><p>Both LLVM and llvm-py are distributed under (different) permissive
+open source licenses. llvm-py uses the
+<a href="http://opensource.org/licenses/bsd-license.php">new BSD license</a>. More
+information is available <a href="license.html">here</a>.</p></div>
+<div class="paragraph"><div class="title">Platforms</div><p>llvm-py has been built/tested/reported to work on various GNU/Linux
+flavours, *BSD, Mac OS X; on i386 and amd64 architectures. Windows is not
+supported, for a variety of reasons.</p></div>
+<div class="paragraph"><div class="title">Versions</div><p>llvm-py 0.6 requires verion 2.7 of LLVM. It will not work with previous
+versions.</p></div>
+<div class="paragraph"><p>llvm-py has been built and tested with Python 2.6. It should work with
+Python 2.4 and 2.5. It has not been tried with Python 3.x (patches welcome).</p></div>
+</div>
+<h2 id="install">Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>llvm-py is distributed as a source tarball. You&#8217;ll need to build and
+install it before it can be used. At least the following will be
+required for this:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+C and C<tt> compilers (gcc/g</tt>)
+</p>
+</li>
+<li>
+<p>
+Python itself
+</p>
+</li>
+<li>
+<p>
+Python development files (headers and libraries)
+</p>
+</li>
+<li>
+<p>
+LLVM, either installed or built
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>On debian-based systems, the first three can be installed with the
+command <tt>sudo apt-get install gcc g++ python python-dev</tt>. Ensure that your
+distro&#8217;s respository has the appropriate version of LLVM!</p></div>
+<div class="paragraph"><p>It does not matter which compiler LLVM itself was built with (g<tt>,
+llvm-g</tt> or any other); llvm-py can be built with any compiler. It has
+been tried only with gcc/g++ though.</p></div>
+<h3 id="_llvm_and_tt_enable_pic_tt">LLVM and <tt>--enable-pic</tt></h3><div style="clear:left"></div>
+<div class="paragraph"><p>The result of an LLVM build is a set of static libraries and object
+files. The llvm-py contains an extension package that is built into a
+shared object (_core.so) which links to these static libraries and
+object files. It is therefore required that the LLVM libraries and
+object files be built with the <tt>-fPIC</tt> option (generate position
+independent code). Be sure to use the <tt>--enable-pic</tt> option while
+configuring LLVM (default is no PIC), like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>~/llvm$ ./configure --enable-pic --enable-optimized</tt></pre>
+</div></div>
+<h3 id="_llvm_config">llvm-config</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Inorder to build llvm-py, it&#8217;s build script needs to know from where it
+can invoke the llvm helper program, <tt>llvm-config</tt>. If you&#8217;ve installed
+LLVM, then this will be available in your <tt>PATH</tt>, and nothing further
+needs to be done. If you&#8217;ve built LLVM yourself, or for any reason
+<tt>llvm-config</tt> is not in your <tt>PATH</tt>, you&#8217;ll need to pass the full path
+of <tt>llvm-config</tt> to the build script.</p></div>
+<div class="paragraph"><p>You&#8217;ll need to be <em>root</em> to install llvm-py. Remember that your <tt>PATH</tt>
+is different from that of <em>root</em>, so even if <tt>llvm-config</tt> is in your
+<tt>PATH</tt>, it may not be available when you do <tt>sudo</tt>.</p></div>
+<h3 id="_steps">Steps</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The commands illustrated below assume that the LLVM source is available
+under <tt>/home/mdevan/llvm</tt>. If you&#8217;ve a previous version of llvm-py
+installed, it is recommended to remove it first, as described
+<a href="#uninstall">below</a>.</p></div>
+<div class="paragraph"><p>If you have <tt>llvm-config</tt> in your path, you can build and install
+llvm-py this way:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ tar jxvf llvm-py-0.6.tar.bz2
+$ cd llvm-py-0.6
+$ python setup.py install --user</tt></pre>
+</div></div>
+<div class="paragraph"><p>If you need to tell the build script where <tt>llvm-config</tt> is, do it this
+way:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ tar jxvf llvm-py-0.6.tar.bz2
+$ cd llvm-py-0.6
+$ python setup.py install --user --llvm-config=/home/mdevan/llvm/Release/bin/llvm-config</tt></pre>
+</div></div>
+<div class="paragraph"><p>To build a debug version of llvm-py, that links against the debug
+libraries of LLVM, use this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ tar jxvf llvm-py-0.6.tar.bz2
+$ cd llvm-py-0.6
+$ python setup.py build -g --llvm-config=/home/mdevan/llvm/Debug/bin/llvm-config
+$ python setup.py install --user --llvm-config=/home/mdevan/llvm/Debug/bin/llvm-config</tt></pre>
+</div></div>
+<div class="paragraph"><p>Be warned that debug binaries will be huge (100MB+) ! They are required
+only if you need to debug into LLVM also.</p></div>
+<div class="paragraph"><p><tt>setup.py</tt> is a standard Python distutils script. See the Python
+documentation regarding <a href="http://docs.python.org/inst/inst.html">Installing
+Python Modules</a> and <a href="http://docs.python.org/dist/dist.html">Distributing
+Python Modules</a> for more information on such scripts.</p></div>
+<h3 id="uninstall">Uninstall</h3><div style="clear:left"></div>
+<div class="paragraph"><p>If you&#8217;d installed llvm-py with the <tt>--user</tt> option, then llvm-py
+would be present under <tt>~/.local/lib/python2.6/site-packages</tt>.
+Otherwise, it might be under <tt>/usr/lib/python2.6/site-packages</tt>
+or <tt>/usr/local/lib/python2.6/site-packages</tt>. The directory would
+vary with your Python version and OS flavour. Look around.</p></div>
+<div class="paragraph"><p>Once you&#8217;ve located the site-packages directory, the modules and
+the "egg" can be removed like so:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ rm -rf &lt;site-packages&gt;/llvm &lt;site-packages&gt;/llvm_py-0.6-py2.6.egg-info</tt></pre>
+</div></div>
+<div class="paragraph"><p>See the <a href="http://docs.python.org/install/index.html">Python
+documentation</a> for more information.</p></div>
+</div>
+<h2 id="_llvm_concepts">LLVM Concepts</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This section explains a few concepts related to LLVM, not specific
+to llvm-py.</p></div>
+<h3 id="_intermediate_representation">Intermediate Representation</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The intermediate representation, or IR for short, is an in-memory data
+structure that represents executable code. The IR data structures allow
+for creation of types, constants, functions, function arguments,
+instructions, global variables and so on. For example, to create a
+function <em>sum</em> that takes two integers and returns their sum, we need to
+follow these steps:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+create an integer type <em>ti</em> of required bitwidth
+</p>
+</li>
+<li>
+<p>
+create a function type <em>tf</em> which takes two <em>ti</em> -s and returns
+  another <em>ti</em>
+</p>
+</li>
+<li>
+<p>
+create a function of type <em>tf</em> named <em>sum</em>
+</p>
+</li>
+<li>
+<p>
+add a <em>basic block</em> to the function
+</p>
+</li>
+<li>
+<p>
+using a helper object called an <em>instruction builder</em>, add two
+  instructions into the basic block:
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+an instruction to add the two arguments and store the result into
+    a temporary variable
+</p>
+</li>
+<li>
+<p>
+a return instruction to return the value of the temporary variable
+</p>
+</li>
+</ol></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>(A basic block is a block of instructions.)</p></div>
+<div class="paragraph"><p>LLVM has it&#8217;s own instruction set; the instructions used above (<tt>add</tt>
+and <tt>ret</tt>) are from this set. The LLVM instructions are at a higher
+level than the usual assembly language; for example there are
+instructions related to variable argument handling, exception handling,
+and garbage collection. These allow high-level languages to be
+represented cleanly in the IR.</p></div>
+<h3 id="_ssa_form_and_phi_nodes">SSA Form and PHI Nodes</h3><div style="clear:left"></div>
+<div class="paragraph"><p>All LLVM instructions are represented in the <em>Static Single Assignment</em>
+(SSA) form. Essentially, this means that any variable can be assigned to
+only once. Such a representation facilitates better optimization, among
+other benefits.</p></div>
+<div class="paragraph"><p>A consequence of single assignment are PHI (&#934;) nodes. These
+are required when a variable can be assigned a different value based on
+the path of control flow. For example, the value of <tt>b</tt> at the end of
+execution of the snippet below:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>a = 1;
+if (v &lt; 10)
+  a = 2;
+b = a;</tt></pre>
+</div></div>
+<div class="paragraph"><p>cannot be determined statically. The value of <em>2</em> cannot be assigned to
+the <em>original</em> <tt>a</tt>, since <tt>a</tt> can be assigned to only once. There are
+two <tt>a</tt> 's in there, and the last assignment has to choose between which
+version to pick. This is accomplished by adding a PHI node:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>a1 = 1;
+if (v &lt; 10)
+  a2 = 2;
+b = PHI(a1, a2);</tt></pre>
+</div></div>
+<div class="paragraph"><p>The PHI node selects <tt>a1</tt> or <tt>a2</tt>, depending on where the control
+reached the PHI node. The argument <tt>a1</tt> of the PHI node is associated
+with the block <tt>"a1 = 1;"</tt> and <tt>a2</tt> with the block <tt>"a2 = 2;"</tt>.</p></div>
+<div class="paragraph"><p>PHI nodes have to be explicitly created in the LLVM IR. Accordingly the
+LLVM instruction set has an instruction called <tt>phi</tt>.</p></div>
+<h3 id="_llvm_assembly_language">LLVM Assembly Language</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The LLVM IR can be represented offline in two formats
+- a textual, human-readable form, similar to assembly language, called
+  the LLVM assembly language (files with .ll extension)
+- a binary form, called the LLVM bitcode (files with .bc extension)
+All three formats (the in-memory IR, the LLVM assembly language and the
+LLVM bitcode) represent the <em>same</em> information. Each format can be
+converted into the other two formats (using LLVM APIs).</p></div>
+<div class="paragraph"><p>The <a href="http://www.llvm.org/demo/">LLVM demo page</a> lets you type in C or C++
+code, converts it into LLVM IR and outputs the IR as LLVM assembly
+language code.</p></div>
+<div class="paragraph"><p>Just to get a feel of the LLVM assembly language, here&#8217;s a function in C,
+and the corresponding LLVM assembly (as generated by the demo page):</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">/* compute sum of 1..n */</span></span>
+<span style="color: #009900">unsigned</span> <span style="font-weight: bold"><span style="color: #000000">sum</span></span><span style="color: #990000">(</span><span style="color: #009900">unsigned</span> n<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>n <span style="color: #990000">==</span> <span style="color: #993399">0</span><span style="color: #990000">)</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> n <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">sum</span></span><span style="color: #990000">(</span>n<span style="color: #990000">-</span><span style="color: #993399">1</span><span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="paragraph"><p>The corresponding LLVM assembly:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>; ModuleID = '/tmp/webcompile/_7149_0.bc'
+target datalayout = "e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-n8:16:32:64"
+target triple = "x86_64-linux-gnu"
+
+define i32 @sum(i32 %n) nounwind readnone {
+entry:
+  %0 = icmp eq i32 %n, 0                          ; &lt;i1&gt; [#uses=1]
+  br i1 %0, label %bb2, label %bb1
+
+bb1:                                              ; preds = %entry
+  %1 = add i32 %n, -1                             ; &lt;i32&gt; [#uses=2]
+  %2 = icmp eq i32 %1, 0                          ; &lt;i1&gt; [#uses=1]
+  br i1 %2, label %sum.exit, label %bb1.i
+
+bb1.i:                                            ; preds = %bb1
+  %3 = add i32 %n, -2                             ; &lt;i32&gt; [#uses=1]
+  %4 = tail call i32 @sum(i32 %3) nounwind        ; &lt;i32&gt; [#uses=1]
+  %5 = add i32 %4, %1                             ; &lt;i32&gt; [#uses=1]
+  br label %sum.exit
+
+sum.exit:                                         ; preds = %bb1.i, %bb1
+  %6 = phi i32 [ %5, %bb1.i ], [ 0, %bb1 ]        ; &lt;i32&gt; [#uses=1]
+  %7 = add i32 %6, %n                             ; &lt;i32&gt; [#uses=1]
+  ret i32 %7
+
+bb2:                                              ; preds = %entry
+  ret i32 0
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>Note the usage of SSA form. The long string called <tt>target datalayout</tt> is a
+specification of the platform ABI (like endianness, sizes of types,
+alignment etc.).</p></div>
+<div class="paragraph"><p>The <a href="http://www.llvm.org/docs/LangRef.html">LLVM Language Reference</a>
+defines the LLVM assembly language including the entire instruction set.</p></div>
+<h3 id="_modules">Modules</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Modules, in the LLVM IR, are similar to a single <tt>C</tt> language source
+file (.c file). A module contains:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+functions (declarations and definitions)
+</p>
+</li>
+<li>
+<p>
+global variables and constants
+</p>
+</li>
+<li>
+<p>
+global type aliases (typedef-s)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Modules are top-level containers; all executable code representation is
+contained within modules. Modules may be combined (linked) together to
+give a bigger resultant module. During this process LLVM attempts to
+reconcile the references between the combined modules.</p></div>
+<h3 id="_optimization_and_passes">Optimization and Passes</h3><div style="clear:left"></div>
+<div class="paragraph"><p>LLVM provides quite a few optimization algorithms that work on the IR.
+These algorithms are organized as <em>passes</em>. Each pass does something
+specific, like combining redundant instructions. Passes need not always
+optimize the IR, it can also do other operations like inserting
+instrumentation code, or analysing the IR (the result of which can be
+used by passes that do optimizations) or even printing call graphs.</p></div>
+<div class="paragraph"><p>This LLVM <a href="http://www.llvm.org/docs/Passes.html">documentation page</a>
+describes all the available passes, and what they do.</p></div>
+<div class="paragraph"><p>LLVM does not automatically choose to run any passes, anytime. Passes
+have to be explicitly selected and run on each module. This gives you
+the flexibility to choose transformations and optimizations that are
+most suitable for the code in the module.</p></div>
+<div class="paragraph"><p>There is an LLVM binary called <a href="http://www.llvm.org/cmds/opt.html">opt</a>,
+which lets you run passes on bitcode files from the command line. You
+can write your own passes (in C/C++, as a shared library). This can be
+loaded and executed by <tt>opt</tt>. (Although llvm-py does not allow you to
+write your own passes, it does allow you to navigate the entire IR at
+any stage, and perform any transforms on it as you like.)</p></div>
+<div class="paragraph"><p>A "pass manager" is responsible for loading passes, selecting the
+correct objects to run them on (for example, a pass may work only
+on functions, individually) and actually runs them. <tt>opt</tt> is a
+command-line wrapper for the pass manager.</p></div>
+<h3 id="_bit_code">Bit code</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO</p></div>
+<h3 id="_execution_engine_jit_and_interpreter">Execution Engine, JIT and Interpreter</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO</p></div>
+</div>
+<h2 id="_the_llvm_py_package">The llvm-py Package</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The llvm-py is a Python package, consisting of 6 modules, that wrap
+over enough LLVM APIs to allow the implementation of your own
+compiler/VM backend in pure Python. If you&#8217;re come this far, you
+probably know why this is a good idea.</p></div>
+<div class="paragraph"><p>Out of the 6 modules, one is an &#8220;extension&#8221; module (i.e., it is
+written in C), and another one is a small private utility module, which
+leaves 4 public modules.  These are:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<tt>llvm</tt>&#8201;&#8212;&#8201;top-level package, common classes (like exceptions)
+</p>
+</li>
+<li>
+<p>
+<tt>llvm.core</tt>&#8201;&#8212;&#8201;IR-related APIs
+</p>
+</li>
+<li>
+<p>
+<tt>llvm.ee</tt>&#8201;&#8212;&#8201;execution engine related APIs
+</p>
+</li>
+<li>
+<p>
+<tt>llvm.passes</tt>&#8201;&#8212;&#8201;pass manager and passes related APIs
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The modules contain only classes and (integer) constants. Mostly simple
+Python constructs are used (deliberately)&#8201;&#8212;&#8201;<a href="http://docs.python.org/lib/built-in-funcs.html">property()</a> and
+<a href="http://wiki.python.org/moin/PythonDecoratorLibrary">property
+decorators</a> are probably the most exotic animals around. All classes are
+"new style" classes. The APIs are designed to be navigable (and
+guessable!) once you know a few conventions. These conventions are
+highlighted in the sections below.</p></div>
+<div class="paragraph"><p>Here is a quick overview of the contents of each package:</p></div>
+<div class="ulist"><div class="title">llvm</div><ul>
+<li>
+<p>
+LLVMException&#8201;&#8212;&#8201;exception class (currently the only one)
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">llvm.core</div><ul>
+<li>
+<p>
+Module&#8201;&#8212;&#8201;represents an LLVM Module
+</p>
+</li>
+<li>
+<p>
+Type&#8201;&#8212;&#8201;represents an LLVM Type
+</p>
+</li>
+<li>
+<p>
+IntegerType, FunctionType, StructType, ArrayType, PointerType,
+  VectorType &#8201;&#8212;&#8201;derived classes of Type
+</p>
+</li>
+<li>
+<p>
+TypeHandle&#8201;&#8212;&#8201;used for constructing recursive (self-referencing) types
+  (e.g. linked list nodes)
+</p>
+</li>
+<li>
+<p>
+Value&#8201;&#8212;&#8201;represents an LLVM Value
+</p>
+</li>
+<li>
+<p>
+Constant, GlobalValue, GlobalVariable, Argument, Function,
+  Instruction, CallOrInvokeInstruction, PHINode, SwitchInstruction&#8201;&#8212;&#8201;  various derived classes of Value
+</p>
+</li>
+<li>
+<p>
+BasicBlock&#8201;&#8212;&#8201;another derived of Value, represents an LLVM basic block
+</p>
+</li>
+<li>
+<p>
+Builder&#8201;&#8212;&#8201;used for creating instructions, wraps LLVM IRBuilder helper
+  class
+</p>
+</li>
+<li>
+<p>
+ModuleProvider&#8201;&#8212;&#8201;required to use modules in execution engine and pass
+  manager
+</p>
+</li>
+<li>
+<p>
+constants <tt>TYPE_*</tt> that represents various types
+</p>
+</li>
+<li>
+<p>
+constants <tt>CC_*</tt> that represent calling conventions
+</p>
+</li>
+<li>
+<p>
+constants <tt>ICMP_*</tt> and <tt>FCMP_*</tt> that represent integer and real
+  comparison predicates (like less than, greater than etc.)
+</p>
+</li>
+<li>
+<p>
+constants <tt>LINKAGE_*</tt> that represent linkage of symbols (external,
+  internal etc.)
+</p>
+</li>
+<li>
+<p>
+constants <tt>VISIBILITY_*</tt> that represents visibility of symbols
+  (default, hidden, protected)
+</p>
+</li>
+<li>
+<p>
+constants <tt>ATTR_*</tt> that represent function parameter attributes
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">llvm.ee</div><ul>
+<li>
+<p>
+ExecutionEngine&#8201;&#8212;&#8201;represents an execution engine (which can be an
+  either an interpreter or a JIT)
+</p>
+</li>
+<li>
+<p>
+TargetData&#8201;&#8212;&#8201;represents the ABI of the target platform (details like
+  sizes and alignment of primitive types, endinanness etc)
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">llvm.passes</div><ul>
+<li>
+<p>
+PassManager&#8201;&#8212;&#8201;represents an LLVM pass manager
+</p>
+</li>
+<li>
+<p>
+FunctionPassManager&#8201;&#8212;&#8201;represents an LLVM function pass manager
+</p>
+</li>
+<li>
+<p>
+constants <tt>PASS_*</tt> that represent various passes
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><div class="title">A note on the 'import&#8217;ing of these modules</div><p>Pythonically, modules are imported with the statement <tt>"import
+llvm.core"</tt>. However, you might find it more convenient to import
+llvm-py modules thus:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">from</span></span> llvm <span style="font-weight: bold"><span style="color: #000080">import</span></span> <span style="color: #990000">*</span>
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> llvm<span style="color: #990000">.</span>core <span style="font-weight: bold"><span style="color: #000080">import</span></span> <span style="color: #990000">*</span>
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> llvm<span style="color: #990000">.</span>ee <span style="font-weight: bold"><span style="color: #000080">import</span></span> <span style="color: #990000">*</span>
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> llvm<span style="color: #990000">.</span>passes <span style="font-weight: bold"><span style="color: #000080">import</span></span> <span style="color: #990000">*</span></tt></pre></div></div>
+<div class="paragraph"><p>This avoids quite some typing. Both conventions work, however.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">Python-style documentation strings (<tt>__doc__</tt>) are present in
+llvm-py. You can use the <tt>help()</tt> of the interactive Python
+interpreter or the <tt>object?</tt> of <a href="http://ipython.scipy.org/moin/">IPython</a>
+to get online help. (Note: not complete yet!)</td>
+</tr></table>
+</div>
+<h3 id="_module_llvm_core">Module (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Modules are top-level container objects. You need to create a module
+object first, before you can add global variables, aliases or functions.
+Modules are created using the static method <tt>Module.new</tt>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/usr/bin/env python</span></span>
+
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> llvm <span style="font-weight: bold"><span style="color: #000080">import</span></span> <span style="color: #990000">*</span>
+<span style="font-weight: bold"><span style="color: #000080">from</span></span> llvm<span style="color: #990000">.</span>core <span style="font-weight: bold"><span style="color: #000080">import</span></span> <span style="color: #990000">*</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># create a module</span></span>
+my_module <span style="color: #990000">=</span> Module<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">new</span></span><span style="color: #990000">(</span><span style="color: #FF0000">'my_module'</span><span style="color: #990000">)</span></tt></pre></div></div>
+<div class="paragraph"><p>The constructor of the Module class should <em>not</em> be used to instantiate
+a Module object. This is a common feature for all llvm-py classes.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">
+<div class="title">Convention</div>
+<div class="paragraph"><p><strong>All</strong> llvm-py objects are instantiated using static methods of
+corresponding classes. Constructors <em>should not</em> be used.</p></div>
+</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The argument <tt>my_module</tt> is a module identifier (a plain string). A
+module can also be constructed via deserialization from a bit code file,
+using the static method <tt>from_bitcode</tt>. This method takes a file-like
+object as argument, i.e., it should have a <tt>read()</tt> method that returns
+the entire data in a single call, as is the case with the builtin file
+object. Here is an example:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># create a module from a bit code file</span></span>
+bcfile <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">file</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"test.bc"</span><span style="color: #990000">)</span>
+my_module <span style="color: #990000">=</span> Module<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">from_bitcode</span></span><span style="color: #990000">(</span>bcfile<span style="color: #990000">)</span></tt></pre></div></div>
+<div class="paragraph"><p>There is corresponding serialization method also, called <tt>to_bitcode</tt>:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># write out a bit code file from the module</span></span>
+bcfile <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">file</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"test.bc"</span><span style="color: #990000">,</span> <span style="color: #FF0000">"w"</span><span style="color: #990000">)</span>
+my_module<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">to_bitcode</span></span><span style="color: #990000">(</span>bcfile<span style="color: #990000">)</span></tt></pre></div></div>
+<div class="paragraph"><p>Modules can also be constructed from LLVM assembly files (<tt>.ll</tt> files).
+The static method <tt>from_assembly</tt> can be used for this. Similar to the
+<tt>from_bitcode</tt> method, this one also takes a file-like object as
+argument:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># create a module from an assembly file</span></span>
+llfile <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">file</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"test.ll"</span><span style="color: #990000">)</span>
+my_module <span style="color: #990000">=</span> Module<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">from_assembly</span></span><span style="color: #990000">(</span>llfile<span style="color: #990000">)</span></tt></pre></div></div>
+<div class="paragraph"><p>Modules can be converted into their assembly representation by
+stringifying them (see below).</p></div>
+<div class="exampleblock">
+<div class="title">llvm.core.Module</div>
+<div class="exampleblock-content">
+<div class="dlist"><div class="title">Static Constructors</div><dl>
+<dt class="hdlist1">
+<tt>new(module_id)</tt>
+</dt>
+<dd>
+<p>
+    Create a new <tt>Module</tt> instance with given <tt>module_id</tt>. The <tt>module_id</tt>
+    should be a string.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>from_bitcode(fileobj)</tt>
+</dt>
+<dd>
+<p>
+    Create a new <tt>Module</tt> instance by deserializing the bitcode file
+    represented by the file-like object <tt>fileobj</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>from_assembly(fileobj)</tt>
+</dt>
+<dd>
+<p>
+    Create a new <tt>Module</tt> instance by parsing the LLVM assembly file
+    represented by the file-like object <tt>fileobj</tt>.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>data_layout</tt>
+</dt>
+<dd>
+<p>
+    A string representing the ABI of the platform.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>target</tt>
+</dt>
+<dd>
+<p>
+    A string like <tt>i386-pc-linux-gnu</tt> or <tt>i386-pc-solaris2.8</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>pointer_size</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The size in bits of pointers, of the target platform. A value of
+    zero represents <tt>llvm::Module::AnyPointerSize</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>global_variables</tt> [read-only]
+</dt>
+<dd>
+<p>
+    An iterable that yields <tt>GlobalVariable</tt> objects, that represent
+    the global variables of the module.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>functions</tt> [read-only]
+</dt>
+<dd>
+<p>
+    An iterable that yields <tt>Function</tt> objects, that represent functions
+    in the module.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Methods</div><dl>
+<dt class="hdlist1">
+<tt>get_type_named(name)</tt>
+</dt>
+<dd>
+<p>
+    Return a <tt>Type</tt> object for the given alias name (typedef).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>add_type_name(name, ty)</tt>
+</dt>
+<dd>
+<p>
+    Add an alias (typedef) for the type <tt>ty</tt> with the name <tt>name</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>delete_type_name(name)</tt>
+</dt>
+<dd>
+<p>
+    Delete an alias with the name <tt>name</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>add_global_variable(ty, name)</tt>
+</dt>
+<dd>
+<p>
+    Add a global variable of the type <tt>ty</tt> with the name <tt>name</tt>.
+    Returns a <tt>GlobalVariable</tt> object.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>get_global_variable_named(name)</tt>
+</dt>
+<dd>
+<p>
+    Get a <tt>GlobalVariable</tt> object corresponding to the global
+    variable with the name <tt>name</tt>. Raises <tt>LLVMException</tt> if such a
+    variable does not exist.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>add_function(ty, name)</tt>
+</dt>
+<dd>
+<p>
+    Add a function named <tt>name</tt> with the function type <tt>ty</tt>. <tt>ty</tt> must
+    of an object of type <tt>FunctionType</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>get_function_named(name)</tt>
+</dt>
+<dd>
+<p>
+    Get a <tt>Function</tt> object corresponding to the function with the name
+    <tt>name</tt>. Raises <tt>LLVMException</tt> if such a function does not exist.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>get_or_insert_function(ty, name)</tt>
+</dt>
+<dd>
+<p>
+    Like <tt>get_function_named</tt>, but adds the function first, if not
+    present (like <tt>add_function</tt>).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>verify()</tt>
+</dt>
+<dd>
+<p>
+    Verify the correctness of the module. Raises <tt>LLVMException</tt> on
+    errors.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>to_bitcode(fileobj)</tt>
+</dt>
+<dd>
+<p>
+    Write the bitcode representation of the module to the file-like
+    object <tt>fileobj</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>link_in(other)</tt>
+</dt>
+<dd>
+<p>
+    Link in another module <tt>other</tt> into this module. Global variables,
+    functions etc. are matched and resolved. The <tt>other</tt> module is no
+    longer valid and should not be used after this operation. This API
+    might be replaced with a full-fledged Linker class in the future.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Special Methods</div><dl>
+<dt class="hdlist1">
+<tt>__str__</tt>
+</dt>
+<dd>
+<p>
+    <tt>Module</tt> objects can be stringified into it&#8217;s LLVM assembly language
+    representation.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>__eq__</tt>
+</dt>
+<dd>
+<p>
+    <tt>Module</tt> objects can be compared for equality. Internally, this
+    converts both arguments into their LLVM assembly representations and
+    compares the resultant strings.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">
+<div class="title">Convention</div>
+<div class="paragraph"><p><strong>All</strong> llvm-py objects (where it makes sense), when stringified, return
+the LLVM assembly representation. <tt>print module_obj</tt> for example,
+prints the LLVM assembly form of the entire module.</p></div>
+<div class="paragraph"><p>Such objects, when compared for equality, internally compare these
+string representations.</p></div>
+</td>
+</tr></table>
+</div>
+<h3 id="_types_llvm_core">Types (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Types are what you think they are. A instance of <tt>llvm.core.Type</tt>, or
+one of its derived classes, represent a type. llvm-py does not use as
+many classes to represent types as does LLVM itself. Some types are
+represented using <tt>llvm.core.Type</tt> itself and the rest are represented
+using derived classes of <tt>llvm.core.Type</tt>. As usual, an instance is created
+via one of the static methods of <tt>Type</tt>. These methods return an
+instance of either <tt>llvm.core.Type</tt> itself or one of its derived
+classes.</p></div>
+<div class="paragraph"><p>The following table lists all the available types along with the static
+method which has to be used to construct it and the name of the class whose
+object is actually returned by the static method.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top">Name</th>
+<th align="left" valign="top">Constructor Method</th>
+<th align="left" valign="top">Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">integer of bitwidth <tt>n</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.int(n)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>IntegerType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">32-bit float</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.float()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">64-bit double</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.double()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">80-bit float</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.x86_fp80()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">128-bit float (112-bit mantissa)</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.fp128()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">128-bit float (two 64-bits)</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.ppc_fp128()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">function</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.function(r, p, v)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>FunctionType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">unpacked struct</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.struct(eltys)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>StructType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">packed struct</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.packed_struct(eltys)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>StructType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">array</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.array(elty, count)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>ArrayType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">pointer to value of type <tt>pty</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.pointer(pty, addrspc)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>PointerType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">vector</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.vector(elty, count)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>VectorType</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">void</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.void()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">label</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.label()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">opaque</p></td>
+<td align="left" valign="top"><p class="table"><tt>Type.opaque()</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>Type</tt></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>The class hierarchy is:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>Type
+  IntegerType
+  FunctionType
+  StructType
+  ArrayType
+  PointerType
+  VectorType</tt></pre>
+</div></div>
+<div class="paragraph"><p>The class-level documentation follows:</p></div>
+<div class="exampleblock">
+<div class="title">llvm.core.Type</div>
+<div class="exampleblock-content">
+<div class="dlist"><div class="title">Static Constructors</div><dl>
+<dt class="hdlist1">
+<tt>int(n)</tt>
+</dt>
+<dd>
+<p>
+    Create an integer type of bit width <tt>n</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>float()</tt>
+</dt>
+<dd>
+<p>
+    Create a 32-bit floating point type.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>double()</tt>
+</dt>
+<dd>
+<p>
+    Create a 64-bit floating point type.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>x86_fp80()</tt>
+</dt>
+<dd>
+<p>
+    Create a 80-bit 80x87-style floating point type.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>fp128()</tt>
+</dt>
+<dd>
+<p>
+    Create a 128-bit floating point type (112-bit mantissa).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>ppc_fp128()</tt>
+</dt>
+<dd>
+<p>
+    Create a 128-bit float (two 64-bits).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>function(ret, params, vararg=False)</tt>
+</dt>
+<dd>
+<p>
+    Create a function type, having the return type <tt>ret</tt> (must be a
+    <tt>Type</tt>), accepting the parameters <tt>params</tt>, where <tt>params</tt> is an
+    iterable, that yields <tt>Type</tt> objects representing the type of
+    each function argument in order. If <tt>vararg</tt> is <tt>True</tt>, function is
+    variadic.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>struct(eltys)</tt>
+</dt>
+<dd>
+<p>
+    Create an unpacked structure. <tt>eltys</tt> is an iterable, that yields
+    <tt>Type</tt> objects representing the type of each element in order.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>packed_struct(eltys)</tt>
+</dt>
+<dd>
+<p>
+    Like <tt>struct(eltys)</tt>, but creates a packed struct.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>array(elty, count)</tt>
+</dt>
+<dd>
+<p>
+    Creates an array type, holding <tt>count</tt> elements, each of type <tt>elty</tt>
+    (which should be a <tt>Type</tt>).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>pointer(pty, addrspc=0)</tt>
+</dt>
+<dd>
+<p>
+    Create a pointer to type <tt>pty</tt> (which should be a <tt>Type</tt>). <tt>addrspc</tt>
+    is an integer that represents the address space of the pointer (see
+    LLVM docs or ask on llvm-dev for more info).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>void()</tt>
+</dt>
+<dd>
+<p>
+    Creates a void type. Used for function return types.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>label()</tt>
+</dt>
+<dd>
+<p>
+    Creates a label type.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>opaque()</tt>
+</dt>
+<dd>
+<p>
+    Opaque type, used for creating self-referencing types.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>kind</tt> [read-only]
+</dt>
+<dd>
+<p>
+    A value (enum) representing the "type" of the object. It will be
+    one of the following constants defined in <tt>llvm.core</tt>:
+</p>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># Warning: do not rely on actual numerical values!</span></span>
+TYPE_VOID       <span style="color: #990000">=</span> <span style="color: #993399">0</span>
+TYPE_FLOAT      <span style="color: #990000">=</span> <span style="color: #993399">1</span>
+TYPE_DOUBLE     <span style="color: #990000">=</span> <span style="color: #993399">2</span>
+TYPE_X86_FP80   <span style="color: #990000">=</span> <span style="color: #993399">3</span>
+TYPE_FP128      <span style="color: #990000">=</span> <span style="color: #993399">4</span>
+TYPE_PPC_FP128  <span style="color: #990000">=</span> <span style="color: #993399">5</span>
+TYPE_LABEL      <span style="color: #990000">=</span> <span style="color: #993399">6</span>
+TYPE_INTEGER    <span style="color: #990000">=</span> <span style="color: #993399">7</span>
+TYPE_FUNCTION   <span style="color: #990000">=</span> <span style="color: #993399">8</span>
+TYPE_STRUCT     <span style="color: #990000">=</span> <span style="color: #993399">9</span>
+TYPE_ARRAY      <span style="color: #990000">=</span> <span style="color: #993399">10</span>
+TYPE_POINTER    <span style="color: #990000">=</span> <span style="color: #993399">11</span>
+TYPE_OPAQUE     <span style="color: #990000">=</span> <span style="color: #993399">12</span>
+TYPE_VECTOR     <span style="color: #990000">=</span> <span style="color: #993399">13</span>
+TYPE_METADATA   <span style="color: #990000">=</span> <span style="color: #993399">14</span>
+TYPE_UNION      <span style="color: #990000">=</span> <span style="color: #993399">15</span></tt></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">().</span>kind <span style="color: #990000">==</span> TYPE_INTEGER
+<span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">void</span></span><span style="color: #990000">().</span>kind <span style="color: #990000">==</span> TYPE_VOID</tt></pre></div></div>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Methods</div><dl>
+<dt class="hdlist1">
+<tt>refine</tt>
+</dt>
+<dd>
+<p>
+    Used for constructing self-referencing types. See the documentation
+    of <tt>TypeHandle</tt> objects.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Special Methods</div><dl>
+<dt class="hdlist1">
+<tt>__str__</tt>
+</dt>
+<dd>
+<p>
+    <tt>Type</tt> objects can be stringified into it&#8217;s LLVM assembly language
+    representation.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>__eq__</tt>
+</dt>
+<dd>
+<p>
+    <tt>Type</tt> objects can be compared for equality. Internally, this
+    converts both arguments into their LLVM assembly representations and
+    compares the resultant strings.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.IntegerType</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Type</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>width</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The width of the integer type, in number of bits.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.FunctionType</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Type</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>return_type</tt> [read-only]
+</dt>
+<dd>
+<p>
+    A <tt>Type</tt> object, representing the return type of the function.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>vararg</tt> [read-only]
+</dt>
+<dd>
+<p>
+    <tt>True</tt> if the function is variadic.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>args</tt> [read-only]
+</dt>
+<dd>
+<p>
+    Returns an iterable object that yields <tt>Type</tt> objects that
+    represent, in order, the types of the arguments accepted by the
+    function. Used like this:
+</p>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>func_type <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> <span style="color: #990000">[</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span> <span style="color: #990000">]</span> <span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> arg <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> func_type<span style="color: #990000">.</span>args<span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> arg<span style="color: #990000">.</span>kind <span style="color: #990000">==</span> TYPE_INTEGER
+    <span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> arg <span style="color: #990000">==</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span>
+<span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> func_type<span style="color: #990000">.</span>arg_count <span style="color: #990000">==</span> <span style="font-weight: bold"><span style="color: #000000">len</span></span><span style="color: #990000">(</span>func_type<span style="color: #990000">.</span>args<span style="color: #990000">)</span></tt></pre></div></div>
+</dd>
+<dt class="hdlist1">
+<tt>arg_count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The number of arguments. Same as <tt>len(obj.args)</tt>, but faster.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.StructType</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Type</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>packed</tt> [read-only]
+</dt>
+<dd>
+<p>
+    <tt>True</tt> if the structure is packed (no padding between elements).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>elements</tt> [read-only]
+</dt>
+<dd>
+<p>
+    Returns an iterable object that yields <tt>Type</tt> objects that
+    represent, in order, the types of the elements of the structure.
+    Used like this:
+</p>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>struct_type <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">struct</span></span><span style="color: #990000">(</span> <span style="color: #990000">[</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span> <span style="color: #990000">]</span> <span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> elem <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> struct_type<span style="color: #990000">.</span>elements<span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> elem<span style="color: #990000">.</span>kind <span style="color: #990000">==</span> TYPE_INTEGER
+    <span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> elem <span style="color: #990000">==</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span>
+<span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> struct_type<span style="color: #990000">.</span>element_count <span style="color: #990000">==</span> <span style="font-weight: bold"><span style="color: #000000">len</span></span><span style="color: #990000">(</span>struct_type<span style="color: #990000">.</span>elements<span style="color: #990000">)</span></tt></pre></div></div>
+</dd>
+<dt class="hdlist1">
+<tt>element_count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The number of elements. Same as <tt>len(obj.elements)</tt>, but faster.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.ArrayType</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Type</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>element</tt> [read-only]
+</dt>
+<dd>
+<p>
+    A <tt>Type</tt> object representing the type of the element of the array.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The number of elements in the array.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.PointerType</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Type</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>address_space</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The address space of the pointer.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>pointee</tt> [read-only]
+</dt>
+<dd>
+<p>
+    A <tt>Type</tt> object representing the type of the value pointed to.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.VectorType</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Type</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>element</tt> [read-only]
+</dt>
+<dd>
+<p>
+    A <tt>Type</tt> object representing the type of the element of the vector.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The number of elements in the vector.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<div class="paragraph"><p>Here is an example that demonstrates the creation of types:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/usr/bin/env python</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># integers</span></span>
+int_ty      <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span>
+bool_ty     <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span><span style="color: #993399">1</span><span style="color: #990000">)</span>
+int_64bit   <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span><span style="color: #993399">64</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># floats</span></span>
+sprec_real  <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">float</span></span><span style="color: #990000">()</span>
+dprec_real  <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">double</span></span><span style="color: #990000">()</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># arrays and vectors</span></span>
+intar_ty    <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">array</span></span><span style="color: #990000">(</span> int_ty<span style="color: #990000">,</span> <span style="color: #993399">10</span> <span style="color: #990000">)</span>     <span style="font-style: italic"><span style="color: #9A1900"># "typedef int intar_ty[10];"</span></span>
+twodim      <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">array</span></span><span style="color: #990000">(</span> intar_ty <span style="color: #990000">,</span> <span style="color: #993399">10</span> <span style="color: #990000">)</span>  <span style="font-style: italic"><span style="color: #9A1900"># "typedef int twodim[10][10];"</span></span>
+vec         <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">array</span></span><span style="color: #990000">(</span> int_ty<span style="color: #990000">,</span> <span style="color: #993399">10</span> <span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># structures</span></span>
+s1_ty       <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">struct</span></span><span style="color: #990000">(</span> <span style="color: #990000">[</span> int_ty<span style="color: #990000">,</span> sprec_real <span style="color: #990000">]</span> <span style="color: #990000">)</span>
+    <span style="font-style: italic"><span style="color: #9A1900"># "struct s1_ty { int v1; float v2; };"</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># pointers</span></span>
+intptr_ty   <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">pointer</span></span><span style="color: #990000">(</span>int_ty<span style="color: #990000">)</span>         <span style="font-style: italic"><span style="color: #9A1900"># "typedef int *intptr_ty;"</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># functions</span></span>
+f1 <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span> int_ty<span style="color: #990000">,</span> <span style="color: #990000">[</span> int_ty <span style="color: #990000">]</span> <span style="color: #990000">)</span>
+    <span style="font-style: italic"><span style="color: #9A1900"># functions that take 1 int_ty and return 1 int_ty</span></span>
+
+f2 <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">void</span></span><span style="color: #990000">(),</span> <span style="color: #990000">[</span> int_ty<span style="color: #990000">,</span> int_ty <span style="color: #990000">]</span> <span style="color: #990000">)</span>
+    <span style="font-style: italic"><span style="color: #9A1900"># functions that take 2 int_tys and return nothing</span></span>
+
+f3 <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">void</span></span><span style="color: #990000">(),</span> <span style="color: #990000">(</span> int_ty<span style="color: #990000">,</span> int_ty <span style="color: #990000">)</span> <span style="color: #990000">)</span>
+    <span style="font-style: italic"><span style="color: #9A1900"># same as f2; any iterable can be used</span></span>
+
+fnargs <span style="color: #990000">=</span> <span style="color: #990000">[</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">pointer</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span><span style="color: #993399">8</span><span style="color: #990000">)</span> <span style="color: #990000">)</span> <span style="color: #990000">]</span>
+printf <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> fnargs<span style="color: #990000">,</span> True <span style="color: #990000">)</span>
+    <span style="font-style: italic"><span style="color: #9A1900"># variadic function</span></span></tt></pre></div></div>
+<h3 id="_typehandle_llvm_core">TypeHandle (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TypeHandle objects are used to create recursive types, like this linked
+list node structure in C:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">struct</span></span> <span style="color: #008080">node</span>
+<span style="color: #FF0000">{</span>
+    <span style="color: #009900">int</span> data<span style="color: #990000">;</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">struct</span></span> <span style="color: #008080">node</span> <span style="color: #990000">*</span>next<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span></tt></pre></div></div>
+<div class="paragraph"><p>This can be realized in llvm-py like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>#!/usr/bin/env python
+
+from llvm.core import *
+
+# create a type handle object
+th = TypeHandle.new(Type.opaque())
+
+# create the struct with an opaque* instead of self*
+ts = Type.struct([ Type.int(), Type.pointer(th.type) ])
+
+# unify the types
+th.type.refine(ts)
+
+# create a module, and add a "typedef"
+m = Module.new('mod1')
+m.add_type_name("struct.node", th.type)
+
+# show what we created
+print m</tt></pre>
+</div></div>
+<div class="paragraph"><p>which gives the output:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>; ModuleID = 'mod1'
+
+%struct.node = type { i32, %struct.node* }</tt></pre>
+</div></div>
+<div class="paragraph"><p>For more details on what is going on here, please refer the LLVM
+Programmer&#8217;s Manual section
+<a href="http://llvm.org/docs/ProgrammersManual.html#TypeResolve">"LLVM Type
+Resolution"</a>. The TypeHandle class of llvm-py corresponds to
+<a href="http://www.llvm.org/doxygen/classllvm_1_1PATypeHolder.html"><tt>llvm::PATypeHolder</tt></a>
+in C++. The above example is available as
+<a href="http://code.google.com/p/llvm-py/source/browse/trunk/test/typehandle.py">test/typehandle.py</a>
+in the source distribution.</p></div>
+<div class="exampleblock">
+<div class="title">llvm.core.TypeHandle</div>
+<div class="exampleblock-content">
+<div class="dlist"><div class="title">Static Constructors</div><dl>
+<dt class="hdlist1">
+<tt>new(abstract_ty)</tt>
+</dt>
+<dd>
+<p>
+    create a new <tt>TypeHandle</tt> instance, which holds a reference to the
+    given abstract type <tt>abstract_ty</tt>. Typically, the abstract type used
+    is <tt>Type.opaque()</tt>.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>type</tt>
+</dt>
+<dd>
+<p>
+    returns the contained type. Typically the <tt>refine</tt> method is called
+    on the returned type.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<h3 id="_values_llvm_core">Values (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><tt>llvm.core.Value</tt> is the base class of all values computed by a program
+that may be used as operands to other values. A value has a type
+associated with it (an object of <tt>llvm.core.Type</tt>).</p></div>
+<div class="paragraph"><p>The class hierarchy is:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>Value
+  User
+    Constant
+      ConstantExpr
+      ConstantAggregateZero
+      ConstantInt
+      ConstantFP
+      ConstantArray
+      ConstantStruct
+      ConstantVector
+      ConstantPointerNull
+      UndefValue
+      GlobalValue
+        GlobalVariable
+        Function
+    Instruction
+      CallOrInvokeInstruction
+      PHINode
+      SwitchInstruction
+      CompareInstruction
+  Argument
+  BasicBlock</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>Value</tt> class is abstract, it&#8217;s not meant to be instantiated. <tt>User</tt>
+is a <tt>Value</tt> that in turn uses (i.e., can refer to) other values (for
+e.g., a constant expression 1+2 refers to two constant values 1 and 2).</p></div>
+<div class="paragraph"><p><tt>Constant</tt>-s represent constants that appear within code or as
+initializers of globals. They are constructed using static methods of
+<tt>Constant</tt>. Various types of constants are represented by various
+subclasses of <tt>Constant</tt>. However, most of them are empty and do
+not provide any additional attributes or methods over <tt>Constant</tt>.</p></div>
+<div class="paragraph"><p>The <tt>Function</tt> object represents an instance of a function type.
+Such objects contain <tt>Argument</tt> objects, which represent the actual,
+local-variable-like arguments of the function (not to be confused with
+the arguments returned by a function <em>type</em> object&#8201;&#8212;&#8201;these represent
+the <em>type</em> of the arguments).</p></div>
+<div class="paragraph"><p>The various <tt>Instruction</tt>-s are created by the <tt>Builder</tt> class. Most
+instructions are represented by <tt>Instruction</tt> itself, but there are
+a few subclasses that represent interesting instructions.</p></div>
+<div class="paragraph"><p><tt>Value</tt> objects have a type (read-only), and a name (read-write).</p></div>
+<div class="exampleblock">
+<div class="title">llvm.core.Value</div>
+<div class="exampleblock-content">
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>name</tt>
+</dt>
+<dd>
+<p>
+    The name of the value.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>type</tt> [read-only]
+</dt>
+<dd>
+<p>
+    An <tt>llvm.core.Type</tt> object representing the type of the value.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>uses</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The list of values (<tt>llvm.core.Value</tt>) that use this value.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>use_count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The number of values that use (refer) this value. Same as
+    <tt>len(val.uses)</tt> but faster if you just want the count.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>value_id</tt> [read-only]
+</dt>
+<dd>
+<p>
+    Returns <tt>llvm::Value::getValueID()</tt>. Refer LLVM documentation
+    for more info.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Special Methods</div><dl>
+<dt class="hdlist1">
+<tt>__str__</tt>
+</dt>
+<dd>
+<p>
+    <tt>Value</tt> objects can be stringified into it&#8217;s LLVM assembly language
+    representation.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>__eq__</tt>
+</dt>
+<dd>
+<p>
+    <tt>Value</tt> objects can be compared for equality. Internally, this
+    converts both arguments into their LLVM assembly representations and
+    compares the resultant strings.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<h3 id="_user_llvm_core">User (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><tt>User</tt>-s are values that refer to other values. The values so refered
+can be retrived by the properties of <tt>User</tt>. This is the reverse of
+the <tt>Value.uses</tt>. Together these can be used to traverse the use-def
+chains of the SSA.</p></div>
+<div class="exampleblock">
+<div class="title">llvm.core.User</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Value</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>operands</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The list of operands (values, of type <tt>llvm.core.Value</tt>) that this
+    value refers to.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>operand_count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The number of operands that this value referes to. Same as
+    <tt>len(uses.operands)</tt> but faster if you just want the count.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<h3 id="_constants_llvm_core">Constants (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p><tt>Constant</tt>-s represents constants that appear within the code. The
+values of such objects are known at creation time. Constants can be
+created from Python constants. A constant expression is also a constant&#8201;&#8212;&#8201;given a <tt>Constant</tt> object, an operation (like addition, subtraction
+etc) can be specified, to yield a new <tt>Constant</tt> object. Let&#8217;s see some
+examples:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">#!/usr/bin/env python</span></span>
+
+ti <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span>                         <span style="font-style: italic"><span style="color: #9A1900"># a 32-bit int type</span></span>
+
+k1 <span style="color: #990000">=</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span>ti<span style="color: #990000">,</span> <span style="color: #993399">42</span><span style="color: #990000">)</span>               <span style="font-style: italic"><span style="color: #9A1900"># "int k1 = 42;"</span></span>
+k2 <span style="color: #990000">=</span> k1<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add</span></span><span style="color: #990000">(</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span> ti<span style="color: #990000">,</span> <span style="color: #993399">10</span> <span style="color: #990000">)</span> <span style="color: #990000">)</span>   <span style="font-style: italic"><span style="color: #9A1900"># "int k2 = k1 + 10;"</span></span>
+
+tr <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">float</span></span><span style="color: #990000">()</span>
+
+r1 <span style="color: #990000">=</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">real</span></span><span style="color: #990000">(</span>tr<span style="color: #990000">,</span> <span style="color: #FF0000">"3.141592"</span><span style="color: #990000">)</span>      <span style="font-style: italic"><span style="color: #9A1900"># create from a string</span></span>
+r2 <span style="color: #990000">=</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">real</span></span><span style="color: #990000">(</span>tr<span style="color: #990000">,</span> <span style="color: #993399">1.61803399</span><span style="color: #990000">)</span>      <span style="font-style: italic"><span style="color: #9A1900"># create from a Python float</span></span></tt></pre></div></div>
+<div class="paragraph"><p>The following constructors (static methods) can be used to create
+constants:</p></div>
+<div class="tableblock" id="constctors">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Constructor Method</th>
+<th align="left" valign="top">What It Creates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>null(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">A null value (all zeros) of type <tt>ty</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>all_ones(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">All 1&#8217;s value of type <tt>ty</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>undef(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">An "undefined" value of type <tt>ty</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>int(ty, value)</tt></p></td>
+<td align="left" valign="top"><p class="table">Integer of type <tt>ty</tt>, with value <tt>value</tt> (a Python int or long)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>int_signextend(ty, value)</tt></p></td>
+<td align="left" valign="top"><p class="table">Integer of signed type <tt>ty</tt> (use for signed types)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>real(ty, value)</tt></p></td>
+<td align="left" valign="top"><p class="table">Floating point value of type <tt>ty</tt>, with value <tt>value</tt> (a Python float)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>stringz(value)</tt></p></td>
+<td align="left" valign="top"><p class="table">A null-terminated string. <tt>value</tt> is a Python string</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>string(value)</tt></p></td>
+<td align="left" valign="top"><p class="table">As <tt>string(ty)</tt>, but not null terminated</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>array(ty, consts)</tt></p></td>
+<td align="left" valign="top"><p class="table">Array of type <tt>ty</tt>, initialized with <tt>consts</tt> (an iterable yielding <tt>Constant</tt> objects of the appropriate type)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>struct(ty, consts)</tt></p></td>
+<td align="left" valign="top"><p class="table">Struct (unpacked) of type <tt>ty</tt>, initialized with <tt>consts</tt> (an iterable yielding <tt>Constant</tt> objects of the appropriate type)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>packed_struct(ty, consts)</tt></p></td>
+<td align="left" valign="top"><p class="table">As <tt>struct(ty, consts)</tt> but packed</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>vector(consts)</tt></p></td>
+<td align="left" valign="top"><p class="table">Vector, initialized with <tt>consts</tt> (an iterable yielding <tt>Constant</tt> objects of the appropriate type)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>sizeof(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Constant value representing the sizeof the type <tt>ty</tt></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>The following operations on constants are supported. For more details on
+any operation, consult the
+<a href="http://www.llvm.org/docs/LangRef.html#constantexprs">Constant Expressions</a>
+section of the LLVM Language Reference.</p></div>
+<div class="tableblock" id="constops">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Method</th>
+<th align="left" valign="top">Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.neg()</tt></p></td>
+<td align="left" valign="top"><p class="table">negation, same as <tt>0 - k</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.not_()</tt></p></td>
+<td align="left" valign="top"><p class="table">1&#8217;s complement of <tt>k</tt>. Note trailing underscore.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.add(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>k + k2</tt>, where <tt>k</tt> and <tt>k2</tt> are integers.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fadd(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>k + k2</tt>, where <tt>k</tt> and <tt>k2</tt> are floating-point.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.sub(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>k - k2</tt>, where <tt>k</tt> and <tt>k2</tt> are integers.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fsub(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>k - k2</tt>, where <tt>k</tt> and <tt>k2</tt> are floating-point.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.mul(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>k * k2</tt>, where <tt>k</tt> and <tt>k2</tt> are integers.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fmul(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>k * k2</tt>, where <tt>k</tt> and <tt>k2</tt> are floating-point.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.udiv(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Quotient of unsigned division of <tt>k</tt> with <tt>k2</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.sdiv(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Quotient of signed division of <tt>k</tt> with <tt>k2</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fdiv(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Quotient of floating point division of <tt>k</tt> with <tt>k2</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.urem(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Reminder of unsigned division of <tt>k</tt> with <tt>k2</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.srem(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Reminder of signed division of <tt>k</tt> with <tt>k2</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.frem(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Reminder of floating point division of <tt>k</tt> with <tt>k2</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.and_(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Bitwise and of <tt>k</tt> and <tt>k2</tt>. Note trailing underscore.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.or_(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Bitwise or of <tt>k</tt> and <tt>k2</tt>. Note trailing underscore.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.xor(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Bitwise exclusive-or of <tt>k</tt> and <tt>k2</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.icmp(icmp, k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Compare <tt>k</tt> with <tt>k2</tt> using the predicate <tt>icmp</tt>. See table <a href="#icmp">below</a> for list of predicates for integer operands.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fcmp(fcmp, k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Compare <tt>k</tt> with <tt>k2</tt> using the predicate <tt>fcmp</tt>. See table <a href="#fcmp">below</a> for list of predicates for real operands.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.shl(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Shift <tt>k</tt> left by <tt>k2</tt> bits.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.lshr(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Shift <tt>k</tt> logically right by <tt>k2</tt> bits (new bits are 0s).</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.ashr(k2)</tt></p></td>
+<td align="left" valign="top"><p class="table">Shift <tt>k</tt> arithmetically right by <tt>k2</tt> bits (new bits are same as previous sign bit).</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.gep(indices)</tt></p></td>
+<td align="left" valign="top"><p class="table">GEP, see <a href="http://www.llvm.org/docs/GetElementPtr.html">LLVM docs</a>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.trunc(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Truncate <tt>k</tt> to a type <tt>ty</tt> of lower bitwidth.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.sext(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Sign extend <tt>k</tt> to a type <tt>ty</tt> of higher bitwidth, while extending the sign bit.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.zext(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Sign extend <tt>k</tt> to a type <tt>ty</tt> of higher bitwidth, all new bits are 0s.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fptrunc(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Truncate floating point constant <tt>k</tt> to floating point type <tt>ty</tt> of lower size than k&#8217;s.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fpext(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Extend floating point constant <tt>k</tt> to floating point type <tt>ty</tt> of higher size than k&#8217;s.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.uitofp(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert an unsigned integer constant <tt>k</tt> to floating point constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.sitofp(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert a signed integer constant <tt>k</tt> to floating point constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fptoui(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert a floating point constant <tt>k</tt> to an unsigned integer constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.fptosi(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert a floating point constant <tt>k</tt> to a signed integer constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.ptrtoint(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert a pointer constant <tt>k</tt> to an integer constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.inttoptr(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert an integer constant <tt>k</tt> to a pointer constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.bitcast(ty)</tt></p></td>
+<td align="left" valign="top"><p class="table">Convert <tt>k</tt> to a (equal-width) constant of type <tt>ty</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.select(cond,k2,k3)</tt></p></td>
+<td align="left" valign="top"><p class="table">Replace value with <tt>k2</tt> if the 1-bit integer constant <tt>cond</tt> is 1, else with <tt>k3</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.extract_element(idx)</tt></p></td>
+<td align="left" valign="top"><p class="table">Extract value at <tt>idx</tt> (integer constant) from a vector constant <tt>k</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.insert_element(k2,idx)</tt></p></td>
+<td align="left" valign="top"><p class="table">Insert value <tt>k2</tt> (scalar constant) at index <tt>idx</tt> (integer constant) of vector constant <tt>k</tt>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>k.shuffle_vector(k2,mask)</tt></p></td>
+<td align="left" valign="top"><p class="table">Shuffle vector constant <tt>k</tt> based on vector constants <tt>k2</tt> and <tt>mask</tt>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph" id="icmp"><p>Predicates for use with <tt>icmp</tt> instruction are listed below. All
+of these are integer constants defined in the <tt>llvm.core</tt> module.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Value</th>
+<th align="left" valign="top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_EQ</tt></p></td>
+<td align="left" valign="top"><p class="table">Equality</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_NE</tt></p></td>
+<td align="left" valign="top"><p class="table">Inequality</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_UGT</tt></p></td>
+<td align="left" valign="top"><p class="table">Unsigned greater than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_UGE</tt></p></td>
+<td align="left" valign="top"><p class="table">Unsigned greater than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_ULT</tt></p></td>
+<td align="left" valign="top"><p class="table">Unsigned less than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_ULE</tt></p></td>
+<td align="left" valign="top"><p class="table">Unsigned less than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_SGT</tt></p></td>
+<td align="left" valign="top"><p class="table">Signed greater than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_SGE</tt></p></td>
+<td align="left" valign="top"><p class="table">Signed greater than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_SLT</tt></p></td>
+<td align="left" valign="top"><p class="table">Signed less than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ICMP_SLE</tt></p></td>
+<td align="left" valign="top"><p class="table">Signed less than or equal</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph" id="fcmp"><p>Predicates for use with <tt>fcmp</tt> instruction are listed below. All
+of these are integer constants defined in the <tt>llvm.core</tt> module.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Value</th>
+<th align="left" valign="top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_FALSE</tt></p></td>
+<td align="left" valign="top"><p class="table">Always false</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_OEQ</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered and equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_OGT</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered and greater than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_OGE</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered and greater than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_OLT</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered and less than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_OLE</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered and less than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_ONE</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered and operands are unequal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_ORD</tt></p></td>
+<td align="left" valign="top"><p class="table">True if ordered (no NaNs)</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_UNO</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered: <tt>isnan(X) | isnan(Y)</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_UEQ</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_UGT</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered or greater than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_UGE</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered, greater than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_ULT</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered, or less than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_ULE</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered, less than or equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>FCMP_UNE</tt></p></td>
+<td align="left" valign="top"><p class="table">True if unordered or not equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">`FCMP_TRUE `</p></td>
+<td align="left" valign="top"><p class="table">Always true</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="exampleblock">
+<div class="title">llvm.core.Constant</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Value</tt>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><div class="title">Static Constructors</div><p>See table of constructors <a href="#constctors">above</a> for full list.</p></div>
+<div class="paragraph"><div class="title">Methods</div><p>See table of operations <a href="#constops">above</a> for full list. There are no other
+methods.</p></div>
+</div></div>
+<h3 id="_other_constant_classes_llvm_core">Other Constant* Classes (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The following subclasses of <tt>Constant</tt> do not provide additional
+methods, they serve only to provide richer type information.</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top">Subclass</th>
+<th align="left" valign="top">LLVM C++ Class</th>
+<th align="left" valign="top">Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantExpr</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantExpr</tt></p></td>
+<td align="left" valign="top"><p class="table">A constant expression</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantAggregateZero</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantAggregateZero</tt></p></td>
+<td align="left" valign="top"><p class="table">All-zero constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantInt</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantInt</tt></p></td>
+<td align="left" valign="top"><p class="table">An integer constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantFP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantFP</tt></p></td>
+<td align="left" valign="top"><p class="table">A floating-point constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantArray</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantArray</tt></p></td>
+<td align="left" valign="top"><p class="table">An array constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantStruct</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantStruct</tt></p></td>
+<td align="left" valign="top"><p class="table">A structure constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantVector</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantVector</tt></p></td>
+<td align="left" valign="top"><p class="table">A vector constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>ConstantPointerNull</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::ConstantPointerNull</tt></p></td>
+<td align="left" valign="top"><p class="table">All-zero pointer constant</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>UndefValue</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>llvm::UndefValue</tt></p></td>
+<td align="left" valign="top"><p class="table">corresponds to <tt>undef</tt> of LLVM IR</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>These types are helpful in <tt>isinstance</tt> checks, like so:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>ti <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span><span style="color: #993399">32</span><span style="color: #990000">)</span>
+k1 <span style="color: #990000">=</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span>ti<span style="color: #990000">,</span> <span style="color: #993399">42</span><span style="color: #990000">)</span>           <span style="font-style: italic"><span style="color: #9A1900"># int32_t k1 = 42;</span></span>
+k2 <span style="color: #990000">=</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">array</span></span><span style="color: #990000">(</span>ti<span style="color: #990000">,</span> <span style="color: #990000">[</span>k1<span style="color: #990000">,</span> k1<span style="color: #990000">])</span>   <span style="font-style: italic"><span style="color: #9A1900"># int32_t k2[] = { k1, k1 };</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> <span style="font-weight: bold"><span style="color: #000000">isinstance</span></span><span style="color: #990000">(</span>k1<span style="color: #990000">,</span> ConstantInt<span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">assert</span></span> <span style="font-weight: bold"><span style="color: #000000">isinstance</span></span><span style="color: #990000">(</span>k2<span style="color: #990000">,</span> ConstantArray<span style="color: #990000">)</span></tt></pre></div></div>
+<h3 id="_global_value_llvm_core">Global Value (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The class <tt>llvm.core.GlobalValue</tt> represents module-scope aliases, variables
+and functions. Global variables are represented by the sub-class
+<tt>llvm.core.GlobalVariable</tt> and functions by <tt>llvm.core.Function</tt>.</p></div>
+<div class="paragraph"><p>Global values have the read-write properties <tt>linkage</tt>, <tt>section</tt>,
+<tt>visibility</tt> and <tt>alignment</tt>. Use one of the following constants (from
+llvm.core) as values for <tt>linkage</tt> (see
+<a href="http://www.llvm.org/docs/LangRef.html#linkage">LLVM documentaion</a> for
+details on each):</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Value</th>
+<th align="left" valign="top">Equivalent LLVM Assembly Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_EXTERNAL</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>externally_visible</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_AVAILABLE_EXTERNALLY</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>available_externally</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_LINKONCE_ANY</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>linkonce</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_LINKONCE_ODR</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>linkonce_odr</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_WEAK_ANY</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>weak</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_WEAK_ODR</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>weak_odr</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_APPENDING</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>appending</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_INTERNAL</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>internal</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_PRIVATE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>private</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_DLLIMPORT</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>dllimport</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_DLLEXPORT</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>dllexport</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_EXTERNAL_WEAK</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>extern_weak</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_GHOST</tt></p></td>
+<td align="left" valign="top"><p class="table">deprecated&#8201;&#8212;&#8201;do not use</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_COMMON</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>common</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>LINKAGE_LINKER_PRIVATE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>linker_private</tt></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>The <tt>section</tt> property can be assigned strings (like ".rodata"), which
+will be used if the target supports it. Visibility property can be set
+to one of thse constants (from llvm.core, see also
+<a href="http://www.llvm.org/docs/LangRef.html#visibility">LLVM docs</a>):</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Value</th>
+<th align="left" valign="top">Equivalent LLVM Assembly Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>VISIBILITY_DEFAULT</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>default</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>VISIBILITY_HIDDEN</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>hidden</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>VISIBILITY_PROTECTED</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>protected</tt></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>The <tt>alignment</tt> property can be 0 (default), or can be set to a power of
+2. The read-only property <tt>is_declaration</tt> can be used to check if the
+global is a declaration or not. The module to which the global belongs
+to can be retrieved using the <tt>module</tt> property (read-only).</p></div>
+<div class="exampleblock">
+<div class="title">llvm.core.GlobalValue</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.Constant</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>linkage</tt>
+</dt>
+<dd>
+<p>
+    The linkage type, takes one of the constants listed above
+    (LINKAGE_*).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>section</tt>
+</dt>
+<dd>
+<p>
+    A string like ".rodata", indicating the section into which the
+    global is placed into.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>visibility</tt>
+</dt>
+<dd>
+<p>
+    The visibility type, takes one of the constants listed above
+    (VISIBILITY_*).
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>alignment</tt>
+</dt>
+<dd>
+<p>
+    A power-of-2 integer indicating the boundary to align to.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>is_declaration</tt> [read-only]
+</dt>
+<dd>
+<p>
+    <tt>True</tt> if the global is a declaration, <tt>False</tt> otherwise.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>module</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The module object to which this global belongs to.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<h3 id="_global_variable_llvm_core">Global Variable (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Global variables (<tt>llvm.core.GlobalVariable</tt>) are subclasses of
+<tt>llvm.core.GlobalValue</tt> and represent module-level variables. These can
+have optional initializers and can be marked as constants. Global
+variables can be created either by using the <tt>add_global_variable</tt>
+method of the <tt>Module</tt> class (see above), or by using the static method
+<tt>GlobalVariable.new</tt>.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># create a global variable using add_global_variable method</span></span>
+gv1 <span style="color: #990000">=</span> module_obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_global_variable</span></span><span style="color: #990000">(</span>Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> <span style="color: #FF0000">"gv1"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># or equivalently, using a static constructor method</span></span>
+gv2 <span style="color: #990000">=</span> GlobalVariable<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">new</span></span><span style="color: #990000">(</span>module_obj<span style="color: #990000">,</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> <span style="color: #FF0000">"gv2"</span><span style="color: #990000">)</span></tt></pre></div></div>
+<div class="paragraph"><p>Existing global variables of a module can be accessed by name using
+<tt>module_obj.get_global_variable_named(name)</tt> or <tt>GlobalVariable.get</tt>.
+All existing global variables can be enumerated via iterating over the
+property <tt>module_obj.global_variables</tt>.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># retrieve a reference to the global variable gv1,</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># using the get_global_variable_named method</span></span>
+gv1 <span style="color: #990000">=</span> module_obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">get_global_variable_named</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"gv1"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># or equivalently, using the static `get` method:</span></span>
+gv2 <span style="color: #990000">=</span> GlobalVariable<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">get</span></span><span style="color: #990000">(</span>module_obj<span style="color: #990000">,</span> <span style="color: #FF0000">"gv2"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># list all global variables in a module</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> gv <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> module_obj<span style="color: #990000">.</span>global_variables<span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> gv<span style="color: #990000">.</span>name<span style="color: #990000">,</span> <span style="color: #FF0000">"of type"</span><span style="color: #990000">,</span> gv<span style="color: #990000">.</span>type</tt></pre></div></div>
+<div class="paragraph"><p>The initializer for a global variable can be set by assigning to the
+<tt>initializer</tt> property of the object. The <tt>is_global_constant</tt> property
+can be used to indicate that the variable is a global constant.</p></div>
+<div class="paragraph"><p>Global variables can be delete using the <tt>delete</tt> method. Do not use the
+object after calling <tt>delete</tt> on it.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># add an initializer 10 (32-bit integer)</span></span>
+gv<span style="color: #990000">.</span>initializer <span style="color: #990000">=</span> Constant<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(),</span> <span style="color: #993399">10</span> <span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># delete the global</span></span>
+gv<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">delete</span></span><span style="color: #990000">()</span>
+<span style="font-style: italic"><span style="color: #9A1900"># DO NOT dereference `gv' beyond this point!</span></span>
+gv <span style="color: #990000">=</span> None</tt></pre></div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.GlobalVariable</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.GlobalValue</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Static Constructors</div><dl>
+<dt class="hdlist1">
+<tt>new(module_obj, ty, name)</tt>
+</dt>
+<dd>
+<p>
+    Create a global variable named <tt>name</tt> of type <tt>ty</tt> in the module
+    <tt>module_obj</tt> and return a <tt>GlobalVariable</tt> object that represents it.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>get(module_obj, name)</tt>
+</dt>
+<dd>
+<p>
+    Return a <tt>GlobalVariable</tt> object to represent the global variable
+    named <tt>name</tt> in the module <tt>module_obj</tt> or raise <tt>LLVMException</tt> if
+    such a variable does not exist.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>initializer</tt>
+</dt>
+<dd>
+<p>
+    The intializer of the variable. Set to <tt>llvm.core.Constant</tt> (or
+    derived). Gets the initializer constant, or <tt>None</tt> if none exists.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>global_constant</tt>
+</dt>
+<dd>
+<p>
+    <tt>True</tt> if the variable is a global constant, <tt>False</tt> otherwise.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Methods</div><dl>
+<dt class="hdlist1">
+<tt>delete()</tt>
+</dt>
+<dd>
+<p>
+    Deletes the global variable from it&#8217;s module. <em>Do not hold any
+    references to this object after calling <tt>delete</tt> on it.</em>
+</p>
+</dd>
+</dl></div>
+</div></div>
+<h3 id="_function_llvm_core">Function (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Functions are represented by <tt>llvm.core.Function</tt> objects. They are
+contained within modules, and can be created either with the method
+<tt>module_obj.add_function</tt> or the static constructor <tt>Function.new</tt>.
+References to functions already present in a module can be retrieved via
+<tt>module.get_function_named</tt> or by the static constructor method
+<tt>Function.get</tt>. All functions in a module can be enumerated by iterating
+over <tt>module_obj.functions</tt>.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># create a type, representing functions that take an integer and return</span></span>
+<span style="font-style: italic"><span style="color: #9A1900"># a floating point value.</span></span>
+ft <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">float</span></span><span style="color: #990000">(),</span> <span style="color: #990000">[</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()</span> <span style="color: #990000">]</span> <span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># create a function of this type</span></span>
+f1 <span style="color: #990000">=</span> module_obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_function</span></span><span style="color: #990000">(</span>ft<span style="color: #990000">,</span> <span style="color: #FF0000">"func1"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># or equivalently, like this:</span></span>
+f2 <span style="color: #990000">=</span> Function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">new</span></span><span style="color: #990000">(</span>module_obj<span style="color: #990000">,</span> ft<span style="color: #990000">,</span> <span style="color: #FF0000">"func2"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># get a reference to an existing function</span></span>
+f3 <span style="color: #990000">=</span> module_obj<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">get_function_named</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"func3"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># or like this:</span></span>
+f4 <span style="color: #990000">=</span> Function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">get</span></span><span style="color: #990000">(</span>module_obj<span style="color: #990000">,</span> <span style="color: #FF0000">"func4"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># list all function names in a module</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> f <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> module_obj<span style="color: #990000">.</span>functions<span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> f<span style="color: #990000">.</span>name</tt></pre></div></div>
+<div class="paragraph" id="intrinsic"><p>References to intrinsic functions can be got via the static constructor
+<tt>intrinsic</tt>. This returns a <tt>Function</tt> object, calling which is
+equivalent to invoking the intrinsic. The <tt>intrinsic</tt> method has to be
+called with a module object, an instrinic ID (which is a numeric
+constant) and a list of the types of arguments (which LLVM uses to
+resolve overloaded intrinsic functions).</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># get a reference to the llvm.bswap intrinsic</span></span>
+bswap <span style="color: #990000">=</span> Function<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">intrinsic</span></span><span style="color: #990000">(</span>mod<span style="color: #990000">,</span> INTR_BSWAP<span style="color: #990000">,</span> <span style="color: #990000">[</span>Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">()])</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># call it</span></span>
+builder<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">call</span></span><span style="color: #990000">(</span>bswap<span style="color: #990000">,</span> <span style="color: #990000">[</span>value<span style="color: #990000">])</span></tt></pre></div></div>
+<div class="paragraph"><p>Here, the constant <tt>INTR_BSWAP</tt>, available from <tt>llvm.core</tt>, represents
+the LLVM intrinsic
+<a href="http://www.llvm.org/docs/LangRef.html#int_bswap">llvm.bswap</a>. The
+<tt>[Type.int()]</tt> selects the version of <tt>llvm.bswap</tt> that has a single 32-bit
+integer argument. The list of intrinsic IDs defined as integer constants
+in <tt>llvm.core</tt>. These are:</p></div>
+<div class="tableblock">
+<table rules="none"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_ANNOTATION</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_CMP_SWAP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_ADD</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_AND</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_MAX</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_MIN</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_NAND</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_OR</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_SUB</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_UMAX</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_UMIN</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_LOAD_XOR</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_ATOMIC_SWAP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_BSWAP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTFF</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTFSI</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTFUI</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTSIF</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTSS</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTSU</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTUIF</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTUS</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CONVERTUU</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_COS</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_CTLZ</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CTPOP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_CTTZ</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_DBG_DECLARE</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_DBG_VALUE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_DWARF_CFA</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_EXCEPTION</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_RETURN_I32</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_RETURN_I64</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_SELECTOR</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_SJLJ_CALLSITE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_SJLJ_LONGJMP</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_SJLJ_LSDA</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_SJLJ_SETJMP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_TYPEID_FOR</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EH_UNWIND_INIT</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_EXP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_EXP2</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_FLT_ROUNDS</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_FRAMEADDRESS</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_GCREAD</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_GCROOT</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_GCWRITE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_INIT_TRAMPOLINE</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_INVARIANT_END</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_INVARIANT_START</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_LIFETIME_END</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_LIFETIME_START</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_LOG</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_LOG10</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_LOG2</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_LONGJMP</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_MEMCPY</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_MEMMOVE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_MEMORY_BARRIER</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_MEMSET</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_OBJECTSIZE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_PCMARKER</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_POW</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_POWI</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_PREFETCH</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_PTR_ANNOTATION</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_READCYCLECOUNTER</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_RETURNADDRESS</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_SADD_WITH_OVERFLOW</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_SETJMP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_SIGLONGJMP</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_SIGSETJMP</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_SIN</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_SMUL_WITH_OVERFLOW</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_SQRT</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_SSUB_WITH_OVERFLOW</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_STACKPROTECTOR</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_STACKRESTORE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_STACKSAVE</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_TRAP</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_UADD_WITH_OVERFLOW</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_UMUL_WITH_OVERFLOW</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_USUB_WITH_OVERFLOW</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_VACOPY</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>INTR_VAEND</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_VAR_ANNOTATION</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>INTR_VASTART</tt></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>There are also target-specific intrinsics (which correspond to that
+target&#8217;s CPU instructions) available, but are omitted here for brevity.
+Full list can be seen from
+<a href="http://code.google.com/p/llvm-py/source/browse/trunk/llvm/_intrinsic_ids.py"><tt>_intrinsic_ids.py</tt></a>.
+See the <a href="http://www.llvm.org/docs/LangRef.html">LLVM Language Reference</a>
+for more information on the intrinsics, and the
+<a href="http://code.google.com/p/llvm-py/source/browse#svn/trunk/test">test</a>
+directory in the source distribution for more examples. The intrinsic ID
+can be retrieved from a function object with the read-only property
+<tt>intrinsic_id</tt>.</p></div>
+<div class="paragraph" id="callconv"><p>The function&#8217;s calling convention can be set using the
+<tt>calling_convention</tt> property. The following (integer) constants defined
+in <tt>llvm.core</tt> can be used as values:</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="200" />
+<col width="600" />
+<thead>
+  <tr>
+    <th align="left">
+    Value
+    </th>
+    <th align="left">
+    Equivalent LLVM Assembly Keyword
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    <tt>CC_C</tt>
+    </td>
+    <td align="left">
+    <tt>ccc</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>CC_FASTCALL</tt>
+    </td>
+    <td align="left">
+    <tt>fastcc</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>CC_COLDCALL</tt>
+    </td>
+    <td align="left">
+    <tt>coldcc</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>CC_X86_STDCALL</tt>
+    </td>
+    <td align="left">
+    <tt>x86_stdcallcc</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>CC_X86_FASTCALL</tt>
+    </td>
+    <td align="left">
+    <tt>x86_fastcallcc</tt>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>See the <a href="http://www.llvm.org/docs/LangRef.html#callingconv">LLVM docs</a> for
+more information on each. Backend-specific numbered conventions can be
+directly passed as integers.</p></div>
+<div class="paragraph"><p>An arbitrary string identifying which garbage collector to use can be
+set or got with the property <tt>collector</tt>.</p></div>
+<div class="paragraph"><p>The value objects corresponding to the arguments of a function can be
+got using the read-only property <tt>args</tt>. These can be iterated over, and
+also be indexed via integers. An example:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># list all argument names and types</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> arg <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> fn<span style="color: #990000">.</span>args<span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> arg<span style="color: #990000">.</span>name<span style="color: #990000">,</span> <span style="color: #FF0000">"of type"</span><span style="color: #990000">,</span> arg<span style="color: #990000">.</span>type
+
+<span style="font-style: italic"><span style="color: #9A1900"># change the name of the first argument</span></span>
+fn<span style="color: #990000">.</span>args<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">].</span>name <span style="color: #990000">=</span> <span style="color: #FF0000">"objptr"</span></tt></pre></div></div>
+<div class="paragraph"><p>Basic blocks (see later) are contained within functions. When newly
+created, a function has no basic blocks. They have to be added
+explicitly, using the <tt>append_basic_block</tt> method, which adds a new,
+empty basic block as the last one in the function. The first basic block
+of the function can be retrieved using the <tt>get_entry_basic_block</tt>
+method. The existing basic blocks can be enumerated by iterating over
+using the read-only property <tt>basic_blocks</tt>. The number of basic blocks
+can be got via <tt>basic_block_count</tt> method. Note that
+<tt>get_entry_basic_block</tt> is slightly faster than <tt>basic_blocks[0]</tt> and so
+is <tt>basic_block_count</tt>, over <tt>len(f.basic_blocks)</tt>.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># add a basic block</span></span>
+b1 <span style="color: #990000">=</span> fn<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">append_basic_block</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"entry"</span><span style="color: #990000">)</span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># get the first one</span></span>
+b2 <span style="color: #990000">=</span> fn<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">get_entry_basic_block</span></span><span style="color: #990000">()</span>
+b2 <span style="color: #990000">=</span> fn<span style="color: #990000">.</span>basic_blocks<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span>  <span style="font-style: italic"><span style="color: #9A1900"># slower than previous method</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># print names of all basic blocks</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> b <span style="font-weight: bold"><span style="color: #0000FF">in</span></span> fn<span style="color: #990000">.</span>basic_blocks<span style="color: #990000">:</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">print</span></span> b<span style="color: #990000">.</span>name
+
+<span style="font-style: italic"><span style="color: #9A1900"># get number of basic blocks</span></span>
+n <span style="color: #990000">=</span> fn<span style="color: #990000">.</span>basic_block_count
+n <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">len</span></span><span style="color: #990000">(</span>fn<span style="color: #990000">.</span>basic_blocks<span style="color: #990000">)</span>  <span style="font-style: italic"><span style="color: #9A1900"># slower than previous method</span></span></tt></pre></div></div>
+<div class="paragraph"><p>Functions can be deleted using the method <tt>delete</tt>. This deletes them
+from their containing module. All references to the function object
+should be dropped after <tt>delete</tt> has been called.</p></div>
+<div class="paragraph"><p>Functions can be verified with the <tt>verify</tt> method. Note that this may
+not work properly (aborts on errors).</p></div>
+<div class="paragraph"><p>Function attributes, as documented
+<a href="http://www.llvm.org/docs/LangRef.html#fnattrs">here</a>, can be
+set on functions using the methods <tt>add_attribute</tt> and
+<tt>remove_attribute</tt>. The following values may be used to refer to the
+LLVM attributes:</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="200" />
+<col width="600" />
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    Value
+    </td>
+    <td align="left">
+    Equivalent LLVM Assembly Keyword
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_ALWAYS_INLINE</tt>
+    </td>
+    <td align="left">
+    <tt>alwaysinline</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_INLINE_HINT</tt>
+    </td>
+    <td align="left">
+    <tt>inlinehint</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_INLINE</tt>
+    </td>
+    <td align="left">
+    <tt>noinline</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_OPTIMIZE_FOR_SIZE</tt>
+    </td>
+    <td align="left">
+    <tt>optsize</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_RETURN</tt>
+    </td>
+    <td align="left">
+    <tt>noreturn</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_UNWIND</tt>
+    </td>
+    <td align="left">
+    <tt>nounwind</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_READ_NONE</tt>
+    </td>
+    <td align="left">
+    <tt>readnone</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_READONLY</tt>
+    </td>
+    <td align="left">
+    <tt>readonly</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_STACK_PROTECT</tt>
+    </td>
+    <td align="left">
+    <tt>ssp</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_STACK_PROTECT_REQ</tt>
+    </td>
+    <td align="left">
+    <tt>sspreq</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_REDZONE</tt>
+    </td>
+    <td align="left">
+    <tt>noredzone</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_IMPLICIT_FLOAT</tt>
+    </td>
+    <td align="left">
+    <tt>noimplicitfloat</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NAKED</tt>
+    </td>
+    <td align="left">
+    <tt>naked</tt>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>Here is how attributes can be set and removed:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.3
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900"># create a function</span></span>
+ti <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">int</span></span><span style="color: #990000">(</span><span style="color: #993399">32</span><span style="color: #990000">)</span>
+tf <span style="color: #990000">=</span> Type<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">function</span></span><span style="color: #990000">(</span>ti<span style="color: #990000">,</span> <span style="color: #990000">[</span>ti<span style="color: #990000">,</span> ti<span style="color: #990000">])</span>
+m <span style="color: #990000">=</span> Module<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">new</span></span><span style="color: #990000">(</span><span style="color: #FF0000">'mod'</span><span style="color: #990000">)</span>
+f <span style="color: #990000">=</span> m<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_function</span></span><span style="color: #990000">(</span>tf<span style="color: #990000">,</span> <span style="color: #FF0000">'sum'</span><span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">print</span></span> f
+<span style="font-style: italic"><span style="color: #9A1900">#   declare i32 @sum(i32, i32)</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900"># add a couple of attributes</span></span>
+f<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_attribute</span></span><span style="color: #990000">(</span>ATTR_NO_UNWIND<span style="color: #990000">)</span>
+f<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">add_attribute</span></span><span style="color: #990000">(</span>ATTR_READONLY<span style="color: #990000">)</span>
+<span style="font-weight: bold"><span style="color: #0000FF">print</span></span> f
+<span style="font-style: italic"><span style="color: #9A1900">#   declare i32 @sum(i32, i32) nounwind readonly</span></span></tt></pre></div></div>
+<div class="exampleblock">
+<div class="title">llvm.core.Function</div>
+<div class="exampleblock-content">
+<div class="ulist"><div class="title">Base Class</div><ul>
+<li>
+<p>
+<tt>llvm.core.GlobalValue</tt>
+</p>
+</li>
+</ul></div>
+<div class="dlist"><div class="title">Static Constructors</div><dl>
+<dt class="hdlist1">
+<tt>new(module_obj, func_ty, name)</tt>
+</dt>
+<dd>
+<p>
+    Create a function named <tt>name</tt> of type <tt>func_ty</tt> in the module
+    <tt>module_obj</tt> and return a <tt>Function</tt> object that represents it.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>get(module_obj, name)</tt>
+</dt>
+<dd>
+<p>
+    Return a <tt>Function</tt> object to represent the function
+    named <tt>name</tt> in the module <tt>module_obj</tt> or raise <tt>LLVMException</tt> if
+    such a function does not exist.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>get_or_insert(module_obj, func_ty, name)</tt>
+</dt>
+<dd>
+<p>
+    Similar to <tt>get</tt>, except that if the function does not exist it
+    is added first, as though with <tt>new</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>intrinsic(module_obj, intrinsic_id, types)</tt>
+</dt>
+<dd>
+<p>
+    Create and return a <tt>Function</tt> object that refers to an intrinsic
+    function, as described <a href="#intrinsic">above</a>.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Properties</div><dl>
+<dt class="hdlist1">
+<tt>calling_convention</tt>
+</dt>
+<dd>
+<p>
+    The calling convention for the function, as listed
+    <a href="#callconv">abov</a>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>collector</tt>
+</dt>
+<dd>
+<p>
+    A string holding the name of the garbage collection algorithm.
+    See <a href="http://www.llvm.org/docs/LangRef.html#gc">LLVM docs</a>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>does_not_throw</tt>
+</dt>
+<dd>
+<p>
+    Setting to True sets the <tt>ATTR_NO_UNWIND</tt> attribute, False
+    removes it. Shortcut to using <tt>f.add_attribute(ATTR_NO_UNWIND)</tt>
+    and <tt>f.remove_attribute(ATTR_NO_UNWIND)</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>args</tt> [read-only]
+</dt>
+<dd>
+<p>
+    List of <tt>llvm.core.Argument</tt> objects representing the formal
+    arguments of the function.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>basic_block_count</tt> [read-only]
+</dt>
+<dd>
+<p>
+    Number of basic blocks belonging to this function. Same as
+    <tt>len(f.basic_blocks)</tt> but faster if you just want the count.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>entry_basic_block</tt> [read-only]
+</dt>
+<dd>
+<p>
+    The <tt>llvm.core.BasicBlock</tt> object representing the entry
+    basic block for this function, or <tt>None</tt> if there are no
+    basic blocks.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>basic_blocks</tt> [read-only]
+</dt>
+<dd>
+<p>
+    List of <tt>llvm.core.BasicBlock</tt> objects representing the
+    basic blocks belonging to this function.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>intrinsic_id</tt> [read-only]
+</dt>
+<dd>
+<p>
+    Returns the ID of the intrinsic if this object represents an
+    intrinsic instruction. Otherwise 0.
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><div class="title">Methods</div><dl>
+<dt class="hdlist1">
+<tt>delete()</tt>
+</dt>
+<dd>
+<p>
+    Deletes the function from it&#8217;s module. _Do not hold any
+    references to this object after calling <tt>delete</tt> on it.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>append_basic_block(name)</tt>
+</dt>
+<dd>
+<p>
+    Add a new basic block named <tt>name</tt>, and return a corresponding
+    <tt>llvm.core.BasicBlock</tt> object. Note that if this is not the
+    entry basic block, you&#8217;ll have to add appropriate branch
+    instructions from other basic blocks yourself.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>add_attribute(attr)</tt>
+</dt>
+<dd>
+<p>
+    Add an attribute <tt>attr</tt> to the function, from the set listed above.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>remove_attribute(attr)</tt>
+</dt>
+<dd>
+<p>
+    Remove the attribute <tt>attr</tt> of the function.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>viewCFG()</tt>
+</dt>
+<dd>
+<p>
+    Displays the control flow graph using the GraphViz tool.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>viewCFGOnly()</tt>
+</dt>
+<dd>
+<p>
+    Displays the control flow graph using the GraphViz tool, but
+    omitting function bodies.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>verify()</tt>
+</dt>
+<dd>
+<p>
+    Verifies the function. See
+    <a href="http://llvm.org/docs/Passes.html#verify">LLVM docs</a>.
+</p>
+</dd>
+</dl></div>
+</div></div>
+<h3 id="_argument_llvm_core">Argument (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The <tt>args</tt> property of <tt>llvm.core.Function</tt> objects yields
+<tt>llvm.core.Argument</tt> objects. This allows for setting attributes for
+functions arguments. <tt>Argument</tt> objects cannot be constructed from user
+code, the only way to get a reference to these are via functions.</p></div>
+<div class="paragraph"><p>The method <tt>add_attribute</tt> and <tt>remove_attribute</tt> can be used to add or
+remove the following attributes:</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="200" />
+<col width="600" />
+<thead>
+  <tr>
+    <th align="left">
+    Value
+    </th>
+    <th align="left">
+    Equivalent LLVM Assembly Keyword
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    <tt>ATTR_ZEXT</tt>
+    </td>
+    <td align="left">
+    <tt>zeroext</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_SEXT</tt>
+    </td>
+    <td align="left">
+    <tt>signext</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_IN_REG</tt>
+    </td>
+    <td align="left">
+    <tt>inreg</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_BY_VAL</tt>
+    </td>
+    <td align="left">
+    <tt>byval</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_STRUCT_RET</tt>
+    </td>
+    <td align="left">
+    <tt>sret</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_ALIAS</tt>
+    </td>
+    <td align="left">
+    <tt>noalias</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NO_CAPTURE</tt>
+    </td>
+    <td align="left">
+    <tt>nocapture</tt>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>ATTR_NEST</tt>
+    </td>
+    <td align="left">
+    <tt>nest</tt>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>The corresponding
+<a href="http://www.llvm.org/docs/LangRef.html#paramattrs">LLVM docs</a>
+provide more information.</p></div>
+<div class="paragraph"><p>The alignment of any parameter can be set via the <tt>alignment</tt>
+property, to any power of 2.</p></div>
+<h3 id="_basic_block_llvm_core">Basic Block (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO</p></div>
+<h3 id="_builder_llvm_core">Builder (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO</p></div>
+<h3 id="_instructions_llvm_core">Instructions (llvm.core)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO</p></div>
+<h3 id="_target_data_llvm_ee">Target Data (llvm.ee)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO</p></div>
+<h3 id="_execution_engine_llvm_ee">Execution Engine (llvm.ee)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO. For now, see <tt>test/example-jit.py</tt>.</p></div>
+<h3 id="_pass_manager_and_passes_llvm_passes">Pass Manager and Passes (llvm.passes)</h3><div style="clear:left"></div>
+<div class="paragraph"><p>TODO. For now, see <tt>test/passes.py</tt>.</p></div>
+</div>
+<h2 id="_about_the_llvm_py_project">About the llvm-py Project</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>llvm-py lives at
+<a href="http://www.mdevan.org/llvm-py/">http://www.mdevan.org/llvm-py/</a>.
+The code (subversion repository) and the issue tracker are hosted on the
+Google code hosting service, at
+<a href="http://code.google.com/p/llvm-py/">http://code.google.com/p/llvm-py/</a>.
+It is distributed under the new BSD license, the full license text is in
+the file named
+<a href="http://code.google.com/p/llvm-py/source/browse/trunk/LICENSE">LICENSE</a>
+available in the source distribution.</p></div>
+<div class="paragraph"><p>There is an llvm-py mailing list / users group:
+<a href="http://groups.google.com/group/llvm-py">http://groups.google.com/group/llvm-py</a>.</p></div>
+<div class="paragraph"><p>The entire llvm-py website is generated from marked up text files
+using the tool <a href="http://www.methods.co.nz/asciidoc/"><em>AsciiDoc</em></a>. These text
+files and the (pre-)generated HTML pages are available in the source
+distribution.</p></div>
+<div class="paragraph"><p>llvm-py is an ongoing, live project. Your contributions in any form
+are most welcome. You can checkout the latest SVN HEAD from
+<a href="http://code.google.com/p/llvm-py/source/checkout">here</a>.</p></div>
+<div class="paragraph"><p>Mahadevan R wrote llvm-py and works on it in his spare time. He can be
+reached at <em>mdevan@mdevan.org</em>.</p></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Web pages &copy; Mahadevan R. Generated with <a href="http://www.methods.co.nz/asciidoc/">asciidoc</a>.
+Last updated 2010-08-31.
+</div>
+</div>
+</div>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+var pageTracker = _gat._getTracker("UA-4519056-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+</body>
+</html>

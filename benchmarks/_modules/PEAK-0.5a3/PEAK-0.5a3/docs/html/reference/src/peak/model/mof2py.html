@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: mof2py</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: mof2py</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/model/mof2py.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Python code generation from MOF model</h3>
+<p>    This is still a little rough and the code it generates has not yet been
+    tested.  In order to do that, we need to have a mechanism for indexing
+    the created model, such that it can be used as a metamodel for
+    <code>peak.storage.xmi</code>.</p>
+<p>    Open issues:</p>
+
+<ul>
+<li><p>There are a few unsupported features which will cause generated code
+      not to work or not match the semantics of the supplied model:
+<ul>
+<li><p>We don't support actual &quot;pure structure&quot; types; specifically we
+          don't generate correct code for the structure fields.</p></li>
+<li><p>Package inheritance is not supported</p></li>
+<li><p>Constants, TypeAliases, Constraints, Operations, Exceptions,
+          Parameters, Associations, AssociationEnds and Tags do not have any
+          code generated for them.</p></li>
+<li><p>If a model name conflicts with Python keywords, built-ins, or a
+          private/system ('_'-prefixed) name, the generated model may fail
+          with no warning from the generator.</p></li>
+
+</ul>
+</p></li>
+<li><p>Docstring formatting is a bit &quot;off&quot;; notably, we're not wrapping
+      paragraphs, and something seems wrong with linespacing, at least
+      in my tests with the CWM metamodel.  This may be purely specific
+      to CWM.  At least <code>happydoc</code> seems to make some sense out of the
+      docstrings it sees (non-nested classes only, alas).</p></li>
+
+</ul>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-__future__.html">__future__</a> <b>import</b> generators<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-cStringIO.html">cStringIO</a> <b>import</b> StringIO<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-os.html">os</a> <b>import</b> makedirs<br>
+<b>from</b> os.path <b>import</b> dirname, exists<br>
+<b>from</b> peak.api <b>import</b> *<br>
+<b>from</b> peak.util.IndentedStream <b>import</b> IndentedStream<br>
+<b>from</b> peak.util.advice <b>import</b> advice<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#genPkg">genPkg</a><br>
+<a href="#main">main</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="genPkg"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">genPkg&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+genPkg (
+        modelDescr,
+        modelFile,
+        pkgBase,
+        srcDir,
+        progress=None,
+        )
+
+</pre></font>
+
+<h3>Generate a <code>peak.model</code> package from a MOF XMI file</h3>
+<dl>
+<dt>    <code>modelDescr</code></dt>
+<dd>title of the model, e.g. <code>"UML 1.3"</code></dd>
+<dt>    <code>modelFile</code></dt>
+<dd>the XMI file to generate from</dd>
+<dt>    <code>pkgBase</code></dt>
+<dd>dotted package prefix, e.g. <code>"peak.metamodels.UML13.model."</code></dd>
+<dt>    <code>srcDir</code></dt>
+<dd>directory prefix before <code>pkgBase</code>, e.g. <code>"./src"</code></dd>
+<dt>    <code>progress</code></dt>
+<dd>a function that will be called with data about each
+         MOF package written; useful for progress indicators.</dd>
+</dl>
+<p>    Any missing directories will be created, but <code>__init__.py</code> files will
+    not be created for parent packages of the specified package, so the
+    output will not be a valid package unless you add them yourself.  Files
+    in the destination directory may be overwritten, but existing files that
+    don't correspond to the MOF model contents will not be deleted.  If you
+    regenerate a changed model, you might want to delete the target directory
+    tree first.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="main"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">main&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+main ( prefix='' )
+
+</pre></font>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="mof2py/MOFFileSet.html">MOFFileSet</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="mof2py/MOFGenerator.html">MOFGenerator</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="mof2py/MOFOutline.html">MOFOutline</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="mof2py/oncePerObject.html">oncePerObject</a></p></td><td valign="top" align="left"></td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:45 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

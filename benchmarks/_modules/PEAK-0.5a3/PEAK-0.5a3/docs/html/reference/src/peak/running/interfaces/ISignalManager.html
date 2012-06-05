@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: ISignalManager</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: ISignalManager</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/running/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>DEPRECATED - Please use <code>events.ISignalSource</code> instead!</h3>
+<p>    A signal handler is any weakly-referenceable object with <code>SIG*()</code> methods
+    (e.g. <code>SIGKILL()</code>, <code>SIGCHLD()</code>, etc.).  Handlers are automatically removed
+    if they are no longer referenced outside the signal manager.</p>
+<p>    For signals with installed handlers, the default behavior is replaced by
+    calling the appropriately named method on each handler.  So, if there are
+    five handlers registered for e.g. SIGCHLD, then when SIGCHLD occurs, those
+    five handlers' <code>SIGCHLD()</code> methods will be called with the signal number
+    and stack frame, as though they had been directly registered for the
+    signal.</p>
+<p>    If a given signal does not have any handlers, it will have its default
+    behavior (SIG_DFL) restored.  Note that due to the global nature of signals
+    in Python programs, direct use of the Python <code>signal</code> module is not
+    recommended and may produce unexpected results.</p>
+<p>    Also note that there is no guaranteed order in which handlers for a given
+    signal are called, and the order may not be consistent from one invocation
+    to the next.  Last, but not least, remember that Python calls signal
+    handlers only from the &quot;main thread&quot;, so handlers should use locks to
+    protect access to resources that may be modified or used by other threads.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+Interface<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#addHandler">addHandler</a><br>
+<a href="#removeHandler">removeHandler</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="addHandler"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">addHandler&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+addHandler ( handler )
+
+</pre></font>
+
+<h3>Add <code>handler</code> to handlers called for appropriate signals</h3>
+<p>        Adding a handler more than once has no effect.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="removeHandler"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">removeHandler&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+removeHandler ( handler )
+
+</pre></font>
+
+<h3>Remove <code>handler</code> from signal handlers</h3>
+<p>        Removing a handler that was not added, has no effect.</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:49 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

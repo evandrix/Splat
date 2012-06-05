@@ -1,0 +1,123 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1' ?>
+<!DOCTYPE schema SYSTEM '../../../ZConfig/doc/schema.dtd' >
+
+<schema extends="pkgfile:peak.running/EventDriven.xml"
+        prefix="peak.tools.supervisor"
+        datatype=".process.ProcessSupervisor.fromZConfig">
+
+    <description>
+    This schema describes the configuration of a ProcessSupervisor: a PEAK
+    command that forks copies of itself as subprocesses, and monitors them.
+    For the original vision document and background, see:
+
+    http://www.eby-sarna.com/pipermail/peak/2003-August/000697.html
+
+    (Note...  there are probably other things we might want to configure later,
+    such as the signals sent to stop subprocesses, signals monitored by the
+    parent process, etc.)
+    </description>
+
+    <key name="Command" attribute="cmdText" datatype="string" default="">
+        <description>
+        The command to be run as a subprocess.  This is a standard PEAK command
+        line; i.e. a URL or peak.running.shortcut item, followed by its
+        arguments.
+        </description>
+    </key>
+
+    <key name="PidFile" attribute="pidFile" datatype="existing-dirpath"
+         required="yes">
+
+        <description>
+        Name of a file where the supervisor process' process ID (PID) will be
+        stored.  If the supervisor is started when a supervisor is already
+        running (as determined by this file), the existing process will be
+        killed.
+        </description>
+
+    </key>
+
+
+
+    <key name="MinProcesses" attribute="minChildren" datatype="integer"
+        default="1">
+
+        <description>
+        Minimum number of child processes to keep running.  If the number of
+        active processes falls below this level, new ones will be started
+        (every 'StartInterval' seconds) to raise the number of active processes
+        to this level.
+        </description>
+
+    </key>
+
+
+    <key name="MaxProcesses" attribute="maxChildren" datatype="integer"
+        default="4">
+
+        <description>
+        Maximum number of child processes allowed.  The supervisor will not
+        start new processes if there are already this many processes active.
+        </description>
+
+    </key>
+
+
+    <key name="StartInterval" attribute="startInterval"
+        datatype="time-interval" default="15s">
+
+        <description>
+        Amount of time to wait after starting a subprocess, before starting
+        another one.  In other words, there will be at this many seconds
+        between subprocess starts.
+        </description>
+
+    </key>
+
+
+
+
+
+
+
+    <multikey name="Import" attribute="importModules"
+        datatype="peak.util.imports.importString">
+
+        <description>
+        You may specify one or more 'Import' keys, each naming a module to
+        be imported at application startup.  The purpose of this is to allow
+        you to ensure that certain modules have been imported before child
+        processes are started, thus preventing the child process from needing
+        to import them.  This can speed the startup of child process, and
+        perhaps even reduce memory consumption on some operating systems.
+        </description>
+
+    </multikey>
+
+    <key name="StartupLock" attribute="startLockURL" datatype="string">
+        <description>
+        An optional URL, specifying an ILock that will be used to ensure only
+        one supervisor attempts startup at a given moment.  If not supplied, it
+        defaults to 'flockfile:PIDFILE.start' where PIDFILE is the supplied
+        'PidFile' setting.  So, if you set 'PidFile' to '/foo/bar/baz.pid',
+        then 'StartupLock' will default to 'flockfile:/foo/bar/baz.pid.start'.
+        </description>
+    </key>
+
+    <key name="PidLock" attribute="pidLockURL" datatype="string">
+        <description>
+        An optional URL, specifying an ILock that will be used to ensure only
+        one supervisor attempts to modify the PidFile at a given moment.  If
+        not supplied, it defaults to 'flockfile:PIDFILE.lock' where PIDFILE is
+        the supplied 'PidFile' setting.  So, if you set 'PidFile' to
+        '/foo/bar/baz.pid', then 'StartupLock' will default to
+        'flockfile:/foo/bar/baz.pid.lock'.
+        </description>
+    </key>
+
+</schema>
+
+
+
+
+

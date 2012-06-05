@@ -1,0 +1,3793 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<XMI xmi.version = '1.0' >
+	<XMI.header >
+		<XMI.documentation >
+			<XMI.exporter >MagicDraw UML</XMI.exporter>
+			<XMI.exporterVersion >3.6</XMI.exporterVersion>
+		</XMI.documentation>
+		<XMI.metamodel xmi.name = 'UML' xmi.version = '1.3' />
+	</XMI.header>
+	<XMI.content >
+		<Model_Management.Model xmi.id = 'ID000000000001' >
+			<Foundation.Core.ModelElement.name >Data</Foundation.Core.ModelElement.name>
+			<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+			<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+			<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+			<Foundation.Core.Namespace.ownedElement >
+				<Foundation.Core.Generalization xmi.id = 'ID000000000002' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID000000000003' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID000000000004' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Model_Management.Package xmi.id = 'ID000000000005' >
+					<Foundation.Core.ModelElement.name >Component View</Foundation.Core.ModelElement.name>
+					<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+					<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+					<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+					<Foundation.Core.Namespace.ownedElement >
+						<Model_Management.Package xmi.id = 'ID000000000006' >
+							<Foundation.Core.ModelElement.name >Meta-MetaModel</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Namespace.ownedElement >
+								<Foundation.Core.Component xmi.id = 'ID000000000007' >
+									<Foundation.Core.ModelElement.name >Kind.java</Foundation.Core.ModelElement.name>
+									<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+									<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+									<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+									<Foundation.Core.Component.residentElement >
+										<Foundation.Core.ElementResidence >
+											<Foundation.Core.ElementResidence.visibility xmi.value = 'private' />
+											<Foundation.Core.ElementResidence.resident >
+												<Foundation.Core.Class xmi.idref = 'ID000000000008' />
+											</Foundation.Core.ElementResidence.resident>
+										</Foundation.Core.ElementResidence>
+									</Foundation.Core.Component.residentElement>
+								</Foundation.Core.Component>
+							</Foundation.Core.Namespace.ownedElement>
+						</Model_Management.Package>
+					</Foundation.Core.Namespace.ownedElement>
+				</Model_Management.Package>
+				<Foundation.Core.Generalization xmi.id = 'ID000000000009' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID000000000008' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID00000000000a' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Foundation.Core.Generalization xmi.id = 'ID00000000000b' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID00000000000c' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID000000000008' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Foundation.Core.Association xmi.id = 'ID0000000000c8' >
+					<Foundation.Core.Association.connection >
+						<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000c9' >
+							<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+							<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+							<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+							<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+							<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+							<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+							<Foundation.Core.AssociationEnd.association >
+								<Foundation.Core.Association xmi.idref = 'ID0000000000c8' />
+							</Foundation.Core.AssociationEnd.association>
+							<Foundation.Core.AssociationEnd.type >
+								<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+							</Foundation.Core.AssociationEnd.type>
+						</Foundation.Core.AssociationEnd>
+						<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000cb' >
+							<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+							<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+							<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+							<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+							<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+							<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+							<Foundation.Core.AssociationEnd.association >
+								<Foundation.Core.Association xmi.idref = 'ID0000000000c8' />
+							</Foundation.Core.AssociationEnd.association>
+							<Foundation.Core.AssociationEnd.type >
+								<Foundation.Core.Class xmi.idref = 'ID000000000008' />		<!-- AttributeKind -->
+							</Foundation.Core.AssociationEnd.type>
+						</Foundation.Core.AssociationEnd>
+					</Foundation.Core.Association.connection>
+				</Foundation.Core.Association>
+				<Foundation.Core.Generalization xmi.id = 'ID00000000000d' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID000000000004' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID000000000008' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Foundation.Core.Generalization xmi.id = 'ID00000000000e' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID00000000000f' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID000000000008' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Model_Management.Model xmi.id = 'ID000000000010' >
+					<Foundation.Core.ModelElement.name >Meta-MetaModel</Foundation.Core.ModelElement.name>
+					<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+					<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+					<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+					<Foundation.Core.Namespace.ownedElement >
+						<Foundation.Core.Association xmi.id = 'ID0000000000cc' >
+							<Foundation.Core.Association.connection >
+								<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000cd' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'aggregate' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID0000000000cc' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID000000000023' />		<!-- association -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+								<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000ce' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.multiplicity >
+										<Foundation.Data_Types.Multiplicity xmi.id = 'ID000000000111' >
+											<Foundation.Data_Types.Multiplicity.range >
+												<Foundation.Data_Types.MultiplicityRange xmi.id = 'ID000000000112' >
+													<Foundation.Data_Types.MultiplicityRange.lower >0</Foundation.Data_Types.MultiplicityRange.lower>
+													<Foundation.Data_Types.MultiplicityRange.upper >*</Foundation.Data_Types.MultiplicityRange.upper>
+												</Foundation.Data_Types.MultiplicityRange>
+											</Foundation.Data_Types.Multiplicity.range>
+										</Foundation.Data_Types.Multiplicity>
+									</Foundation.Core.AssociationEnd.multiplicity>
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID0000000000cc' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+							</Foundation.Core.Association.connection>
+						</Foundation.Core.Association>
+						<Foundation.Core.Class xmi.id = 'ID000000000003' >
+							<Foundation.Core.ModelElement.name >element</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID000000000002' />
+							</Foundation.Core.GeneralizableElement.generalization>
+							<Foundation.Core.Classifier.feature >
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000d1' >
+									<Foundation.Core.ModelElement.name >abstract</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID000000000003' />		<!-- element -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d2' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+							</Foundation.Core.Classifier.feature>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID0000000000d3' >
+							<Foundation.Core.ModelElement.name >literal</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.Classifier.feature >
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000d4' >
+									<Foundation.Core.ModelElement.name >name</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d3' />		<!-- literal -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d5' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+							</Foundation.Core.Classifier.feature>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID0000000000ca' >
+							<Foundation.Core.ModelElement.name >role</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.Classifier.feature >
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000d6' >
+									<Foundation.Core.ModelElement.name >composite</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d2' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000d7' >
+									<Foundation.Core.ModelElement.name >xmi_name</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d5' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000d8' >
+									<Foundation.Core.ModelElement.name >navigable</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d2' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000d9' >
+									<Foundation.Core.ModelElement.name >kind</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000da' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000db' >
+									<Foundation.Core.ModelElement.name >name</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000ca' />		<!-- role -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d5' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+							</Foundation.Core.Classifier.feature>
+						</Foundation.Core.Class>
+						<Foundation.Core.Association xmi.id = 'ID000000000011' >
+							<Foundation.Core.Association.connection >
+								<Foundation.Core.AssociationEnd xmi.id = 'ID000000000012' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'aggregate' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID000000000011' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID000000000013' />		<!-- package -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+								<Foundation.Core.AssociationEnd xmi.id = 'ID000000000014' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID000000000011' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID00000000000a' />		<!-- PackageElement -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+							</Foundation.Core.Association.connection>
+						</Foundation.Core.Association>
+						<Foundation.Core.Association xmi.id = 'ID000000000018' >
+							<Foundation.Core.Association.connection >
+								<Foundation.Core.AssociationEnd xmi.id = 'ID000000000019' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'aggregate' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID000000000018' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID00000000000c' />		<!-- enumeration -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+								<Foundation.Core.AssociationEnd xmi.id = 'ID00000000001a' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID000000000018' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d3' />		<!-- literal -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+							</Foundation.Core.Association.connection>
+						</Foundation.Core.Association>
+						<Foundation.Core.Class xmi.id = 'ID00000000000f' >
+							<Foundation.Core.ModelElement.name >primitive</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000000e' />
+							</Foundation.Core.GeneralizableElement.generalization>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID000000000015' >
+							<Foundation.Core.ModelElement.name >attribute</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.Classifier.feature >
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000dc' >
+									<Foundation.Core.ModelElement.name >name</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID000000000015' />		<!-- attribute -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d5' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+							</Foundation.Core.Classifier.feature>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID0000000000d5' >
+							<Foundation.Core.ModelElement.name >Name</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID000000000023' >
+							<Foundation.Core.ModelElement.name >association</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000001d' />
+							</Foundation.Core.GeneralizableElement.generalization>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID000000000013' >
+							<Foundation.Core.ModelElement.name >package</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000001e' />
+							</Foundation.Core.GeneralizableElement.generalization>
+							<Foundation.Core.Classifier.feature >
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000dd' >
+									<Foundation.Core.ModelElement.name >name</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID000000000013' />		<!-- package -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d5' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+							</Foundation.Core.Classifier.feature>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID00000000000c' >
+							<Foundation.Core.ModelElement.name >enumeration</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000000b' />
+							</Foundation.Core.GeneralizableElement.generalization>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID00000000000a' >
+							<Foundation.Core.ModelElement.name >PackageElement</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'true' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.specialization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000001d' />
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000001e' />
+								<Foundation.Core.Generalization xmi.idref = 'ID000000000009' />
+							</Foundation.Core.GeneralizableElement.specialization>
+						</Foundation.Core.Class>
+						<Foundation.Core.Association xmi.id = 'ID000000000027' >
+							<Foundation.Core.Association.connection >
+								<Foundation.Core.AssociationEnd xmi.id = 'ID000000000028' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'aggregate' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID000000000027' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID000000000004' />		<!-- datatype -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+								<Foundation.Core.AssociationEnd xmi.id = 'ID000000000029' >
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+									<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+									<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+									<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+									<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+									<Foundation.Core.AssociationEnd.association >
+										<Foundation.Core.Association xmi.idref = 'ID000000000027' />
+									</Foundation.Core.AssociationEnd.association>
+									<Foundation.Core.AssociationEnd.type >
+										<Foundation.Core.Class xmi.idref = 'ID000000000015' />		<!-- attribute -->
+									</Foundation.Core.AssociationEnd.type>
+								</Foundation.Core.AssociationEnd>
+							</Foundation.Core.Association.connection>
+						</Foundation.Core.Association>
+						<Foundation.Core.Class xmi.id = 'ID0000000000da' >
+							<Foundation.Core.ModelElement.name >RoleKind</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID0000000000d2' >
+							<Foundation.Core.ModelElement.name >Boolean</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID000000000008' >
+							<Foundation.Core.ModelElement.name >AttributeKind</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'true' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID000000000009' />
+							</Foundation.Core.GeneralizableElement.generalization>
+							<Foundation.Core.GeneralizableElement.specialization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000000e' />
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000000d' />
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000000b' />
+							</Foundation.Core.GeneralizableElement.specialization>
+							<Foundation.Core.Classifier.feature >
+								<Foundation.Core.Attribute xmi.id = 'ID0000000000de' >
+									<Foundation.Core.ModelElement.name >name</Foundation.Core.ModelElement.name>
+									<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+									<Foundation.Core.Feature.ownerScope xmi.value = 'instance' />
+									<Foundation.Core.StructuralFeature.changeability xmi.value = 'changeable' />
+									<Foundation.Core.StructuralFeature.targetScope xmi.value = 'instance' />
+									<Foundation.Core.Feature.owner >
+										<Foundation.Core.Class xmi.idref = 'ID000000000008' />		<!-- AttributeKind -->
+									</Foundation.Core.Feature.owner>
+									<Foundation.Core.StructuralFeature.type >
+										<Foundation.Core.Class xmi.idref = 'ID0000000000d5' />
+									</Foundation.Core.StructuralFeature.type>
+								</Foundation.Core.Attribute>
+							</Foundation.Core.Classifier.feature>
+						</Foundation.Core.Class>
+						<Foundation.Core.Class xmi.id = 'ID000000000004' >
+							<Foundation.Core.ModelElement.name >datatype</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+							<Foundation.Core.Class.isActive xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.generalization >
+								<Foundation.Core.Generalization xmi.idref = 'ID00000000000d' />
+							</Foundation.Core.GeneralizableElement.generalization>
+							<Foundation.Core.GeneralizableElement.specialization >
+								<Foundation.Core.Generalization xmi.idref = 'ID000000000002' />
+							</Foundation.Core.GeneralizableElement.specialization>
+						</Foundation.Core.Class>
+					</Foundation.Core.Namespace.ownedElement>
+				</Model_Management.Model>
+				<Foundation.Core.Generalization xmi.id = 'ID00000000001e' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID000000000013' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID00000000000a' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Foundation.Core.Association xmi.id = 'ID0000000000df' >
+					<Foundation.Core.Association.connection >
+						<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000e0' >
+							<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+							<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+							<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+							<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+							<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+							<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+							<Foundation.Core.AssociationEnd.association >
+								<Foundation.Core.Association xmi.idref = 'ID0000000000df' />
+							</Foundation.Core.AssociationEnd.association>
+							<Foundation.Core.AssociationEnd.type >
+								<Foundation.Core.Class xmi.idref = 'ID000000000004' />		<!-- datatype -->
+							</Foundation.Core.AssociationEnd.type>
+						</Foundation.Core.AssociationEnd>
+						<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000e1' >
+							<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+							<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+							<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+							<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+							<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+							<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+							<Foundation.Core.AssociationEnd.association >
+								<Foundation.Core.Association xmi.idref = 'ID0000000000df' />
+							</Foundation.Core.AssociationEnd.association>
+							<Foundation.Core.AssociationEnd.type >
+								<Foundation.Core.Class xmi.idref = 'ID000000000004' />		<!-- datatype -->
+							</Foundation.Core.AssociationEnd.type>
+						</Foundation.Core.AssociationEnd>
+					</Foundation.Core.Association.connection>
+				</Foundation.Core.Association>
+				<Foundation.Core.Association xmi.id = 'ID0000000000e2' >
+					<Foundation.Core.Association.connection >
+						<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000e3' >
+							<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+							<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+							<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+							<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+							<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+							<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+							<Foundation.Core.AssociationEnd.association >
+								<Foundation.Core.Association xmi.idref = 'ID0000000000e2' />
+							</Foundation.Core.AssociationEnd.association>
+							<Foundation.Core.AssociationEnd.type >
+								<Foundation.Core.Class xmi.idref = 'ID000000000015' />		<!-- attribute -->
+							</Foundation.Core.AssociationEnd.type>
+						</Foundation.Core.AssociationEnd>
+						<Foundation.Core.AssociationEnd xmi.id = 'ID0000000000e4' >
+							<Foundation.Core.ModelElement.visibility xmi.value = 'private' />
+							<Foundation.Core.AssociationEnd.isNavigable xmi.value = 'true' />
+							<Foundation.Core.AssociationEnd.ordering xmi.value = 'unordered' />
+							<Foundation.Core.AssociationEnd.aggregation xmi.value = 'none' />
+							<Foundation.Core.AssociationEnd.targetScope xmi.value = 'instance' />
+							<Foundation.Core.AssociationEnd.changeability xmi.value = 'changeable' />
+							<Foundation.Core.AssociationEnd.association >
+								<Foundation.Core.Association xmi.idref = 'ID0000000000e2' />
+							</Foundation.Core.AssociationEnd.association>
+							<Foundation.Core.AssociationEnd.type >
+								<Foundation.Core.Class xmi.idref = 'ID000000000008' />		<!-- AttributeKind -->
+							</Foundation.Core.AssociationEnd.type>
+						</Foundation.Core.AssociationEnd>
+					</Foundation.Core.Association.connection>
+				</Foundation.Core.Association>
+				<Foundation.Core.Generalization xmi.id = 'ID00000000001d' >
+					<Foundation.Core.Generalization.child >
+						<Foundation.Core.Class xmi.idref = 'ID000000000023' />
+					</Foundation.Core.Generalization.child>
+					<Foundation.Core.Generalization.parent >
+						<Foundation.Core.Class xmi.idref = 'ID00000000000a' />
+					</Foundation.Core.Generalization.parent>
+				</Foundation.Core.Generalization>
+				<Model_Management.Package xmi.id = 'ID00000000002c' >
+					<Foundation.Core.ModelElement.name >Data types</Foundation.Core.ModelElement.name>
+					<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+					<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+					<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+					<Foundation.Core.Namespace.ownedElement >
+						<Foundation.Core.DataType xmi.id = 'ID00000000002d' >
+							<Foundation.Core.ModelElement.name >byte</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID00000000002e' >
+							<Foundation.Core.ModelElement.name >int</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID00000000002f' >
+							<Foundation.Core.ModelElement.name >double</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID000000000020' >
+							<Foundation.Core.ModelElement.name >boolean</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID000000000030' >
+							<Foundation.Core.ModelElement.name >float</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID000000000031' >
+							<Foundation.Core.ModelElement.name >long</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID000000000032' >
+							<Foundation.Core.ModelElement.name >short</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID000000000017' >
+							<Foundation.Core.ModelElement.name >char</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+						<Foundation.Core.DataType xmi.id = 'ID000000000033' >
+							<Foundation.Core.ModelElement.name >void</Foundation.Core.ModelElement.name>
+							<Foundation.Core.GeneralizableElement.isRoot xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isLeaf xmi.value = 'false' />
+							<Foundation.Core.GeneralizableElement.isAbstract xmi.value = 'false' />
+						</Foundation.Core.DataType>
+					</Foundation.Core.Namespace.ownedElement>
+				</Model_Management.Package>
+			</Foundation.Core.Namespace.ownedElement>
+		</Model_Management.Model>
+	</XMI.content>
+	<XMI.extensions xmi.extender = 'MagicDraw UML 3.6' >
+		<mdOwnedDiagrams >
+			<mdElement elementClass = 'DiagramData' xmi.id = 'ID00000000006e' >
+				<Foundation.Core.ModelElement.name >The Meta-meta Model</Foundation.Core.ModelElement.name>
+				<parentID xmi.idref = 'ID000000000010' />
+				<type >Class Diagram</type>
+				<mdElement elementClass = 'DiagramView' xmi.id = 'ID00000000006f' >
+					<elementID xmi.idref = 'ID00000000006e' />
+					<zoomFactor xmi.value = '1.0' />
+					<mdOwnedViews >
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000070' >
+							<elementID xmi.idref = 'ID000000000008' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Full Classifier Type</name>
+									<propertyID >SHOW_FULL_TYPE</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+							</properties>
+							<geometry >380, 230, 115, 69</geometry>
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000071' >
+							<elementID xmi.idref = 'ID000000000015' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Full Classifier Type</name>
+									<propertyID >SHOW_FULL_TYPE</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+							</properties>
+							<geometry >700, 370, 130, 70</geometry>
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000072' >
+							<elementID xmi.idref = 'ID000000000004' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Attributes</name>
+									<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >500, 380, 115, 43</geometry>
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID000000000073' >
+							<elementID xmi.idref = 'ID000000000027' />
+							<linkFirstEndID xmi.idref = 'ID000000000072' />
+							<linkSecondEndID xmi.idref = 'ID000000000071' />
+							<geometry >615, 405; 700, 405; </geometry>
+							<linkNameID xmi.idref = 'ID000000000074' />
+							<linkConstraintID xmi.idref = 'ID000000000075' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000075' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >506, 710, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000076' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >506, 710, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID000000000077' >
+									<elementID xmi.idref = 'ID000000000028' />
+									<geometry >615, 400, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000078' >
+											<visible xmi.value = 'false' />
+											<geometry >615, 400, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000079' >
+											<visible xmi.value = 'false' />
+											<geometry >615, 400, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000007a' >
+											<visible xmi.value = 'false' />
+											<geometry >615, 400, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID000000000078' />
+									<roleMultiplicityID xmi.idref = 'ID000000000079' />
+									<roleConstraintsID xmi.idref = 'ID00000000007a' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID00000000007b' >
+									<elementID xmi.idref = 'ID000000000029' />
+									<geometry >690, 400, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000007c' >
+											<visible xmi.value = 'false' />
+											<geometry >690, 400, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000007d' >
+											<visible xmi.value = 'false' />
+											<geometry >690, 400, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000007e' >
+											<visible xmi.value = 'false' />
+											<geometry >690, 400, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID00000000007c' />
+									<roleMultiplicityID xmi.idref = 'ID00000000007d' />
+									<roleConstraintsID xmi.idref = 'ID00000000007e' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID000000000074' >
+									<visible xmi.value = 'false' />
+									<geometry >498, 701, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID000000000076' />
+							<associationFirstEndID xmi.idref = 'ID000000000077' />
+							<associationSecondEndID xmi.idref = 'ID00000000007b' />
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID00000000007f' >
+							<elementID xmi.idref = 'ID00000000000d' />
+							<linkFirstEndID xmi.idref = 'ID000000000070' />
+							<linkSecondEndID xmi.idref = 'ID000000000072' />
+							<geometry >425, 299; 425, 335; 545, 335; 545, 380; </geometry>
+							<linkNameID xmi.idref = 'ID000000000080' />
+							<linkConstraintID xmi.idref = 'ID000000000081' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000080' >
+									<visible xmi.value = 'false' />
+									<geometry >201, 274, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000081' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >201, 274, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000082' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >201, 274, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID000000000082' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000083' >
+							<elementID xmi.idref = 'ID000000000003' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Full Classifier Type</name>
+									<propertyID >SHOW_FULL_TYPE</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+							</properties>
+							<geometry >500, 470, 219, 69</geometry>
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID000000000084' >
+							<elementID xmi.idref = 'ID000000000002' />
+							<linkFirstEndID xmi.idref = 'ID000000000072' />
+							<linkSecondEndID xmi.idref = 'ID000000000083' />
+							<geometry >555, 423; 555, 470; </geometry>
+							<linkNameID xmi.idref = 'ID000000000085' />
+							<linkConstraintID xmi.idref = 'ID000000000086' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000085' >
+									<visible xmi.value = 'false' />
+									<geometry >140, 363, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000086' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >140, 363, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000087' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >140, 363, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID000000000087' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000088' >
+							<elementID xmi.idref = 'ID00000000000a' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >250, 110, 115, 54</geometry>
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000089' >
+							<elementID xmi.idref = 'ID000000000013' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Full Classifier Type</name>
+									<propertyID >SHOW_FULL_TYPE</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Tagged Values</name>
+									<propertyID >SHOW_TAGGED_VALUES</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+							</properties>
+							<geometry >250, 10, 115, 69</geometry>
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID00000000008a' >
+							<elementID xmi.idref = 'ID000000000009' />
+							<linkFirstEndID xmi.idref = 'ID000000000088' />
+							<linkSecondEndID xmi.idref = 'ID000000000070' />
+							<geometry >320, 164; 320, 205; 430, 205; 430, 230; </geometry>
+							<linkNameID xmi.idref = 'ID00000000008b' />
+							<linkConstraintID xmi.idref = 'ID00000000008c' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000008b' >
+									<visible xmi.value = 'false' />
+									<geometry >92, 139, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000008c' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >92, 139, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000008d' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >92, 139, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID00000000008d' />
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID00000000008e' >
+							<elementID xmi.idref = 'ID00000000001e' />
+							<linkFirstEndID xmi.idref = 'ID000000000088' />
+							<linkSecondEndID xmi.idref = 'ID000000000089' />
+							<geometry >320, 110; 320, 79; </geometry>
+							<linkNameID xmi.idref = 'ID00000000008f' />
+							<linkConstraintID xmi.idref = 'ID000000000090' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000008f' >
+									<visible xmi.value = 'false' />
+									<geometry >480, 116, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000090' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >480, 116, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000091' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >480, 116, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID000000000091' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000092' >
+							<elementID xmi.idref = 'ID00000000000c' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Attributes</name>
+									<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >370, 380, 115, 43</geometry>
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000093' >
+							<elementID xmi.idref = 'ID00000000000f' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Attributes</name>
+									<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >240, 380, 115, 43</geometry>
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID000000000094' >
+							<elementID xmi.idref = 'ID00000000000b' />
+							<linkFirstEndID xmi.idref = 'ID000000000070' />
+							<linkSecondEndID xmi.idref = 'ID000000000092' />
+							<geometry >425, 299; 425, 380; </geometry>
+							<linkNameID xmi.idref = 'ID000000000095' />
+							<linkConstraintID xmi.idref = 'ID000000000096' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000095' >
+									<visible xmi.value = 'false' />
+									<geometry >0, 156, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000096' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >0, 156, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000097' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >0, 156, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID000000000097' />
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID000000000098' >
+							<elementID xmi.idref = 'ID00000000000e' />
+							<linkFirstEndID xmi.idref = 'ID000000000070' />
+							<linkSecondEndID xmi.idref = 'ID000000000093' />
+							<geometry >425, 299; 425, 335; 300, 335; 300, 380; </geometry>
+							<linkNameID xmi.idref = 'ID000000000099' />
+							<linkConstraintID xmi.idref = 'ID00000000009a' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000099' >
+									<visible xmi.value = 'false' />
+									<geometry >403, 323, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000009a' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >403, 323, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000009b' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >403, 323, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID00000000009b' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID00000000009c' >
+							<elementID xmi.idref = 'ID0000000000d3' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Full Classifier Type</name>
+									<propertyID >SHOW_FULL_TYPE</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+							</properties>
+							<geometry >370, 470, 115, 69</geometry>
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID00000000009d' >
+							<elementID xmi.idref = 'ID000000000018' />
+							<linkFirstEndID xmi.idref = 'ID000000000092' />
+							<linkSecondEndID xmi.idref = 'ID00000000009c' />
+							<geometry >420, 423; 420, 470; </geometry>
+							<linkNameID xmi.idref = 'ID00000000009e' />
+							<linkConstraintID xmi.idref = 'ID00000000009f' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000009f' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >0, 269, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a0' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >0, 269, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000a1' >
+									<elementID xmi.idref = 'ID000000000019' />
+									<geometry >415, 423, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a2' >
+											<visible xmi.value = 'false' />
+											<geometry >415, 423, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a3' >
+											<visible xmi.value = 'false' />
+											<geometry >415, 423, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a4' >
+											<visible xmi.value = 'false' />
+											<geometry >415, 423, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000a2' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000a3' />
+									<roleConstraintsID xmi.idref = 'ID0000000000a4' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000a5' >
+									<elementID xmi.idref = 'ID00000000001a' />
+									<geometry >415, 460, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a6' >
+											<visible xmi.value = 'false' />
+											<geometry >415, 460, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a7' >
+											<visible xmi.value = 'false' />
+											<geometry >415, 460, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000a8' >
+											<visible xmi.value = 'false' />
+											<geometry >415, 460, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000a6' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000a7' />
+									<roleConstraintsID xmi.idref = 'ID0000000000a8' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID00000000009e' >
+									<visible xmi.value = 'false' />
+									<geometry >1, 269, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID0000000000a0' />
+							<associationFirstEndID xmi.idref = 'ID0000000000a1' />
+							<associationSecondEndID xmi.idref = 'ID0000000000a5' />
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID0000000000a9' >
+							<elementID xmi.idref = 'ID000000000011' />
+							<linkFirstEndID xmi.idref = 'ID000000000089' />
+							<linkSecondEndID xmi.idref = 'ID000000000088' />
+							<geometry >295, 79; 295, 110; </geometry>
+							<linkNameID xmi.idref = 'ID0000000000aa' />
+							<linkConstraintID xmi.idref = 'ID0000000000ab' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ab' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >554, 141, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ac' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >554, 141, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000ad' >
+									<elementID xmi.idref = 'ID000000000012' />
+									<geometry >290, 79, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ae' >
+											<visible xmi.value = 'false' />
+											<geometry >290, 79, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000af' >
+											<visible xmi.value = 'false' />
+											<geometry >290, 79, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b0' >
+											<visible xmi.value = 'false' />
+											<geometry >290, 79, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000ae' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000af' />
+									<roleConstraintsID xmi.idref = 'ID0000000000b0' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000b1' >
+									<elementID xmi.idref = 'ID000000000014' />
+									<geometry >290, 100, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b2' >
+											<visible xmi.value = 'false' />
+											<geometry >290, 100, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b3' >
+											<visible xmi.value = 'false' />
+											<geometry >290, 100, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b4' >
+											<visible xmi.value = 'false' />
+											<geometry >290, 100, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000b2' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000b3' />
+									<roleConstraintsID xmi.idref = 'ID0000000000b4' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID0000000000aa' >
+									<visible xmi.value = 'false' />
+									<geometry >540, 141, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID0000000000ac' />
+							<associationFirstEndID xmi.idref = 'ID0000000000ad' />
+							<associationSecondEndID xmi.idref = 'ID0000000000b1' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID0000000000b5' >
+							<elementID xmi.idref = 'ID000000000023' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >80, 230, 115, 54</geometry>
+						</mdElement>
+						<mdElement elementClass = 'GeneralizationView' xmi.id = 'ID0000000000b6' >
+							<elementID xmi.idref = 'ID00000000001d' />
+							<linkFirstEndID xmi.idref = 'ID000000000088' />
+							<linkSecondEndID xmi.idref = 'ID0000000000b5' />
+							<geometry >320, 164; 320, 205; 135, 205; 135, 230; </geometry>
+							<linkNameID xmi.idref = 'ID0000000000b7' />
+							<linkConstraintID xmi.idref = 'ID0000000000b8' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b7' >
+									<visible xmi.value = 'false' />
+									<geometry >201, 144, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b8' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >201, 144, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000b9' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >201, 144, 34, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID0000000000b9' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID0000000000ba' >
+							<elementID xmi.idref = 'ID0000000000ca' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'ChoiceProperty' >
+									<name >Attributes Sort Mode</name>
+									<propertyID >SORT_CLASS_ATTRIBUTES_MODE</propertyID>
+									<choice xmi.value = 'No Sorting^By Name^By Stereotype^By Visibility' />
+									<index xmi.value = '0' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Show Full Classifier Type</name>
+									<propertyID >SHOW_FULL_TYPE</propertyID>
+									<value xmi.value = 'false' />
+								</mdElement>
+							</properties>
+							<geometry >80, 380, 140, 140</geometry>
+							<attributes >
+								<mdElement elementClass = 'AttributeView' xmi.id = 'ID0000000000e5' >
+									<elementID xmi.idref = 'ID0000000000d6' />
+									<geometry >83, 426, 132, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'AttributeView' xmi.id = 'ID0000000000e6' >
+									<elementID xmi.idref = 'ID0000000000d9' />
+									<geometry >83, 443, 102, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'AttributeView' xmi.id = 'ID0000000000e7' >
+									<elementID xmi.idref = 'ID0000000000db' />
+									<geometry >83, 460, 94, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'AttributeView' xmi.id = 'ID0000000000e8' >
+									<elementID xmi.idref = 'ID0000000000d8' />
+									<geometry >83, 477, 127, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'AttributeView' xmi.id = 'ID0000000000e9' >
+									<elementID xmi.idref = 'ID0000000000d7' />
+									<geometry >83, 494, 120, 17</geometry>
+								</mdElement>
+							</attributes>
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID0000000000bb' >
+							<elementID xmi.idref = 'ID0000000000cc' />
+							<linkFirstEndID xmi.idref = 'ID0000000000b5' />
+							<linkSecondEndID xmi.idref = 'ID0000000000ba' />
+							<geometry >140, 284; 140, 380; </geometry>
+							<linkNameID xmi.idref = 'ID0000000000bc' />
+							<linkConstraintID xmi.idref = 'ID0000000000bd' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000bd' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >0, 223, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000be' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >0, 223, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000bf' >
+									<elementID xmi.idref = 'ID0000000000cd' />
+									<geometry >135, 284, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000c0' >
+											<visible xmi.value = 'false' />
+											<geometry >135, 284, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000c1' >
+											<visible xmi.value = 'false' />
+											<geometry >135, 284, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000c2' >
+											<visible xmi.value = 'false' />
+											<geometry >135, 284, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000c0' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000c1' />
+									<roleConstraintsID xmi.idref = 'ID0000000000c2' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000c3' >
+									<elementID xmi.idref = 'ID0000000000ce' />
+									<geometry >135, 370, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000c4' >
+											<visible xmi.value = 'false' />
+											<geometry >96, 353, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000c5' >
+											<visible xmi.value = 'false' />
+											<geometry >150, 353, 34, 17</geometry>
+											<text >0..*</text>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000c6' >
+											<visible xmi.value = 'false' />
+											<geometry >135, 370, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000c4' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000c5' />
+									<roleConstraintsID xmi.idref = 'ID0000000000c6' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID0000000000bc' >
+									<visible xmi.value = 'false' />
+									<geometry >3, 223, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID0000000000be' />
+							<associationFirstEndID xmi.idref = 'ID0000000000bf' />
+							<associationSecondEndID xmi.idref = 'ID0000000000c3' />
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID0000000000ea' >
+							<elementID xmi.idref = 'ID0000000000e2' />
+							<linkFirstEndID xmi.idref = 'ID000000000071' />
+							<linkSecondEndID xmi.idref = 'ID000000000070' />
+							<geometry >755, 370; 755, 260; 495, 260; </geometry>
+							<linkNameID xmi.idref = 'ID0000000000eb' />
+							<linkConstraintID xmi.idref = 'ID0000000000ec' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ec' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >319, 710, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ed' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >319, 710, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000ee' >
+									<elementID xmi.idref = 'ID0000000000e3' />
+									<geometry >750, 360, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ef' >
+											<visible xmi.value = 'false' />
+											<geometry >750, 360, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f0' >
+											<visible xmi.value = 'false' />
+											<geometry >750, 360, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f1' >
+											<visible xmi.value = 'false' />
+											<geometry >750, 360, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000ef' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000f0' />
+									<roleConstraintsID xmi.idref = 'ID0000000000f1' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000f2' >
+									<elementID xmi.idref = 'ID0000000000e4' />
+									<geometry >495, 255, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f3' >
+											<visible xmi.value = 'false' />
+											<geometry >495, 255, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f4' >
+											<visible xmi.value = 'false' />
+											<geometry >495, 255, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f5' >
+											<visible xmi.value = 'false' />
+											<geometry >495, 255, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000f3' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000f4' />
+									<roleConstraintsID xmi.idref = 'ID0000000000f5' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID0000000000eb' >
+									<visible xmi.value = 'false' />
+									<geometry >311, 702, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID0000000000ed' />
+							<associationFirstEndID xmi.idref = 'ID0000000000ee' />
+							<associationSecondEndID xmi.idref = 'ID0000000000f2' />
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID0000000000f6' >
+							<elementID xmi.idref = 'ID0000000000df' />
+							<linkFirstEndID xmi.idref = 'ID000000000072' />
+							<linkSecondEndID xmi.idref = 'ID000000000072' />
+							<geometry >615, 384; 660, 384; 660, 335; 590, 335; 590, 380; </geometry>
+							<linkNameID xmi.idref = 'ID0000000000f7' />
+							<linkConstraintID xmi.idref = 'ID0000000000f8' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f8' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >206, 543, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000f9' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >206, 543, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000fa' >
+									<elementID xmi.idref = 'ID0000000000e0' />
+									<geometry >615, 379, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000fb' >
+											<visible xmi.value = 'false' />
+											<geometry >615, 379, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000fc' >
+											<visible xmi.value = 'false' />
+											<geometry >615, 379, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000fd' >
+											<visible xmi.value = 'false' />
+											<geometry >615, 379, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000fb' />
+									<roleMultiplicityID xmi.idref = 'ID0000000000fc' />
+									<roleConstraintsID xmi.idref = 'ID0000000000fd' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID0000000000fe' >
+									<elementID xmi.idref = 'ID0000000000e1' />
+									<geometry >585, 370, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID0000000000ff' >
+											<visible xmi.value = 'false' />
+											<geometry >585, 370, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000100' >
+											<visible xmi.value = 'false' />
+											<geometry >585, 370, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000101' >
+											<visible xmi.value = 'false' />
+											<geometry >585, 370, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID0000000000ff' />
+									<roleMultiplicityID xmi.idref = 'ID000000000100' />
+									<roleConstraintsID xmi.idref = 'ID000000000101' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID0000000000f7' >
+									<visible xmi.value = 'false' />
+									<geometry >201, 537, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID0000000000f9' />
+							<associationFirstEndID xmi.idref = 'ID0000000000fa' />
+							<associationSecondEndID xmi.idref = 'ID0000000000fe' />
+						</mdElement>
+						<mdElement elementClass = 'AssociationView' xmi.id = 'ID000000000102' >
+							<elementID xmi.idref = 'ID0000000000c8' />
+							<linkFirstEndID xmi.idref = 'ID0000000000ba' />
+							<linkSecondEndID xmi.idref = 'ID000000000070' />
+							<geometry >180, 380; 180, 295; 380, 295; </geometry>
+							<linkNameID xmi.idref = 'ID000000000103' />
+							<linkConstraintID xmi.idref = 'ID000000000104' />
+							<nameVisible xmi.value = 'true' />
+							<mdOwnedViews >
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000104' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >501, 39, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000105' >
+									<editable xmi.value = 'false' />
+									<visible xmi.value = 'false' />
+									<geometry >501, 39, 34, 17</geometry>
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID000000000106' >
+									<elementID xmi.idref = 'ID0000000000c9' />
+									<geometry >175, 370, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000107' >
+											<visible xmi.value = 'false' />
+											<geometry >175, 370, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000108' >
+											<visible xmi.value = 'false' />
+											<geometry >175, 370, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID000000000109' >
+											<visible xmi.value = 'false' />
+											<geometry >175, 370, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID000000000107' />
+									<roleMultiplicityID xmi.idref = 'ID000000000108' />
+									<roleConstraintsID xmi.idref = 'ID000000000109' />
+								</mdElement>
+								<mdElement elementClass = 'RoleView' xmi.id = 'ID00000000010a' >
+									<elementID xmi.idref = 'ID0000000000cb' />
+									<geometry >370, 290, 10, 10</geometry>
+									<mdOwnedViews >
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000010b' >
+											<visible xmi.value = 'false' />
+											<geometry >370, 290, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000010c' >
+											<visible xmi.value = 'false' />
+											<geometry >370, 290, 34, 17</geometry>
+										</mdElement>
+										<mdElement elementClass = 'TextBoxView' xmi.id = 'ID00000000010d' >
+											<visible xmi.value = 'false' />
+											<geometry >370, 290, 34, 17</geometry>
+											<text >{}</text>
+										</mdElement>
+									</mdOwnedViews>
+									<roleNameID xmi.idref = 'ID00000000010b' />
+									<roleMultiplicityID xmi.idref = 'ID00000000010c' />
+									<roleConstraintsID xmi.idref = 'ID00000000010d' />
+								</mdElement>
+								<mdElement elementClass = 'AssociationTextBoxView' xmi.id = 'ID000000000103' >
+									<visible xmi.value = 'false' />
+									<geometry >493, 43, 51, 17</geometry>
+								</mdElement>
+							</mdOwnedViews>
+							<linkStereotypeID xmi.idref = 'ID000000000105' />
+							<associationFirstEndID xmi.idref = 'ID000000000106' />
+							<associationSecondEndID xmi.idref = 'ID00000000010a' />
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID00000000010e' >
+							<elementID xmi.idref = 'ID0000000000d5' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Attributes</name>
+									<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >90, 570, 115, 43</geometry>
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID00000000010f' >
+							<elementID xmi.idref = 'ID0000000000d2' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Attributes</name>
+									<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >90, 630, 115, 43</geometry>
+						</mdElement>
+						<mdElement elementClass = 'ClassView' xmi.id = 'ID000000000110' >
+							<elementID xmi.idref = 'ID0000000000da' />
+							<properties >
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Attributes</name>
+									<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+								<mdElement elementClass = 'BooleanProperty' >
+									<name >Suppress Operations</name>
+									<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+									<value xmi.value = 'true' />
+								</mdElement>
+							</properties>
+							<geometry >90, 690, 115, 43</geometry>
+						</mdElement>
+					</mdOwnedViews>
+				</mdElement>
+			</mdElement>
+		</mdOwnedDiagrams>
+		<mdOwnedWindows >
+			<mdElement elementClass = 'ClassDiagramWindow' >
+				<elementID xmi.idref = 'ID00000000006f' />
+				<geometry >0, 0, 885, 844</geometry>
+				<maximized xmi.value = 'true' />
+			</mdElement>
+		</mdOwnedWindows>
+		<options >
+			<tipsStyle xmi.value = '0' />
+			<docsStyle xmi.value = 'false' />
+			<interfaceStyle xmi.value = '0' />
+			<browserVisible xmi.value = 'true' />
+			<browserBounds >0, 123, 383, 844</browserBounds>
+		</options>
+		<componentView xmi.idref = 'ID000000000005' />
+		<dataTypes xmi.idref = 'ID00000000002c' />
+		<mdElement elementClass = 'StyleManager' >
+			<mdElement elementClass = 'Style' >
+				<name >Default</name>
+				<default xmi.value = 'true' />
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Symbol</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Shapes</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Paths</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Diagram</name>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Snap to Grid</name>
+						<propertyID >USE_GRID</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Grid</name>
+						<propertyID >SHOW_GRID</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Background Color</name>
+						<propertyID >DIAGRAM_BACKGROUND_COLOR</propertyID>
+						<value xmi.value = '-1' />
+					</mdElement>
+					<mdElement elementClass = 'NumberProperty' >
+						<name >Grid Size</name>
+						<propertyID >GRID_SIZE</propertyID>
+						<value xmi.value = '10.0' />
+						<type xmi.value = '0' />
+						<lowRange xmi.value = '1.0' />
+						<highRange xmi.value = '30.0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Message Numbers</name>
+						<propertyID >SHOW_MESSAGE_NUMBERS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Link</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Class</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-13159' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Attributes</name>
+						<propertyID >SUPPRESS_CLASS_ATTRIBUTES</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Operations</name>
+						<propertyID >SUPPRESS_CLASS_OPERATIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Operations Signature</name>
+						<propertyID >SHOW_OPERATIONS_SIGNATURE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show More Sign For Attributes</name>
+						<propertyID >SHOW_MORE_SIGN_FOR_ATTRIBUTES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show More Sign For Operations</name>
+						<propertyID >SHOW_MORE_SIGN_FOR_OPERATIONS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ChoiceProperty' >
+						<name >Attributes Sort Mode</name>
+						<propertyID >SORT_CLASS_ATTRIBUTES_MODE</propertyID>
+						<choice xmi.value = 'No Sorting^By Name^By Stereotype^By Visibility' />
+						<index xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'ChoiceProperty' >
+						<name >Operations Sort Mode</name>
+						<propertyID >SORT_CLASS_OPERATIONS_MODE</propertyID>
+						<choice xmi.value = 'No Sorting^By Name^By Stereotype^By Visibility' />
+						<index xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Attributes Visibility</name>
+						<propertyID >SHOW_ATTRIBUTES_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Operations Visibility</name>
+						<propertyID >SHOW_OPERATIONS_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Full Classifier Type</name>
+						<propertyID >SHOW_FULL_TYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Initial Attribute Value</name>
+						<propertyID >SHOW_INIT_VALUE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Node Instance</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-13159' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '16' />
+						<style xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Class</name>
+						<propertyID >SHOW_OBJECT_CLASS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Note Anchor</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Message</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Generalization</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Subactivity State</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Wrap Words</name>
+						<propertyID >WRAP_WORDS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Actions</name>
+						<propertyID >SUPPRESS_STATE_ACTIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >N-ary Association</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Package</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-3355393' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '16' />
+						<style xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ChoiceProperty' >
+						<name >Header Position</name>
+						<propertyID >PACKAGE_HEADER_POSITION</propertyID>
+						<choice xmi.value = 'Top^In Tab' />
+						<index xmi.value = '0' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Synchronization Bar</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Object</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Class</name>
+						<propertyID >SHOW_OBJECT_CLASS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Attributes</name>
+						<propertyID >SUPPRESS_OBJECT_ATTRIBUTES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Classifier Role</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-3605816' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Class</name>
+						<propertyID >SHOW_OBJECT_CLASS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Note</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Wrap Words</name>
+						<propertyID >WRAP_WORDS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Component</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Swimlane</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '14' />
+						<style xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Action State</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Wrap Words</name>
+						<propertyID >WRAP_WORDS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Actions</name>
+						<propertyID >SUPPRESS_STATE_ACTIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Realization</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Generalization Tree</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Node</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-13159' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '16' />
+						<style xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Link Attribute</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Transition</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Decision</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Component Instance</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Class</name>
+						<propertyID >SHOW_OBJECT_CLASS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Subsystem</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-3355393' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '16' />
+						<style xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ChoiceProperty' >
+						<name >Header Position</name>
+						<propertyID >PACKAGE_HEADER_POSITION</propertyID>
+						<choice xmi.value = 'Top^In Tab' />
+						<index xmi.value = '1' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Operations</name>
+						<propertyID >SUPPRES_SUBSYSTEM_OPERATIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Realization Elements</name>
+						<propertyID >SUPPRES_SUBSYSTEM_REALIZATIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Specification Elements</name>
+						<propertyID >SUPPRES_SUBSYSTEM_SPECIFICATIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Operations Visibility</name>
+						<propertyID >SHOW_OPERATIONS_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Dependency</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >RoleView</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Role</name>
+						<propertyID >SHOW_ROLE_NAME</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_ROLE_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Supplier Multiplicity</name>
+						<propertyID >SHOW_ROLE_MULTIPLICITY</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >ObjectFlow State</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Class</name>
+						<propertyID >SHOW_OBJECT_CLASS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >State</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Attributes</name>
+						<propertyID >SUPPRESS_STATE_ATTRIBUTES</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Actions</name>
+						<propertyID >SUPPRESS_STATE_ACTIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Signal</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ChoiceProperty' >
+						<name >Direction</name>
+						<propertyID >DIRECTION</propertyID>
+						<choice xmi.value = 'Right^Left' />
+						<index xmi.value = '0' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Initial/Final State</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Association</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Rectilinear Line Style</name>
+						<propertyID >LINK_LINE_STYLE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Direction Arrow</name>
+						<propertyID >SHOW_ASSOCIATION_DIRECTION_ICON</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Use Case</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-103' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Suppress Extensions</name>
+						<propertyID >SUPPRESS_EXTENSIONS</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >TextBox</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Wrap Words</name>
+						<propertyID >WRAP_WORDS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+				<mdElement elementClass = 'PropertyManager' >
+					<name >Collaboration</name>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Fill Color</name>
+						<propertyID >FILL_COLOR</propertyID>
+						<value xmi.value = '-52' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Use Fill Color</name>
+						<propertyID >USE_FILL_COLOR</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Pen Color</name>
+						<propertyID >PEN_COLOR</propertyID>
+						<value xmi.value = '-12434878' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Text Color</name>
+						<propertyID >TEXT_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Font</name>
+						<propertyID >FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Autosize</name>
+						<propertyID >AUTOSIZE</propertyID>
+						<value xmi.value = 'false' />
+					</mdElement>
+					<mdElement elementClass = 'ColorProperty' >
+						<name >Stereotype Color</name>
+						<propertyID >STEREOTYPE_COLOR</propertyID>
+						<value xmi.value = '-16777216' />
+					</mdElement>
+					<mdElement elementClass = 'FontProperty' >
+						<name >Stereotype Font</name>
+						<propertyID >STEREOTYPE_FONT</propertyID>
+						<fontName >Helvetica</fontName>
+						<size xmi.value = '12' />
+						<style xmi.value = '0' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Stereotype</name>
+						<propertyID >SHOW_STEREOTYPE</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Constraints</name>
+						<propertyID >SHOW_CONSTRAINTS</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Visibility</name>
+						<propertyID >SHOW_VISIBILITY</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+					<mdElement elementClass = 'BooleanProperty' >
+						<name >Show Tagged Values</name>
+						<propertyID >SHOW_TAGGED_VALUES</propertyID>
+						<value xmi.value = 'true' />
+					</mdElement>
+				</mdElement>
+			</mdElement>
+		</mdElement>
+	</XMI.extensions>
+</XMI>

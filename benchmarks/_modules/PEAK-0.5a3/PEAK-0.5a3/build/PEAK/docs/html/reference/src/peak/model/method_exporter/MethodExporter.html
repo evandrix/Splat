@@ -1,0 +1,629 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: MethodExporter</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: MethodExporter</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/model/method_exporter.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Support for generating &quot;verbSubject()&quot; methods from template functions</h3>
+<p>        MethodExporter is a metaclass whose instances are singletons that
+        install &quot;verbSubject()&quot;-style methods in classes which contain them.
+        The verbs are implemented as method templates in the class statement
+        which defines the MethodExporter, and the subject name comes from
+        the name of the class being defined.  (Note: the target class must have
+        a metaclass based on <code>binding.Activator</code>, either through explicit
+        definition or via inheritance from e.g. <code>binding.Component</code>.)</p>
+<p>        Usage example:
+<pre>
+            class slappableFeature(object):
+
+                __metaclass__ = MethodExporter
+
+                message = "Ow, that hurts!"
+
+                newVerbs = [ ('slap', "slap%(initCap)s") ]
+
+                def slap(feature, self, extra):
+                    print "%s: %s (%s)" % (self.name, feature.message, extra)
+
+            class Person(object):
+
+                __metaclass__ = binding.Activator
+
+                def __init__(self,name):
+                    self.name = name
+
+                class face(slappableFeature):
+                    message = "Watch out for my glasses!"
+
+                class back(slappableFeature):
+                    pass
+
+            joe = Person('Joe')
+
+            # Prints: "Joe: Watch out for my glasses! (Thanks, I needed that!)"
+            joe.slapFace("Thanks, I needed that!")
+
+            # Prints: "Joe: Ow, that hurts!  (Am I great or what?)"
+            joe.slapBack("Am I great or what?")
+</pre>
+</p>
+<p>        While a bit silly, this demonstrates how the method template <code>slap()</code>
+        is used to generate <code>slapFace()</code> and <code>slapBack()</code> methods, how to
+        define a <code>newVerbs</code> list, and the calling conventions for verbs.</p>
+<p>        Typically, you will define MethodExporters with multiple verbs, and
+        you may also use template variants, which are chosen by metadata in
+        subclasses.  For example, suppose we wanted <code>slappableFeatures</code> to
+        implement the <code>slap</code> verb differently depending on skin thickness:
+<pre>
+            class slappableFeature(object):
+
+                __metaclass__ = MethodExporter
+
+                thickness = 5
+
+                newVerbs = [ ('slap', "slap%(initCap)s") ]
+
+                def slap_thick(feature, self):
+                    print "THUD!", feature.thickness
+
+                slap_thick.installIf = (
+                    lambda feature,func: feature.thickness &gt; 10
+                )
+
+                slap_thick.verb = "slap"
+
+                def slap_thin(feature, self):
+                    print "SMACK!", feature.thickness
+
+                slap_thin.installIf = (
+                    lambda feature,func: feature.thickness &lt;= 10
+                )
+
+                slap_thin.verb = "slap"
+
+            class Person(object):
+
+                __metaclass__ = binding.Activator
+
+                class face(slappableFeature):
+                    thickness = 5
+
+                class back(slappableFeature):
+                    thickness = 15
+
+            joe = Person()
+
+            # two ways to print "SMACK! 5"
+            joe.slapFace()
+            Person.face.slap(joe)
+
+            # two ways to print "THUD! 15"
+            joe.slapBack()
+            Person.back.slap(joe)
+</pre>
+</p>
+<p>        As you can see from this example, <code>face</code> and <code>back</code> actually do exist
+        as real attributes of the <code>Person</code> class.  They are instances of
+        MethodExporter, class-like objects created by their respective class
+        statements.  MethodExporter instances are singleton-like: any functions
+        defined in a MethodExporter which are not templates (i.e., do not
+        have a <code>verb</code> and aren't listed in the <code>newVerbs</code> list) will become
+        methods of the MethodExporter itself, rather than methods of the
+        containing class.  To distinguish such methods, and to keep clear the
+        distinction between the feature and its container, we suggest using
+        <code>feature</code> as the first parameter of such methods.  For example, we
+        could rewrite the slap verb as:
+<pre>
+            def yelp(feature):
+                # This will be a method of the feature, because it is not
+                # defined in 'newVerbs' of this class or a superclass
+                print 'Y%sow!  My %s hurts!" % (
+                    'e'*(20-feature.thickness), feature.attrName
+                )
+
+            def slap(feature, self):
+                feature.yelp()
+</pre>
+</p>
+<p>        This will print &quot;Yeeeeeeeeeeeeeeeow!  My face hurts!&quot; or
+        &quot;Yeeeeeow!  My back hurts!&quot;, as is appropriate for the specific
+        feature.  We could also simply call <code>Person.back.yelp()</code> or
+        <code>Person.face.yelp()</code> to obtain the same results.</p>
+<p>        By now, the sharp-eyed reader will be wondering about the bits of
+        magic code that keep showing up, such as the <code>(feature, self)</code>
+        parameter pattern, and the <code>newVerbs</code> list.  Not to mention our earlier
+        usage of the <code>installIf</code> and <code>verb</code> attributes.  So let's move on to
+        the reference sections...</p>
+<h4>        Specifying Verbs with the <code>newVerbs</code> class attribute</h4>
+<p>            The <code>newVerbs</code> class attribute is a list of <code>(key,value)</code> tuples
+            listing verbs introduced in the MethodExporter being defined.
+            The keys are verb (inner method) names, and the values are format
+            strings that are used to generate the outer method names.</p>
+<p>            The format strings are applied to a <code>nameMapping</code> object supplied
+            by MethodExporter's <code>subjectNames()</code> method.  The format strings
+            are normal Python '%<code> formatting strings as applied to a mapping.
+            The names in parentheses, such as </code>&quot;initCap&quot;<code> in
+            </code>&quot;slap%(initCap)s&quot;', are looked up in the mapping object.</p>
+<p>            <code>initCap</code> is the most commonly used name in a format string: it
+            supplies the MethodExporter instance's name, with the first
+            character capitalized.  But there are many other options.  For
+            example, any attribute of the MethodExporter being defined can
+            be used, like this:
+<pre>
+                class Collection(someFeature):
+                    single = 'item'
+                    newVerbs = Items(add='add%(single)s')
+</pre>
+</p>
+<p>            The above example will generate an <code>additem()</code> method, unless a
+            subclass changes the <code>single</code> attribute to a different string.
+            This lets you have subclasses change the name of what kind of
+            objects are in a collection, and have the exported method names
+            change accordingly.  (Notice also that you can use the peak.api
+            <code>Items()</code> function to create a <code>newVerbs</code> list; you don't have to
+            do it by hand.)</p>
+<p>            You can also use more complex formatting, using dotted names:
+<pre>
+                class Collection(someFeature):
+                    single = 'item'
+                    newVerbs = Items(add='add%(single.initCap)s')
+</pre>
+</p>
+<p>            This will apply the <code>nameMapping.initCap()</code> method to the <code>single</code>
+            attribute before formatting, resulting in an <code>addItem()</code> method.
+            See the <code>nameMapping</code> documentation for more details on how names
+            used in format strings are interpreted.</p>
+<h4>        The <code>installIf</code> function attribute</h4>
+<p>            The <code>installIf</code> function attribute, if supplied, is a callable that
+            takes two arguments: the feature (i.e. the MethodExporter instance
+            which is being created), and the function.  If the callable returns
+            a true value, the function will be used as the template for the
+            appropriate verb (inner and outer forms).  If the callable returns
+            false, the function will not be used.  Note that <code>installIf</code>
+            conditions should be arranged such that at most <em>one</em> can be true
+            at a time, because if more than one is true, a <code>TypeError</code> will be
+            raised at class creation time.  If none of the <code>installIf</code>
+            conditions are true, the verb will not appear as a method of the
+            feature class, nor will it be exported to any containing class.</p>
+<h4>        The <code>verb</code> function attribute</h4>
+<p>            The normal use of <code>installIf</code> is to select variant implementations
+            of the same verb, based on metadata supplied in a subclass.  However,
+            since the variants must have different function names, the <code>verb</code>
+            function attribute is used to indicate the name which will be used
+            in the finished MethodExporter.  Thus, in our &quot;thick and thin&quot; slap
+            example, using <code>slap_thick.verb="slap"</code> and <code>slap_thin.verb="slap"</code>
+            caused either <code>slap_thick</code> or <code>slap_thin</code> to be installed as the
+            <code>slap</code> method of the MethodExporter.  If you do not supply a
+            <code>verb</code> function attribute, the function's name within the class
+            is used.  Note that this does not have to be the function name;
+            for example, the below defines a <code>baz</code> verb, not 'foo':
+<pre>
+                def foo(self): pass
+
+                class bar(object):
+                    __metaclass__ = MethodExporter
+                    newVerbs = Items(baz='baz%(initCap)s')
+                    baz = foo
+</pre>
+</p>
+<p>            Also note that methods are only exported if their <code>verb</code> is listed
+            in the <code>newVerbs</code> of the class or one of its base classes.  You can
+            make use of this behavior to create &quot;private&quot; verbs that are only
+            accessible from the feature.  Just set the <code>verb</code> attribute of
+            your function templates to the name of the desired &quot;private&quot;
+            method.</p>
+<h4>        Parameters and Calling Conventions</h4>
+<p>            All methods of a MethodExporter are defined as Python <code>classmethod</code>
+            objects.  (This is done for you automatically by MethodExporter, so
+            you don't have to explicitly declare them as such.)</p>
+<p>            Being class methods, the first parameter of any method or method
+            template that you place in a MethodExporter class is always the
+            class.  By convention in PEAK, this parameter is named
+            <code>feature</code>, but you may use any name that makes sense to you.  When
+            the method executes, this parameter will refer to the
+            MethodExporter, so you can access its attributes and methods.  For
+            simple methods of the MethodExporter itself, this is the only
+            parameter which you <em>must</em> define.</p>
+<p>            Method templates, however, must take a second parameter, named
+            <code>self</code> by convention in PEAK.  This parameter will receive
+            the instance of the containing class that the MethodExporter is
+            being used in.  Any further parameters beyond this point belong
+            to the signature of your method template and are not defined or
+            used by the infrastructure.</p>
+<p>            This approach allows method templates to do double duty.  They
+            can be used as class methods and passed an instance of the outer
+            class, or they can be used directly as instance methods of the
+            outer class.</p>
+<h4>        Dynamic Method Templates</h4>
+<p>            By using the <code>isTemplate</code> function attribute, you can indicate that
+            the function should be called in order to obtain the actual code to
+            be used.  Here's the earlier code generation example, rewritten
+            using dynamic templates:
+<pre>
+                class slappableFeature(object):
+
+                    __metaclass__ = MethodExporter
+
+                    thickness = 5
+
+                    newVerbs = [ ('slap', "slap%(initCap)s") ]
+
+                    def slap(feature):
+
+                        if feature.thickness &gt; 10:
+
+                            def slap(feature, self):
+                                print "THUD!", feature.thickness
+
+                        else:
+                            def slap(feature, self):
+                                print "SMACK!", feature.thickness
+
+                        return slap
+
+                    slap.isTemplate = True
+</pre>
+</p>
+<p>            As you can see, this can often be a more readable approach, if you
+            don't need to redefine the variants in subclasses.  The outer
+            <code>slap</code> function shown above is passed the feature object (or one
+            of its subclasses) being defined, and must return the function to
+            be used as a verb implementation.  If it returns <code>None</code>, the verb
+            will not exist in the defined feature, nor will it be exported to
+            any class the feature is placed in.</p>
+<p>            The same rules apply for recognizing a template as any other verb
+            implementation: it must be named the same as a verb, or it must
+            have a <code>verb</code> function attribute identifying the appropriate verb.
+            It can also have an <code>installIf</code> attribute, if desired.  The
+            <code>installIf</code> attribute is checked first, and the template function
+            is only called if the <code>installIf</code> check returns a true value.</p>
+<h4>        Inner and Outer Method Definitions</h4>
+<p>            Sometimes, one needs to modify an &quot;off-the-shelf&quot; method
+            exported by a MethodExporter.  For this reason, MethodExporters
+            do not overwrite methods which are already defined in their
+            containing class.  For example, if we defined Person as follows:
+<pre>
+                class Person(object):
+
+                    class face(slappableFeature):
+                        thickness = 5
+
+                    class back(slappableFeature):
+                        thickness = 15
+
+                    def slapBack(self):
+                        self.__class__.back.slap(self)
+                        print "Do you really have to do that?"
+
+                    def slapFace(self):
+                        print "Don't even think about it!"
+</pre>
+</p>
+<p>            Then <code>aPerson.slapFace()</code> would print &quot;Don't even think about it&quot;,
+            while <code>aPerson.slapBack()</code> would carry out the generated behavior,
+            and then ask, &quot;Do you really have to do that?&quot;.  Subclasses of
+            Person will retain these modified behaviors, even if <code>back</code> is
+            redefined in the subclass.  (In which case, the redefined behavior
+            will be followed by the &quot;Do you really have to do that?&quot; question.)</p>
+<h4>        Overriding Templates in Subclasses</h4>
+<p>            If you override a template in a subclass, you don't need to specify
+            its <code>verb</code>, since that method name is already associated with the
+            verb.  However, if you need an <code>installIf</code> condition you must
+            specify it in the subclass as well; otherwise it will be treated
+            as an unconditional template, which may lead to conflict between
+            install conditions.</p>
+<p>            Note that the above rules apply to any template you override,
+            regardless of its name, as long as it existed in the superclass.
+            If you add a new template for an existing or new verb, you <em>must</em>
+            specify its <code>verb</code> attribute, or it must be an exported verb
+            defined in the subclass' <code>newVerbs</code> list.</p>
+<h4>        Why <code>self.__class__.back</code>?</h4>
+<p>            Sharp-eyed Pythonistas may wonder why we don't just say
+            <code>self.back</code> and be done with it.  The reason is that features
+            can also be properties, so <code>self.back</code> might actually be the
+            instance value of the property defined by the feature.
+            <code>self.__class__.back</code> will always be the class' definition of the
+            feature <code>back</code>, which is what we want.</p>
+<p>            The SEF framework adds <code>__get__</code>, <code>__set__</code>, and <code>__delete__</code>
+            methods to a subclass of MethodExporter, which lets you create
+            features that are properties; look at the
+            <code>peak.model.api.FeatureClass</code> class for more details.</p>
+<h4>        Implementation Notes</h4>
+<p>            It's amazing that it takes so much documentation to describe so
+            little code.  The combined docstrings for this metaclass are over
+            <em>three times the size of the actual code</em>.  So if you've already
+            read this far, you might as well read the source if you have a need
+            to understand the actual implementation.  :)</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+protocols.ProviderMixin<br>
+ActiveClass<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#__init__">__init__</a><br>
+<a href="#activateInClass">activateInClass</a><br>
+<a href="#getMethod">getMethod</a><br>
+<a href="#subjectNames">subjectNames</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__init__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__init__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__init__ (
+        self,
+        className,
+        bases,
+        classDict,
+        )
+
+</pre></font>
+
+<p>Set up method templates, name mapping, etc.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+TypeError(( "More than one version of '%s' template applies" % verb ), self, candidates )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="activateInClass"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">activateInClass&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+activateInClass (
+        self,
+        klass,
+        attrName,
+        )
+
+</pre></font>
+
+<p>Install the feature's &quot;verbSubject()&quot; methods upon use in a class</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+TypeError("Feature %s installed in %s as %s; must be named %s" %( self.attrName, klass, attrName, self.attrName ) )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getMethod"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getMethod&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getMethod (
+        self,
+        ob,
+        verb,
+        )
+
+</pre></font>
+
+<h3>Look up a method dynamically</h3>
+<p>        Sometimes, one wishes to access a possibly-overridden method of a
+        feature, knowing the verb and subject, but not the method name.
+        That is, one knows about <code>slap</code>, and <code>face</code>, but not <code>slapFace</code>.
+        In that case, <code>face.getMethod(object,"slap")</code> can be used to obtain
+        the <code>object.slapFace</code> method, without needing to know the naming
+        convetions used by the object.</p>
+<p>        Note that this is different than simply accessing <code>face.slap</code>,
+        because the containing class might have defined its own
+        <code>slapFace()</code> method.  That method would refer to <code>face.slap</code>
+        in order to call the original, un-overridden method generated
+        by the <code>face</code> feature.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="subjectNames"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">subjectNames&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+subjectNames ( self )
+
+</pre></font>
+
+<p>Return a nameMapping object for this feature</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:45 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

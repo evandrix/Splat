@@ -1,0 +1,1141 @@
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- This section of the DTD contains XML declarations required by   -->
+<!-- XMI.                                                            -->
+<!-- _______________________________________________________________ -->
+
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI is the top-level XML element for XMI transfer text          -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI (XMI.header?, XMI.content?, XMI.difference*,
+               XMI.extensions*) >
+<!ATTLIST XMI
+            xmi.version CDATA #FIXED "1.1"
+            timestamp CDATA #IMPLIED
+            verified (true | false) #IMPLIED
+	    xmlns:Model CDATA #IMPLIED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.header contains documentation and identifies the model,     -->
+<!-- metamodel, and metametamodel                                    -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.header (XMI.documentation?, XMI.model*, XMI.metamodel*,
+                      XMI.metametamodel*, XMI.import*) >
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- documentation for transfer data                                 -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.documentation (#PCDATA | XMI.owner | XMI.contact |
+                             XMI.longDescription | XMI.shortDescription |
+                             XMI.exporter | XMI.exporterVersion |
+                             XMI.notice)* >
+<!ELEMENT XMI.owner ANY >
+<!ELEMENT XMI.contact ANY >
+<!ELEMENT XMI.longDescription ANY >
+<!ELEMENT XMI.shortDescription ANY >
+<!ELEMENT XMI.exporter ANY >
+<!ELEMENT XMI.exporterVersion ANY >
+<!ELEMENT XMI.exporterID ANY >
+<!ELEMENT XMI.notice ANY >
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.element.att defines the attributes that each XML element    -->
+<!-- that corresponds to a metamodel class must have to conform to   -->
+<!-- the XMI specification.                                          -->
+<!-- _______________________________________________________________ -->
+
+
+<!ENTITY % XMI.element.att
+               'xmi.id ID #IMPLIED xmi.label CDATA #IMPLIED xmi.uuid
+                CDATA #IMPLIED ' >
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.link.att defines the attributes that each XML element that  -->
+<!-- corresponds to a metamodel class must have to enable it to      -->
+<!-- function as a simple XLink as well as refer to model            -->
+<!-- constructs within the same XMI file.                            -->
+<!-- _______________________________________________________________ -->
+
+
+<!ENTITY % XMI.link.att
+               'href CDATA #IMPLIED xmi.idref IDREF #IMPLIED xml:link
+                CDATA #IMPLIED xlink:inline (true | false) #IMPLIED
+                xlink:actuate (show | user) #IMPLIED xlink:content-role
+                CDATA #IMPLIED xlink:title CDATA #IMPLIED xlink:show
+                (embed | replace | new) #IMPLIED xlink:behavior CDATA
+                #IMPLIED' >
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.model identifies the model(s) being transferred             -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.model ANY >
+<!ATTLIST XMI.model
+            %XMI.link.att;
+            xmi.name     CDATA #REQUIRED
+            xmi.version  CDATA #IMPLIED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.metamodel identifies the metamodel(s) for the transferred   -->
+<!-- data                                                            -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.metamodel ANY >
+<!ATTLIST XMI.metamodel
+            %XMI.link.att;
+            xmi.name     CDATA #REQUIRED
+            xmi.version  CDATA #IMPLIED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.metametamodel identifies the metametamodel(s) for the       -->
+<!-- transferred data                                                -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.metametamodel ANY >
+<!ATTLIST XMI.metametamodel
+            %XMI.link.att;
+            xmi.name     CDATA #REQUIRED
+            xmi.version  CDATA #IMPLIED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.metametamodel identifies other files associated with the    -->
+<!-- transferred data                                                -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.import ANY >
+<!ATTLIST XMI.import
+            %XMI.link.att;
+            xmi.name     CDATA #REQUIRED
+            xmi.version  CDATA #IMPLIED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.content is the actual data being transferred                -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.content ANY >
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.extensions contains data to transfer that does not conform  -->
+<!-- to the metamodel(s) in the header                               -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.extensions ANY >
+<!ATTLIST XMI.extensions
+            xmi.extender CDATA #REQUIRED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- extension contains information related to a specific model      -->
+<!-- construct that is not defined in the metamodel(s) in the header -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.extension ANY >
+<!ATTLIST XMI.extension
+            %XMI.element.att;
+            %XMI.link.att;
+            xmi.extender CDATA #REQUIRED
+            xmi.extenderID CDATA #IMPLIED
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.difference holds XML elements representing differences to a -->
+<!-- base model                                                      -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.difference (XMI.difference | XMI.delete | XMI.add |
+                          XMI.replace)* >
+<!ATTLIST XMI.difference
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.delete represents a deletion from a base model              -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.delete EMPTY >
+<!ATTLIST XMI.delete
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.add represents an addition to a base model                  -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.add ANY >
+<!ATTLIST XMI.add
+            %XMI.element.att;
+            %XMI.link.att;
+            xmi.position CDATA "-1"
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.replace represents the replacement of a model construct     -->
+<!-- with another model construct in a base model                    -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.replace ANY >
+<!ATTLIST XMI.replace
+            %XMI.element.att;
+            %XMI.link.att;
+            xmi.position CDATA "-1"
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- XMI.reference may be used to refer to data types not defined in -->
+<!-- the metamodel                                                   -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT XMI.reference ANY >
+<!ATTLIST XMI.reference
+            %XMI.link.att;
+>
+
+<!ATTLIST XMI
+            xmlns:MOF CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.any ANY >
+<!ATTLIST XMI.any
+            %XMI.link.att;
+            xmi.type CDATA #IMPLIED
+            xmi.name CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.field ANY >
+
+<!ELEMENT XMI.CorbaTypeCode (XMI.CorbaTcAlias | XMI.CorbaTcStruct |
+                             XMI.CorbaTcSequence | XMI.CorbaTcArray |
+                             XMI.CorbaTcEnum | XMI.CorbaTcUnion |
+                             XMI.CorbaTcExcept | XMI.CorbaTcString |
+                             XMI.CorbaTcWstring | XMI.CorbaTcShort |
+                             XMI.CorbaTcLong | XMI.CorbaTcUshort |
+                             XMI.CorbaTcUlong | XMI.CorbaTcFloat |
+                             XMI.CorbaTcDouble | XMI.CorbaTcBoolean |
+                             XMI.CorbaTcChar | XMI.CorbaTcWchar |
+                             XMI.CorbaTcOctet | XMI.CorbaTcAny |
+                             XMI.CorbaTcTypeCode | XMI.CorbaTcPrincipal |
+                             XMI.CorbaTcNull | XMI.CorbaTcVoid |
+                             XMI.CorbaTcLongLong |
+                             XMI.CorbaTcLongDouble) >
+<!ATTLIST XMI.CorbaTypeCode
+            %XMI.element.att;
+>
+
+<!ELEMENT XMI.CorbaTcAlias (XMI.CorbaTypeCode) >
+<!ATTLIST XMI.CorbaTcAlias
+            xmi.tcName CDATA #REQUIRED
+            xmi.tcId   CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.CorbaTcStruct (XMI.CorbaTcField)* >
+<!ATTLIST XMI.CorbaTcStruct
+            xmi.tcName CDATA #REQUIRED
+            xmi.tcId   CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.CorbaTcField (XMI.CorbaTypeCode) >
+<!ATTLIST XMI.CorbaTcField
+            xmi.tcName CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcSequence (XMI.CorbaTypeCode |
+                               XMI.CorbaRecursiveType) >
+<!ATTLIST XMI.CorbaTcSequence
+            xmi.tcLength CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaRecursiveType EMPTY >
+<!ATTLIST XMI.CorbaRecursiveType
+            xmi.offset CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcArray (XMI.CorbaTypeCode) >
+<!ATTLIST XMI.CorbaTcArray
+            xmi.tcLength CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcObjRef EMPTY >
+<!ATTLIST XMI.CorbaTcObjRef
+            xmi.tcName CDATA #REQUIRED
+            xmi.tcId   CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.CorbaTcEnum (XMI.CorbaTcEnumLabel)+ >
+<!ATTLIST XMI.CorbaTcEnum
+            xmi.tcName CDATA #REQUIRED
+            xmi.tcId   CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.CorbaTcEnumLabel EMPTY >
+<!ATTLIST XMI.CorbaTcEnumLabel
+            xmi.tcName CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcUnionMbr (XMI.CorbaTypeCode, XMI.any) >
+<!ATTLIST XMI.CorbaTcUnionMbr
+            xmi.tcName CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcUnion (XMI.CorbaTypeCode, XMI.CorbaTcUnionMbr*) >
+<!ATTLIST XMI.CorbaTcUnion
+            xmi.tcName CDATA #REQUIRED
+            xmi.tcId   CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.CorbaTcExcept (XMI.CorbaTcField)* >
+<!ATTLIST XMI.CorbaTcExcept
+            xmi.tcName CDATA #REQUIRED
+            xmi.tcId   CDATA #IMPLIED
+>
+
+<!ELEMENT XMI.CorbaTcString EMPTY >
+<!ATTLIST XMI.CorbaTcString
+            xmi.tcLength CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcWstring EMPTY >
+<!ATTLIST XMI.CorbaTcWstring
+            xmi.tcLength CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcFixed EMPTY >
+<!ATTLIST XMI.CorbaTcFixed
+            xmi.tcDigits CDATA #REQUIRED
+            xmi.tcScale  CDATA #REQUIRED
+>
+
+<!ELEMENT XMI.CorbaTcShort EMPTY >
+
+<!ELEMENT XMI.CorbaTcLong EMPTY >
+
+<!ELEMENT XMI.CorbaTcUshort EMPTY >
+
+<!ELEMENT XMI.CorbaTcUlong EMPTY >
+
+<!ELEMENT XMI.CorbaTcFloat EMPTY >
+
+<!ELEMENT XMI.CorbaTcDouble EMPTY >
+
+<!ELEMENT XMI.CorbaTcBoolean EMPTY >
+
+<!ELEMENT XMI.CorbaTcChar EMPTY >
+
+<!ELEMENT XMI.CorbaTcWchar EMPTY >
+
+<!ELEMENT XMI.CorbaTcOctet EMPTY >
+
+<!ELEMENT XMI.CorbaTcAny EMPTY >
+
+<!ELEMENT XMI.CorbaTcTypeCode EMPTY >
+
+<!ELEMENT XMI.CorbaTcPrincipal EMPTY >
+
+<!ELEMENT XMI.CorbaTcNull EMPTY >
+
+<!ELEMENT XMI.CorbaTcVoid EMPTY >
+
+<!ELEMENT XMI.CorbaTcLongLong EMPTY >
+
+<!ELEMENT XMI.CorbaTcLongDouble EMPTY >
+
+
+
+<!ELEMENT Model:Namespace.contents (Model:ModelElement | Model:Feature |
+                                  Model:Namespace | Model:Constraint |
+                                  Model:Import | Model:TypedElement |
+                                  Model:Tag | Model:StructuralFeature |
+                                  Model:BehavioralFeature |
+                                  Model:Attribute | Model:Reference |
+                                  Model:Operation | Model:MofException |
+                                  Model:GeneralizableElement |
+                                  Model:Classifier | Model:Package |
+                                  Model:Class | Model:Association |
+                                  Model:DataType | Model:Parameter |
+                                  Model:Constant | Model:AssociationEnd |
+                                  Model:TypeAlias)* >
+
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Feature                                        -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Feature.visibility EMPTY >
+<!ATTLIST Model:Feature.visibility
+            xmi.value (public_vis | protected_vis | private_vis) #REQUIRED
+>
+
+<!ELEMENT Model:Feature.scope EMPTY >
+<!ATTLIST Model:Feature.scope
+            xmi.value (instance_level | classifier_level) #REQUIRED
+>
+
+<!ELEMENT Model:Feature (Model:ModelElement.name |
+                       Model:ModelElement.annotation |
+                       Model:Feature.visibility | Model:Feature.scope |
+                       XMI.extension | Model:ModelElement.container |
+                       Model:ModelElement.constraints)* >
+<!ATTLIST Model:Feature
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Classifier                                     -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Classifier (Model:ModelElement.name |
+                          Model:ModelElement.annotation |
+                          Model:GeneralizableElement.visibility |
+                          Model:GeneralizableElement.isAbstract |
+                          Model:GeneralizableElement.isRoot |
+                          Model:GeneralizableElement.isLeaf |
+                          XMI.extension | Model:ModelElement.container |
+                          Model:ModelElement.constraints |
+                          Model:GeneralizableElement.supertypes |
+                          Model:Namespace.contents)* >
+<!ATTLIST Model:Classifier
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            isAbstract (true | false) #IMPLIED
+            isRoot (true | false) #IMPLIED
+            isLeaf (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            supertypes IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Namespace                                      -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Namespace (Model:ModelElement.name |
+                         Model:ModelElement.annotation | XMI.extension |
+                         Model:ModelElement.container |
+                         Model:ModelElement.constraints |
+                         Model:Namespace.contents)* >
+<!ATTLIST Model:Namespace
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.StructuralFeature                              -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:StructuralFeature.multiplicity (Model:MultiplicityType | XMI.field+) >
+
+<!ELEMENT Model:StructuralFeature.isChangeable EMPTY >
+<!ATTLIST Model:StructuralFeature.isChangeable
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:StructuralFeature (Model:ModelElement.name |
+                                 Model:ModelElement.annotation |
+                                 Model:Feature.visibility |
+                                 Model:Feature.scope |
+                                 Model:StructuralFeature.multiplicity |
+                                 Model:StructuralFeature.isChangeable |
+                                 XMI.extension |
+                                 Model:ModelElement.container |
+                                 Model:ModelElement.constraints |
+                                 Model:TypedElement.type)* >
+<!ATTLIST Model:StructuralFeature
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            isChangeable (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Attribute                                   -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Attribute.isDerived EMPTY >
+<!ATTLIST Model:Attribute.isDerived
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:Attribute (Model:ModelElement.name |
+                            Model:ModelElement.annotation |
+                            Model:Feature.visibility | Model:Feature.scope |
+                            Model:StructuralFeature.multiplicity |
+                            Model:StructuralFeature.isChangeable |
+                            Model:Attribute.isDerived | XMI.extension |
+                            Model:ModelElement.container |
+                            Model:ModelElement.constraints |
+                            Model:TypedElement.type)* >
+<!ATTLIST Model:Attribute
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            isChangeable (true | false) #IMPLIED
+            isDerived (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Operation                                      -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Operation.isQuery EMPTY >
+<!ATTLIST Model:Operation.isQuery
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:Operation.exceptions (Model:MofException)* >
+
+<!ELEMENT Model:Operation (Model:ModelElement.name |
+                         Model:ModelElement.annotation |
+                         Model:Feature.visibility | Model:Feature.scope |
+                         Model:Operation.isQuery | XMI.extension |
+                         Model:ModelElement.container |
+                         Model:ModelElement.constraints |
+                         Model:Operation.exceptions |
+                         Model:Namespace.contents)* >
+<!ATTLIST Model:Operation
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            isQuery (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            exceptions IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Class                                          -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Class.isSingleton EMPTY >
+<!ATTLIST Model:Class.isSingleton
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:Class (Model:ModelElement.name |
+                     Model:ModelElement.annotation |
+                     Model:GeneralizableElement.visibility |
+                     Model:GeneralizableElement.isAbstract |
+                     Model:GeneralizableElement.isRoot |
+                     Model:GeneralizableElement.isLeaf |
+                     Model:Class.isSingleton | XMI.extension |
+                     Model:ModelElement.container |
+                     Model:ModelElement.constraints |
+                     Model:GeneralizableElement.supertypes |
+                     Model:Namespace.contents)* >
+<!ATTLIST Model:Class
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            isAbstract (true | false) #IMPLIED
+            isRoot (true | false) #IMPLIED
+            isLeaf (true | false) #IMPLIED
+            isSingleton (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            supertypes IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.ModelElement                                   -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:ModelElement.name (#PCDATA | XMI.reference)* >
+
+<!ELEMENT Model:ModelElement.annotation (#PCDATA | XMI.reference)* >
+
+<!ELEMENT Model:ModelElement.container (Model:Namespace)* >
+
+<!ELEMENT Model:ModelElement.constraints (Model:Constraint)* >
+
+<!ELEMENT Model:ModelElement (Model:ModelElement.name |
+                            Model:ModelElement.annotation | XMI.extension |
+                            Model:ModelElement.container |
+                            Model:ModelElement.constraints)* >
+<!ATTLIST Model:ModelElement
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Package                                        -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Package (Model:ModelElement.name |
+                       Model:ModelElement.annotation |
+                       Model:GeneralizableElement.visibility |
+                       Model:GeneralizableElement.isAbstract |
+                       Model:GeneralizableElement.isRoot |
+                       Model:GeneralizableElement.isLeaf | XMI.extension |
+                       Model:ModelElement.container |
+                       Model:ModelElement.constraints |
+                       Model:GeneralizableElement.supertypes |
+                       Model:Namespace.contents)* >
+<!ATTLIST Model:Package
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            isAbstract (true | false) #IMPLIED
+            isRoot (true | false) #IMPLIED
+            isLeaf (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            supertypes IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Constraint                                     -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Constraint.expression (XMI.any)* >
+
+<!ELEMENT Model:Constraint.language (#PCDATA | XMI.reference)* >
+
+<!ELEMENT Model:Constraint.evaluationPolicy EMPTY >
+<!ATTLIST Model:Constraint.evaluationPolicy
+            xmi.value (immediate | deferred) #REQUIRED
+>
+
+<!ELEMENT Model:Constraint.constrainedElts (Model:ModelElement)* >
+
+<!ELEMENT Model:Constraint (Model:ModelElement.name |
+                          Model:ModelElement.annotation |
+                          Model:Constraint.expression |
+                          Model:Constraint.language |
+                          Model:Constraint.evaluationPolicy |
+                          XMI.extension | Model:ModelElement.container |
+                          Model:ModelElement.constraints |
+                          Model:Constraint.constrainedElts)* >
+<!ATTLIST Model:Constraint
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            language CDATA #IMPLIED
+            evaluationPolicy (immediate | deferred) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            constrainedElts IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Association                                    -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Association.isDerived EMPTY >
+<!ATTLIST Model:Association.isDerived
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:Association (Model:ModelElement.name |
+                           Model:ModelElement.annotation |
+                           Model:GeneralizableElement.visibility |
+                           Model:GeneralizableElement.isAbstract |
+                           Model:GeneralizableElement.isRoot |
+                           Model:GeneralizableElement.isLeaf |
+                           Model:Association.isDerived | XMI.extension |
+                           Model:ModelElement.container |
+                           Model:ModelElement.constraints |
+                           Model:GeneralizableElement.supertypes |
+                           Model:Namespace.contents)* >
+<!ATTLIST Model:Association
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            isAbstract (true | false) #IMPLIED
+            isRoot (true | false) #IMPLIED
+            isLeaf (true | false) #IMPLIED
+            isDerived (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            supertypes IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Parameter                                      -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Parameter.direction EMPTY >
+<!ATTLIST Model:Parameter.direction
+            xmi.value (in_dir | out_dir | inout_dir | return_dir) #REQUIRED
+>
+
+<!ELEMENT Model:Parameter.multiplicity (Model:MultiplicityType | XMI.field+) >
+
+<!ELEMENT Model:Parameter (Model:ModelElement.name |
+                         Model:ModelElement.annotation |
+                         Model:Parameter.direction |
+                         Model:Parameter.multiplicity | XMI.extension |
+                         Model:ModelElement.container |
+                         Model:ModelElement.constraints |
+                         Model:TypedElement.type)* >
+<!ATTLIST Model:Parameter
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            direction (in_dir | out_dir | inout_dir | return_dir) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.BehavioralFeature                              -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:BehavioralFeature (Model:ModelElement.name |
+                                 Model:ModelElement.annotation |
+                                 Model:Feature.visibility |
+                                 Model:Feature.scope | XMI.extension |
+                                 Model:ModelElement.container |
+                                 Model:ModelElement.constraints |
+                                 Model:Namespace.contents)* >
+<!ATTLIST Model:BehavioralFeature
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Import                                         -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Import.visibility EMPTY >
+<!ATTLIST Model:Import.visibility
+            xmi.value (public_vis | protected_vis | private_vis) #REQUIRED
+>
+
+<!ELEMENT Model:Import.importedNamespace (Model:Namespace)* >
+
+<!ELEMENT Model:Import (Model:ModelElement.name |
+                      Model:ModelElement.annotation |
+                      Model:Import.visibility | XMI.extension |
+                      Model:ModelElement.container |
+                      Model:ModelElement.constraints |
+                      Model:Import.importedNamespace)* >
+<!ATTLIST Model:Import
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            importedNamespace IDREFS #IMPLIED
+	    isClustered (true | false) #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.GeneralizableElement                           -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:GeneralizableElement.visibility EMPTY >
+<!ATTLIST Model:GeneralizableElement.visibility
+            xmi.value (public_vis | protected_vis | private_vis) #REQUIRED
+>
+
+<!ELEMENT Model:GeneralizableElement.isAbstract EMPTY >
+<!ATTLIST Model:GeneralizableElement.isAbstract
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:GeneralizableElement.isRoot EMPTY >
+<!ATTLIST Model:GeneralizableElement.isRoot
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:GeneralizableElement.isLeaf EMPTY >
+<!ATTLIST Model:GeneralizableElement.isLeaf
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:GeneralizableElement.supertypes
+                                               (Model:GeneralizableElement)* >
+
+<!ELEMENT Model:GeneralizableElement (Model:ModelElement.name |
+                                    Model:ModelElement.annotation |
+                                    Model:GeneralizableElement.visibility |
+                                    Model:GeneralizableElement.isAbstract |
+                                    Model:GeneralizableElement.isRoot |
+                                    Model:GeneralizableElement.isLeaf |
+                                    XMI.extension |
+                                    Model:ModelElement.container |
+                                    Model:ModelElement.constraints |
+                                    Model:GeneralizableElement.supertypes |
+                                    Model:Namespace.contents)* >
+<!ATTLIST Model:GeneralizableElement
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            isAbstract (true | false) #IMPLIED
+            isRoot (true | false) #IMPLIED
+            isLeaf (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            supertypes IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Constant                                       -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Constant.constValue (XMI.any) >
+
+<!ELEMENT Model:Constant (Model:ModelElement.name |
+                        Model:ModelElement.annotation |
+                        Model:Constant.constValue | XMI.extension |
+                        Model:ModelElement.container |
+                        Model:ModelElement.constraints |
+                        Model:TypedElement.type)* >
+<!ATTLIST Model:Constant
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Reference                                      -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Reference.referencedEnd (Model:AssociationEnd)* >
+
+<!ELEMENT Model:Reference (Model:ModelElement.name |
+                         Model:ModelElement.annotation |
+                         Model:Feature.visibility | Model:Feature.scope |
+                         Model:StructuralFeature.multiplicity |
+                         Model:StructuralFeature.isChangeable |
+                         XMI.extension | Model:ModelElement.container |
+                         Model:ModelElement.constraints |
+                         Model:TypedElement.type |
+                         Model:Reference.referencedEnd)* >
+<!ATTLIST Model:Reference
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            isChangeable (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            referencedEnd IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.MofException                                   -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:MofException (Model:ModelElement.name |
+                            Model:ModelElement.annotation |
+                            Model:Feature.visibility | Model:Feature.scope |
+                            XMI.extension | Model:ModelElement.container |
+                            Model:ModelElement.constraints |
+                            Model:Namespace.contents)* >
+<!ATTLIST Model:MofException
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            scope (instance_level | classifier_level) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.DataType                                       -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:DataType.typeCode ANY >
+
+<!ELEMENT Model:DataType (Model:ModelElement.name |
+                        Model:ModelElement.annotation |
+                        Model:GeneralizableElement.visibility |
+                        Model:GeneralizableElement.isAbstract |
+                        Model:GeneralizableElement.isRoot |
+                        Model:GeneralizableElement.isLeaf |
+                        Model:DataType.typeCode | XMI.extension |
+                        Model:ModelElement.container |
+                        Model:ModelElement.constraints |
+                        Model:GeneralizableElement.supertypes |
+                        Model:Namespace.contents)* >
+<!ATTLIST Model:DataType
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            visibility (public_vis | protected_vis | private_vis) #IMPLIED
+            isAbstract (true | false) #IMPLIED
+            isRoot (true | false) #IMPLIED
+            isLeaf (true | false) #IMPLIED
+            typeCode CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            supertypes IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.AssociationEnd                                 -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:AssociationEnd.multiplicity (Model:MultiplicityType | XMI.field+) >
+
+<!ELEMENT Model:AssociationEnd.aggregation EMPTY >
+<!ATTLIST Model:AssociationEnd.aggregation
+            xmi.value (none | shared | composite) #REQUIRED
+>
+
+<!ELEMENT Model:AssociationEnd.isNavigable EMPTY >
+<!ATTLIST Model:AssociationEnd.isNavigable
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:AssociationEnd.isChangeable EMPTY >
+<!ATTLIST Model:AssociationEnd.isChangeable
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:AssociationEnd.otherEnd (Model:AssociationEnd) >
+
+<!ELEMENT Model:AssociationEnd (Model:ModelElement.name |
+                              Model:ModelElement.annotation |
+                              Model:AssociationEnd.multiplicity |
+                              Model:AssociationEnd.aggregation |
+                              Model:AssociationEnd.isNavigable |
+                              Model:AssociationEnd.isChangeable |
+                              Model:AssociationEnd.otherEnd |
+                              XMI.extension | Model:ModelElement.container |
+                              Model:ModelElement.constraints |
+                              Model:TypedElement.type)* >
+<!ATTLIST Model:AssociationEnd
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            aggregation (none | shared | composite) #IMPLIED
+            isNavigable (true | false) #IMPLIED
+            isChangeable (true | false) #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.TypedElement                                   -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:TypedElement.type (Model:Classifier)* >
+
+<!ELEMENT Model:TypedElement (Model:ModelElement.name |
+                            Model:ModelElement.annotation | XMI.extension |
+                            Model:ModelElement.container |
+                            Model:ModelElement.constraints |
+                            Model:TypedElement.type)* >
+<!ATTLIST Model:TypedElement
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Multiplicity                                   -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:MultiplicityType.lower (#PCDATA | XMI.reference)* >
+
+<!ELEMENT Model:MultiplicityType.upper (#PCDATA | XMI.reference)* >
+
+<!ELEMENT Model:MultiplicityType.is_ordered EMPTY >
+<!ATTLIST Model:MultiplicityType.is_ordered
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:MultiplicityType.is_unique EMPTY >
+<!ATTLIST Model:MultiplicityType.is_unique
+            xmi.value (true | false) #REQUIRED
+>
+
+<!ELEMENT Model:MultiplicityType (Model:MultiplicityType.lower |
+                            Model:MultiplicityType.upper |
+                            Model:MultiplicityType.is_ordered |
+                            Model:MultiplicityType.is_unique | XMI.extension)* >
+<!ATTLIST Model:MultiplicityType
+            lower CDATA #IMPLIED
+            upper CDATA #IMPLIED
+            is_ordered (true | false) #IMPLIED
+            is_unique (true | false) #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.TypeAlias                                      -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:TypeAlias.multiplicity (Model:MultiplicityType | XMI.field+) >
+
+<!ELEMENT Model:TypeAlias (Model:ModelElement.name |
+                         Model:ModelElement.annotation |
+                         Model:TypeAlias.multiplicity | XMI.extension |
+                         Model:ModelElement.container |
+                         Model:ModelElement.constraints |
+                         Model:TypedElement.type)* >
+<!ATTLIST Model:TypeAlias
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            type IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!-- _______________________________________________________________ -->
+<!--                                                                 -->
+<!-- CLASS: Mof.Model.Tag                                            -->
+<!-- _______________________________________________________________ -->
+
+<!ELEMENT Model:Tag.tagId (#PCDATA | XMI.reference)* >
+
+<!ELEMENT Model:Tag.values (XMI.any) >
+
+<!ELEMENT Model:Tag.elements (Model:ModelElement)* >
+
+<!ELEMENT Model:Tag (Model:ModelElement.name | Model:ModelElement.annotation |
+                   Model:Tag.tagId | Model:Tag.values | XMI.extension |
+                   Model:ModelElement.container |
+                   Model:ModelElement.constraints | Model:Tag.elements)* >
+<!ATTLIST Model:Tag
+            name CDATA #IMPLIED
+            annotation CDATA #IMPLIED
+            tagId CDATA #IMPLIED
+            container IDREFS #IMPLIED
+            constraints IDREFS #IMPLIED
+            elements IDREFS #IMPLIED
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!ELEMENT Model:Mof (Model:Model)* >
+<!ATTLIST Model:Mof
+            %XMI.element.att;
+            %XMI.link.att;
+>
+
+<!ELEMENT Model:Model (Model:Feature | Model:Classifier | Model:Namespace |
+                     Model:StructuralFeature | Model:Attribute |
+                     Model:Operation | Model:Class | Model:ModelElement |
+                     Model:Package | Model:Constraint | Model:Association |
+                     Model:Parameter | Model:BehavioralFeature | Model:Import |
+                     Model:GeneralizableElement | Model:Constant |
+                     Model:Reference | Model:MofException | Model:DataType |
+                     Model:AssociationEnd | Model:TypedElement |
+                     Model:MultiplicityType | Model:TypeAlias | Model:Tag)* >
+<!ATTLIST Model:Model
+            %XMI.element.att;
+            %XMI.link.att;
+>

@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: adapters</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: adapters</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/protocols/adapters.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>Basic Adapters and Adapter Operations</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#DOES_NOT_SUPPORT">DOES_NOT_SUPPORT</a><br>
+<a href="#IMPLEMENTATION_ERROR">IMPLEMENTATION_ERROR</a><br>
+<a href="#NO_ADAPTER_NEEDED">NO_ADAPTER_NEEDED</a><br>
+<a href="#composeAdapters">composeAdapters</a><br>
+<a href="#minimumAdapter">minimumAdapter</a><br>
+<a href="#updateWithSimplestAdapter">updateWithSimplestAdapter</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="DOES_NOT_SUPPORT"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">DOES_NOT_SUPPORT&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+DOES_NOT_SUPPORT ( obj,  protocol )
+
+</pre></font>
+
+<p>Prevent <code>obj</code> from supporting <code>protocol</code></p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="IMPLEMENTATION_ERROR"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">IMPLEMENTATION_ERROR&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+IMPLEMENTATION_ERROR ( obj,  protocol )
+
+</pre></font>
+
+<p>Raise <code>NotImplementedError</code> when adapting <code>obj</code> to <code>protocol</code></p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+NotImplementedError( "Can't adapt", obj, protocol )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="NO_ADAPTER_NEEDED"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">NO_ADAPTER_NEEDED&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+NO_ADAPTER_NEEDED ( obj,  protocol )
+
+</pre></font>
+
+<p>Assume <code>obj</code> implements <code>protocol</code> directly</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="composeAdapters"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">composeAdapters&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+composeAdapters (
+        baseAdapter,
+        baseProtocol,
+        extendingAdapter,
+        )
+
+</pre></font>
+
+<p>Return the composition of 'baseAdapter'+<code>extendingAdapter</code></p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="minimumAdapter"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">minimumAdapter&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+minimumAdapter (
+        a1,
+        a2,
+        d1=0,
+        d2=0,
+        )
+
+</pre></font>
+
+<h3>Shortest route to implementation, <code>a1</code> @ depth <code>d1</code>, or <code>a2</code> @ <code>d2</code>?</h3>
+<p>    Assuming both a1 and a2 are interchangeable adapters (i.e. have the same
+    source and destination protocols), return the one which is preferable; that
+    is, the one with the shortest implication depth, or, if the depths are
+    equal, then the adapter that is composed of the fewest chained adapters.
+    If both are the same, then prefer <code>NO_ADAPTER_NEEDED</code>, followed by
+    anything but <code>DOES_NOT_SUPPORT</code>, with <code>DOES_NOT_SUPPORT</code> being least
+    preferable.  If there is no unambiguous choice, and <code>not a1 is a2</code>,
+    TypeError is raised.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+TypeError( "Ambiguous adapter choice", a1, a2, d1, d2 )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="updateWithSimplestAdapter"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">updateWithSimplestAdapter&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+updateWithSimplestAdapter (
+        mapping,
+        key,
+        adapter,
+        depth,
+        )
+
+</pre></font>
+
+<p>Replace 'mapping<a href="#refkey">[key]</a>' w/<code>adapter</code> @ <code>depth</code>, return true if changed</p>
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="adapters/Adapter.html">Adapter</a></p></td><td valign="top" align="left">
+<p>Convenient base class for adapters</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="adapters/StickyAdapter.html">StickyAdapter</a></p></td><td valign="top" align="left">
+<p>Adapter that attaches itself to its subject for repeated use</p>
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:03 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: ldapURL</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: ldapURL</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/storage/LDAP.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>RFC2255 LDAP URLs, with the following changes:</h3>
+<p>    1) Additionally supports ldaps and ldapi (TLS and Unix Domain variants).</p>
+<p>    2) Supports familiar (http, ftp-like) [user<a href="#ref:pass">[:pass]</a>@] syntax before
+    the hostport part of the URL. These are translated into critical bindname
+    and x-bindpw extensions. That is:<p>        ldap://foo:bar@localhost</p>
+</p>
+<h4>    is treated as:</h4>
+<p>        ldap://localhost/????!bindname=foo,!x-bindpw=bar</p>
+<p>    We do this for backwards compatability with some applications which
+    used the old AppUtils LDAP module, and because the standard
+    second syntax is quite unpleasant, especially when the bindname
+    DN contains commas that would have to be quoted as %2C in the extensions.</p>
+<p>    Attributes provided:</p>
+<p>    host            hostname of server (or empty string)
+    port            port number (integer, default 389)
+    basedn          the dn provided (or empty string)
+    attrs           tuple of attributes to retrieve, None if unspecified
+    scope           SCOPE_BASE (default), SCOPE_ONELEVEL, or SCOPE_SUBTREE
+    filter          search filter (or empty string)
+    extensions      dictionary mapping extension names to tuples of
+                    (critical, value) where critical is 0 or 1, and
+                    value is a string.
+    critical        a list of extension names that are critical, so
+                    code may easily check for unsupported extenstions
+                    and throw an error.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+URL.Base<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#parse">parse</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="parse"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">parse&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+parse (
+        self,
+        scheme,
+        body,
+        )
+
+</pre></font>
+
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:50 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: llvm-py
+Version: 0.6
+Summary: Python Bindings for LLVM
+Home-page: http://mdevan.nfshost.com/llvm-py/
+Author: Mahadevan R
+Author-email: mdevan.foobar@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN

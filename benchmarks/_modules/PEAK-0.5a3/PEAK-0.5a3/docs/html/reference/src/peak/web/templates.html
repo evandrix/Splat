@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: templates</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: templates</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/web/templates.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>XML/XHTML Templates for <code>peak.web</code>, similar to Twisted's Woven</p>
+<h3>TODO</h3>
+
+<ul>
+<li><p>implement interaction wrapper for &quot;/skin&quot;, &quot;/request&quot;, etc. data paths</p></li>
+<li><p>implement sub-template support (convert doc-&gt;DOMlet in another doc)</p></li>
+<li><p>add hooks for DOMlets to validate the list of supplied parameters</p></li>
+<li><p><code>list</code> DOMlet needs iteration variables, maybe paging</p></li>
+<li><p>need translation DOMlets, among lots of other kinds of DOMlets</p></li>
+<li><p>support DTD fragments, and the rest of the XML standard</p></li>
+
+</ul>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-__future__.html">__future__</a> <b>import</b> generators<br>
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> *<br>
+<b>from</b> peak.api <b>import</b> *<br>
+<b>from</b> <a href="publish.html">publish</a> <b>import</b> <a href="publish/TraversalPath.html">TraversalPath</a><br>
+<b>from</b> xml.sax.saxutils <b>import</b> quoteattr, escape<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#URLTag">URLTag</a><br>
+<a href="#infiniter">infiniter</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="URLTag"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">URLTag&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+URLTag (
+        parentComponent,
+        componentName=None,
+        domletProperty=None,
+        **kw,
+        )
+
+</pre></font>
+
+<p>Create a URLText or URLAttribute DOMlet based on parameters</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="infiniter"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">infiniter&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+infiniter ( sequence )
+
+</pre></font>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="templates/ContentReplacer.html">ContentReplacer</a></p></td><td valign="top" align="left">
+<p>Abstract base for elements that replace their contents</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/DOMletAsWebPage.html">DOMletAsWebPage</a></p></td><td valign="top" align="left">
+<p>Render a template component</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/DOMletParser.html">DOMletParser</a></p></td><td valign="top" align="left">
+<p>Parser that assembles a Document</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/DOMletState.html">DOMletState</a></p></td><td valign="top" align="left">
+<p>Execution state for a DOMlet</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/Element.html">Element</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/List.html">List</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/Literal.html">Literal</a></p></td><td valign="top" align="left">
+<p>Simple static text node</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/TaglessElement.html">TaglessElement</a></p></td><td valign="top" align="left">
+<p>Element w/out tags</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/TaglessText.html">TaglessText</a></p></td><td valign="top" align="left">
+<p>Text w/out open/close tag</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/TaglessXML.html">TaglessXML</a></p></td><td valign="top" align="left">
+<p>XML w/out open/close tag</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/TemplateDocument.html">TemplateDocument</a></p></td><td valign="top" align="left">
+<p>Document-level template element</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/Text.html">Text</a></p></td><td valign="top" align="left">
+<p>Replace element contents w/data (XML-quoted)</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/URLAttribute.html">URLAttribute</a></p></td><td valign="top" align="left">
+<p>Put the URL in an attribute</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/URLText.html">URLText</a></p></td><td valign="top" align="left">
+<p>Write absolute URL as body text</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="templates/XML.html">XML</a></p></td><td valign="top" align="left">
+<p>Replace element contents w/data (XML structure)</p>
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:56 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

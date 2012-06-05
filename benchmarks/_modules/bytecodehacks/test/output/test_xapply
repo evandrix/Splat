@@ -1,0 +1,4 @@
+test_xapply
+keyword parameter redefined
+unexpected keyword argument: h
+too many arguments; expected 7, got 8

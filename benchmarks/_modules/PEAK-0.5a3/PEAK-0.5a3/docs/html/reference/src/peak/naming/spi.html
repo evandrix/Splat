@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: spi</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: spi</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/naming/spi.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Service Provider Interface</h3>
+<p>    Core functions for implementing naming services.  These are
+    Pythonic equivalents to some of the static methods provided by
+    <code>NamingManager</code> and <code>DirectoryManager</code> in the JNDI <code>javax.naming.spi</code>
+    package.  For Python, it makes more sense to have these as
+    module-level functions than as static methods of classes.</p>
+<p>    Note that if you just want to <em>use</em> naming services, you don't need
+    to worry about this.  These are just a few simple &quot;policy&quot; methods
+    that control how initial context and URL context objects are created,
+    based on component properties.  They simplify the implementation of
+    context objects by allowing them to focus on their own issues instead
+    of on framework-oriented concerns.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> *<br>
+<b>from</b> <a href="names.html">names</a> <b>import</b> <a href="names/NNS_Reference.html">NNS_Reference</a><br>
+<b>from</b> peak.api <b>import</b> adapt, protocols<br>
+<b>from</b> peak.binding.interfaces <b>import</b> IComponentFactory<br>
+<b>from</b> peak.util.imports <b>import</b> importObject<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#getInitialContext">getInitialContext</a><br>
+<a href="#getURLContext">getURLContext</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getInitialContext"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getInitialContext&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getInitialContext (
+        parentComponent,
+        componentName=None,
+        **options,
+        )
+
+</pre></font>
+
+<h3>Create initial context for parent, w/component name and options</h3>
+<p>    The type of initial context created is determined by asking the supplied
+    <code>parentComponent</code> for its <code>peak.naming.initialContextFactory</code> property,
+    which will be treated as an import string if it is of string type.
+    (Note: the property name used is available as the constant
+    <code>naming.INIT_CTX_FACTORY</code>, if you want to provide an attribute binding
+    for it.)</p>
+<p>    Keyword options and the component name desired for the initial context
+    are passed through to the actual factory, along with the parent component
+    and component name.  If a <code>creationParent</code> argument is not supplied,
+    it will be defaulted to <code>parentComponent</code>, in order to establish the
+    parent component for any newly created objects retrieved from the
+    resulting context object.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getURLContext"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getURLContext&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getURLContext (
+        parent,
+        scheme,
+        iface,
+        componentName=None,
+        **options,
+        )
+
+</pre></font>
+
+<h3>Return a context object for the given URL scheme and interface</h3>
+<p>        This is done by looking up <code>scheme</code> in the <code>peak.naming.schemes.*</code>
+        property namespace.  (That is, the '&quot;ldap:<a href="&quot">' URL scheme is retrieved
+        from the <code>peak.naming.schemes.ldap</code> property.  Per RFC 1738, the
+        lowercase form of the scheme name is always used; note that the '</a>;'
+        should not be included in the scheme name.)  The property value
+        found, if a string, will be treated as an import specification, and
+        the relevant object imported.</p>
+<p>        The property value or imported object must do one of the following:</p>
+
+<ul>
+<li><p>Implement <code>naming.IURLContextFactory</code>, in which case its
+          <code>getURLContext()</code> method will be called with the same arguments
+          as supplied to this function.</p></li>
+<li><p>Be a class whose instances implement the requested context interface
+          (e.g. <code>naming.IBasicContext</code>), in which case an instance will be
+          constructed and returned, using <code>parent</code> as its parent component,
+          and <code>componentName</code> as its name.  (Note that the class must also
+          implement the <code>binding.IComponentFactory</code> constructor signature for
+          this to work.)</p></li>
+<li><p>Be a class whose instances implement <code>naming.IAddress</code>, in which case
+          a generic <code>AddressContext</code> will be returned, with its <code>schemeParser</code>
+          set to the appropriate address class.</p></li>
+
+</ul>
+<p>        If none of these conditions apply, or the property isn't found in the
+        first place, this function returns <code>None</code>, as per the
+        <code>naming.IURLContextFactory</code> interface.</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:47 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

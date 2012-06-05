@@ -1,0 +1,6 @@
+TODO
+MANIFEST
+RELEASE
+ChangeLog
+test
+bytecodehacks/code_gen *methods !*2_methods

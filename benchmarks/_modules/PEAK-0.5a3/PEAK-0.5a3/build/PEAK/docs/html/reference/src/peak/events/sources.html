@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: sources</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: sources</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/events/sources.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>from</b> <a href="interfaces.html">interfaces</a> <b>import</b> *<br>
+<b>from</b> peak.core <b>import</b> protocols, adapt, NOT_GIVEN<br>
+<b>from</b> peak.util.EigenData <b>import</b> AlreadyRead<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-types.html">types</a> <b>import</b> MethodType<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-weakref.html">weakref</a> <b>import</b> ref<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#noNew">noNew</a><br>
+<a href="#subscribe">subscribe</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="noNew"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">noNew&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+noNew ( *args )
+
+</pre></font>
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+TypeError( "Only one Null instance allowed" )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="subscribe"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">subscribe&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+subscribe ( source,  callback )
+
+</pre></font>
+
+<h3>Subscribe <code>callback</code> to an <code>IEventSource</code>, using a weak reference</h3>
+<p>    Usage::
+        canceller = events.subscribe(source,callback)</p>
+<p>    This function returns a callable that can be used to cancel the
+    subscription: just invoke <code>canceller()</code> and no subsequent callbacks will be
+    received.  The <code>callback</code> will be wrapped in a weak reference, so if the
+    callback goes away, the subscription automatically halts.  (Note that if
+    <code>callback</code> is a method, then the subscription ends when the object that
+    owns the method goes away.</p>
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Classes">Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td valign="top" align="left"><p><a href="sources/AbstractConditional.html">AbstractConditional</a></p></td><td valign="top" align="left">
+<p>Base class for an 'IConditional': fires if and only if value is true</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/AnyOf.html">AnyOf</a></p></td><td valign="top" align="left">
+<p>Union of multiple event sources</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Broadcaster.html">Broadcaster</a></p></td><td valign="top" align="left">
+<p>Like a distributor, but broadcasting events to all callbacks</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Condition.html">Condition</a></p></td><td valign="top" align="left">
+<p>Send callbacks/allow tasks to proceed when condition is true</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/DerivedCondition.html">DerivedCondition</a></p></td><td valign="top" align="left">
+<p>DerivedCondition(formula, *values)' - derive condition from value(s)</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/DerivedValue.html">DerivedValue</a></p></td><td valign="top" align="left">
+<p>DerivedValue(formula, *values)' - a value derived from other values</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Distributor.html">Distributor</a></p></td><td valign="top" align="left">
+<p>Sends each event to one callback</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Intersect.html">Intersect</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Not.html">Not</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/NullClass.html">NullClass</a></p></td><td valign="top" align="left">
+<p>Null condition: never fires, never has a value other than None</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Observable.html">Observable</a></p></td><td valign="top" align="left">
+<p>Base class for a generic event source</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Readable.html">Readable</a></p></td><td valign="top" align="left">
+<dl>
+<dt>Base class for an <code>IReadableSource</code></dt>
+<dd>adds a <code>_value</code> and '__call__</dd>
+</dl>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/ReadableAsCondition.html">ReadableAsCondition</a></p></td><td valign="top" align="left">
+<p>Wrap an <code>IReadableSource</code> as an 'IConditional</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Semaphore.html">Semaphore</a></p></td><td valign="top" align="left">
+<p>Allow up to <code>n</code> tasks to proceed simultaneously</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Union.html">Union</a></p></td><td valign="top" align="left"></td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Value.html">Value</a></p></td><td valign="top" align="left">
+<p>Broadcast changes in a variable to all observers</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/Writable.html">Writable</a></p></td><td valign="top" align="left">
+<dl>
+<dt>Base class for an <code>IWritableSource</code></dt>
+<dd>adds a <code>set()</code> method</dd>
+</dl>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/WritableAsCondition.html">WritableAsCondition</a></p></td><td valign="top" align="left">
+<p>Wrap an <code>IWritableValue</code> as an 'IConditional</p>
+</td></tr>
+<tr><td valign="top" align="left"><p><a href="sources/_compound.html">_compound</a></p></td><td valign="top" align="left"></td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:00 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

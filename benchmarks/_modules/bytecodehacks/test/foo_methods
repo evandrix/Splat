@@ -1,0 +1,4 @@
+CLASS_1:
+    return "one", arg
+CLASS_2:
+    return "two", arg

@@ -1,0 +1,246 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1' ?>
+<!DOCTYPE component SYSTEM '../../ZConfig/doc/schema.dtd' >
+
+<component prefix="peak.running">
+
+  <abstracttype name='running.Task'>
+    <description>
+      Any component that can be part of a running.commands.EventDriven
+      application.
+    </description>
+  </abstracttype>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <sectiontype  name="AdaptiveTask"
+                datatype=".daemons.AdaptiveTask.fromZConfig"
+                implements="running.Task">
+
+    <description>Common configuration for adaptive tasks.</description>
+
+    <key name="RunEvery"
+         attribute="runEvery"
+	 datatype="time-interval"
+	 required="yes">
+	 <description>
+	 The default number of seconds between attempts to run this task.
+	 </description>
+    </key>
+
+    <key name="Priority"
+         attribute="priority"
+         datatype="integer"
+         required="yes">
+         <description>
+         The priority of this task, relative to others.  Higher numbers
+         are higher priority.  Tasks with higher priority will run before
+         tasks with lower priority, if more than one task is ready to run.
+         Higher priority tasks will *starve* lower priority tasks if there
+         continues to be work available for the higher priority task, and its
+         'MinimumIdle' setting is low.
+         </description>
+    </key>
+
+    <key name="MinimumIdle"
+         attribute="minimumIdle"
+	 datatype="time-interval">
+	 <description>
+	 The minimum number of seconds the task will wait between *successful*
+	 attempts to run.  Defaults to the same as 'RunEvery'.
+	 </description>
+    </key>
+
+
+
+
+    <key name="IncreaseIdleBy"
+         attribute="increaseIdleBy"
+         datatype="time-interval">
+         <description>
+         Each time the task is attempted and fails (i.e. has no work to do),
+         increase the idle interval by this duration, until 'MaximumIdle' is
+         reached.  The idle interval will reset to the 'MinimumIdle' once the
+         task successfully does work, otherwise it will stay at 'MaximumIdle'.
+         'IncreaseIdleBy' defaults to zero if not set.
+         </description>
+    </key>
+
+    <key name="MultiplyIdleBy"
+         attribute="multiplyIdleBy"
+         datatype="float">
+         <description>
+         Each time the task is attempted and fails (i.e. has no work to do),
+         multiply the idle interval by this number before adding
+         'IncreaseIdleBy' (if set), until 'MaximumIdle' is reached.  The idle
+         interval will reset to the 'MinimumIdle' once the task successfully
+         does work, otherwise it will stay at 'MaximumIdle'.
+         'MultiplyIdleBy' Defaults to 1 if not set.
+         </description>
+    </key>
+
+    <key name="MaximumIdle"
+         attribute="maximumIdle"
+	 datatype="time-interval">
+	 <description>
+	 The maximum number of seconds the task will wait between *unsuccessful*
+	 attempts to run.  Defaults to a number that will allow the idle interval
+     to increase three times, if either 'MultiplyIdleBy' or 'IncreaseIdleBy'
+     are set.  Otherwise, defaults to the same as 'RunEvery'.
+	 </description>
+    </key>
+
+
+
+
+
+
+    <key name="LockURL" attribute="lockName" datatype="string">
+	 <description>
+	 The PEAK URL of an object to be used as a lock.  The lock will be acquired
+     before (and released after) the task's getWork() and doWork() methods
+     are called.  If no URL is supplied, no lock will be acquired or released.
+	 </description>
+    </key>
+
+    <key name="logURL" attribute="logName" datatype="string">
+	 <description>
+	 The PEAK URL of the logger that this task should use to record events.
+     It defaults to 'logger:daemons.TaskName', where TaskName is
+     the task's section name in the ZConfig file.
+	 </description>
+    </key>
+
+  </sectiontype>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <sectiontype  name="CleanupFiles"
+                datatype=".daemons.FileCleaner.fromZConfig"
+                implements="running.Task"
+                extends="AdaptiveTask">
+
+    <description>Remove old files from a directory</description>
+
+    <key name="Directory" attribute="directory" datatype="existing-directory"
+         required="yes">
+         <description>
+         The directory that needs to be cleaned of files.  The directory must
+         exist at configuration time.  Note that you can also specify
+         subdirectories of this directory as part of the 'MatchFiles' setting.
+         </description>
+    </key>
+
+    <key name="MatchFiles" attribute="matchFiles" datatype="string"
+         default="*">
+         <description>
+         A filename "glob" (i.e. match pattern) that will be used to search
+         'Directory' for files to delete.  The pattern may contain '?' (match
+         a single arbitrary character), '*' (match any number of characters
+         that are not path separators, and '[]' (match one of the characters
+         between the brackets.  The pattern defaults to '*' (i.e., all files)
+         if not specified.
+         </description>
+    </key>
+
+    <key name="DeleteIfOlderThan" attribute="olderThan"
+         datatype="time-interval"
+         required="yes">
+         <description>
+         Files that match the 'MatchFiles' pattern in 'Directory' that were
+         last modified at least this long ago will be deleted.
+         </description>
+    </key>
+
+  </sectiontype>
+
+
+
+  <sectiontype  name="URLChecker"
+                datatype=".daemons.URLChecker.fromZConfig"
+                implements="running.Task"
+                extends="AdaptiveTask">
+
+    <description>Check a URL for activity and start a service if needed.
+    </description>
+
+    <key name="CheckURL" attribute="url" datatype="string" required="yes">
+         <description>
+         The URL of the resource to check.  This can be a stream resource
+         (e.g. 'file:', 'http:', or 'ftp:' URLs), a managed connection
+         (e.g. 'ldap:', 'pgsql:', etc.), or any resource that can be adapted to
+         the 'peak.running.ICheckableResource' interface.
+         </description>
+    </key>
+
+    <key name="RestartWith" attribute="restartURL" datatype="string"
+         required="yes">
+         <description>
+         URL of a command to invoke when needed to restart the service
+         controlling 'CheckURL'.
+         </description>
+    </key>
+
+  </sectiontype>
+
+</component>
+
+
+
+
+
+
+
+
+
+
+
+
+

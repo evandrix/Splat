@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: Bootstrap</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: Bootstrap</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/running/commands.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Invoke and use an arbitrary <code>IExecutable</code> object</h3>
+<p>    This class is designed to allow specification of an arbitrary
+    name or URL on the command line to retrieve and invoke the
+    designated object.</p>
+<p>    If the name is not a scheme-prefixed URL, it is first converted to
+    a name in the <code>peak.running.shortcuts</code> configuration property namespace,
+    thus allowing simpler names to be used.  For example, <code>runIni</code> is a
+    shortcut for <code>"import:peak.running.commands:IniInterpreter"</code>.  If you
+    use a sitewide PEAK_CONFIG file, you can add your own shortcuts to
+    the <code>peak.running.shortcuts</code> namespace.  (See the <code>peak.ini</code> file for
+    current shortcuts, and examples of how to define them.)</p>
+<p>    The object designated by the name or URL in 'argv<a href="#ref1">[1]</a>' must be an
+    'IExecutable'; that is to say it must implement one of the <code>IExecutable</code>
+    sub-interfaces, or else be callable without arguments.  (See the
+    <code>running.IExecutable</code> interface for more details.)</p>
+<p>    Here's an example bootstrap script (which is installed as the <code>peak</code>
+    script by the PEAK distribution on <code>posix</code> operating systems):
+<pre>
+        #!/usr/bin/env python2.2
+
+        from peak.running.commands import Bootstrap
+        from peak.api import config
+        import sys
+
+        sys.exit(
+            Bootstrap(
+                config.makeRoot()
+            ).run()
+        )
+</pre>
+</p>
+<p>    The script above will look up its first supplied command line argument,
+    and then invoke the found object as a command, supplying the remaining
+    command line arguments.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="AbstractInterpreter.html">AbstractInterpreter</a><br>
+<ul>
+
+<a href="AbstractCommand.html">AbstractCommand</a><br>
+<ul>
+
+binding.Component<br>
+
+</ul>
+
+</ul>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#interpret">interpret</a><br>
+<a href="#showHelp">showHelp</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="interpret"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">interpret&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+interpret ( self,  name )
+
+</pre></font>
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+InvocationError( "Invalid command object", factory, "found at", name )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="showHelp"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">showHelp&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+showHelp ( self )
+
+</pre></font>
+
+<p>Display usage message on stderr</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:49 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

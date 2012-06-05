@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: autocommitted</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: autocommitted</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/storage/autocommit.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>meth = autocommited(meth) - Wrap a method with autocommit support</h3>
+<p>    <code>AutoCommitter</code> classes should wrap any methods which want to be
+    atomic operations in an <code>autocommitted()</code> advice.  For example:
+<pre>
+        from peak.storage.autocommit import *
+
+        class QueuedMessageSender(AutoCommitter):
+
+            def send(self,message):
+                # ...
+
+            send = autocommitted(send)
+</pre>
+</p>
+<p>    When a <code>QueuedMessageSender</code> object's <code>send()</code> method is called,
+    it will be wrapped in a transaction as long as the object was
+    created with a true setting for its <code>autocommit</code> parameter.  If
+    an error is raised from <code>send()</code>, the transaction will be aborted,
+    otherwise it will be committed.</p>
+<p>    If a wrapped method is called from inside another <code>autocommitted()</code>
+    method of the same object, or if the object doesn't have <code>autocommit</code>
+    set to a true value, no special transaction handling occurs.</p>
+<p>    Note that errors raised during the wrapping transaction's commit or
+    abort method may leave the object's transaction service stuck in a
+    failure mode, where it cannot be committed, only aborted.  This can
+    be fixed by calling the <code>theBrokenObject.txnSvc.abort()</code> until it
+    no longer raises an exception.  Or, it may be more worthwhile to
+    set up a custom error handler on the transaction service instance
+    used for autocommit transactions.  Once we have enough experience
+    with this issue to know what's most useful, we may add such an
+    error handler to the <code>AutoCommitter</code> default <code>txnSvc</code> setup code.</p>
+<p>    Also note that wrapped methods should always use <code>self.joinedTxn</code> to
+    ensure they have joined a transaction; this wrapper doesn't do it for
+    you.  (It can't, since it would then fail to work correctly when
+    autocommit is turned off.)</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+advice<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#__call__">__call__</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="__call__"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">__call__&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+__call__ (
+        __advice,
+        self,
+        *__args,
+        *__kw,
+        )
+
+</pre></font>
+
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:50 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

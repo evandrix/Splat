@@ -1,0 +1,430 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: ModelChecker</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: ModelChecker</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/ddt/processors.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Test a domain object by getting/setting attributes or invoking methods</h3>
+<p>    Unlike <code>ddt.MethodChecker</code>, this class can be used without subclassing.
+    Just specify the <code>targetClass</code> in the constructor, and optionally set
+    <code>itemPerRow</code> to <code>False</code> if you want one target instance to be used for
+    all rows.  You can also supply <code>typeInfo</code> to list the <code>model.IType</code>
+    types that should be used when invoking methods or checking their return
+    values.  For example, you might use the following in an .ini file:
+<pre>
+        [peak.ddt.processors]
+
+        MyProcessor = ddt.ModelChecker(
+            targetClass = importString('my_model.MyElement'),
+            typeInfo = Items(
+                someMethodReturningInt = model.Integer,
+                someMethodTakingFloat = model.Float,
+                # etc.
+            )
+        )
+</pre>
+</p>
+<p>    If <code>someMethodReturningInt</code> or <code>someMethodTakingFloat</code> are invoked by a
+    test, the cell value will be converted to/from an integer or float as
+    appropriate.</p>
+<p>    By default, <code>ModelChecker</code> checks whether a column heading ends in ':<code>
+    (indicating a "set" operation) or </code>?' (indicating a &quot;get&quot; operation).
+    If you would like to override this, you can supply a <code>columnSuffixes</code>
+    argument to the constructor, or override it in a subclass.  See the
+    <code>parseHeader()</code> method for more details.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="MethodChecker.html">MethodChecker</a><br>
+<ul>
+
+<a href="AbstractProcessor.html">AbstractProcessor</a><br>
+<ul>
+
+binding.Component<br>
+
+</ul>
+
+</ul>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#afterRow">afterRow</a><br>
+<a href="#beforeRow">beforeRow</a><br>
+<a href="#getGetter">getGetter</a><br>
+<a href="#getHandler">getHandler</a><br>
+<a href="#getMapper">getMapper</a><br>
+<a href="#getSetter">getSetter</a><br>
+<a href="#parseHeader">parseHeader</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="afterRow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">afterRow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+afterRow ( self )
+
+</pre></font>
+
+<p>Get rid of old instance, if needed, after finishing a row</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="beforeRow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">beforeRow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+beforeRow ( self )
+
+</pre></font>
+
+<p>Create a new instance, if needed, before starting a row</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getGetter"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getGetter&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getGetter ( self,  name )
+
+</pre></font>
+
+<h3>Get a &quot;getting&quot; handler for <code>name</code></h3>
+<p>        This is implemented by getting a <code>ddt.ICellMapper</code> for the named
+        feature from <code>self.getMapper(name)</code>, and returning a handler that
+        performs a <code>mapper.get()</code> operation on <code>self.targetInstance</code> each
+        time it's invoked.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getHandler"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getHandler&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getHandler ( self,  text )
+
+</pre></font>
+
+<h3>Figure out whether handler should get or set, and how to do that</h3>
+<p>        The default implementation uses <code>self.parseHeader()</code> to determine the
+        kind of handler required, and then returns <code>self.getGetter()</code> or
+        <code>self.getSetter()</code> accordingly.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+ValueError( "Invalid return value from parseHeader():", getOrSet )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getMapper"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getMapper&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getMapper ( self,  name )
+
+</pre></font>
+
+<h3>Get an <code>ICellMapper</code> for the named feature in the target class</h3>
+<p>        This is done by retrieving the named attribute from the class (after
+        applying <code>titleAsMethodName()</code> to the name) and and adapting it to
+        the <code>ddt.ICellMapper</code> interface.  If there is an entry in
+        <code>self.typeInfo</code> that indicates the datatype that should be used for
+        the column, the mapper is informed of this via its <code>suggestType()</code>
+        method.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getSetter"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getSetter&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getSetter ( self,  name )
+
+</pre></font>
+
+<h3>Get a &quot;setting&quot; handler for <code>name</code></h3>
+<p>        This is implemented by getting a <code>ddt.ICellMapper</code> for the named
+        feature from <code>self.getMapper(name)</code>, and returning a handler that
+        performs a <code>mapper.set()</code> operation on <code>self.targetInstance</code> each
+        time it's invoked.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="parseHeader"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">parseHeader&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+parseHeader ( self,  text )
+
+</pre></font>
+
+<h3>Return a <code>(getOrSet,name)</code> tuple for header <code>text</code></h3>
+<p>        <code>getOrSet</code> should be the string <code>"get"</code> or <code>"set"</code>, indicating how the
+        column is to be interpreted.  <code>name</code> should be the name to be used for
+        calling <code>self.getSetter()</code> or <code>self.getGetter()</code>, respectively.</p>
+<p>        The default implementation uses <code>self.columnSuffixes</code> to determine the
+        appropriate type.  The <code>columnSuffixes</code> attribute must be an iterable
+        of <code>(suffix,getOrSet)</code> pairs, where <code>suffix</code> is a string to be checked
+        for at the end of <code>text</code>, and <code>getOrSet</code> is a string indicating whether
+        the column should be get or set.  The suffices in <code>columnSuffixes</code> are
+        checked in the order they are provided, so longer suffixes should be
+        listed before shorter ones to avoid ambiguity.  An empty string may
+        be used as a suffix, to indicate the default behavior for a column, but
+        should be placed last in the suffixes, if used.  If no default is
+        given, and no suffixes match, an error is raised, causing the header
+        to be marked in error and the table as a whole to be skipped.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+ValueError( "Unable to determine column type:", text )<br>
+
+</td></tr>
+</table>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:01 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

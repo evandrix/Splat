@@ -1,0 +1,500 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Module: imports</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Module: imports</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/util/imports.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>Tools for doing dynamic imports</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Imported modules">Imported modules</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<b>import</b> __main__<br>
+<b>from</b> peak.util.EigenData <b>import</b> AlreadyRead<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-sys.html">sys</a> <b>import</b> modules<br>
+<b>from</b> <a href="http://www.python.org/doc/current/lib/module-types.html">types</a> <b>import</b> StringTypes, ModuleType<br>
+
+</td></tr>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Functions">Functions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+
+            <table border="0" cellspacing="2" cellpadding="2" width="100%">
+              <tr>
+            <td align="LEFT" valign="TOP">
+<a href="#_loadAndRunHooks">_loadAndRunHooks</a><br>
+<a href="#_setModuleHook">_setModuleHook</a><br>
+<a href="#getModuleHooks">getModuleHooks</a><br>
+<a href="#importObject">importObject</a><br>
+<a href="#importSequence">importSequence</a><br>
+</td>
+<td align="LEFT" valign="TOP">
+<a href="#importString">importString</a><br>
+<a href="#importSuite">importSuite</a><br>
+<a href="#joinPath">joinPath</a><br>
+<a href="#lazyModule">lazyModule</a><br>
+<a href="#whenImported">whenImported</a><br>
+</td>
+</tr>
+            </table>
+            
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="_loadAndRunHooks"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">_loadAndRunHooks&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+_loadAndRunHooks ( module )
+
+</pre></font>
+
+<p>Load an unactivated &quot;lazy&quot; module object</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="_setModuleHook"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">_setModuleHook&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+_setModuleHook ( moduleName,  hook )
+
+</pre></font>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getModuleHooks"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getModuleHooks&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getModuleHooks ( moduleName )
+
+</pre></font>
+
+<p>Get list of hooks for 'moduleName'; error if module already loaded</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Exceptions">Exceptions</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+AlreadyRead( "Module already imported", moduleName )<br>
+
+</td></tr>
+</table>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="importObject"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">importObject&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+importObject ( spec,  globalDict=defaultGlobalDict )
+
+</pre></font>
+
+<h3>Convert a possible string specifier to an object</h3>
+<p>    If <code>spec</code> is a string or unicode object, import it using <code>importString()</code>,
+    otherwise return it as-is.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="importSequence"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">importSequence&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+importSequence ( specs,  globalDict=defaultGlobalDict )
+
+</pre></font>
+
+<h3>Convert a string or list specifier to a list of objects.</h3>
+<p>    If <code>specs</code> is a string or unicode object, treat it as a
+    comma-separated list of import specifications, and return a
+    list of the imported objects.</p>
+<p>    If the result is not a string but is iterable, return a list
+    with any string/unicode items replaced with their corresponding
+    imports.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="importString"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">importString&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+importString ( name,  globalDict=defaultGlobalDict )
+
+</pre></font>
+
+<h3>Import an item specified by a string</h3>
+<p>    Example Usage:
+<pre>
+        attribute1 = importString('some.module:attribute1')
+        attribute2 = importString('other.module:nested.attribute2')
+</pre>
+</p>
+<p>    <code>importString</code> imports an object from a module, according to an
+    import specification string: a dot-delimited path to an object
+    in the Python package namespace.  For example, the string
+    <code>"some.module.attribute"</code> is equivalent to the result of
+    <code>from some.module import attribute</code>.</p>
+<p>    For readability of import strings, it's sometimes helpful to use a <code>:</code> to
+    separate a module name from items it contains.  It's optional, though,
+    as <code>importString</code> will convert the ':<code> to a </code>.' internally anyway.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="importSuite"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">importSuite&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+importSuite ( specs,  globalDict=defaultGlobalDict )
+
+</pre></font>
+
+<p>Create a test suite from import specs</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="joinPath"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">joinPath&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+joinPath ( modname,  relativePath )
+
+</pre></font>
+
+<p>Adjust a module name by a '/'-separated, relative or absolute path</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="lazyModule"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">lazyModule&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+lazyModule ( modname,  relativePath=None )
+
+</pre></font>
+
+<h3>Return module <code>modname</code>, but with its contents loaded &quot;on demand&quot;</h3>
+<p>    This function returns 'sys.modules<a href="#refmodname">[modname]</a>', if present.  Otherwise
+    it creates a <code>LazyModule</code> object for the specified module, caches it
+    in <code>sys.modules</code>, and returns it.</p>
+<p>    <code>LazyModule</code> is a subclass of the standard Python module type, that
+    remains empty until an attempt is made to access one of its
+    attributes.  At that moment, the module is loaded into memory, and
+    any hooks that were defined via <code>whenImported()</code> are invoked.</p>
+<p>    Note that calling <code>lazyModule</code> with the name of a non-existent or
+    unimportable module will delay the <code>ImportError</code> until the moment
+    access is attempted.  The <code>ImportError</code> will occur every time an
+    attribute access is attempted, until the problem is corrected.</p>
+<p>    This function also takes an optional second parameter, <code>relativePath</code>,
+    which will be interpreted as a '/'-separated path string relative to
+    <code>modname</code>.  If a <code>relativePath</code> is supplied, the module found by
+    traversing the path will be loaded instead of <code>modname</code>.  In the path,
+    '.<code> refers to the current module, and </code>..' to the current module's
+    parent.  For example:
+<pre>
+        fooBaz = lazyModule('foo.bar','../baz')
+</pre>
+</p>
+<p>    will return the module <code>foo.baz</code>.  The main use of the <code>relativePath</code>
+    feature is to allow relative imports in modules that are intended for
+    use with module inheritance.  Where an absolute import would be carried
+    over as-is into the inheriting module, an import relative to <code>__name__</code>
+    will be relative to the inheriting module, e.g.:
+<pre>
+        something = lazyModule(__name__,'../path/to/something')
+</pre>
+</p>
+<p>    The above code will have different results in each module that inherits
+    it.</p>
+<p>    (Note: <code>relativePath</code> can also be an absolute path (starting with <code>/</code>);
+    this is mainly useful for module <code>__bases__</code> lists.)</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="whenImported"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">whenImported&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+whenImported ( moduleName,  hook )
+
+</pre></font>
+
+<h3>Call <code>hook(module)</code> when module named <code>moduleName</code> is first used</h3>
+<p>    <code>hook</code> must accept one argument: the module object named by <code>moduleName</code>,
+    which must be a fully qualified (i.e. absolute) module name.  The hook
+    should not raise any exceptions, or it may prevent later hooks from
+    running.</p>
+<p>    If the module has already been imported normally, <code>hook(module)</code> is
+    called immediately, and the module object is returned from this function.
+    If the module has not been imported, or has only been imported lazily,
+    then the hook is called when the module is first used, and a lazy import
+    of the module is returned from this function.  If the module was imported
+    lazily and used before calling this function, the hook is called
+    immediately, and the loaded module is returned from this function.</p>
+<p>    Note that using this function implies a possible lazy import of the
+    specified module, and lazy importing means that any <code>ImportError</code> will be
+    deferred until the module is used.</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:52 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

@@ -1,4 +1,0 @@
-liveUnPYC
-===================
-.. automodule:: liveUnPYC
-   :members:

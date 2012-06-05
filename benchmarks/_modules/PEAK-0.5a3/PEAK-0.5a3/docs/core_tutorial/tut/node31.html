@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>2.2.2.2 Basic Binding Classes/Functions</title>
+<META NAME="description" CONTENT="2.2.2.2 Basic Binding Classes/Functions">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<link rel="STYLESHEET" href="tut.css">
+<link rel="first" href="tut.html">
+<link rel="contents" href="contents.html" title="Contents">
+
+<LINK REL="previous" HREF="node30.html">
+<LINK REL="up" HREF="node29.html">
+<LINK REL="next" HREF="node32.html">
+</head>
+<body>
+<DIV CLASS="navigation">
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node30.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node29.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node32.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node30.html">2.2.2.1 API Conventions</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node29.html">2.2.2 Creating Attribute Bindings</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node32.html">2.3 Composing Hierarchies with</A>
+<br><hr>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION004222000000000000000">
+2.2.2.2 Basic Binding Classes/Functions</A>
+</H3>
+
+<P>
+The following functions and classes can be used as-is to create attribute
+bindings, or you can subclass the classes to create custom binding types
+of your own:
+
+<P>
+<dl><dt><b><a name="l2h-1"><tt class="function">Make</tt></a></b>(<var>recipe, **keywords</var>)
+<dd>
+The most basic of all binding types, the <tt class="class">binding.Once</tt> class requires
+only a callable object such as a function or lambda.  If you don't supply an
+<var>attrName</var>, the "<tt class="samp">__name__</tt>" attribute of the <var>func</var> parameter is
+used, if available.  Similarly, if you don't supply a <var>doc</var>, the
+"<tt class="samp">__doc__</tt>" attribute of the <var>func</var> parameter is used, if available.
+
+<P>
+As we've already seen, the <tt class="function">binding.Make</tt> function just needs a class
+or type object as its <var>obtype</var> parameter, and it creates a new instance of
+that type.
+
+<P>
+<tt class="function">binding.Make</tt> will also accept a string for its <var>recipe</var>
+parameter, in which case it will interpret the string as an <b>import
+specification</b>, using the <tt class="function">peak.util.imports.importString</tt> function to
+load it.  We'll talk more about import specifications in the chapter on the
+<tt class="module">peak.config</tt> package.
+</dl>
+
+<P>
+<dl><dt><b><a name="l2h-2"><tt class="function">Require</tt></a></b>(<var>description, **keywords</var>)
+<dd>
+The <tt class="function">binding.Require</tt> class is the odd one out in this group.
+It doesn't compute a value at all!  Instead, it raises an error when the
+attribute is accessed.  This is so that you can easily define an attribute that
+you expect a subclass or instance to provide, and thus get a clearer error
+message if the expected attribute is never defined.
+</dl>
+
+<P>
+XXX Need Obtain and Delegate here as well.
+
+<P>
+
+<DIV CLASS="navigation">
+<p><hr>
+<table align="center" width="100%" cellpadding="0" cellspacing="2">
+<tr>
+<td><A HREF="node30.html"><img src="../icons/previous.gif"
+  border="0" height="32"
+  alt="Previous Page" width="32"></A></td>
+<td><A HREF="node29.html"><img src="../icons/up.gif"
+  border="0" height="32"
+  alt="Up One Level" width="32"></A></td>
+<td><A HREF="node32.html"><img src="../icons/next.gif"
+  border="0" height="32"
+  alt="Next Page" width="32"></A></td>
+<td align="center" width="100%">Building Component-Based 
+<BR>
+Applications with PEAK</td>
+<td><A href="contents.html"><img src="../icons/contents.gif"
+  border="0" height="32"
+  alt="Contents" width="32"></A></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+<td><img src="../icons/blank.gif"
+  border="0" height="32"
+  alt="" width="32"></td>
+</tr></table>
+<b class="navlabel">Previous:</b> <a class="sectref" HREF="node30.html">2.2.2.1 API Conventions</A>
+<b class="navlabel">Up:</b> <a class="sectref" HREF="node29.html">2.2.2 Creating Attribute Bindings</A>
+<b class="navlabel">Next:</b> <a class="sectref" HREF="node32.html">2.3 Composing Hierarchies with</A>
+<hr>
+<span class="release-info">Release 0.5a3, documentation updated on June 11, 2003.</span>
+</DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

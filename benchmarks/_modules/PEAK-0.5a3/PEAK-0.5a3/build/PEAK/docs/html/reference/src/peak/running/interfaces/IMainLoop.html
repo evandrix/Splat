@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: IMainLoop</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: IMainLoop</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/running/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Run the reactor event loop, with activity monitoring and timeouts</h3>
+<p>    This is typically used to control the lifetime of an event-driven
+    application.  The application invokes <code>run()</code> with the desired parameters
+    once the system reactor is ready to run.</p>
+<p>    Reactor-driven components should invoke the <code>activityOccurred()</code> method
+    on this interface whenever I/O or useful processing occurs, in order to
+    prevent inactivity timeouts.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+Interface<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#activityOccurred">activityOccurred</a><br>
+<a href="#exitWith">exitWith</a><br>
+<a href="#run">run</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="activityOccurred"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">activityOccurred&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+activityOccurred ()
+
+</pre></font>
+
+<p>Call this periodically to prevent inactivity timeouts.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="exitWith"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">exitWith&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+exitWith ( self,  exitCode )
+
+</pre></font>
+
+<p>Exit the mainloop immediately, returning <code>exitCode</code></p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="run"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">run&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+run (
+        stopAfter=0,
+        idleTimeout=0,
+        runAtLeast=0,
+        )
+
+</pre></font>
+
+<h3>Loop polling for IO, GUI, and scheduled events</h3>
+<dl>
+<dt>        <code>stopAfter</code></dt>
+<dd>No scheduled actions will be invoked after this
+                       many seconds.  <code>run()</code> will exit soon afterward.
+                       (Zero means &quot;run until the reactor stops&quot;.)</dd>
+<dt>        <code>idleTimeout</code></dt>
+<dd>If <code>activityOccurred()</code> is not called for this
+                         many seconds, stop and return from <code>run()</code>.
+                         (Zero means, &quot;don't check for inactivity&quot;.)</dd>
+<dt>        <code>runAtLeast</code></dt>
+<dd>run at least this many seconds before an <code>idleTimeout</code>
+                        is allowed to occur.  (Zero means, &quot;idle timeouts
+                        may occur any time after the run starts.&quot;)</dd>
+</dl>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:49 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

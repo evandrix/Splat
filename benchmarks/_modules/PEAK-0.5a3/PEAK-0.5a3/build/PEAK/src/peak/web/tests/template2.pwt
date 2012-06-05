@@ -1,0 +1,13 @@
+<body>
+<h1 domlet="text:foo">Title Goes Here</h1>
+
+<ul domlet="list:bar">
+    <li define="listItem" domlet="text"></li>
+</ul>
+
+<a href="ignored" domlet="url.href:xml">
+The EventDriven.xml file, found at
+<span domlet="url.notag">this URL</span>
+</a>
+
+</body>

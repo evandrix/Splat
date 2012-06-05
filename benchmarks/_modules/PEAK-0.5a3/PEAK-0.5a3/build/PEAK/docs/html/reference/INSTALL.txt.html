@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>PEAK API Reference</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">PEAK API Reference</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Installing PEAK</h3>
+<p> PEAK Release 0.5 alpha 3</p>
+<p> Copyright (C) 1996-2004 by Phillip J. Eby and Tyler C. Sarna.
+ All rights reserved.  This software may be used under the same terms
+ as Zope or Python.  THERE ARE ABSOLUTELY NO WARRANTIES OF ANY KIND.
+ Code quality varies between modules, from &quot;beta&quot; to &quot;experimental
+ pre-alpha&quot;.  :)</p>
+<h4> SYSTEM REQUIREMENTS</h4>
+<p>  Python 2.2.2 or better is required.  Some portions of PEAK may support only
+  POSIX-like and/or Windows operating systems.  Installation from a source
+  distribution requires a C compiler that works with Python.</p>
+<p>  If you are modifying the source of PEAK extension modules, you will need
+  Pyrex version 0.7.2.  You do not need Pyrex if you are just installing
+  PEAK as-is, but if you <em>do</em> have Pyrex installed, it must be version 0.7.2.</p>
+<p>  In general, it is best to uninstall previous versions of PEAK before
+  installing new ones, since some modules may have moved or been renamed.
+  Also, if you have Zope X3 installed on your Python path, you should ensure
+  that it is an up-to-date CVS version: &quot;Milestone 2&quot; is no longer supported.</p>
+<h4> BASIC INSTALLATION</h4>
+<p>  PEAK is distributed using the now-standard Python <code>distutils</code> utilities.
+  Just unpack the archive, go to the directory containing <code>setup.py</code>, and
+  run:
+<pre>
+    python setup.py install
+</pre>
+</p>
+<p>  PEAK will be installed in the <code>site-packages</code> directory of your Python
+  installation.  (Unless directed elsewhere; see the &quot;Installing Python
+  Modules&quot; section of the Python manuals for details on customizing
+  installation locations, etc.).</p>
+<p>  (Note: for the Win32 installer release, just run the .exe file.)</p>
+<h4> SCRIPTS, BATCH FILES, AND <code>#!</code></h4>
+<p>  PEAK installs a Python script named <code>peak</code>.  <code>peak</code> is an application
+  bootstrap script that can invoke any object that is referenceable via
+  the PEAK naming system.  Run the <code>peak</code> script for usage info, or see
+  the <code>Bootstrap</code> class in <code>peak.running.commands</code> for more on how to make
+  objects bootable via <code>peak</code>.</p>
+<p>  Note that on Windows, you cannot invoke the <code>peak</code> script directly.  Instead
+  you must run it like this:
+<pre>
+    python C:\Python22\Scripts\peak
+</pre>
+</p>
+<p>  followed by the appropriate arguments.  You should of course substitute the
+  correct path to your Python installation's &quot;scripts&quot; directory.</p>
+<p>  The <code>peak</code> script is designed for use as a <code>#!</code> command interpreter for
+  certain file types, such as ZConfig configuration files.  Some Unixes,
+  however, do not support using scripts as <code>#!</code> interpreters.  To work around
+  this, there is a (currently experimental) <code>invoke</code> program you can build.  To
+  build the <code>invoke</code> program, go to the directory you unpacked the PEAK source
+  in, and type:
+<pre>
+    gcc -o invoke scripts/invoke.c
+</pre>
+</p>
+<p>  This will build an <code>invoke</code> executable, which you can then place on your
+  system's path or other appropriate location.  You can then use '#!<code> lines
+  like this (replacing </code>/usr/local/bin' with the directory where you installed
+  <code>invoke</code>, of course):
+<pre>
+    #!/usr/local/bin/invoke peak EventDriven
+    ...rest of config file goes here
+</pre>
+</p>
+<p>  <code>invoke</code> allows an arbitrary number of space-separated arguments to be passed
+  to the command it invokes, thus working around various Unixes' <code>#!</code> parsing
+  problems, as well as the &quot;can't use a script as an interpreter&quot; problem.  It
+  also searches the system PATH for the specified command.  You may find this
+  useful for non-PEAK script interpreters as well.</p>
+<p>  The interpretation of <code>#!</code> lines is highly OS-dependent.  Some operating
+  systems limit the length of <code>#!</code> lines to 32, 80, 127, or 255 characters.
+  Some operating systems require a space after <code>#!</code>, and or require the path
+  that follows to be absolute.  Some operating systems will search the <code>PATH</code>
+  environment variable for the specified interpreter, others will not.  When
+  creating programs that use <code>#!</code> lines, or using such programs written by
+  others, be sure to adjust the line as appropriate for your operating system.
+  For more information on this subject, you can visit the
+  <a href="http://homepages.cwi.nl/~aeb/std/shebang/">shebang site</a>, which lists useful
+  <code>#!</code> line information for various operating systems.</p>
+<p>  Note that Windows does not support <code>#!</code> lines at all, so programs that use
+  them must be run using batch files when run on Windows, unless you have a
+  Unix-like shell available (e.g. Cygwin).</p>
+<h4> TESTING YOUR INSTALLATION</h4>
+<p>  PEAK comes with a moderately-sized built-in test suite.  If you wish to
+  run it after installation, you can do so like this:
+<pre>
+    peak test
+</pre>
+</p>
+<p>  This will run over 120 tests on various parts of PEAK.  If you have
+  installed everything correctly, 100% of the tests should succeed.  If
+  anything is broken, you will probably be unable to run the tests at all.</p>
+<p>  If you'd like to run only a portion of the test suite, you can supply
+  a specific test suite on the command line as follows:
+<pre>
+    peak test peak.util.tests.test_suite
+</pre>
+</p>
+<p>  For more options, run <code>peak test --help</code>.</p>
+<p>  If you've installed using the Windows binary installer, you can run the
+  tests like this:
+<pre>
+    python C:\Python22\Scripts\peak test
+</pre>
+</p>
+<h4> THIRD PARTY SOFTWARE INCLUDED WITH PEAK</h4>
+<h5>  Aaron Watters' <code>kjbuckets</code> Module</h5>
+<p>   PEAK now includes a copy of Aaron Watters' <code>kjbuckets</code> module for
+   your convenience, and automatically installs it alongside PEAK in
+   your Python <code>site-packages</code> directory.  (Note that this will overwrite
+   any existing installation of the <code>kjbuckets</code> module.)</p>
+<p>   <code>kjbuckets</code> is copyright Aaron Watters and contributors; please see
+   the <code>src/kjbuckets/COPYRIGHT.txt</code> file for details of its license.</p>
+<h5>  The Zope 3 <code>persistence</code> and <code>ZConfig</code> Packages</h5>
+<p>   PEAK includes a copy of the following packages from the Zope X3 Milestone 2
+   release, and will install them unless Zope X3 is available on <code>sys.path</code>
+   at the time <code>setup.py</code> is run:</p>
+
+<ul>
+<li><p><code>persistence</code></p></li>
+<li><p><code>ZConfig</code></p></li>
+
+</ul>
+<p>   (Also, if you are using a Python version that does not include the <code>datetime</code>
+   or <code>csv</code> packages (i.e. versions &lt; 2.3), replacement versions are installed
+   as well.)  These packages are automatically installed alongside PEAK in your
+   <code>site-packages</code> directory, unless you specify an alternate installation
+   location to <code>setup.py</code>.  Note that this will overwrite any existing
+   installation of these packages.</p>
+<p>   To prevent overwriting versions of these packages that were installed
+   separately, <code>setup.py</code> attempts to detect the presence of Zope X3 by
+   importing <code>zope.component</code> (which is not distributed with PEAK).  If you
+   have a <code>zope.component</code> package on your <code>sys.path</code> when <code>setup.py</code> runs,
+   <code>setup.py</code> will assume you have a complete Zope X3 installation, and it
+   will not install any of the Zope packages listed above, in order to avoid
+   overwriting newer versions from your Zope installation.</p>
+<p>   The <code>datetime</code>, <code>persistence</code> and <code>ZConfig</code> packages are Copyright Zope
+   Corporation and contributors; please see the <code>LICENSE.txt</code> files in their
+   directories for details of their licenses.</p>
+<h5>  The <code>fcgiapp</code> Module</h5>
+<p>   On platforms where <code>os.name=="posix"</code> (most Unixes and Cygwin), PEAK also
+   installs the <code>fcgiapp</code> module, which provides support for the FastCGI
+   protocol.  You may experience problems building this module on some
+   platforms; check the <code>fcgiconfig.h</code> to see if you need to change anything
+   for your system.  Or, you can simply disable it, by editing <code>setup.py</code>
+   and changing the <code>include_fcgiapp</code> flag to <code>False</code>.</p>
+<p>   The <code>fcgiapp</code> module is Copyright Digital Creations, LC (now Zope Corp.);
+   see the <code>fcgiappmodule.c</code> file for details of its license.  In the same
+   directory are distributed portions of the FastCGI Development Kit, which
+   is Copyright Open Market, Inc.  See the <code>LICENSE.TERMS</code> file in that
+   directory for details of its license.</p>
+<h4> EMBEDDING PEAK IN AN APPLICATION</h4>
+<p>  If you are embedding PEAK in an application that you are distributing,
+  and space is at a premium, there are some modules you may want to omit
+  from the installation.  For example, PEAK's test modules are probably
+  not useful in such an environment, and unless your application is a
+  CASE tool, you will probably not need to redistribute the UML and MOF
+  metamodels.  In such situations, you may want to install a copy of PEAK
+  that does not contain these modules.  You can disable installation of
+  either set of modules by editing <code>setup.py</code>, and changing the
+  <code>include_tests</code> and <code>include_metamodels</code> flags, located near the top of
+  the script.</p>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:38 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

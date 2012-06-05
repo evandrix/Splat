@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: ITransactionParticipant</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: ITransactionParticipant</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/storage/interfaces.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<p>Participant in a transaction; may be a resource manager, a transactional
+    cache, or just a logging/monitoring object.<h3>    Event sequence is approximately as follows:</h3>
+<p>        join(participant)
+            ( readyToVote voteForCommit commitTransaction ) | abortTransaction</p>
+<p>    An abortTransaction may occur at <em>any</em> point following join(), and
+    aborts the transaction.</p>
+<p>    Generally speaking, participants fall into a few broad categories:</p>
+
+<ul>
+<li><p>Database connections</p></li>
+<li><p>Resource managers that write data to another participant, e.g. a
+      storage manager writing to a database connection</p></li>
+<li><p>Resource managers that manage their own storage transactions,
+      e.g. ZODB Database/Storage objects, a filesystem-based queue, etc.</p></li>
+<li><p>Objects which don't manage any transactional resources, but need to
+      know what's happening with a transaction, in order to log it.</p></li>
+
+</ul>
+<p>    Each kind of participant will typically use different messages to
+    achieve their goals.  Resource managers that use other
+    participants for storage, for example, won't care much about
+    <code>voteForCommit()</code>, while a resource manager that manages direct storage
+    will care about <code>voteForCommit()</code> very deeply!</p>
+<p>    Resource managers that use other participants for storage, but
+    buffer writes to the other participant, will need to pay close
+    attention to the <code>readyToVote()</code> message.  Specifically, they must
+    flush all pending writes to the participant that handles their
+    storage, and return <code>False</code> if there was anything to flush.
+    <code>readyToVote()</code> will be called repeatedly on <em>all</em> participants until
+    they <em>all</em> return <code>True</code>, at which point the transaction will initiate
+    the <code>voteForCommit()</code> phase.</p>
+<p>    By following this algorithm, any number of participants may be
+    chained together, such as a persistence manager that writes to an
+    XML document, which is persisted in a database table, which is
+    persisted in a disk file.  The persistence manager, the XML
+    document, the database table, and the disk file would all be
+    participants, but only the disk file would actually use
+    <code>voteForCommit()</code> and <code>commitTransaction()</code> to handle a commit.
+    All of the other participants would flush pending updates during the
+    <code>readyToVote()</code> loop, guaranteeing that the disk file participant
+    would know about all the updates by the time <code>voteForCommit()</code> was
+    issued, regardless of the order in which the participants received
+    the messages.</p>
+</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+Interface<br>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#abortTransaction">abortTransaction</a><br>
+<a href="#commitTransaction">commitTransaction</a><br>
+<a href="#finishTransaction">finishTransaction</a><br>
+<a href="#readyToVote">readyToVote</a><br>
+<a href="#voteForCommit">voteForCommit</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="abortTransaction"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">abortTransaction&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+abortTransaction ( txnService )
+
+</pre></font>
+
+<p>This message can be received at any time, and means the
+        entire transaction must be rolled back.  Transactional caches
+        might use this message to reset themselves.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="commitTransaction"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">commitTransaction&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+commitTransaction ( txnService )
+
+</pre></font>
+
+<p>This message follows vote_commit, if no participants vetoed
+        the commit.  DB connections will probably issue COMMIT TRAN
+        here. Transactional caches might use this message to reset
+        themselves.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="finishTransaction"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">finishTransaction&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+finishTransaction ( txnService,  committed )
+
+</pre></font>
+
+<p>The transaction is over, whether it aborted or committed.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="readyToVote"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">readyToVote&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+readyToVote ( txnService )
+
+</pre></font>
+
+<p>Transaction commit is beginning; flush dirty objects and
+        enter write-through mode, if applicable.  Return a true
+        value if nothing needed to be done, or a false value if
+        work needed to be done.  DB connections will probably never
+        do anything here, and thus will just return a true value.
+        Object managers like Entity DMs will write their objects and
+        return false, or return true if they have nothing to write.
+        Note: participants <em>must</em> continue to accept writes until
+        <code>voteForCommit()</code> occurs, and <em>must</em> accept repeated writes
+        of the same objects!</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="voteForCommit"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">voteForCommit&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+voteForCommit ( txnService )
+
+</pre></font>
+
+<p>Raise an exception if commit isn't possible.  This will
+        mostly be used by resource managers that handle their own
+        storage, or the few DB connections that are capable of
+        multi-phase commit.</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:55:50 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

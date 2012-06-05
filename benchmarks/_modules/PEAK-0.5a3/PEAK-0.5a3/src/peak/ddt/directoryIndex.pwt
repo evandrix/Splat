@@ -1,0 +1,19 @@
+<html>
+ <head>
+  <title>Index of <span domlet="text.notag:basename"/></title>
+ </head>
+ <body>
+<h1>Index of <span domlet="text.notag:basename"/></h1>
+<hr />
+<table domlet="list:contents">
+<tr define="header"><td>Name</td><td>Last modified</td><td>Size</td><td>Description</td></tr>
+<tr define="header"><td><a HREF="..">Parent Directory</a></td>
+<td></td><td></td><td></td></tr>
+
+<tr define="listItem">
+<td><a href="?" domlet="url.href"><span domlet="text.notag:basename">?</span></a></td>
+<td></td><td></td><td></td>
+</tr>
+</table>
+<hr />
+</body></html>

@@ -1,0 +1,10 @@
+import pydot
+g = pydot.Dot('temp', graph_type='digraph', prog='dot')
+node1 = pydot.Node('node1')
+node2 = pydot.Node('node2')
+g.add_node( node1 )
+g.add_node( node2 )
+g.add_edge( pydot.Edge(node1, node2) )
+graphWithPositions = pydot.graph_from_dot_data(g.create_dot())
+node_positions = [(g.get_name(), float(g.get_pos()[1:-1].split(",")[0]), float(g.get_pos()[1:-1].split(",")[1]), g) for g in graphWithPositions.get_nodes()[3:]]
+edge_positions = [(e.get_pos(), e) for e in graphWithPositions.get_edges()]

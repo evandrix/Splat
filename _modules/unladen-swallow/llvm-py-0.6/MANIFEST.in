@@ -1,4 +1,0 @@
-include CHANGELOG LICENSE README setup.py MANIFEST.in
-recursive-include llvm *
-recursive-include www *
-recursive-include test *

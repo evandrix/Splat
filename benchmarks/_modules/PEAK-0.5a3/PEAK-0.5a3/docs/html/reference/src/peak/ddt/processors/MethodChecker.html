@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html40/loose.dtd">
+
+<html>
+         
+  <head>
+    <title>Class: MethodChecker</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+        
+        <table border="0" cellpadding="5" cellspacing="0" width="100%">
+        <tr>
+            <th rowspan="2"
+                valign="top"
+                align="left"
+                width="10%"
+                bgcolor="#88bbee"><font color="#000000">Class: MethodChecker</font>
+            </th>
+            <th bgcolor="#88bbee"
+                width="90%"
+                align="right"><font color="#000000">./src/peak/ddt/processors.py</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<h3>Perform tests by mapping columns to methods of the checker</h3>
+<p>    If a table has columns named <code>x</code>, <code>y</code>, and <code>z</code>, this checker will call
+    <code>self.x(cell)</code> for the first cell in each row, <code>self.y(cell)</code> for the
+    second, and so on across each row.  It's up to you to define those methods
+    in a subclass to do whatever is appropriate for the given cell, such
+    as using it for input, using it to validate output, mark the cell &quot;right&quot;
+    or &quot;wrong&quot;, etc.</p>
+<p>    You can also override various methods of this class to use different ways
+    of finding the methods to be called, parse column headings differently,
+    etc.  See each method's documentation for details.</p>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Base Classes">Base Classes</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="AbstractProcessor.html">AbstractProcessor</a><br>
+<ul>
+
+binding.Component<br>
+
+</ul>
+
+</td></tr>
+</table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="Methods">Methods</a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        
+<a href="#afterRow">afterRow</a><br>
+<a href="#beforeRow">beforeRow</a><br>
+<a href="#getHandler">getHandler</a><br>
+<a href="#methodNameFor">methodNameFor</a><br>
+<a href="#processRow">processRow</a><br>
+<a href="#processRows">processRows</a><br>
+<a href="#setupHandlers">setupHandlers</a><br>
+
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="afterRow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">afterRow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+afterRow ( self )
+
+</pre></font>
+
+<h3>Perform any post-row tear down</h3>
+<p>        This method is akin to <code>tearDown()</code> in a PyUnit test case.  It gives
+        you an opportunity to get rid of objects, reset values, close files,
+        etc. after finishing a row in the test table.  The default
+        implementation does nothing.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="beforeRow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">beforeRow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+beforeRow ( self )
+
+</pre></font>
+
+<h3>Perform any pre-row setup</h3>
+<p>        This method is akin to <code>setUp()</code> in a PyUnit test case.  It gives you
+        an opportunity to create objects, reset values, open files, etc. before
+        starting a row in the test table.  The default implementation does
+        nothing.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="getHandler"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">getHandler&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+getHandler ( self,  text )
+
+</pre></font>
+
+<h3>Get a handler using <code>text</code> from a cell</h3>
+<p>        The default implementation computes a method name using
+        <code>self.methodNameFor(text)</code>, and then attempts to return
+        <code>getattr(self,methodName)</code>.</p>
+<p>        You can override this routine to return any callable object that
+        accepts a <code>ddt.Cell</code> as its sole parameter.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="methodNameFor"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">methodNameFor&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+methodNameFor ( self,  text )
+
+</pre></font>
+
+<h3>Convert <code>text</code> to a method name</h3>
+<p>        The default implemenation uses <code>titleAsMethodName</code> to normalize the
+        cell text to a &quot;camel case&quot; (e.g. <code>camelCase</code>) format.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="processRow"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">processRow&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+processRow (
+        self,
+        row,
+        rows,
+        )
+
+</pre></font>
+
+<h3>Match each cell with a handler, and invoke it</h3>
+<p>        This method matches each cell in the row with the corresponding handler
+        from <code>self.handlers</code>, and then calls <code>handler(cell)</code>.  If a handler
+        raises an exception, attempt to annotate the cell with the appropriate
+        error information.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="processRows"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">processRows&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+processRows ( self,  rows )
+
+</pre></font>
+
+<h3>Set up methods from the heading row, then process other rows</h3>
+<p>        This method invokes <code>self.setupHandlers(row,rows)</code> on the &quot;heading&quot;
+        row (the row after the title row naming the processor for this table).
+        It then invokes <code>self.processRow(row,rows)</code> on the remaining rows.</p>
+
+        <tr>
+            <th bgcolor="#99ccff"
+                rowspan="2"
+                valign="top"
+                align="left"
+                width="20%"
+                >
+                <font color="#000000">
+                  <a name="setupHandlers"></a>&nbsp;
+                </font>
+            </th>
+            <th bgcolor="#99ccff"
+                valign="top"
+                align="left"
+                width="80%"
+                >
+                <font color="#000000">setupHandlers&nbsp;</font>
+            </th>
+        </tr>
+        <tr>
+        <td>
+        <font color="#000088"><pre>
+setupHandlers (
+        self,
+        row,
+        rows,
+        )
+
+</pre></font>
+
+<h3>Obtain a handler (method) corresponding to each column heading</h3>
+<p>        Obtain a handler using <code>self.getHandler(cell.text)</code> for each cell in
+        the heading row, and put them in <code>self.handlers</code> in the same order as
+        they appear in the table.  If an error occurs when looking up a handler,
+        the corresponding cell is annotated with error information, and the
+        table's contents are skipped, by consuming the <code>rows</code> iterator.</p>
+</td></tr>
+</td></tr>
+</table>
+
+        </td>
+        </tr>
+        </table>
+
+        <hr>
+
+        <p><i><a href="../../../../index.html">Table of Contents</a></i></p>
+
+        <font size="-2"><i>This document was automatically generated
+        on Tue Feb 17 19:56:01 2004 by
+        <a href="http://happydoc.sourceforge.net">HappyDoc</a> version
+        2.1</i></font>
+        
+        </body>
+        </html>
+        

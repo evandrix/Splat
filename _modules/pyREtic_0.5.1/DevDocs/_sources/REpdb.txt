@@ -1,4 +1,0 @@
-REpdb
-===================
-.. automodule:: REpdb
-   :members:

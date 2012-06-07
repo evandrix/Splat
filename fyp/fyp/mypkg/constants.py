@@ -111,18 +111,6 @@ reserved_try = [
     byteplay.POP_BLOCK,
 ]
 ###
-term = Terminal()
-term_colors = {
-    'black': term.black,
-    'red': term.red,
-    'green': term.green,
-    'yellow': term.yellow,
-    'blue': term.blue,
-    'magenta': term.magenta,
-    'cyan': term.cyan,
-    'white': term.white,
-}
-###
 MAX_ITERATIONS  = 2**10
 def f_noarg(): return                   # Mock parameters
 def f_varg(*args, **kwargs): return

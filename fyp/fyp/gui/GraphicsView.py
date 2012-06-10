@@ -8,8 +8,8 @@ class GraphicsView(QtGui.QGraphicsView):
         self.zoomLevel = 1.0
         self.win = parent
         self.pixmap = pixmap
-        QtCore.QMetaObject.connectSlotsByName(self)
         self.setupActions()
+        QtCore.QMetaObject.connectSlotsByName(self)
 
     def setupActions(self):
         zoomfit = QtGui.QAction(self)
@@ -38,12 +38,14 @@ class GraphicsView(QtGui.QGraphicsView):
 
     def zoomTo(self, zoomLevel):
         scale = zoomLevel/self.zoomLevel
+        print >> sys.stderr, "GraphicsView::zoomTo(%f)" % scale
         self.scale(scale, scale)
         self.zoomLevel = zoomLevel
 
     def resizeEvent(self, event):
+        print >> sys.stderr, "GraphicsView::resizeEvent()"
         if self.pixmap:
             pixmap = self.pixmap.scaled(event.size(),
-                Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
             self.centerOn(1.0, 1.0)
             self.pixmap = pixmap

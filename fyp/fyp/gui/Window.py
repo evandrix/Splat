@@ -39,42 +39,43 @@ class Window(QtGui.QMainWindow):
         # UI attributes
         self.setWindowTitle('FYP module 2012')
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+
         # UI components
         self.splitter = QtGui.QSplitter(QtCore.Qt.Horizontal)
-
         # pane1
         self.left = QtGui.QFrame(self)
         self.left.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.load_image(None, self.left)
+        
+        self.scene = QtGui.QGraphicsScene()
+        self.view = GraphicsView(None, self.scene, self.left)
+        self.view.setDragMode(QtGui.QGraphicsView.ScrollHandDrag)
+        self.view.setScene(self.scene)
+
         self.view.setMinimumSize(.8*self.resolution.width(),
             self.resolution.height())
         self.splitter.addWidget(self.view)
 
         # pane2
         self.right = QtGui.QSplitter(QtCore.Qt.Vertical)
-
         self.right_top_model = QtGui.QDirModel()
         self.right_top_model.setNameFilters(['*.png'])
         self.right_top_model.setFilter(QtCore.QDir.AllDirs|QtCore.QDir.Files|
             QtCore.QDir.NoDotAndDotDot|QtCore.QDir.CaseSensitive)
         self.right_top_model.setSorting(QtCore.QDir.Name|QtCore.QDir.DirsFirst)
-
         self.right_top_tree = FileTree(self.right_top_model, directory)
         QtCore.QObject.connect(self.right_top_tree,
             QtCore.SIGNAL("clicked(QModelIndex)"), self.right_top_clicked)
         self.right.addWidget(self.right_top_tree)
-
         self.right_bottom_tree = FileTree(None, directory)
         QtCore.QObject.connect(self.right_bottom_tree,
             QtCore.SIGNAL("clicked(QModelIndex)"), self.right_bottom_clicked)
         self.right.addWidget(self.right_bottom_tree)
-
         self.splitter.addWidget(self.right)
         self.setCentralWidget(self.splitter)
 
     def load_image(self, filename, qwidget):
         print >> sys.stderr, "Window::load_image(%s)" % filename
-        self.scene = QtGui.QGraphicsScene()
+        
         self.filename = filename
         self.qwidget = qwidget
         if filename and os.path.isfile(filename) \
@@ -85,13 +86,9 @@ class Window(QtGui.QMainWindow):
             self.qgpi = QtGui.QGraphicsPixmapItem(self.pixmap)
             self.scene.clear()
             self.scene.addItem(self.qgpi)
-            self.view = GraphicsView(self.pixmap, self.scene, qwidget)
-            self.view.setDragMode(QtGui.QGraphicsView.ScrollHandDrag)
-            self.view.zoomfit()
-            self.view.fitInView(QtCore.QRectF(0, 0, width, height), QtCore.Qt.KeepAspectRatio)
+#            self.scene.addText(filename)
+#            self.view.fitInView(QtCore.QRectF(0, 0, width, height), QtCore.Qt.KeepAspectRatio)            
             self.scene.update()
-        else:
-            self.view = GraphicsView(None, self.scene, qwidget)
 
     def right_top_clicked(self, index):
         print >> sys.stderr, 'Window::right_top_clicked()'
@@ -99,12 +96,12 @@ class Window(QtGui.QMainWindow):
             model = index.model()
             if model:
                 path = str(model.filePath(index))
-                if os.path.isfile(path):
-                    _, ext = os.path.splitext(path)
-                    if ext.endswith('.png'):
-                        print >> sys.stderr, 'Window::show_image(%s)' % path
-                        self.load_image(path, self.left)
-                        self.right_bottom_tree.setModel(None)
+                if os.path.isfile(path) \
+                    and os.path.splitext(path)[1].endswith('.png'):
+                    print >> sys.stderr, 'Window::show_image(%s)' % path
+                    self.load_image(path, self.left)
+
+                    self.right_bottom_tree.setModel(None)
                 elif os.path.isdir(path) and model.isDir(index):
                     print >> sys.stderr, 'Window::show_dir(%s)' % path
 
@@ -126,9 +123,8 @@ class Window(QtGui.QMainWindow):
             model = index.model()
             if model:
                 path = str(model.filePath(index))
-                if os.path.isfile(path):
-                    _, ext = os.path.splitext(path)
-                    if ext.endswith('.png'):
+                if os.path.isfile(path) \
+                    and os.path.splitext(path)[1].endswith('.png'):
                         print >> sys.stderr, 'Window::right_bottom_clicked(%s)' % path
                         self.load_image(path, self.left)
 

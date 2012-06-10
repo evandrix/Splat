@@ -1,9 +1,9 @@
 import sys
 from PyQt4 import QtGui, QtCore
 
-class OMITGraphicsView(QtGui.QGraphicsView):
+class GraphicsView(QtGui.QGraphicsView):
     def __init__(self, pixmap, scene, parent, *args):
-        print >> sys.stderr, "OMITGraphicsView::init()"
+        print >> sys.stderr, "GraphicsView::init()"
         QtGui.QGraphicsView.__init__(self, scene)
         self.zoomLevel = 1.0
         self.win = parent
@@ -23,7 +23,7 @@ class OMITGraphicsView(QtGui.QGraphicsView):
         self.addAction(zoom200)
 
     def zoomfit(self, *ignore):
-        print >> sys.stderr, "OMITGraphicsView::zoomfit()"
+        print >> sys.stderr, "GraphicsView::zoomfit()"
         if self.pixmap:
             winSize = self.size()
             imgSize = self.pixmap.size()
@@ -33,7 +33,7 @@ class OMITGraphicsView(QtGui.QGraphicsView):
             self.zoomTo(zoomLevel)
 
     def zoom200(self, *ignore):
-        print >> sys.stderr, "OMITGraphicsView::zoom200()"
+        print >> sys.stderr, "GraphicsView::zoom200()"
         self.zoomTo(1.0)
 
     def zoomTo(self, zoomLevel):

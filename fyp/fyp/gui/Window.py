@@ -11,9 +11,13 @@ from FileTree import *
 from GraphicsView import *
 
 class Window(QtGui.QMainWindow):
-    def __init__(self):
+    def __init__(self, parent=None):
         print >> sys.stderr, 'Window::init()'
-        QtGui.QWidget.__init__(self)
+        QtGui.QMainWindow.__init__(self, None, QtCore.Qt.Tool|QtCore.Qt.FramelessWindowHint)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setAttribute(QtCore.Qt.WA_QuitOnClose, True)
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowTitle('FYP module 2012')
         self.select_img_folder()
 
     def select_img_folder(self):
@@ -33,26 +37,23 @@ class Window(QtGui.QMainWindow):
         QtGui.QApplication.setStyle(QtGui.QStyleFactory.create('macintosh'))
         # UI position
         self.move(0, 0)
-        self.resolution = QtGui.QDesktopWidget().screenGeometry()
+        self.resolution = QtGui.QDesktopWidget().availableGeometry()
         self.setGeometry(self.resolution)
         self.showFullScreen()
-        # UI attributes
-        self.setWindowTitle('FYP module 2012')
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
         # UI components
         self.splitter = QtGui.QSplitter(QtCore.Qt.Horizontal)
         # pane1
         self.left = QtGui.QFrame(self)
         self.left.setFrameShape(QtGui.QFrame.StyledPanel)
-        
+
         self.scene = QtGui.QGraphicsScene()
         self.view = GraphicsView(None, self.scene, self.left)
         self.view.setDragMode(QtGui.QGraphicsView.ScrollHandDrag)
-        self.view.setScene(self.scene)
-
         self.view.setMinimumSize(.8*self.resolution.width(),
             self.resolution.height())
+        self.view.setCacheMode(QtGui.QGraphicsView.CacheBackground)
+        self.view.setViewportUpdateMode(QtGui.QGraphicsView.BoundingRectViewportUpdate)
         self.splitter.addWidget(self.view)
 
         # pane2
@@ -75,20 +76,22 @@ class Window(QtGui.QMainWindow):
 
     def load_image(self, filename, qwidget):
         print >> sys.stderr, "Window::load_image(%s)" % filename
-        
         self.filename = filename
         self.qwidget = qwidget
         if filename and os.path.isfile(filename) \
             and os.path.splitext(filename)[1].endswith('.png'):
+            [self.scene.removeItem(item) for item in self.scene.items()]
             self.image = Image.open(str(filename))
             width, height = self.image.size
             self.pixmap = QtGui.QPixmap(filename)
             self.qgpi = QtGui.QGraphicsPixmapItem(self.pixmap)
-            self.scene.clear()
             self.scene.addItem(self.qgpi)
-#            self.scene.addText(filename)
-#            self.view.fitInView(QtCore.QRectF(0, 0, width, height), QtCore.Qt.KeepAspectRatio)            
-            self.scene.update()
+            self.scene.setSceneRect(self.scene.itemsBoundingRect())
+            self.view.centerOn(0, 0)
+            assert len(self.scene.items()) == 1
+            self.view.scene  = self.scene
+            self.view.pixmap = self.pixmap
+#            print >> sys.stderr, self.left.size(), self.view.size(), self.scene.sceneRect(), self.scene.itemsBoundingRect(), (width, height)
 
     def right_top_clicked(self, index):
         print >> sys.stderr, 'Window::right_top_clicked()'
@@ -116,7 +119,7 @@ class Window(QtGui.QMainWindow):
                     [self.right_bottom_tree.hideColumn(n) for n in xrange(1,4)]
                     self.right_bottom_tree.header().hide()
                     self.right_bottom_tree.setColumnWidth(0,256)
-                    
+
                     # clear image loaded
     def right_bottom_clicked(self, index):
         if index and index.isValid() and index.row() >= 0:
@@ -142,3 +145,7 @@ class Window(QtGui.QMainWindow):
         QtGui.QMainWindow.keyPressEvent(self,event)
     def handleMessage(self, message):
         print >> sys.stderr, 'Window::handleMessage(%s)' % message
+
+    def closeEvent(self, event):
+        QtGui.QApplication.instance().quit()
+

@@ -87,7 +87,8 @@ class Window(QtGui.QMainWindow):
             self.qgpi = QtGui.QGraphicsPixmapItem(self.pixmap)
             self.scene.addItem(self.qgpi)
             self.scene.setSceneRect(self.scene.itemsBoundingRect())
-            self.view.centerOn(0, 0)
+            self.view.centerOn(self.view.size().width()/2,
+                self.view.size().height()/2)
             assert len(self.scene.items()) == 1
             self.view.scene  = self.scene
             self.view.pixmap = self.pixmap

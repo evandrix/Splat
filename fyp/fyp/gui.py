@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from Application import *
-from Window import *
+from mypkg.gui.Application import *
+from mypkg.gui.Window import *
 
 def main():
     app = Application(sys.argv, key='FYP')

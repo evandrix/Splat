@@ -35,14 +35,15 @@ class GraphicsView(QtGui.QGraphicsView):
             zoomLevel = min(hZoom, vZoom)
             scaleFactor = zoomLevel/self.zoomLevel
             self.scale(scaleFactor, scaleFactor)
-            self.centerOn(0, 0)
+            self.centerOn(winSize.width()/2, winSize.height()/2)
             self.zoomLevel = zoomLevel
             print >> sys.stderr, "GraphicsView::zoom_fit(#1, %f)" % self.zoomLevel
 
     def zoom_org(self, *ignore):
+        print >> sys.stderr, "GraphicsView::zoom_org(#2)"
         scaleFactor = 1.0/self.zoomLevel
         self.scale(scaleFactor, scaleFactor)
-        self.centerOn(0, 0)
+        self.centerOn(self.size().width()/2, self.size().height()/2)
         self.zoomLevel = 1.0
         print >> sys.stderr, "GraphicsView::zoom_org(#2, %f)" % self.zoomLevel
 

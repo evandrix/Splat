@@ -6,10 +6,12 @@ import collections
 from pprint import pprint
 
 class Function(object):
-    def __init__(self, num_args):
-        self.name = None
+    def __init__(self, num_args, end):
+        self.name  = None
         self.num_args = num_args
-        self.args = []
+        self.args  = []
+        self.start = -1
+        self.end   = end
 
     def __repr__(self):
         my_name = str(self.name)
@@ -17,9 +19,9 @@ class Function(object):
             and isinstance(self.name, collections.Iterable):
             my_name = '.'.join(map(str,self.name))
         if self.args:
-            return "%s(%s)" %(my_name,','.join(map(str,self.args)))
+            return "(%d,%d): %s(%s)" %(self.start,self.end, my_name,','.join(map(str,self.args)))
         else:
-            return "%s()" %(my_name)
+            return "(%d,%d): %s()" %(self.start,self.end, my_name)
 
 def write_graph(GLOBALS, globals_key, graphname, suffix, pred_node, pred_edge, prog='dot'):
     basename = GLOBALS['basename']
@@ -43,7 +45,8 @@ def debug(GLOBALS):
     write_graph(GLOBALS, 'graph_fn_fn', 'function dependency', 'fns',
         lambda node: '.' not in node,
         lambda start,end: '.' not in start.get_name() and '.' not in end.get_name())
-    write_graph(GLOBALS, 'graph_fn_cls', 'class dependency', 'cls', lambda _: True, lambda s,e: True)
+    write_graph(GLOBALS, 'graph_fn_cls', 'class dependency', 'cls',
+        lambda _: True, lambda s,e: True)
 
 def fn_fn_find_rightmost(co):
     """ find rightmost occurrence of (CALL_FUNCTION, _) """
@@ -57,26 +60,27 @@ def fn_fn_find_rightmost(co):
 
 def fn_fn_merge_single_LOAD(bytecode_list, end_index):
     """ transform bytecode - merge into single LOAD_* instr """
-    affected_instrs = reserved_slices.keys() + reserved_binary + [byteplay.LOAD_ATTR, byteplay.BUILD_TUPLE]
-    for i,(opcode, arg) in enumerate(bytecode_list):
+    affected_instrs = reserved_slices.keys() \
+        + reserved_binary \
+        + [byteplay.LOAD_ATTR, byteplay.BUILD_TUPLE]
+    for i,(_, (opcode, arg)) in enumerate(bytecode_list):
         if opcode not in affected_instrs:
             continue
         the_offset, the_opcode = None, None
         if opcode == byteplay.LOAD_ATTR:
-            if i-1 > 0 and bytecode_list[i-1][0] == byteplay.BUILD_MAP:
+            if i-1 > 0 and bytecode_list[i-1][1][0] == byteplay.BUILD_MAP:
                 pass
             else:
                 new_bytecode = (LOAD_OBJ_FN,
-                    tuple([v[1] for v in bytecode_list[i-1:i+1]]))
+                    tuple([v[1][1] for v in bytecode_list[i-1:i+1]]))
                 del bytecode_list[i-1:i+1]
-                bytecode_list.insert(i-1, new_bytecode)
+                bytecode_list.insert(i-1, (-1, new_bytecode))
                 end_index -= 1
             continue
         elif opcode == byteplay.BUILD_TUPLE:
-            new_bytecode = (byteplay.BUILD_TUPLE,
-                tuple([v[1] for v in bytecode_list[i-2:i]]))
+            new_bytecode = (opcode, tuple([v[1][1] for v in bytecode_list[i-2:i]]))
             del bytecode_list[i-2:i]
-            bytecode_list.insert(i-2, new_bytecode)
+            bytecode_list.insert(i-2, (-1, new_bytecode))
             end_index -= 2
             continue
         if opcode in reserved_slices:
@@ -88,27 +92,30 @@ def fn_fn_merge_single_LOAD(bytecode_list, end_index):
             the_opcode = opcode
             the_offset = 1
         new_bytecode = (the_opcode,
-                tuple([v[1] for v in bytecode_list[i-the_offset-1:i]]))
+                tuple([v[1][1] for v in bytecode_list[i-the_offset-1:i]]))
         del bytecode_list[i-the_offset-1:i+1]
-        bytecode_list.insert(i-the_offset-1, new_bytecode)
+        bytecode_list.insert(i-the_offset-1, (-1, new_bytecode))
         end_index -= the_offset + 1
 
 def fn_fn_parse(bytecode_list, all_classes):
     func_calls, func_stack = [], []
-    for i,(opcode, arg) in enumerate(bytecode_list[::-1]):
+    for i,(bytecode_id, (opcode, arg)) in enumerate(bytecode_list[::-1]):
         if opcode == byteplay.CALL_FUNCTION:
-            if i+1 < len(bytecode_list) and bytecode_list[i+1][0] == byteplay.STORE_MAP:
+            if i+1 < len(bytecode_list) \
+                and bytecode_list[i+1][1][0] == byteplay.STORE_MAP:
                 continue
             else:
-                func_stack.append(Function(arg))
-        elif opcode in reserved_loads+reserved_binary+[LOAD_OBJ_FN]:
+                func_stack.append(Function(arg, bytecode_id))
+        elif opcode in reserved_loads+reserved_binary+[LOAD_OBJ_FN, LOAD_LIST]:
             if func_stack:
                 last_func = func_stack[-1]
                 if len(last_func.args) < last_func.num_args:
                     last_func.args.insert(0, arg)
                 elif len(last_func.args) == last_func.num_args:
                     last_func.name = arg
-                    while len(func_stack) > 1 and last_func.name and len(last_func.args) == last_func.num_args:
+                    last_func.start = bytecode_id
+                    while len(func_stack) > 1 and last_func.name \
+                        and len(last_func.args) == last_func.num_args:
                         func_stack[-2].args.insert(0, last_func)
                         func_stack = func_stack[:-1]
                     if len(func_stack) == 1 and func_stack[0].name \
@@ -124,7 +131,6 @@ def fn_fn_toposort(graph_nodes, graph_edges, all_functions):
     # 1. isolated functions (no incoming/outgoing edges)
     isolated_fns = [fn for name,fn in all_functions.iteritems() \
         if name not in graph_nodes]
-
     # recursive functions do not affect order of testing - convert to DAG
     graph_edges = [(start,end) for start,end in graph_edges if start != end]
 
@@ -153,30 +159,45 @@ def main(GLOBALS):
         (f_name, len(inspect.getargspec(f_fn).args)) \
         for f_name,f_fn in all_functions.iteritems()
     ]
-    print "[Total: %d functions]" % len(all_functions)
+    all_modules = set([inspect.getmodule(f_fn) \
+        for _,f_fn in all_functions.iteritems()])
+    GLOBALS['all_modules'] = all_modules
+    print "[Total: %d functions in %d modules]" % (len(all_functions),len(all_modules))
     print "(IIa): function -> function (no classes)"
     print "\t=> work out order to test functions (root -> leaf node)"
-    graph_nodes, graph_edges = {}, set()
+    graph_nodes, graph_edges, recursive_functions = {}, set(), set()
     for name, fn in all_functions.iteritems():
         co = byteplay.Code.from_code(fn.func_code)
-
         end_index = fn_fn_find_rightmost(co)
         if end_index == -1: # no function calls in function
             continue
-
         bytecode_list \
             = [(a,b) for a,b in co.code[:end_index] if a != byteplay.SetLineno]
+        bytecode_list = [(i,(a,b)) for i,(a,b) in enumerate(bytecode_list)]
         fn_fn_merge_single_LOAD(bytecode_list, end_index)
+        # merge for (BUILD_LIST, <length>)
+        for i,(_, (opcode, arg)) in enumerate(bytecode_list):
+            if opcode == byteplay.BUILD_LIST:
+                length = arg
+                new_arg = bytecode_list[i-arg:i]
+                new_bytecode = (LOAD_LIST, new_arg)
+                del bytecode_list[i-arg:i+1]
+                bytecode_list.insert(i-arg, (-1, new_bytecode))
         func_calls = fn_fn_parse(bytecode_list, all_classes)
+
+        GLOBALS['dependent_fn'][name] = func_calls
+        for f in func_calls:
+            if f.name == name \
+                and f.num_args == len(inspect.getargspec(fn).args):
+                recursive_functions.add(name)
+
         # ASSUME <obj>.<fn> calls are valid wrt #args
         called_fns = set()
         invoked_class_methods = defaultdict(set)
         for called_f in func_calls:
             assert isinstance(called_f, Function)
-
             if not isinstance(called_f.name, basestring):
                 continue
-
             if (called_f.name, called_f.num_args) in all_functions_arglen:
                 called_fns.add((called_f.name, called_f.num_args))
                 if name not in graph_nodes:
@@ -193,10 +214,11 @@ def main(GLOBALS):
             GLOBALS['function_class_methods'][name] = invoked_class_methods
 
     GLOBALS['graph_fn_fn']['nodes'] = graph_nodes
-    GLOBALS['graph_fn_fn']['edges'] = set(graph_edges)
-
+    import copy
+    GLOBALS['graph_fn_fn']['edges'] = copy.deepcopy(graph_edges)
     isolated_fns, L = fn_fn_toposort(graph_nodes, graph_edges, all_functions)
-    GLOBALS['function_test_order']  = { 'isolated': isolated_fns, 'L': L }
+    GLOBALS['recursive_functions'] = recursive_functions
+    GLOBALS['function_test_order'] = { 'isolated': isolated_fns, 'L': L }
 
     print "(IIb): class as function input arg/in method body"
     graph_nodes, graph_edges = {}, set()

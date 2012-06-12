@@ -9,7 +9,7 @@ import pprint
 import random
 import types
 import unittest
-from {{module_name}} import *
+
 {{#all_imports}}
 import {{module}}
 {{/all_imports}}
@@ -27,12 +27,13 @@ class TestProgram(unittest.TestCase):
         # suppress program output streams
         sys.stdout = DevNull(sys.stdout)
         sys.stderr = DevNull(sys.stderr)
+        sys.path.append('{{module_path}}')
         # reference module under test
-        self.{{module_name}} = __import__('{{module_name}}')
+        self.module = __import__('{{module_name}}')
     def tearDown(self):
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
-        del self.{{module_name}}
+        del self.module
     def assertNotRaises(self, function, *args, **kwargs):
         with self.assertRaises(Exception):
             try:

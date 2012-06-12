@@ -1,0 +1,1 @@
+[{"fn_name": "find_cycle", "stmts_list": ["self.assertRaises(InvalidGraphType, self.module.find_cycle, *[None])"], "add_params": null, "test_name": "all_Nones"}]

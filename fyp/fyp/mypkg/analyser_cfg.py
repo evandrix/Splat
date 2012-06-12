@@ -11,27 +11,22 @@ def get_color(bytecode, current_node, function_globals):
     opcode, arg = bytecode
     if opcode in reserved_loads \
         and isinstance(arg, basestring) and arg in function_globals:
-        return "#ee82ee"
-    elif opcode in reserved_rel:
-        return "#00ff7f"
+        return graph_node_colors['PINK']
     elif isinstance(opcode, byteplay.Label):
-        return "#87cefa"
+        return graph_node_colors['LIGHT_BLUE']
+    elif opcode in reserved_rel:
+        return graph_node_colors['GREEN']
     elif opcode in reserved_abs:
-        return "#f4a460"
+        return graph_node_colors['ORANGE']
     return None
 
 def write_graph(GLOBALS, graph_nodes, graph_edges, function_name, function_globals):
     graph = pydot.Dot(function_name, graph_type='digraph')
     for node_index in graph_nodes:
         bytecode, node = graph_nodes[node_index]
-        node.set_style("filled")
-        color = get_color(bytecode, node, function_globals)
-        if color:   node.set_fillcolor(color)
         graph.add_node( node )
-
     for start,end in graph_edges:
         graph.add_edge( pydot.Edge(start, end) )
-
     if not os.path.exists('%s-pngs' % GLOBALS['basename']):
         os.makedirs('%s-pngs' % GLOBALS['basename'])
     graph.write_png('%s-pngs/%s.png' % (GLOBALS['basename'],function_name))
@@ -72,14 +67,17 @@ def collapse_graph(GLOBALS, node_list, edge_list, function_globals):
                         # transfer edge from end to start of segment
                         new_edge_list.add( (node, end) )
 
-                node.set_name('(%d-%d, ...)'%(node_index,end_node_index))
+                if node_index == end_node_index:
+                    node.set_name('(%d, %s, %s)' %(node_index, bytecode[0], bytecode[1]))
+                else:
+                    node.set_name('(%d-%d, ...)' %(node_index,end_node_index))
                 new_node_list[node_index] = (bytecode, node)
     for start,end in edge_list:
         if start in ctrl_pts and end in ctrl_pts:
             new_edge_list.add( (start, end) )
     return new_node_list, new_edge_list
 
-def build_graph(GLOBALS, function_name, bytecode):
+def build_graph(GLOBALS, function_name, bytecode, function_globals):
     node_list, edge_list = defaultdict(pydot.Node), set()
     if bytecode:
         first = bytecode[0]
@@ -105,26 +103,37 @@ def build_graph(GLOBALS, function_name, bytecode):
                     to_index,   to_node   = to_labels[label]
                     if to_index - from_index != 1: # jumps
                         edge_list.add( (from_node, to_node) )
+
+        # color nodes
+        for node_id, value in node_list.iteritems():
+            bytecode, node = value
+            color = get_color(bytecode, node, function_globals)
+            if color:
+                node.set_style("filled")
+                node.set_fillcolor(color)
     return node_list, edge_list
 
-def main(GLOBALS):
+def main(GLOBALS, write=False):
     all_functions = GLOBALS['all_functions']
     all_functions_len = len(all_functions)
 
     for i, (name, fn) in enumerate(all_functions.iteritems()):
+        GLOBALS['graph_fn_cfg'][name]['fn'] = fn
         sz_status = "\r\x1b[K" + "[%.2f%%] Analyser CFG: processing fn '%s'..." % (100*i/float(all_functions_len),name)
         if sys.stderr.isatty():
             print >> sys.stderr, sz_status,
         co = byteplay.Code.from_code(fn.func_code)
         bytecode = [(a,b) for a,b in co.code if a != byteplay.SetLineno]
         function_globals = inspect.getargspec(fn).args
-        node_list, edge_list = build_graph(GLOBALS, name, bytecode)
+        node_list, edge_list = build_graph(GLOBALS, name, bytecode, function_globals)
+        GLOBALS['graph_fn_cfg'][name]['nodes'] = node_list
+        import copy
+        GLOBALS['graph_fn_cfg'][name]['edges'] = copy.deepcopy(edge_list)
         new_node_list, new_edge_list = collapse_graph(GLOBALS, node_list, edge_list, function_globals)
-        
-        if new_node_list:        
-            write_graph(GLOBALS, new_node_list, new_edge_list, name, function_globals)
-        elif node_list:
-            write_graph(GLOBALS, node_list, edge_list, name, function_globals)            
 
-        GLOBALS['graph_fn_cfg'][name] = fn
+        if new_node_list:        
+            if write: write_graph(GLOBALS, new_node_list, new_edge_list, name, function_globals)
+        elif node_list:
+            if write: write_graph(GLOBALS, node_list, edge_list, name, function_globals)
     print "\r\x1b[K"
+

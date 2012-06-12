@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
-
 import os
 import sys
 import time
@@ -12,9 +11,9 @@ import types
 import mypkg.common
 from mypkg.constants import *
 from collections import defaultdict
-
 f = lambda: defaultdict(f)
 GLOBALS = defaultdict(f)
+
 
 @mypkg.common.aspect_timer
 def main():
@@ -42,12 +41,17 @@ def main():
 
     print "(III): Analyse control flow (CFG)"
     import mypkg.analyser_cfg
-    mypkg.analyser_cfg.main(GLOBALS)
+    mypkg.analyser_cfg.main(GLOBALS, write=False)
 
     print "(V): Unit test generator"
-    #
+    import mypkg.generator
+    mypkg.generator.main(GLOBALS)
 
-    mypkg.common.debug(GLOBALS)
+    print "(V): Template writer"
+    import mypkg.template_writer
+    mypkg.template_writer.main(GLOBALS)
+
+    #mypkg.common.debug(GLOBALS)
 
 if __name__ == "__main__":
     main()

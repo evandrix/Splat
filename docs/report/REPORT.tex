@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 	FYP Report - Lee Wei Yeong (lwy08)	%
+%	FYP Report 2012 - Lee Wei Yeong (lwy08)	%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{icldt}
 \def \supervisor   {Prof. Susan Eisenbach}
 \def \secondmarker {Dr. Tristan Allwood}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath, amssymb, amsthm} % AMS packages
-\usepackage{graphicx}                 % Packages for graphics and color
+\usepackage{graphicx}                 % graphics and color
 \usepackage[usenames,dvipsnames]{color}
-\usepackage[T1]{fontenc}              % Ensure correct text encoding
+\usepackage[T1]{fontenc}              % correct text encoding
 \usepackage[utf8]{inputenc}
 \usepackage{url}
 \usepackage{algorithm, algorithmic}
@@ -16,7 +16,7 @@
 \usepackage{moreverb}
 \usepackage{eukdate}
 \usepackage[british]{babel}
-\usepackage{parskip}				% justified paragraphs + newlines
+\usepackage{parskip}				  % justified paragraphs + newlines
 \usepackage{minted}
 \usepackage{appendix}
 \usepackage{xcolor}
@@ -29,15 +29,14 @@
 \usepackage{float,multicol,epsfig}
 \usepackage{turnstile}
 \usepackage{mathtools,extarrows}
-\usepackage{tikz}					% figure drawing library
+\usepackage{tikz}					  % drawing figures
 \usetikzlibrary{calendar,calc,trees,positioning,arrows,chains,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
 \usepackage{tikz-qtree}
 \usepackage{verbatim}
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
-\usepackage{mathpazo}				% custom fonts
-
+\usepackage{mathpazo}				  % custom fonts
 % manage vertical spacing
 \usepackage{etex}
 \usepackage[compact]{titlesec}
@@ -47,17 +46,15 @@
 \titlespacing*{\section}{0pt}{11pt}{0pt}
 \titlespacing*{\subsection}{0pt}{11pt}{0pt}
 \titlespacing*{\subsubsection}{0pt}{5pt}{0pt}
-
 % custom captions
 \usepackage[hang, small, bf, margin=0pt]{caption}
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 \setlength{\abovecaptionskip}{0pt}
-
 % PDF options
 \usepackage[pdftex,bookmarks=true,colorlinks]{hyperref}
-\usepackage[figure,table]{hypcap} % Correct a problem with hyperref
+\usepackage[figure,table]{hypcap} 	  % correct problem with hyperref
 \hypersetup{
     bookmarksnumbered,
     pdfstartview={FitH},
@@ -67,14 +64,13 @@
     pdfpagemode={UseOutlines},
     pdfborder={0 0 0}
 }
-% hack to ensure the hyperlinks actually jump to the right place
+% ensure hyperlinks actually jump to the right place
 \makeatletter
 \newcommand\org@hypertarget{}
 \let\org@hypertarget\hypertarget
 \renewcommand\hypertarget[2]{%
 \Hy@raisedlink{\org@hypertarget{#1}{}}#2%
 } \makeatother
-
 % page layout
 \parindent 0pt
 \setlength{\parsep}{0pt}
@@ -83,11 +79,10 @@
 \setlength{\topsep}{0pt}
 \setlength{\partopsep}{0pt}
 \setlength{\footskip}{30pt}
-\numberwithin{equation}{section}       % Tinker with equation numbering
-\renewcommand{\bibname}{References}    % Alter appearance of table of contents slightly
+\numberwithin{equation}{section}       % equation numbering
+\renewcommand{\bibname}{References}    % appearance of ToC
 \renewcommand{\contentsname}{Contents}
 \pagenumbering{arabic}
-
 % fix for \float@addtolists warning
 \usepackage{scrhack}
 \usepackage{fancyhdr}
@@ -98,20 +93,12 @@
 \fancyhf{} % clear all header and footer fields
 \fancyhead[RH]{\slshape \leftmark}
 \fancyfoot[C]{\thepage}
-
-% extension for simple column horizontal stretching
-\usepackage{tabularx}
-
-% insert chapter reference by name
-\usepackage{nameref}
-
-% enable multi-line text node support
-\usepackage{makecell}
-
-% for project timetable
+\usepackage{tabularx}					% simple column horizontal stretching
+\usepackage{nameref}					% insert chapter reference by name
+\usepackage{makecell}					% multi-line text node support
+% project timetable
 \usepackage{colortbl}
 \definecolor{lgray}{gray}{0.8}
-
 \lstdefinelanguage{CSharp}
 {
  morecomment = [l]{//}, 
@@ -140,9 +127,7 @@
    else,  long,  static,   
    enum,  namespace,  string}
 }
-
 \def\naive{na\"{\i}ve }
-
 % tikz settings for architecture diagram
 \tikzset{
 >=stealth',
@@ -175,108 +160,22 @@
   category/.style={decorate},
   catlabel/.style={midway, right=2pt},
 }
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 	\include{titlepage}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae velit. Aenean malesuada adipiscing sem. Quisque ligula mauris, posuere sed, elementum id, suscipit et, urna. Phasellus suscipit tristique nisl. Vivamus ac urna. Pellentesque egestas facilisis velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi eu augue. Vestibulum congue placerat sem. Integer eget urna id risus suscipit eleifend. Etiam at est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent orci. Suspendisse potenti. Morbi egestas, justo vel cursus eleifend, dui leo dapibus ante, vitae pretium purus massa sed enim. Vivamus eu libero in nulla sagittis aliquam. Quisque semper quam id dui. Nulla facilisi.	
-%	\hfill --- Pyrulan
-\end{abstract}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\include{abstract}
 	\include{acknowledgement}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\tableofcontents
-%\listoftables
-%\listoffigures
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Introduction}
-\begin{comment}
-\begin{itemize}
-	\item What is the problem?
-	\item Why is it interesting / important / difficult to solve / issues to address?
-	\item What is your main idea for solving it?
-\end{itemize}
-\end{comment}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Motivation}	% describes the continual need for automated testing
-Professional software engineers often write tests while developing code, especially for large complex codebases. These tests are highly beneficial for generating confidence in a bug-free solution delivery.
-
-However, writing tests is not easy to get right, and can be quite costly. It is reported that testing code is responsible for approximately half the total cost of software development \cite{Edvardsson99asurvey}\cite{Han2008}\cite{Korel2005}.
-
-Furthermore, this task becomes gradually more time-consuming as software grows in terms of complexity. Given similar resource constraints, it can become increasingly difficult to consistently achieve high test code coverage.
-
-Moreover, a significant proportion of overall development time is spent writing test code, which is eventually not included in production. Hence this work, though critical to software quality assurance \cite{Harrold00}, is ultimately hidden from the client, as far as billing and accountability is concerned.
-
-This has led to a large body of work on automatically generating test suites in the imperative programming community \cite{Allwood2011}.
-
-Even then, the present need for manual testing indicates that there still remains much scope for improvement in this area. A recent example supporting this claim is Google handing out a record \$26k in bug bounties for security researchers reporting Chrome vulnerabilities \cite{ChromeBugBounties}.
-
-Therefore, this raises the question of whether full automatic discovery \cite{Bertolino2007} for all these bugs could be possible, in order to eliminate this cost, let alone any bug exploits.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Automated software testing for dynamic languages}
-Whilst research in this field is typically devoted to static programming languages such as Java or C/C++, relatively less emphasis is placed on their dynamic counterparts like Javascript, Ruby or Python.
-
-One such paper implements search-based software testing (SBST) technique, to automatically generate test scenarios for Ruby code, using genetic algorithms \cite{Mairhofer2011}. There is no equivalent tool targeting Python instead.
-
-This observation is made in contrast to the rapid growth trend in popularity of dynamic languages, especially in recent years, and in particular, Python. Python was awarded the TIOBE Programming Language of the Year in 2007 and 2010 \cite{TiobeDec11}.
-
-In this paper \cite{Mairhofer2011}, the authors claimed success in achieving consistent and significantly high code coverage over a preselected set of test inputs with their tool, when compared against the \naive random test case generator. Would it be possible to better this using a suitable adaptation of existing techniques, and/or to maintain this coverage across a more extensive range of programs?
-
-As both Python and Ruby are reflective and dynamic languages, it would be logical to adopt a similar approach in solving this problem, specifically by generating test scenarios via \emph{runtime code analysis} \cite{Mairhofer2011}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Python}
-The Python programming language contains a variety of interesting features which encourage rapid experimentation with automatic testing techniques.
-
-This is primarily because Python is an open source, general purpose, multi-paradigm, cross-platform compatible, dynamically typed language, offering duck typing, and in active development and support. It also provides \emph{excellent builtin introspection and reflection capabilities}, to inspect and manipulate code at runtime.
-
-At the heart of the language design philosophy \cite{Pep20ZenPython}, there should be one -- and preferably only one -- obvious way to do things. The importance of readability promotes a \emph{clean, concise and elegant syntax}, which makes demonstrating 'proof of concept' code easy.
-
-For instance, the Python code snippet reads more fluently than its C\# counterpart:
-
-\begin{tabularx}{\textwidth}{X X}
-\underline{Sample C\# code} & \underline{Equivalent Python code} \\
-\begin{lstlisting}[language=CSharp]^^J
-if ("hello".indexOf("e") >= 0)^^J
-\{^^J
-\ \ \ return true;^^J
-\}^^J
-\end{lstlisting}
-&
-\begin{lstlisting}[language=python]^^J
-if 'e' in 'hello':^^J
-\ \ \ return True^^J
-\end{lstlisting}
-\end{tabularx}
-Python features a fundamental testing infrastructure toolset based on \textsf{unittest}, \textsf{doctest} and \textsf{py.test}. However, there is limited availability of testing support tools built on top of those. Many of these either target outdated versions of Python, or are discontinued. There are some tools for automated testing, for instance, \textsf{pythoscope} and \textsf{pytestsgenerator}, which generate tests by performing static code analysis. However there are no tools which perform dynamic test case generation.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Project contributions}
-Within the context given above, this project makes the following key contributions:
-
-\begin{itemize}
-	\item A discussion of the possible ways considered for automated software testing, focusing on test data generation by only using information gathered at runtime
-	\item A motivating example describing automated lazy testing in Python
-	\item Implementation as a Python module to automatically generate high coverage test suites, primarily evaluated against Python libraries like Django web framework, NumPy/SciPy, wxPython
-	\item Investigating effectiveness of the lazy testing technique, as illustrated by \textsc{Irulan} in Haskell \cite{Allwood2011}, for Python
-	\item Further advance the work in the field of automated software testing, especially for dynamic languages
-\end{itemize}
-
-To this end, we take advantage of the main features of the Python language, ie. strong introspection and reflective capabilities, together with its extensive tool support, the Python Package Index (PyPI) repository.
-
-The concepts discussed in this paper are concretely demonstrated in a tool called \textsc{Pyrulan}, a high coverage test suite generator for Python library code, written in Python. This tool has successfully been applied to some of the most popular frameworks, and achieved the initial objective of consistently high test code coverage, discovering several bugs in the process as well. The tool has also been extended to conducted property and regression testing, where reports on a sample of case studies are included.
-
-\section{Report organisation}
-The rest of this paper is structured as follows. Firstly, relevant background material is reviewed in Chapter \ref{ch:background}. Thereafter, the various algorithms and techniques used to automatically generate tests are formally introduced in Chapter \ref{ch:research}. These ideas presented here are then implemented in the tool \textsc{Pyrulan}, constituting the subject of Chapter \ref{ch:pyrulan}. This is accompanied by a detailed description of its software design architecture, together with several worked examples for clarification. Summarising, the success of the project is discussed in Chapter \ref{ch:eval}, before some final conclusions are drawn and suggestions are given to possible future work in Chapter \ref{ch:conclusion}.
+	\include{introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background}
 \label{ch:background}
 \section{Introduction}
-This part of the paper is intended to provide an overview and discussion of the relevant literature to this project, forming the basis for the reader to follow later content. Firstly, Sections \ref{sect:basics} to \ref{sect:overview} review the general field of automated software testing. Section \ref{sect:current-state} deals with the papers that inspired and influenced this project. Relevant characteristics of dynamically typed programming languages, with special focus on Python, are then discussed in Section \ref{sect:python-features}. Finally, the associated technical difficulties are highlighted in Section \ref{sect:challenges}.
+This part of the paper is intended to provide an overview and discussion of the relevant literature to this project, forming the basis for the reader to follow on later content. Firstly, Sections \ref{sect:basics} to \ref{sect:overview} review the general field of automated software testing. Section \ref{sect:current-state} deals with the papers that inspired and influenced this project. Relevant characteristics of dynamically typed programming languages, ie. those related to Python, are then discussed in Section \ref{sect:python-features}. Finally, the associated technical difficulties are highlighted in Section \ref{sect:challenges}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Basic concepts}
 \label{sect:basics}
-Software testing delivers quality assurance in the product to the customer. It verifies that software bugs are absent, as far as the verification that implementation complies with original client specification goes. The following terms commonly found in \emph{automated test data generation research} are defined below.
+Software testing delivers quality assurance in the product to the customer. It verifies the absence of software bugs, as far as the verification that implementation complies with original client specification goes. The following terms commonly found in \emph{automated test data generation research} are defined below.
 
 \subsection{Definition of terms}
 \subsubsection{General testing}
@@ -299,21 +198,11 @@ Software testing delivers quality assurance in the product to the customer. It v
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Validation criteria}
-Software is usually checked for whether it meets certain functional, non-functional and business related requirements.
-\textcolor{red}{
-\subsubsection{Functional requirements}
-Functional requirements are associated with specific product features and functionality.
-}
-\subsubsection{Non-functional requirements}
-Non-functional requirements refer to product quality, in terms of constraints placed on attributes like speed, efficiency, reliability, safety and scalability. This is an area where automation excels in, over manual testing, and thus also becomes the key focus of this paper.
-\textcolor{red}{
-\subsubsection{Business requirements}
-Business requirements reflect customer concerns, with respect to fulfilling the demands of daily work processes.
-}
+Software is usually checked for product quality, in terms of constraints placed on attributes like speed, efficiency, reliability, safety and scalability. This is an area in which automation excels over manual testing, thus it becomes a key focus of this paper.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementations}
 
-\textcolor{red}{<Missing introductory paragraph: specifics - implementation of what? overview of the different methods?>}
+This section provides a general outline of the various types of existing ways to automatically generate unit tests.
 
 \subsection{Static method}
 This method generate tests without executing the software, generally via symbolic execution to solve for constraints on input variables. The static approach to test case generation derives a test case that will traverse a chosen path, as it satisfies that path predicate.
@@ -372,7 +261,7 @@ Another interesting paper is the idea of testability transformations \cite{Korel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Current state of the art}
 \label{sect:current-state}
-These reference survey papers \cite{McMinn2004} \cite{Han2008} \cite{Tahbildar} provide a high level overview of software testing techniques.
+These survey papers \cite{McMinn2004} \cite{Han2008} \cite{Tahbildar} provide a high level overview of software testing techniques.
 
 The closest automated unit test generator in a dynamic language is \textsc{RuTeG} \cite{Mairhofer2011}, which uses evolutionary algorithms on Ruby source code to automatically create unit tests in Ruby. Apart from the description in the paper, there is no source code available online to try it out.
 
@@ -536,7 +425,7 @@ There are several possible ways to conduct the search for such corner cases. Pre
 Therefore, the task here is to come up with a more efficient way of prioritising pathological boundary parameter value generation, under real time and space constraints. Some leading intuition follows.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Lazy instantiation}
-It might be reasonable to begin with ``lazy instantiation"\cite{Allwood2011}, where dummy nullified objects are passed in initially, and test data are only generated for return values when the methods on them are actually invoked. This supposes multiple runs through the same code block, and using feedback from previous iteration to direct future execution. A \href{https://github.com/evandrix/Pyrulan}{prototype} of this is available together with the original project proposal.
+It might be reasonable to begin with ``lazy instantiation"\cite{Allwood2011}, where dummy nullified objects are passed in initially, and test data are only generated for return values when the methods on them are actually invoked. This supposes multiple runs through the same code block, and using feedback from previous iteration to direct future execution. A \href{https://github.com/evandrix/Splat}{prototype} of this is available together with the original project proposal.
 
 \subsubsection{Runtime in-memory manipulation}
 It is also envisioned that the dynamic language features of Python be exploited in order to rapidly generate useful test data. One idea is to manipulate and observe the behaviour of code blocks in memory at runtime, by monkeypatching or hotswapping code under test (CUT) for stubs, but with a hook to log incoming parameters during a sample execution, in order to determine their initial starting range \& types.
@@ -657,8 +546,8 @@ Detailed below as follows are the selection of Python resources for various purp
 \section{Summary}
 In this chapter, the current research work has been highlighted. In order to demonstrate the idea of automated lazy testing in Python, an example usage of the tool is provided, using the ideas found in this chapter. The structure of this tool, and the examples, is the subject of the next chapter.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{\textsc{Pyrulan}}
-\label{ch:pyrulan}
+\chapter{\textsc{Splat}}
+\label{ch:splat}
 \section{Architecture}
 The software design architecture is outlined below:
 \begin{center}
@@ -726,13 +615,14 @@ In this chapter, the working automated testing tool has been shown, but exactly 
 	\item Which tests/benchmarks, and results?
 	\item Comparison with existing work?
 	\item Contribution to extending state of the art?
+	\item mutation testing!
 \end{itemize}
 \end{comment}
 
 Experimental evaluation entails the following:
 \begin{enumerate}[i.]
 	\item comparison with existing work, eg. Pythoscope (2010), PyTestsGenerator (2009)
-	\item benchmark against popular Python libraries - Django web framework, NumPy/SciPy (Numeric / Scientific Python utilities), Twisted event-driven networking engine, PyPi package index
+	\item benchmark against popular Python libraries - python-graph, and Python module implementations of famous algorithms
 	\item measure quality of test cases generated using metrics - code coverage (statement, path, branch), Linear Code Sequence And Jump (LCSAJ), bugs, crash discovery (pathological inputs)
 	\item performance and efficiency - runtime and space complexity
 	\item generality of output - extensions to generating unit tests for programs in other languages
@@ -743,59 +633,6 @@ The results achieved and comparison of desired outcomes with original expectatio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion \& Future Work}
 \label{ch:conclusion}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In risus. Ut vitae velit. Aenean malesuada adipiscing sem. Quisque ligula mauris, posuere sed, elementum id, suscipit et, urna. Phasellus suscipit tristique nisl. Vivamus ac urna. Pellentesque egestas facilisis velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi eu augue. Vestibulum congue placerat sem. Integer eget urna id risus suscipit eleifend. Etiam at est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent orci. Suspendisse potenti. Morbi egestas, justo vel cursus eleifend, dui leo dapibus ante, vitae pretium purus massa sed enim. Vivamus eu libero in nulla sagittis aliquam. Quisque semper quam id dui. Nulla facilisi.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Project Plan}
-
-\section{Estimated timeline (by weeks)}
-\begin{comment}
-	Key milestones, and fallback positions
-\end{comment}
-\begin{tikzpicture}[shift={(current page.center)},scale=.7]
-\draw (0,0) -- (0,-16);
-\draw[decorate,decoration={snake,pre length=5mm, post length=5mm}] (0,-16) -- (0,-19);
-\draw (0,-19) -- (0,-24);
-
-\foreach \x in {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23,24}
-   \draw (3pt,-\x cm) -- (-3pt,-\x cm);
-
-% nodes
-\draw (0,0) node[left=3pt] {2012} node[right=3pt] {};
-\draw (0,-1) node[left=3pt] {18 Jan} node[right=3pt] {\textbf{Project outline report deadline}};
-\draw (0,-2) node[left=3pt] {} node[right=3pt] {};	% 23 Jan
-\draw (0,-3) node[left=3pt] {} node[right=3pt] {};	% 30 Jan
-\draw (0,-4) node[left=3pt] {8 Feb} node[right=3pt] {\textbf{Project review meeting deadline}};
-\draw (0,-5) node[left=3pt] {} node[right=3pt] {};	% 13 Feb
-\draw (0,-6) node[left=3pt] {} node[right=3pt] {};	% 20 Feb
-\draw (0,-7) node[left=3pt] {} node[right=3pt] {};	% 27 Feb
-\draw (0,-8) node[left=3pt] {5 Mar} node[right=3pt] {<Final report draft I>};
-\draw (0,-9) node[left=3pt] {} node[right=3pt] {};	% 12 Mar
-\draw (0,-10) node[left=3pt] {} node[right=3pt] {};	% 19 Mar
-\draw (0,-11) node[left=3pt] {} node[right=3pt] {};	% 26 Mar
-\draw (0,-12) node[left=3pt] {2 Apr} node[right=3pt] {<Final report draft II>};
-\draw (0,-13) node[left=3pt] {} node[right=3pt] {};	% 9 Apr
-\draw (0,-14) node[left=3pt] {} node[right=3pt] {};	% 16 Apr
-\draw (0,-15) node[left=3pt] {} node[right=3pt] {};	% 23 Apr
-\draw (0,-16) node[left=3pt] {30 Apr} node[right=3pt] {};
-\draw (0,-19) node[left=3pt] {18 May} node[right=3pt] {};
-\draw (0,-21) node[left=3pt] {4 Jun} node[right=3pt] {<Final report draft III>};
-\draw (0,-23) node[left=3pt] {19 Jun} node[right=3pt] {\textbf{Final report deadline}};
-\draw (0,-24) node[left=3pt] {25/26 Jun} node[right=3pt] {\textbf{Project presentation}};
-
-% edges
-\draw [decorate,decoration={brace},xshift=-4pt]
-	(.3,-1.1) -- (.3,-3.9) node [black,midway,right=3pt] {\makecell[l]{Fix project report\\Schedule review meeting}};
-\draw [decorate,decoration={brace},xshift=-4pt]
-	(.4,-16) -- (.4,-19) node [black,midway,right=3pt] {Department examinations};
-\draw [decorate,decoration={brace},xshift=-4pt]
-	(6.4,-20) -- (6.4,-22) node [black,midway,right=3pt] {Evaluation};
-\end{tikzpicture}
-\textcolor{red}{<Missing research milestones>}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Possible extensions}
-\begin{comment}
-	Relative priority? Rationale?
-\end{comment}
 The following is a simple non-exhaustive enumeration of 'could-haves', if time permits:
 \begin{itemize}
 	\item An API to allow for other developers to contribute to the development of this tool, and make use of the algorithms contained therein in isolation
@@ -812,10 +649,5 @@ The following is a simple non-exhaustive enumeration of 'could-haves', if time p
 \bibliographystyle{alpha}
 \nocite{*}
 \bibliography{FYP}\addcontentsline{toc}{chapter}{Bibliography}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\appendix
-%\chapter{Figures}
-\chapter{Code listings}
-\lstinputlisting[language=python,label=IsPrime,caption=Sample Python Bytecode]{isprime.py}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

@@ -19,7 +19,6 @@ logger.setLevel(logging.INFO)
 
 def update_frame_param(current, event):
     """ mutate & propagate trace_params down the stack frames """
-
     # can only store stack frame ids across processes due to PicklingError of frame object
     params = [
         ("recursion_depth", lambda parent_val: parent_val+1),
@@ -42,7 +41,6 @@ def current_func():
 
     Note: functions can share code objects (in the case where you return a function from a function, ie. a closure). When there's more than one function using a given code object, we can't tell which function it is, so we return None.
     """
-
     frame = inspect.currentframe(1)
     code  = frame.f_code
     globs = frame.f_globals
@@ -64,16 +62,13 @@ def trace(frame, event, arg):
     lineno    = frame.f_lineno
     offset    = frame.f_lasti
     caller    = frame.f_back
-
     # code object
     filename  = co.co_filename
     name      = co.co_name
     varnames  = co.co_varnames[:co.co_argcount]
-
     if event == 'line':
         # pre: bytecode must be instrumented!
         cb = byteplay.Code.from_code(co)
-
         # ...(<Label>, None), (SetLineno, <#>)...
         #   => ...(SetLineno, <#>), (<Label>, None), (SetLineno, <#>)...
         code = []
@@ -82,16 +77,13 @@ def trace(frame, event, arg):
                 code.append(cb.code[i+1])
             code.append((opcode,arg))
         cb.code = code
-
         # pre: assumes bytecode list of the form:
         # - [ ((SetLineno, <#>), (opcode, arg)) x ... ]
         code_fragments = zip(cb.code[::2],cb.code[1::2])
         code_fragment  = [inst_node for (lineno_node,inst_node) in code_fragments if lineno_node == (byteplay.SetLineno, lineno)]
-
         indexes = [i for i,(a,b) in enumerate(code_fragments) if a == (byteplay.SetLineno, lineno)]
         if len(indexes) < 1:
             raise RuntimeError("Please instrument bytecode under test first.")
-
         next_i = [i for i,(a,b) in enumerate(code_fragments) if a == (byteplay.SetLineno, lineno)][-1] + 1
         if next_i < len(code_fragments)-1:
             _, next_node = code_fragments[next_i]
@@ -109,7 +101,6 @@ def trace(frame, event, arg):
         if frame.f_locals[TRACE_DICT]['recursion_depth'] > sys.getrecursionlimit():
             #raise RuntimeError("Maximum recursion depth reached")
             pass
-
         #print >> sys.stderr, '[call]: 0x%x=>0x%x, %s,%s\n%s\n%s' % \
         #    (id(frame.f_back), id(frame), caller.f_lineno,
         #    caller.f_lasti, frame.f_locals, arg)
@@ -127,7 +118,6 @@ def trace(frame, event, arg):
             if f_param in frame.f_locals:
                 param = frame.f_locals[f_param]
                 break
-
         # factorial
         if isinstance(arg, numbers.Number):
             if isinstance(arg, int) and \
@@ -136,7 +126,6 @@ def trace(frame, event, arg):
             # generate unit test object + memoize!
             if id(param) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
                 frame.f_locals[TRACE_DICT]["unit_test_objs"][id(param)] = ["self.assertEqual(%r, %s(%s))" % (arg,name,param)]
-
         # hanoi
         if 'self' in frame.f_locals:
             # construct object for test initialisation
@@ -145,11 +134,9 @@ def trace(frame, event, arg):
             paramlist = [obj.__dict__[param] \
                 if param in obj.__dict__ else None \
                 for param in obj_params[1:]]
-
             # construct assertion on function return value
             args,_,_,_       = inspect.getargspec(getattr(obj, name))
             arglist = [ frame.f_locals[f_arg] for f_arg in args[1:] ]
-
             # generate unit test object + memoize!
             if id(arglist) not in frame.f_locals[TRACE_DICT]["unit_test_objs"]:
                 frame.f_locals[TRACE_DICT]["unit_test_objs"][id(arglist)] = ["obj = %s(%s)" % (obj.__class__.__name__,','.join(map(str,paramlist))), "self.assertEqual(%r, obj.%s(%s))" % (arg,name,','.join(map(str,arglist)))]
@@ -201,7 +188,6 @@ old_dir = __builtin__.dir
 def new_dir(*args, **kwargs):
     """ builtin dir() without __var__ clutter """
     return [a for a in old_dir(*args, **kwargs) if not a.startswith("__")]
-
 
 def test_recursive_func(module, function):
     t0 = time.time()

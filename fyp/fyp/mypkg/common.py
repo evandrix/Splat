@@ -1,6 +1,5 @@
 import sys
 import time
-import opcode
 import decorator
 import inspect
 

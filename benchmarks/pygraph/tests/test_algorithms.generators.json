@@ -1,0 +1,1 @@
+[{"fn_name": "generate_hypergraph", "stmts_list": ["self.assertRaises(TypeError, self.module.generate_hypergraph, *[None, None, None])"], "add_params": null, "test_name": "all_Nones"}, {"fn_name": "generate", "stmts_list": ["self.assertRaises(TypeError, self.module.generate, *[None, None, None, None])"], "add_params": null, "test_name": "all_Nones"}]

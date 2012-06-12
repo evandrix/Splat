@@ -17,7 +17,6 @@ inspect_types = {
 #    'method': inspect.ismethod,
 #    'builtin': inspect.isbuiltin,
 #    'routine': inspect.isroutine,
-
 #    'module': inspect.ismodule,
 #    'abstract': inspect.isabstract,
 #    'frame': inspect.isframe,
@@ -45,6 +44,7 @@ reserved_stores = [
 ]
 LOAD_SLICE  = 'LOAD_SLICE'
 LOAD_OBJ_FN = 'LOAD_OBJ_FN'
+LOAD_LIST   = 'LOAD_LIST'
 reserved_loads = [
     byteplay.LOAD_ATTR,
     byteplay.LOAD_CLOSURE,
@@ -56,6 +56,7 @@ reserved_loads = [
     byteplay.LOAD_NAME,
     LOAD_SLICE, # custom
     LOAD_OBJ_FN,
+    LOAD_LIST,
 ]
 reserved_binary = [
      byteplay.BINARY_POWER,
@@ -116,3 +117,15 @@ def f_noarg(): return                   # Mock parameters
 def f_varg(*args, **kwargs): return
 PARAM_VALUE_SEQ = [ None, 0, 0.0, '', f_noarg, f_varg ]
 class ClassType:    OLD, NEW = range(2)
+###
+graph_node_colors = {
+    'PINK':         "#EE82EE",
+    'LIGHT_BLUE':   "#87CEFA",
+    'GREEN':        "#00FF7F",
+    'ORANGE':       "#F4A460",
+}
+###
+is_primitive = lambda var: isinstance(var, \
+            (int, float, long, complex, basestring, \
+            bool, tuple, list, dict))
+

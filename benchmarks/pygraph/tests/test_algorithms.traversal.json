@@ -1,0 +1,1 @@
+[{"fn_name": "self.module.traversal", "stmts_list": ["self.assertNotRaises(self.module.traversal, *[None, None, None])", "self.assertEqual(self.module.traversal(*[None, None, None]), <generator object traversal at 0x11152d370>, function return value not equal)"], "add_params": null, "test_name": "all_Nones"}]

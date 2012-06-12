@@ -6,7 +6,6 @@ import sys
 import time
 import types
 import byteplay
-import opcode
 import imp
 import inspect
 from pprint import pprint

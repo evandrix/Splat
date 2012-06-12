@@ -1,30 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import os
-import sys
-import time
-import re
-import dis
-import types
-import py
-import inspect
-import pprint
-import byteplay
-import random
-import decorator
-import instrumentor
-import bytecode
-import tracer
-import trace
-from cStringIO       import StringIO
-from common          import *  # AOP
-from header          import *  # enable colors
-from template_writer import *  # submodule support
-from metaclass       import *
-
-# add tracing facility to function under test
 def add_tracer(function, *vargs, **kwargs):
+    """ add tracing facility to function under test """
     cb    = byteplay.Code.from_code(function.func_code)
     total = len([(op,arg) for op,arg in cb.code if op != byteplay.SetLineno])
     tracer.NUM_LINES_EXECUTED = 0
@@ -59,9 +34,8 @@ def add_tracer(function, *vargs, **kwargs):
             show_missing=False,
             summary=False,
             coverdir='coverdir')
-
-# Wrap function to catch Exception & print program output
 def add_formatter(function, *vargs, **kwargs):
+    """ Wrap function to catch Exception & print program output """
     try:
         sys.stdout = StringIO()  # suppress stdout to string
         return_value = function(*vargs, **kwargs)
@@ -77,51 +51,16 @@ def add_formatter(function, *vargs, **kwargs):
     finally:
         sys.stdout = Writer(sys.__stdout__) # restore stdout
     return return_value
-
-class Generator(object):
-    def __init__(self, target):
-        self.target = target
-
-    def run(self):
-        print "** Collecting class definitions with methods & functions"
-        program_states = {}
-        functions_states = {}
-        functions = inspect.getmembers(self.target, inspect.isfunction)
-        for name,function in functions:
-            tracer.TRACE_INTO.append(name)
-            fn_bytecode = bytecode.Bytecode(function.func_code)
-            #fn_bytecode.pretty_print(sys.stderr)   # human-readable
-            #fn_bytecode.debug_print(sys.stderr)    # programmatic
-            functions_states[name] = (function, fn_bytecode)
-        program_states['functions'] = functions_states
-        #####################################################################
-        print "** Testing top-level functions in '%s' **" % PYC_NAME
-        all_tests = []
-        for name,function in functions:
-            test_obj = self.test_function(function)
-            all_tests.extend(test_obj)
-        tmpl_writer = TemplateWriter(self.target)
-        tmpl_writer.run(all_tests)
-    ########################################################################
+###
     def test_function(self, fn):
-        assert callable(fn)
-        #print "\t'%s': %s" % (fn.__name__, inspect.getargspec(fn))
-        args, varargs, keywords, defaults = inspect.getargspec(fn)
-        tests = []
         #####################################################################
         # Case 1: Nones
         #####################################################################
-        fn.aop_newline     = True
-        fn.aop_single_exec = True
         function = decorator(add_formatter, decorator(add_tracer, fn))
-
         print "[test-all-Nones]:\t",
-        arglist = [None] * len(args)    # correct number of arguments supplied
-        assert len(arglist) == len(args)
         try:
             return_value = function(*arglist)
         except AttributeError as e:
-            #print OKGREEN + 'Error' + ':' + ENDC, e
             assert isinstance(e, Exception)
             tests.append(UnitTestObject(
                 function.__name__, "all_Nones",
@@ -129,7 +68,7 @@ class Generator(object):
                     (e.__class__.__name__, function.__name__, arglist) ]
             ))
         else:
-            # function executed succesfully with Nones supplied
+            # function executed successfully with Nones supplied
             # assert that return value is equal (also if None)
             statements = []
             statements.append("self.assertNotRaises(%s, *%s)" % \
@@ -147,10 +86,7 @@ class Generator(object):
         #####################################################################
         # Case 2: Lazy instantiation
         #####################################################################
-        fn.aop_newline     = False
-        fn.aop_single_exec = False
         function = decorator(add_formatter, decorator(add_tracer, fn))
-
         print "[test-all-params]:\t",
         param_states = {}           # dict() of param state info
         # tracks last instantiated parameter - (obj, attr, next_param_index)
@@ -164,14 +100,12 @@ class Generator(object):
                 assert 'last_instantiated' in param_states
                 obj, attr, index = param_states['last_instantiated']
                 err_param = re.split('^%d format: a number is required, not Param([0-9]+)$', e.message)[1:-1]
-
                 # 1: transform arglist to assertions in test case
                 fn_name  = function.__name__
                 stmts    = self.arglist_to_stmts(arglist, function, e)
                 test_obj = UnitTestObject(fn_name, str(iteration_no), stmts)
                 tests.append(test_obj)
                 #print>>sys.__stderr__, 1,"#"+str(iteration_no),':',e,map(todict, arglist)
-
                 if len(err_param) == 1: # error message parsed correctly
                     self.handle_TypeError_require_number(err_param, arglist, obj, param_instantiated, param_states)
                 else:
@@ -202,20 +136,17 @@ class Generator(object):
         # attr lookup on param object certainly fails => trap
         lookup_key, obj, attr = str(e), e.target_object, e.missing_attr
         next_param_index = param_states.setdefault(lookup_key, 0)
-
         if next_param_index >= len(PARAM_VALUE_SEQ):
             print "No more possible arguments to try for %s" % lookup_key
             return False
         else:
             if 'last_instantiated' not in param_states \
                 or obj != param_states['last_instantiated'][0]:
-
                 # 2: transform arglist to assertions in test case
                 fn_name  = function.__name__
                 stmts    = self.arglist_to_stmts(arglist, function, e)
                 test_obj = UnitTestObject(fn_name, str(iteration_no), stmts)
                 tests.append(test_obj)
-
             next_param = PARAM_VALUE_SEQ[next_param_index]
             param_states[lookup_key] += 1
             param_states['last_instantiated'] = (obj, attr, next_param_index)
@@ -234,7 +165,6 @@ class Generator(object):
             # 'last instantiated' object instantiated successfully
             # => add to list of already instantiated parameters
             param_instantiated.add(obj)
-
             # fix error
             # 1. instantiate this object with a number
             numbers = []
@@ -246,11 +176,9 @@ class Generator(object):
                         next_param_index = i+1
             index, number = numbers[random.randint(0,len(numbers)-1)]
             arglist[err_param-1] = number
-
             # 2. error should not occur again
             #    => assume instantiated correctly
             param_instantiated.add(obj_err_param)
-
             # 3. update 'last instantiated' state
             param_states[sz_err_param] = index
             param_states['last_instantiated'] = \
@@ -270,8 +198,6 @@ class Generator(object):
         del obj.__dict__[attr]  # retry with next argument in list
 
     def arglist_to_stmts(self, arglist, fn, e=None):
-        is_primitive = lambda var: isinstance(var, \
-            (int, float, long, complex, basestring, bool, tuple, list, dict))
         stmts = []
         for item in arglist:
             if not is_primitive(item) and hasattr(item, '__class__') \
@@ -300,13 +226,3 @@ class Generator(object):
                     (e.__class__.__name__, fn.__name__, arglist))
         return stmts
 
-#############################################################################
-@aspect_import_mut
-@aspect_timer
-def run(*vargs, **kwargs):
-    generator = Generator(kwargs['module'])
-    generator.run()
-
-if __name__ == "__main__":
-    run(*sys.argv[1:])
-    sys.exit(0)

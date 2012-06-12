@@ -1,0 +1,1 @@
+[{"fn_name": "pagerank", "stmts_list": ["self.assertRaises(AttributeError, self.module.pagerank, *[None, None, None, None])"], "add_params": null, "test_name": "all_Nones"}]

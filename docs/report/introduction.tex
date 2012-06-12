@@ -1,0 +1,71 @@
+\chapter{Introduction}
+This is the Report for my Final Year Project, \emph{Simple Python Lazy Automated Tester}, hence the acronym '\textsf{SPLAT}' appearing on the cover page, which represents the name of the tool created from this research.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivation}	% describes the continual need for automated testing
+Professional software engineers often write tests while developing code, especially for large complex codebases. These tests are highly beneficial for generating confidence in a bug-free solution delivery.
+
+However, writing tests is not always easy to get right, and can be quite costly. It is reported that testing code is responsible for \emph{approximately half} the total cost of software development \cite{Edvardsson99asurvey}\cite{Han2008}\cite{Korel2005}.
+
+Furthermore, this task becomes gradually more time-consuming as software grows in terms of complexity. Given similar resource constraints, it can become increasingly difficult to consistently achieve high test code coverage.
+
+Moreover, a significant proportion of overall development time is spent writing test code not eventually included in production. Hence this work, though critical to assuring the quality of software\cite{Harrold00}, is ultimately invisible to the client, as far as billing and accountability is concerned.
+
+This has led to a large body of work on automatically generating test suites, particularly notable within the imperative programming community \cite{Allwood2011}.
+
+Even then, the present need for manual testing indicates that there still remains much scope for improvement in this area. A recent example supporting this claim is Google handing out a record \$26k in bug bounties for security researchers reporting Chrome vulnerabilities \cite{ChromeBugBounties}.
+
+Therefore, this raises the question of whether full automatic discovery \cite{Bertolino2007} for all these bugs could be possible, in order to eliminate this cost, let alone any bug exploits.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Automated software testing for dynamic languages}
+Whilst research in this field is typically devoted to statically typed programming languages such as C/C++, Objective-C or Java/Scala, relatively less emphasis is placed on their dynamic counterparts like Javascript, Python or Ruby.
+
+One such paper implements the search-based software testing (SBST) technique, to automatically generate test scenarios for Ruby code, using genetic algorithms \cite{Mairhofer2011}. There is neither any equivalent tool targeting Python instead, nor any chance of porting these tests for Python programs.
+
+This observation is made in contrast to the rapid growth in popularity of dynamic languages in recent years, especially Python. Python was named the `The Importance Of Being Earnest' (TIOBE) Programming Language of the Year, both in 2007 and 2010 \cite{TiobeDec11}.
+
+In this paper \cite{Mairhofer2011}, the authors claimed success in achieving consistent and significantly high code coverage over a preselected set of test inputs with their tool, when compared against the \naive random test case generator. Would it be possible to better this using a suitable adaptation of existing techniques, and/or to maintain this coverage across a more extensive range of programs?
+
+As Python, like Ruby, is a reflective, dynamically typed language, it would seem logical to adopt a similar approach in solving this problem, specifically by generating test scenarios via \emph{runtime code analysis} \cite{Mairhofer2011}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Python}
+The Python programming language contains a variety of interesting features which encourage rapid experimentation with automatic testing techniques.
+
+This is primarily because Python is an open source, general purpose, multi-paradigm, cross-platform compatible, dynamically typed language, offering duck typing, and in active development and support. It also provides \emph{excellent builtin introspection and reflection capabilities}, to inspect and manipulate code at runtime.
+
+At the heart of the language design philosophy \cite{Pep20ZenPython}, there should be one -- and preferably only one -- obvious way to do things. The importance of readability promotes a \emph{clean, concise and elegant syntax}, which makes demonstrating 'proof of concept' code easy.
+\clearpage
+For instance, the following Python code snippet certainly reads more fluently than its C\# counterpart:
+
+\begin{tabularx}{\textwidth}{X X}
+\underline{Sample C\# code} & \underline{Equivalent Python code} \\
+\begin{lstlisting}[language=CSharp]^^J
+if ("hello".indexOf("e") >= 0)^^J
+\{^^J
+\ \ \ return true;^^J
+\}^^J
+\end{lstlisting}
+&
+\begin{lstlisting}[language=python]^^J
+if 'e' in 'hello':^^J
+\ \ \ return True^^J
+\end{lstlisting}
+\end{tabularx}
+Python features a fundamental testing infrastructure toolset based on \textsf{unittest}, \textsf{doctest} and \textsf{py.test}. However, there is limited availability of testing support tools built on top of those. Many of these either target outdated versions of Python, or are discontinued. There are a few candidate tools for automated testing, for instance, \textsf{pythoscope} and \textsf{pytestsgenerator}, which generate tests by performing static code analysis. However there are no tools which perform dynamic test case generation.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Project contributions}
+Within the context given above, this project makes the following key contributions:
+
+\begin{itemize}
+	\item A discussion of the possible ways considered for automated software testing, focusing on test data generation by using information gathered at runtime
+	\item A motivating example describing automated lazy testing in Python
+	\item Implementation as a Python module, to automatically generate consistently high coverage test suites, primarily evaluated against Python libraries like python-graph, and other Python module implementations of famous algorithms
+	\item Investigating effectiveness of the \emph{lazy instantiation} testing technique, as illustrated by \textsc{Irulan} in Haskell \cite{Allwood2011}, for Python
+	\item Further advance the work in the field of automated software testing, especially for dynamic languages
+\end{itemize}
+
+To this end, we take advantage of the main features of the core Python language, ie. strong introspection and reflective capabilities, combined together with its extensive tool support from the Python Package Index (PyPI) repository.
+
+The concepts discussed in this paper are concretely demonstrated in a tool called \textsc{Splat}, a high coverage test suite generator for Python modules, written in Python, but portable to target other languages. This tool has been successfully applied to some of the most popular frameworks, achieving the initial objective of consistently high test code coverage, comparable to those manual unit tests written by hand, and even potentially discovering several bugs in the process as well. The tool has also been extended to support regression testing, where reports on a sample of case studies are included in this report.
+
+\section{Report organisation}
+The rest of this paper is structured as follows. Firstly, relevant background material is reviewed in Chapter \ref{ch:background}. Thereafter, the various algorithms and techniques used to automatically generate tests are formally introduced in Chapter \ref{ch:research}. These ideas presented here are then implemented in the tool \textsc{Splat}, constituting the subject of Chapter \ref{ch:splat}. This is accompanied by a detailed description of its software design architecture, together with several worked examples, for clarification purposes. A summary of the extent of success of the project is discussed in Chapter \ref{ch:eval}, before some final conclusions are drawn, and suggestions are given to possible future work in Chapter \ref{ch:conclusion}.

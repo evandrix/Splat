@@ -55,13 +55,18 @@
 \BOOKMARK [1][-]{section.5.1}{5.1 Experiment}{chapter.5}% 55
 \BOOKMARK [2][-]{subsection.5.1.1}{5.1.1 Evaluation criteria}{section.5.1}% 56
 \BOOKMARK [3][-]{subsubsection.5.1.1.1}{5.1.1.1 Code coverage}{subsection.5.1.1}% 57
-\BOOKMARK [3][-]{subsubsection.5.1.1.2}{5.1.1.2 Linear Code Sequence And Jump \(LCSAJ\)}{subsection.5.1.1}% 58
-\BOOKMARK [3][-]{subsubsection.5.1.1.3}{5.1.1.3 Performance}{subsection.5.1.1}% 59
-\BOOKMARK [3][-]{subsubsection.5.1.1.4}{5.1.1.4 Quality of test data}{subsection.5.1.1}% 60
-\BOOKMARK [3][-]{subsubsection.5.1.1.5}{5.1.1.5 Generality}{subsection.5.1.1}% 61
-\BOOKMARK [2][-]{subsection.5.1.2}{5.1.2 Selection of programs}{section.5.1}% 62
-\BOOKMARK [2][-]{subsection.5.1.3}{5.1.3 Coverage results}{section.5.1}% 63
-\BOOKMARK [2][-]{subsection.5.1.4}{5.1.4 Errors found}{section.5.1}% 64
-\BOOKMARK [1][-]{section.5.2}{5.2 Summary}{chapter.5}% 65
-\BOOKMARK [0][-]{chapter.6}{6 Conclusion \046 Future Work}{}% 66
-\BOOKMARK [0][-]{chapter*.9}{Bibliography}{}% 67
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{5.1.1.2 Performance}{subsection.5.1.1}% 58
+\BOOKMARK [3][-]{subsubsection.5.1.1.3}{5.1.1.3 Quality of test data}{subsection.5.1.1}% 59
+\BOOKMARK [3][-]{subsubsection.5.1.1.4}{5.1.1.4 Generality}{subsection.5.1.1}% 60
+\BOOKMARK [2][-]{subsection.5.1.2}{5.1.2 Selection of programs}{section.5.1}% 61
+\BOOKMARK [2][-]{subsection.5.1.3}{5.1.3 Coverage results}{section.5.1}% 62
+\BOOKMARK [2][-]{subsection.5.1.4}{5.1.4 Errors found}{section.5.1}% 63
+\BOOKMARK [1][-]{section.5.2}{5.2 Summary}{chapter.5}% 64
+\BOOKMARK [0][-]{chapter.6}{6 Conclusion \046 Future Work}{}% 65
+\BOOKMARK [0][-]{chapter*.11}{Bibliography}{}% 66
+\BOOKMARK [0][-]{appendix.A}{A Python 2.7 Grammar \(EBNF\)}{}% 67
+\BOOKMARK [0][-]{appendix.B}{B Exception hierarchy}{}% 68
+\BOOKMARK [0][-]{appendix.C}{C Python objects}{}% 69
+\BOOKMARK [1][-]{section.C.1}{C.1 frame object}{appendix.C}% 70
+\BOOKMARK [1][-]{section.C.2}{C.2 code object}{appendix.C}% 71
+\BOOKMARK [0][-]{appendix.D}{D Python 2.7 opcodes}{}% 72

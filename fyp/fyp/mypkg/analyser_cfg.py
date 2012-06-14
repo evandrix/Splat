@@ -131,7 +131,7 @@ def main(GLOBALS, write=False):
         GLOBALS['graph_fn_cfg'][name]['edges'] = copy.deepcopy(edge_list)
         new_node_list, new_edge_list = collapse_graph(GLOBALS, node_list, edge_list, function_globals)
 
-        if new_node_list:        
+        if new_node_list:
             if write: write_graph(GLOBALS, new_node_list, new_edge_list, name, function_globals)
         elif node_list:
             if write: write_graph(GLOBALS, node_list, edge_list, name, function_globals)

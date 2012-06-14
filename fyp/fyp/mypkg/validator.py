@@ -14,6 +14,7 @@ def main(GLOBALS):
             if ext.endswith('.py'):
                 compileall.compile_file(path, force=True, quiet=True)
                 package += 'c'  # .py -> .pyc
+                path    += 'c'
             if ext.endswith('.py') or ext.endswith('.pyc'):
                 GLOBALS['pkg_path'] = path
                 GLOBALS['pkg_type'] = 'bytecode'

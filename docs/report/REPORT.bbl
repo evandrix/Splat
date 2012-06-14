@@ -1,6 +1,12 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{MMSW97}
 
+\bibitem[AB06]{Alshraideh2006}
+Mohammad Alshraideh and Leonardo Bottaci.
+\newblock Search-based software test data generation for string data using
+  program-specific search operators: Research articles.
+\newblock {\em Softw. Test. Verif. Reliab.}, 16(3):175--203, September 2006.
+
 \bibitem[ACE11]{Allwood2011}
 Tristan O.~R. Allwood, Cristian Cadar, and Susan Eisenbach.
 \newblock High coverage testing of haskell programs.
@@ -86,6 +92,13 @@ Jonathan Jacky.
 \newblock Pymodel: Model-based testing in python.
 \newblock \url{http://staff.washington.edu/jon/pymodel/www/}, March 2010.
 
+\bibitem[KAY96]{Korel1996}
+Bogdan Korel and Ali~M. Al-Yami.
+\newblock Assertion-oriented automated test data generation.
+\newblock In {\em Proceedings of the 18th international conference on Software
+  engineering}, ICSE '96, pages 71--80, Washington, DC, USA, 1996. IEEE
+  Computer Society.
+
 \bibitem[Kei11]{ChromeBugBounties}
 Gregg Keizer.
 \newblock {Computerworld News Article: Security - Google pays record \$26K in
@@ -130,6 +143,11 @@ Stefan Mairhofer, Robert Feldt, and Richard Torkar.
 \newblock In {\em Proceedings of the Genetic and Evolutionary Computation
   Conference (GECCO)}, pages 1859--1866. ACM, 2011.
 
+\bibitem[MM98]{Michael1998}
+Christoph Michael and Gary Mcgraw.
+\newblock Automated software test data generation for complex programs.
+\newblock In {\em Reliable Software Technologies}, pages 136--146, 1998.
+
 \bibitem[MMSW97]{Michael1997}
 C.~C. Michael, G.~E. McGraw, M.~A. Schatz, and C.~C. Walton.
 \newblock Genetic algorithms for dynamic test data generation.
@@ -154,6 +172,12 @@ Tim Peters.
 \newblock {PEP 20 -- The Zen of Python}.
 \newblock \url{http://www.python.org/dev/peps/pep-0020/}, 2004.
 \newblock [Online; accessed 7-January-2012].
+
+\bibitem[PHP99]{Pargas99}
+Roy~P. Pargas, Mary~Jean Harrold, and Robert~R. Peck.
+\newblock Test-data generation using genetic algorithms.
+\newblock {\em Software Testing, Verification And Reliability}, 9:263--282,
+  1999.
 
 \bibitem[PLEB07]{Pacheco2007}
 Carlos Pacheco, Shuvendu~K. Lahiri, Michael~D. Ernst, and Thomas Ball.
@@ -213,6 +237,12 @@ Nigel Tracey, John Clark, John McDermid, and Keith Mander.
 \bibitem[TK]{Tahbildar}
 Hitesh Tahbildar and Bichitra Kalita.
 \newblock Automated software test data generation: Direction of research.
+
+\bibitem[ZL07]{Zhao2007}
+Ruilian Zhao and Qing Li.
+\newblock Automatic test generation for dynamic data structures.
+\newblock In {\em Software Engineering Research, Management Applications, 2007.
+  SERA 2007. 5th ACIS International Conference on}, pages 545 --549, aug. 2007.
 
 \bibitem[ZLM03]{Zhao2003}
 R.~Zhao, M.R. Lyu, and Yinghua Min.

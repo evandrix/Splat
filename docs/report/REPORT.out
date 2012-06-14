@@ -1,42 +1,67 @@
 \BOOKMARK [0][-]{chapter.1}{1 Introduction}{}% 1
 \BOOKMARK [1][-]{section.1.1}{1.1 Motivation}{chapter.1}% 2
 \BOOKMARK [1][-]{section.1.2}{1.2 Automated software testing for dynamic languages}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{1.3 Python}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.3}{1.3 The Python programming language}{chapter.1}% 4
 \BOOKMARK [1][-]{section.1.4}{1.4 Project contributions}{chapter.1}% 5
 \BOOKMARK [1][-]{section.1.5}{1.5 Report organisation}{chapter.1}% 6
 \BOOKMARK [0][-]{chapter.2}{2 Background}{}% 7
 \BOOKMARK [1][-]{section.2.1}{2.1 Introduction}{chapter.2}% 8
-\BOOKMARK [1][-]{section.2.2}{2.2 Basic concepts}{chapter.2}% 9
-\BOOKMARK [2][-]{subsection.2.2.1}{2.2.1 Definition of terms}{section.2.2}% 10
-\BOOKMARK [2][-]{subsection.2.2.2}{2.2.2 Validation criteria}{section.2.2}% 11
-\BOOKMARK [1][-]{section.2.3}{2.3 Implementations}{chapter.2}% 12
-\BOOKMARK [2][-]{subsection.2.3.1}{2.3.1 Static method}{section.2.3}% 13
-\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 Dynamic method}{section.2.3}% 14
-\BOOKMARK [2][-]{subsection.2.3.3}{2.3.3 Hybrid}{section.2.3}% 15
-\BOOKMARK [1][-]{section.2.4}{2.4 Overview}{chapter.2}% 16
-\BOOKMARK [1][-]{section.2.5}{2.5 Current state of the art}{chapter.2}% 17
-\BOOKMARK [2][-]{subsection.2.5.1}{2.5.1 Pythoscope}{section.2.5}% 18
-\BOOKMARK [2][-]{subsection.2.5.2}{2.5.2 Python Tests Generator}{section.2.5}% 19
-\BOOKMARK [2][-]{subsection.2.5.3}{2.5.3 Irulan}{section.2.5}% 20
-\BOOKMARK [1][-]{section.2.6}{2.6 Features of Python}{chapter.2}% 21
-\BOOKMARK [1][-]{section.2.7}{2.7 Challenges}{chapter.2}% 22
-\BOOKMARK [2][-]{subsection.2.7.1}{2.7.1 Function argument instantiation}{section.2.7}% 23
-\BOOKMARK [2][-]{subsection.2.7.2}{2.7.2 Optimising search space coverage}{section.2.7}% 24
-\BOOKMARK [2][-]{subsection.2.7.3}{2.7.3 Testing a dynamically typed language}{section.2.7}% 25
-\BOOKMARK [2][-]{subsection.2.7.4}{2.7.4 Non-terminating program executions}{section.2.7}% 26
-\BOOKMARK [2][-]{subsection.2.7.5}{2.7.5 Early detection of path infeasibility}{section.2.7}% 27
-\BOOKMARK [2][-]{subsection.2.7.6}{2.7.6 Improving code coverage}{section.2.7}% 28
-\BOOKMARK [1][-]{section.2.8}{2.8 Summary}{chapter.2}% 29
-\BOOKMARK [0][-]{chapter.3}{3 Contributions}{}% 30
-\BOOKMARK [1][-]{section.3.1}{3.1 Specification}{chapter.3}% 31
-\BOOKMARK [1][-]{section.3.2}{3.2 Approach}{chapter.3}% 32
-\BOOKMARK [1][-]{section.3.3}{3.3 Algorithm}{chapter.3}% 33
-\BOOKMARK [1][-]{section.3.4}{3.4 Summary}{chapter.3}% 34
-\BOOKMARK [0][-]{chapter.4}{4 Splat}{}% 35
-\BOOKMARK [1][-]{section.4.1}{4.1 Architecture}{chapter.4}% 36
-\BOOKMARK [1][-]{section.4.2}{4.2 Examples}{chapter.4}% 37
-\BOOKMARK [1][-]{section.4.3}{4.3 Summary}{chapter.4}% 38
-\BOOKMARK [0][-]{chapter.5}{5 Evaluation}{}% 39
-\BOOKMARK [1][-]{section.5.1}{5.1 Summary}{chapter.5}% 40
-\BOOKMARK [0][-]{chapter.6}{6 Conclusion \046 Future Work}{}% 41
-\BOOKMARK [0][-]{chapter*.9}{Bibliography}{}% 42
+\BOOKMARK [1][-]{section.2.2}{2.2 Definition of terms}{chapter.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.1}{2.2.1 General software testing}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.2}{2.2.2 Modelling programs as graphs}{section.2.2}% 11
+\BOOKMARK [1][-]{section.2.3}{2.3 Overview}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.3.1}{2.3.1 Functional testing}{section.2.3}% 13
+\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 Structural testing}{section.2.3}% 14
+\BOOKMARK [3][-]{subsubsection.2.3.2.1}{2.3.2.1 Static approach}{subsection.2.3.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.3.2.2}{2.3.2.2 Dynamic approach}{subsection.2.3.2}% 16
+\BOOKMARK [2][-]{subsection.2.3.3}{2.3.3 Hybrid testing}{section.2.3}% 17
+\BOOKMARK [2][-]{subsection.2.3.4}{2.3.4 Testability transformation}{section.2.3}% 18
+\BOOKMARK [1][-]{section.2.4}{2.4 Existing tools}{chapter.2}% 19
+\BOOKMARK [2][-]{subsection.2.4.1}{2.4.1 RuTeG}{section.2.4}% 20
+\BOOKMARK [2][-]{subsection.2.4.2}{2.4.2 Python}{section.2.4}% 21
+\BOOKMARK [3][-]{subsubsection.2.4.2.1}{2.4.2.1 FizzBuzz \(sample Python module\)}{subsection.2.4.2}% 22
+\BOOKMARK [3][-]{subsubsection.2.4.2.2}{2.4.2.2 Pythoscope}{subsection.2.4.2}% 23
+\BOOKMARK [3][-]{subsubsection.2.4.2.3}{2.4.2.3 Pytestsgenerator}{subsection.2.4.2}% 24
+\BOOKMARK [1][-]{section.2.5}{2.5 The Python programming language}{chapter.2}% 25
+\BOOKMARK [2][-]{subsection.2.5.1}{2.5.1 Dynamic typing}{section.2.5}% 26
+\BOOKMARK [2][-]{subsection.2.5.2}{2.5.2 Introspection/reflection}{section.2.5}% 27
+\BOOKMARK [2][-]{subsection.2.5.3}{2.5.3 Runtime modification}{section.2.5}% 28
+\BOOKMARK [1][-]{section.2.6}{2.6 Challenges}{chapter.2}% 29
+\BOOKMARK [2][-]{subsection.2.6.1}{2.6.1 Function argument instantiation}{section.2.6}% 30
+\BOOKMARK [3][-]{subsubsection.2.6.1.1}{2.6.1.1 Lazy instantiation}{subsection.2.6.1}% 31
+\BOOKMARK [3][-]{subsubsection.2.6.1.2}{2.6.1.2 Runtime in-memory manipulation}{subsection.2.6.1}% 32
+\BOOKMARK [3][-]{subsubsection.2.6.1.3}{2.6.1.3 Random testing}{subsection.2.6.1}% 33
+\BOOKMARK [2][-]{subsection.2.6.2}{2.6.2 Optimising search space coverage}{section.2.6}% 34
+\BOOKMARK [2][-]{subsection.2.6.3}{2.6.3 Testing a dynamically typed language}{section.2.6}% 35
+\BOOKMARK [2][-]{subsection.2.6.4}{2.6.4 Non-terminating program executions}{section.2.6}% 36
+\BOOKMARK [2][-]{subsection.2.6.5}{2.6.5 Early detection of path infeasibility}{section.2.6}% 37
+\BOOKMARK [2][-]{subsection.2.6.6}{2.6.6 Improving code coverage}{section.2.6}% 38
+\BOOKMARK [1][-]{section.2.7}{2.7 Summary}{chapter.2}% 39
+\BOOKMARK [0][-]{chapter.3}{3 Contributions}{}% 40
+\BOOKMARK [1][-]{section.3.1}{3.1 Specification}{chapter.3}% 41
+\BOOKMARK [1][-]{section.3.2}{3.2 Approach}{chapter.3}% 42
+\BOOKMARK [1][-]{section.3.3}{3.3 Algorithm}{chapter.3}% 43
+\BOOKMARK [2][-]{subsection.3.3.1}{3.3.1 The test data generation algorithm}{section.3.3}% 44
+\BOOKMARK [3][-]{subsubsection.3.3.1.1}{3.3.1.1 Step 1: Construction of the CFG}{subsection.3.3.1}% 45
+\BOOKMARK [3][-]{subsubsection.3.3.1.2}{3.3.1.2 Step 2: Initial path selection}{subsection.3.3.1}% 46
+\BOOKMARK [3][-]{subsubsection.3.3.1.3}{3.3.1.3 Step 3: Derivation of linear constraints}{subsection.3.3.1}% 47
+\BOOKMARK [2][-]{subsection.3.3.2}{3.3.2 Examples}{section.3.3}% 48
+\BOOKMARK [1][-]{section.3.4}{3.4 Summary}{chapter.3}% 49
+\BOOKMARK [0][-]{chapter.4}{4 Splat}{}% 50
+\BOOKMARK [1][-]{section.4.1}{4.1 Architecture}{chapter.4}% 51
+\BOOKMARK [1][-]{section.4.2}{4.2 Examples}{chapter.4}% 52
+\BOOKMARK [1][-]{section.4.3}{4.3 Summary}{chapter.4}% 53
+\BOOKMARK [0][-]{chapter.5}{5 Evaluation}{}% 54
+\BOOKMARK [1][-]{section.5.1}{5.1 Experiment}{chapter.5}% 55
+\BOOKMARK [2][-]{subsection.5.1.1}{5.1.1 Evaluation criteria}{section.5.1}% 56
+\BOOKMARK [3][-]{subsubsection.5.1.1.1}{5.1.1.1 Code coverage}{subsection.5.1.1}% 57
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{5.1.1.2 Linear Code Sequence And Jump \(LCSAJ\)}{subsection.5.1.1}% 58
+\BOOKMARK [3][-]{subsubsection.5.1.1.3}{5.1.1.3 Performance}{subsection.5.1.1}% 59
+\BOOKMARK [3][-]{subsubsection.5.1.1.4}{5.1.1.4 Quality of test data}{subsection.5.1.1}% 60
+\BOOKMARK [3][-]{subsubsection.5.1.1.5}{5.1.1.5 Generality}{subsection.5.1.1}% 61
+\BOOKMARK [2][-]{subsection.5.1.2}{5.1.2 Selection of programs}{section.5.1}% 62
+\BOOKMARK [2][-]{subsection.5.1.3}{5.1.3 Coverage results}{section.5.1}% 63
+\BOOKMARK [2][-]{subsection.5.1.4}{5.1.4 Errors found}{section.5.1}% 64
+\BOOKMARK [1][-]{section.5.2}{5.2 Summary}{chapter.5}% 65
+\BOOKMARK [0][-]{chapter.6}{6 Conclusion \046 Future Work}{}% 66
+\BOOKMARK [0][-]{chapter*.9}{Bibliography}{}% 67

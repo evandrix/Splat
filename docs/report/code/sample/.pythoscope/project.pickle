@@ -1,0 +1,19 @@
+Äcpythoscope.store
+Project
+q)Åq}q(Upoints_of_entryq}UpathqU0/Users/lwy08/Dropbox/FYP/docs/report/code/sampleUcode_trees_managerqcpythoscope.code_trees_manager
+FilesystemCodeTreesManager
+q)Åq}q	(U_cached_code_treeq
+NUcode_trees_pathqUG/Users/lwy08/Dropbox/FYP/docs/report/code/sample/.pythoscope/code-treesubU_modulesq}q(Utriangle.pyqcpythoscope.store
+Module
+q)Åq}q(Uerrorsq]UparentqNUcreatedqGA”ˆCµd%1Uimportsq]UchangedqâUsubpathqhUprojectqhUobjectsq]q(cpythoscope.store
+Class
+q)Åq}q(Ubasesq]qUobjectq aUuser_objectsq!]Unameq"UTriangleUmoduleq#hUmethodsq$]q%cpythoscope.store
+Method
+q&)Åq'}q((Uis_generatorq)âUargsq*]q+(Uselfq,UaUbUceh"U__init__Uklassq-hubaubcpythoscope.store
+Function
+q.)Åq/}q0(Ucallsq1]h)âh*]q2Utriangleq3ah"Uclassify_triangleh#hubeU
+test_casesq4]ubUtests/test_triangle.pyq5h)Åq6}q7(h]hNhGA”ˆC∑k0Qh]q8Uunittestq9ahâhh5hhh]q:(cpythoscope.store
+TestClass
+q;)Åq<}q=(h"UTestTrianglehh6h]q>h9ahâUassociated_modulesq?]q@hah4]qAcpythoscope.store
+TestMethod
+qB)ÅqC}qD(h"Utest___init__qEhh<ubaubh;)ÅqF}qG(h"UTestClassifyTrianglehh6hh>hâh?]qHhah4]qIhB)ÅqJ}qK(h"Utest_classify_triangleqLhhFubaubeh4]qM(h<hFeubuUnew_tests_directoryqNUtestsub.

@@ -8,9 +8,9 @@ However, writing tests is not always easy to get right, and can be quite costly.
 
 Furthermore, this task becomes gradually more time-consuming as software grows in terms of complexity. Given similar resource constraints, it can become increasingly difficult to consistently achieve high test code coverage.
 
-Moreover, a significant proportion of overall development time is spent writing test code not eventually included in production. Hence this work, though critical to assuring the quality of software\cite{Harrold00}, is ultimately invisible to the client, as far as billing and accountability is concerned.
+Moreover, a significant proportion of overall development time is spent writing test code not eventually included in production. Hence this work, though critical to assuring the quality of software \cite{Harrold00}, is ultimately invisible to the client, and sometimes difficult to justify this expenditure, as far as billing and accountability is concerned.
 
-This has led to a large body of work on automatically generating test suites, particularly notable within the imperative programming community \cite{Allwood2011}.
+This has led to a large body of work on automatically generating unit test suites, particularly notable within the imperative programming community \cite{Allwood2011}, in order to reduce the effort of unit testing required, to encourage wider adoption by developers.
 
 Even then, the present need for manual testing indicates that there still remains much scope for improvement in this area. A recent example supporting this claim is Google handing out a record \$26k in bug bounties for security researchers reporting Chrome vulnerabilities \cite{ChromeBugBounties}.
 
@@ -27,7 +27,7 @@ In this paper \cite{Mairhofer2011}, the authors claimed success in achieving con
 
 As Python, like Ruby, is a reflective, dynamically typed language, it would seem logical to adopt a similar approach in solving this problem, specifically by generating test scenarios via \emph{runtime code analysis} \cite{Mairhofer2011}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Python}
+\section{The Python programming language}
 The Python programming language contains a variety of interesting features which encourage rapid experimentation with automatic testing techniques.
 
 This is primarily because Python is an open source, general purpose, multi-paradigm, cross-platform compatible, dynamically typed language, offering duck typing, and in active development and support. It also provides \emph{excellent builtin introspection and reflection capabilities}, to inspect and manipulate code at runtime.
@@ -64,8 +64,8 @@ Within the context given above, this project makes the following key contributio
 \end{itemize}
 
 To this end, we take advantage of the main features of the core Python language, ie. strong introspection and reflective capabilities, combined together with its extensive tool support from the Python Package Index (PyPI) repository.
-
+\clearpage
 The concepts discussed in this paper are concretely demonstrated in a tool called \textsc{Splat}, a high coverage test suite generator for Python modules, written in Python, but portable to target other languages. This tool has been successfully applied to some of the most popular frameworks, achieving the initial objective of consistently high test code coverage, comparable to those manual unit tests written by hand, and even potentially discovering several bugs in the process as well. The tool has also been extended to support regression testing, where reports on a sample of case studies are included in this report.
 
 \section{Report organisation}
-The rest of this paper is structured as follows. Firstly, relevant background material is reviewed in Chapter \ref{ch:background}. Thereafter, the various algorithms and techniques used to automatically generate tests are formally introduced in Chapter \ref{ch:research}. These ideas presented here are then implemented in the tool \textsc{Splat}, constituting the subject of Chapter \ref{ch:splat}. This is accompanied by a detailed description of its software design architecture, together with several worked examples, for clarification purposes. A summary of the extent of success of the project is discussed in Chapter \ref{ch:eval}, before some final conclusions are drawn, and suggestions are given to possible future work in Chapter \ref{ch:conclusion}.
+Firstly, relevant background material is reviewed in Chapter \ref{ch:background}. Thereafter, the various algorithms and techniques used to automatically generate tests are formally introduced in Chapter \ref{ch:contrib}. These ideas presented here are then implemented in the tool \textsc{Splat}, constituting the subject of Chapter \ref{ch:splat}. This is accompanied by a detailed description of its software design architecture, together with several worked examples, for clarification purposes. A summary of the extent of success of the project is discussed in Chapter \ref{ch:eval}, before some final conclusions are drawn, and suggestions are given to possible future work in Chapter \ref{ch:conclusion}.

@@ -98,7 +98,7 @@ def test_function(GLOBALS, function):
     GLOBALS['unittest_cache'][function.func_name] \
         = {'module': submodule_key, 'testcases': tests}
 
-    if False:
+    if True:
         print '=== fn_cfg_nodes ==='
         pprint(sorted([(a,b) \
             for a,b in GLOBALS['graph_fn_cfg'][function.func_name]['nodes'].iteritems()]))

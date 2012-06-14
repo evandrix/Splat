@@ -2,47 +2,70 @@
 \contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivation}{6}{section.1.1}
 \contentsline {section}{\numberline {1.2}Automated software testing for dynamic languages}{7}{section.1.2}
-\contentsline {section}{\numberline {1.3}Python}{7}{section.1.3}
+\contentsline {section}{\numberline {1.3}The Python programming language}{7}{section.1.3}
 \contentsline {section}{\numberline {1.4}Project contributions}{8}{section.1.4}
 \contentsline {section}{\numberline {1.5}Report organisation}{9}{section.1.5}
 \contentsline {chapter}{\numberline {2}Background}{10}{chapter.2}
 \contentsline {section}{\numberline {2.1}Introduction}{10}{section.2.1}
-\contentsline {section}{\numberline {2.2}Basic concepts}{10}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Definition of terms}{10}{subsection.2.2.1}
-\contentsline {subsubsection}{General testing}{10}{subsubsection*.4}
-\contentsline {subsubsection}{Graph theory}{10}{subsubsection*.5}
-\contentsline {subsection}{\numberline {2.2.2}Validation criteria}{11}{subsection.2.2.2}
-\contentsline {section}{\numberline {2.3}Implementations}{11}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Static method}{11}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Dynamic method}{11}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Hybrid}{12}{subsection.2.3.3}
-\contentsline {section}{\numberline {2.4}Overview}{12}{section.2.4}
-\contentsline {section}{\numberline {2.5}Current state of the art}{12}{section.2.5}
-\contentsline {subsection}{\numberline {2.5.1}Pythoscope}{13}{subsection.2.5.1}
-\contentsline {subsection}{\numberline {2.5.2}Python Tests Generator}{13}{subsection.2.5.2}
-\contentsline {subsection}{\numberline {2.5.3}\textsc {Irulan}}{15}{subsection.2.5.3}
-\contentsline {section}{\numberline {2.6}Features of Python}{16}{section.2.6}
-\contentsline {section}{\numberline {2.7}Challenges}{16}{section.2.7}
-\contentsline {subsection}{\numberline {2.7.1}Function argument instantiation}{16}{subsection.2.7.1}
-\contentsline {subsubsection}{Lazy instantiation}{17}{subsubsection*.6}
-\contentsline {subsubsection}{Runtime in-memory manipulation}{17}{subsubsection*.7}
-\contentsline {subsubsection}{Random testing}{17}{subsubsection*.8}
-\contentsline {subsection}{\numberline {2.7.2}Optimising search space coverage}{17}{subsection.2.7.2}
-\contentsline {subsection}{\numberline {2.7.3}Testing a dynamically typed language}{17}{subsection.2.7.3}
-\contentsline {subsection}{\numberline {2.7.4}Non-terminating program executions}{18}{subsection.2.7.4}
-\contentsline {subsection}{\numberline {2.7.5}Early detection of path infeasibility}{18}{subsection.2.7.5}
-\contentsline {subsection}{\numberline {2.7.6}Improving code coverage}{18}{subsection.2.7.6}
-\contentsline {section}{\numberline {2.8}Summary}{18}{section.2.8}
-\contentsline {chapter}{\numberline {3}Contributions}{20}{chapter.3}
-\contentsline {section}{\numberline {3.1}Specification}{20}{section.3.1}
-\contentsline {section}{\numberline {3.2}Approach}{21}{section.3.2}
-\contentsline {section}{\numberline {3.3}Algorithm}{22}{section.3.3}
-\contentsline {section}{\numberline {3.4}Summary}{22}{section.3.4}
-\contentsline {chapter}{\numberline {4}\textsc {Splat}}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}Architecture}{23}{section.4.1}
-\contentsline {section}{\numberline {4.2}Examples}{23}{section.4.2}
-\contentsline {section}{\numberline {4.3}Summary}{24}{section.4.3}
-\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Summary}{25}{section.5.1}
-\contentsline {chapter}{\numberline {6}Conclusion \& Future Work}{26}{chapter.6}
-\contentsline {chapter}{Bibliography}{30}{chapter*.9}
+\contentsline {section}{\numberline {2.2}Definition of terms}{10}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}General software testing}{10}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Modelling programs as graphs}{10}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}Overview}{11}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Functional testing}{12}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Structural testing}{12}{subsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.2.1}Static approach}{12}{subsubsection.2.3.2.1}
+\contentsline {subsubsection}{\numberline {2.3.2.2}Dynamic approach}{13}{subsubsection.2.3.2.2}
+\contentsline {paragraph}{Systematic (optimisation)}{14}{section*.5}
+\contentsline {paragraph}{Random}{15}{section*.6}
+\contentsline {subsection}{\numberline {2.3.3}Hybrid testing}{15}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Testability transformation}{16}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Existing tools}{17}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\textsc {RuTeG}}{17}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Python}{17}{subsection.2.4.2}
+\contentsline {subsubsection}{\numberline {2.4.2.1}\textsf {FizzBuzz} (sample Python module)}{17}{subsubsection.2.4.2.1}
+\contentsline {subsubsection}{\numberline {2.4.2.2}\textsf {Pythoscope}}{20}{subsubsection.2.4.2.2}
+\contentsline {subsubsection}{\numberline {2.4.2.3}Pytestsgenerator}{20}{subsubsection.2.4.2.3}
+\contentsline {section}{\numberline {2.5}The Python programming language}{22}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Dynamic typing}{22}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Introspection/reflection}{23}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Runtime modification}{23}{subsection.2.5.3}
+\contentsline {section}{\numberline {2.6}Challenges}{23}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Function argument instantiation}{23}{subsection.2.6.1}
+\contentsline {subsubsection}{\numberline {2.6.1.1}Lazy instantiation}{24}{subsubsection.2.6.1.1}
+\contentsline {subsubsection}{\numberline {2.6.1.2}Runtime in-memory manipulation}{25}{subsubsection.2.6.1.2}
+\contentsline {subsubsection}{\numberline {2.6.1.3}Random testing}{25}{subsubsection.2.6.1.3}
+\contentsline {subsection}{\numberline {2.6.2}Optimising search space coverage}{26}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Testing a dynamically typed language}{26}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Non-terminating program executions}{26}{subsection.2.6.4}
+\contentsline {subsection}{\numberline {2.6.5}Early detection of path infeasibility}{26}{subsection.2.6.5}
+\contentsline {subsection}{\numberline {2.6.6}Improving code coverage}{27}{subsection.2.6.6}
+\contentsline {section}{\numberline {2.7}Summary}{27}{section.2.7}
+\contentsline {chapter}{\numberline {3}Contributions}{28}{chapter.3}
+\contentsline {section}{\numberline {3.1}Specification}{28}{section.3.1}
+\contentsline {section}{\numberline {3.2}Approach}{29}{section.3.2}
+\contentsline {section}{\numberline {3.3}Algorithm}{30}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}The test data generation algorithm}{30}{subsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.1.1}Step 1: Construction of the CFG}{30}{subsubsection.3.3.1.1}
+\contentsline {subsubsection}{\numberline {3.3.1.2}Step 2: Initial path selection}{30}{subsubsection.3.3.1.2}
+\contentsline {subsubsection}{\numberline {3.3.1.3}Step 3: Derivation of linear constraints}{30}{subsubsection.3.3.1.3}
+\contentsline {subsection}{\numberline {3.3.2}Examples}{31}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Summary}{31}{section.3.4}
+\contentsline {chapter}{\numberline {4}\textsc {Splat}}{32}{chapter.4}
+\contentsline {section}{\numberline {4.1}Architecture}{32}{section.4.1}
+\contentsline {section}{\numberline {4.2}Examples}{33}{section.4.2}
+\contentsline {section}{\numberline {4.3}Summary}{33}{section.4.3}
+\contentsline {chapter}{\numberline {5}Evaluation}{34}{chapter.5}
+\contentsline {section}{\numberline {5.1}Experiment}{34}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Evaluation criteria}{34}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Code coverage}{34}{subsubsection.5.1.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.2}Linear Code Sequence And Jump (LCSAJ)}{34}{subsubsection.5.1.1.2}
+\contentsline {subsubsection}{\numberline {5.1.1.3}Performance}{35}{subsubsection.5.1.1.3}
+\contentsline {subsubsection}{\numberline {5.1.1.4}Quality of test data}{35}{subsubsection.5.1.1.4}
+\contentsline {paragraph}{Mutation testing}{35}{section*.8}
+\contentsline {subsubsection}{\numberline {5.1.1.5}Generality}{36}{subsubsection.5.1.1.5}
+\contentsline {subsection}{\numberline {5.1.2}Selection of programs}{36}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Coverage results}{37}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Errors found}{37}{subsection.5.1.4}
+\contentsline {section}{\numberline {5.2}Summary}{37}{section.5.2}
+\contentsline {chapter}{\numberline {6}Conclusion \& Future Work}{38}{chapter.6}
+\contentsline {chapter}{Bibliography}{42}{chapter*.9}

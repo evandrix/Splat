@@ -1,1 +1,0 @@
-[{"fn_name": "transitive_edges", "stmts_list": ["self.assertRaises(InvalidGraphType, self.module.transitive_edges, *[None])"], "add_params": null, "test_name": "all_Nones"}, {"fn_name": "critical_path", "stmts_list": ["self.assertRaises(InvalidGraphType, self.module.critical_path, *[None])"], "add_params": null, "test_name": "all_Nones"}]

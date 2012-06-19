@@ -36,7 +36,8 @@ def aspect_import_mut(f, *args, **kwargs):
             settings.MODULE_UNDER_TEST = module
         kwargs['module'] = __import__(settings.MODULE_UNDER_TEST)
     except ImportError as e:
-        print >> sys.stderr, "Module %s cannot be imported" % settings.MODULE_UNDER_TEST
+        print >> sys.stderr, "Module %s cannot be imported" \
+            % settings.MODULE_UNDER_TEST
     return f(*args, **kwargs)
 @decorator.decorator
 def aspect_timer(f, *args, **kwargs):
@@ -69,7 +70,8 @@ def recursive_print(v, lvl):
                     print '\t'*lvl+term.bold_blue_on_bright_green(_k.__name__)+':',
                 else:
                     print '\t'*lvl+term.bold_blue_on_bright_green(str(_k))+':',
-                if any(map(lambda cls: isinstance(_v, cls), [list,set,dict])) and len(_v) > 1:
+                if any(map(lambda cls: isinstance(_v, cls), [list,set,dict])) \
+                    and len(_v) > 1:
                     recursive_print(_v, lvl+1)
                 else:
                     print _v
@@ -94,4 +96,3 @@ def debug(GLOBALS):
             else:
                 print term.bold_cyan_on_bright_green(k) + ':',
                 recursive_print(v,1)
-

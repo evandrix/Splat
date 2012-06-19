@@ -15,9 +15,13 @@ fyp/mypkg/bytecode_modifier.py
 fyp/mypkg/common.py
 fyp/mypkg/constants.py
 fyp/mypkg/decompiler.py
+fyp/mypkg/generator.py
+fyp/mypkg/instrumentor.py
 fyp/mypkg/metaclass.py
 fyp/mypkg/scanner.py
 fyp/mypkg/settings.py
+fyp/mypkg/template_writer.py
+fyp/mypkg/tracer.py
 fyp/mypkg/validator.py
 fyp/mypkg/test/__init__.py
 fyp/mypkg/test/test_analyser_fn.py

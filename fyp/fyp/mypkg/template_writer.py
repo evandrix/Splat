@@ -3,6 +3,7 @@
 
 from __future__ import with_statement
 import os
+import sys
 import simplejson
 import jsonpickle
 import pyparsing    # S-Expr
@@ -36,27 +37,20 @@ class UnitTestObject(object):
             (self.__class__.__name__, self.fn_name, self.test_name, self.add_params, self.stmts)
 
 class TemplateWriter(object):
-    def run(self, GLOBALS, module_name, test_objects):
+    def run(self, GLOBALS, basedir, module_path, module_name, rel_path,
+        basename, test_objects):
         assert isinstance(test_objects, list)
         if len(test_objects) <= 0:  return
         assert isinstance(test_objects[0], UnitTestObject)
-        template = self.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), TEMPLATE_FILENAME))
-
-        if GLOBALS['pkg_type'] == 'bytecode':
-            module_path = os.path.dirname(GLOBALS['pkg_path'])
-        elif GLOBALS['pkg_type'] == 'directory':
-            module_path = GLOBALS['pkg_path']
-        basedir = module_path+'/tests'
-
+        template = self.read(os.path.join( \
+            os.path.dirname(os.path.realpath(__file__)), TEMPLATE_FILENAME))
         context = {
-            'module_name': module_name,
-            'module_path': module_path,
+            'module_name': basename,
+            'base_import_path': GLOBALS['base_import_dir'],
+            'module_path': os.path.join(module_path, rel_path),
             'all_imports': None,
             'all_tests':   test_objects
         }
-
-        print 'module_path =', module_path
-
         attr_excluded = [ 'stmts', 'prefix' ]
         json_test_objects = []
         for obj in test_objects:
@@ -83,20 +77,31 @@ class TemplateWriter(object):
             os.makedirs(basedir)
         with codecs.open(filename, "w", "utf-8") as fout:
             if isinstance(data, markupsafe.Markup):
-                print >> fout, data.unescape().replace("&#39;","'")
+                print >> fout, data.unescape() \
+                    .replace("&#34;",'"').replace("&#39;","'")
             else:
                 print >> fout, data
 
 def main(GLOBALS):
     unit_test_objects = defaultdict(list)
     for function_name, values in GLOBALS['unittest_cache'].iteritems():
+        # basedir/relative module path/module name
         module_name = values['module']
         if module_name.startswith('/'):
             module_name = module_name[1:]
-        module_name = module_name.replace('/','.')
-        unit_test_objects[module_name].extend(values['testcases'])
+        basename, rel_path = '/'.join(module_name.rstrip('/') \
+            .split('/')[::-1]).partition('/')[::2]
+        unit_test_objects[(basename, rel_path)].extend(values['testcases'])
 
-    for module_name, testcases in unit_test_objects.iteritems():
-        print testcases
-        TemplateWriter().run(GLOBALS, module_name, testcases)
+    if GLOBALS['pkg_type'] == 'bytecode':
+        module_path = os.path.dirname(GLOBALS['pkg_path'])
+    elif GLOBALS['pkg_type'] == 'directory':
+        module_path = GLOBALS['pkg_path']
+    basedir = os.path.join(module_path, '../%s-tests'%GLOBALS['pkg_name'])
 
+    for (basename, rel_path), testcases in unit_test_objects.iteritems():
+        module_name = os.path.join(rel_path, basename).replace('/', '_')
+        TemplateWriter().run(GLOBALS, basedir, module_path, module_name,
+            rel_path, basename, testcases)
+
+    print 'Unit test suite written to:', basedir

@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# run nosetests for directory 'tests': `nosetests -vsw tests`
 import os
 import sys
 import time
@@ -9,7 +6,8 @@ import pprint
 import random
 import types
 import unittest
-
+import imp
+import jsonpickle
 {{#all_imports}}
 import {{module}}
 {{/all_imports}}
@@ -25,8 +23,9 @@ def f_varg(self, *args, **kwargs):
 class TestProgram(unittest.TestCase):
     def setUp(self):
         # suppress program output streams
-        sys.stdout = DevNull(sys.stdout)
+        #sys.stdout = DevNull(sys.stdout)
         sys.stderr = DevNull(sys.stderr)
+        sys.path.append('{{base_import_path}}')
         sys.path.append('{{module_path}}')
         # reference module under test
         self.module = __import__('{{module_name}}')
@@ -34,6 +33,20 @@ class TestProgram(unittest.TestCase):
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
         del self.module
+    def assertRaisesException(self, expected_e, function, *args, **kwargs):
+        try:
+            function(*args, **kwargs)
+        except Exception as actual_e:
+            assert actual_e.__class__.__name__ == expected_e.__name__
+    def assertEqualClassName(self, function, expected, *args, **kwargs):
+        return_value = function
+        assert return_value.__class__.__name__ == expected
+    def assertEqualAttrs(self, function, expected, *args, **kwargs):
+        return_value = function
+        unpickled = jsonpickle.decode(expected)
+        assert isinstance(unpickled, dict)
+        for key, value in unpickled.iteritems():
+            assert return_value.__dict__[key] == value
     def assertNotRaises(self, function, *args, **kwargs):
         with self.assertRaises(Exception):
             try:
@@ -46,11 +59,5 @@ class TestProgram(unittest.TestCase):
 {{#all_tests}}
 {{prefix}}def test_{{fn_name}}_{{test_name}}(self{{add_params}}): {{stmts}}
 {{/all_tests}}
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestProgram))
-    return suite
 if __name__ == '__main__':
     unittest.main()
-    #unittest.TextTestRunner(verbosity=2).run(suite())
-

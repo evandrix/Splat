@@ -1,7 +1,0 @@
-polish attr_freeze.
-
-implement some way of storing hacked functions or bytecodes between
-runs to couteract the fact that the bytecodehacks are really rather
-slow.
-
-docstrings!

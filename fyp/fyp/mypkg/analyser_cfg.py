@@ -119,7 +119,9 @@ def main(GLOBALS, write=False):
 
     for i, (name, fn) in enumerate(all_functions.iteritems()):
         GLOBALS['graph_fn_cfg'][name]['fn'] = fn
-        sz_status = "\r\x1b[K" + "[%.2f%%] Analyser CFG: processing fn '%s'..." % (100*i/float(all_functions_len),name)
+        sz_status = "\r\x1b[K" \
+            + "[%.2f%%] Processing function %s.%s..." \
+            % (100*i/float(all_functions_len), fn.__module__, name)
         if sys.stderr.isatty():
             print >> sys.stderr, sz_status,
         co = byteplay.Code.from_code(fn.func_code)
@@ -128,12 +130,15 @@ def main(GLOBALS, write=False):
         node_list, edge_list = build_graph(GLOBALS, name, bytecode, function_globals)
         GLOBALS['graph_fn_cfg'][name]['nodes'] = node_list
         import copy
-        GLOBALS['graph_fn_cfg'][name]['edges'] = copy.deepcopy(edge_list)
-        new_node_list, new_edge_list = collapse_graph(GLOBALS, node_list, edge_list, function_globals)
+        GLOBALS['graph_fn_cfg'][name]['edges'] = edge_list #copy.deepcopy(edge_list)
+        new_node_list, new_edge_list \
+            = collapse_graph(GLOBALS, node_list, edge_list, function_globals)
 
         if new_node_list:
-            if write: write_graph(GLOBALS, new_node_list, new_edge_list, name, function_globals)
-        elif node_list:
-            if write: write_graph(GLOBALS, node_list, edge_list, name, function_globals)
+            if write:
+                write_graph(GLOBALS, new_node_list, new_edge_list, name, function_globals)
+        if node_list:
+            if write:
+                write_graph(GLOBALS, node_list, edge_list, name, function_globals)
     print "\r\x1b[K"
 

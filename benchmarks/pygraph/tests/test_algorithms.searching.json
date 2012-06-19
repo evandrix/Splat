@@ -1,1 +1,0 @@
-[{"fn_name": "depth_first_search", "stmts_list": ["self.assertRaises(AttributeError, self.module.depth_first_search, *[None, None, None])"], "add_params": null, "test_name": "all_Nones"}, {"fn_name": "breadth_first_search", "stmts_list": ["self.assertRaises(AttributeError, self.module.breadth_first_search, *[None, None, None])"], "add_params": null, "test_name": "all_Nones"}]

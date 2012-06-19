@@ -217,6 +217,12 @@ Arjan Seesing and Hans-Gerhard Gross.
 \newblock Special Issue Section on Evaluation of Novel Approaches to Software
   Engineering Guest Editors: Pericles Loucopoulos and Kalle Lyytinen.
 
+\bibitem[Smi11]{Smith2011}
+Rich Smith.
+\newblock pyretic: In memory reverse engineering for obfuscated python
+  bytecode.
+\newblock Google Code, Jan 2011.
+
 \bibitem[SN]{MutantGene}
 Selvakumar Subramanian and Ramaraj Natarajan.
 \newblock A tool for generation and minimization of test suite by mutant gene

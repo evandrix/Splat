@@ -14,7 +14,6 @@ from collections import defaultdict
 f = lambda: defaultdict(f)
 GLOBALS = defaultdict(f)
 
-
 @mypkg.common.aspect_timer
 def main():
     GLOBALS['byteorder'] = sys.byteorder
@@ -23,7 +22,8 @@ def main():
     import mypkg.validator
     valid = mypkg.validator.main(GLOBALS)
     if not valid:
-        print "USAGE: python %s [<path/package_name>|<.py{,c} file>]" % sys.argv[0]
+        print "USAGE:\tpython %s [<path/package_name>|<.pyc file>]" % sys.argv[0]
+        print "\t(python -m compileall <*.py file>)"
         sys.exit(1)
     GLOBALS['basename'] = GLOBALS['pkg_name'].replace('/','.')
     if GLOBALS['basename'].startswith('.'): # no hidden
@@ -33,7 +33,7 @@ def main():
     import mypkg.scanner
     mypkg.scanner.main(GLOBALS)
 #    mypkg.scanner.debug(GLOBALS)
-
+    
     print "(II): Analyse function dependency"
     import mypkg.analyser_fn
     mypkg.analyser_fn.main(GLOBALS)

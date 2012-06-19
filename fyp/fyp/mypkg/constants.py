@@ -112,20 +112,24 @@ reserved_try = [
     byteplay.POP_BLOCK,
 ]
 ###
-MAX_ITERATIONS  = 2**10
-def f_noarg(): return                   # Mock parameters
-def f_varg(*args, **kwargs): return
-PARAM_VALUE_SEQ = [ None, 0, 0.0, '', f_noarg, f_varg ]
-class ClassType:    OLD, NEW = range(2)
-###
 graph_node_colors = {
     'PINK':         "#EE82EE",
     'LIGHT_BLUE':   "#87CEFA",
     'GREEN':        "#00FF7F",
     'ORANGE':       "#F4A460",
 }
-###
-is_primitive = lambda var: isinstance(var, \
-            (int, float, long, complex, basestring, \
-            bool, tuple, list, dict))
+class ClassType: OLD, NEW = range(2)
+MAX_ITERATIONS = 2**10
+def f_noarg(): return                   # Mock parameters
+def f_varg(*args, **kwargs): return
+PARAM_VALUE_SEQ = [ None, 0, 0.0, '', f_noarg, f_varg ]
+PRIMITIVE_TYPES \
+    = (int, float, long, complex, basestring, bool, tuple, list, dict)
+is_primitive = lambda var: isinstance(var, PRIMITIVE_TYPES)
 
+op_arithmetic = ['+','-','*','/','%','**','//']
+op_cmp = ['==','!=','<>','>','<','>=','<=']
+op_assign = ['=','+=','-=','*=','/=','%=','**=','//=']
+op_bitwise = ['&','|','^','~','<<','>>']
+op_membership = ['in','not in']
+op_id = ['is','is not']

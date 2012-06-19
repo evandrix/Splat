@@ -1,6 +1,7 @@
 import dis
 import marshal
 import struct
+import re
 import os
 import sys
 import time
@@ -8,6 +9,7 @@ import types
 import byteplay
 import imp
 import inspect
+import decompiler
 from pprint import pprint
 from collections import defaultdict
 from cStringIO import StringIO
@@ -21,20 +23,13 @@ def load_single_pyc(GLOBALS, original, basedir, path):
     assert magic == imp.get_magic()
     modtime = time.asctime(time.localtime(struct.unpack('=L', moddate)[0]))
     code = marshal.load(f)
+
     pyc_info = defaultdict(dict)
-    pyc_info['magic_no']       = magic.encode('hex')
-    pyc_info['mod_ts']['date'] = moddate.encode('hex')
-    pyc_info['mod_ts']['time'] = modtime
-    pyc_info['code_object']    = code
-    pyc_info['bytecode']       = byteplay.Code.from_code(code)
-    bytecode_list = [(a,b) for a,b in pyc_info['bytecode'].code if a != byteplay.SetLineno]
-    if [1 for a,b in bytecode_list if isinstance(b, basestring) and b == 'raw_input']:
-        print >> sys.stderr, '[IGNORE] raw_input() found in module %s@%s...' % (module_name,path)
-        return
-    pyc_info['module_imports'] = [import_name for a,import_name in bytecode_list if a == byteplay.IMPORT_NAME]
-    import decompiler
+    pyc_info['magic_no']          = magic.encode('hex')
+    pyc_info['mod_ts']['date']    = moddate.encode('hex')
+    pyc_info['mod_ts']['time']    = modtime
+    pyc_info['code_object']       = code
     pyc_info['ext_bytecode']      = decompiler.decompile(code)
-    #decompiler.pretty_print(pyc_info['ext_bytecode'])
     pyc_info['code']['argcount']  = code.co_argcount
     pyc_info['code']['nlocals']   = code.co_nlocals
     pyc_info['code']['stacksize'] = code.co_stacksize
@@ -48,18 +43,20 @@ def load_single_pyc(GLOBALS, original, basedir, path):
     pyc_info['code']['firstlineno']  = code.co_firstlineno
     pyc_info['code']['consts']    = code.co_consts
     pyc_info['code']['lnotab']    = code.co_lnotab
-    # print code.co_lnotab.encode('hex')
-    #pprint(pyc_info)
-    sys.stdout = StringIO()
-    try:
-        module = imp.load_compiled(module_name, path)
-    except:
-        print >> sys.stderr, '[IGNORE] failed loading module %s@%s...' % (module_name,path)
-        return False
-    sys.stdout = sys.__stdout__
+
+    if False:
+        import mypkg.instrumentor
+        instrumentor = mypkg.instrumentor.Instrumentor(path.replace('_instrumented.pyc','.pyc'))
+        exit_code = instrumentor.run()
+        if module_name in sys.modules:
+            del sys.modules[module_name]
+        new_path = os.path.join(dirname, module_name+'_instrumented.pyc')
+        module = imp.load_compiled(module_name, new_path)
+
+    module = imp.load_compiled(module_name, path)
     submodule_key = basedir[len(original)+1:]+'/'+module_name
     GLOBALS['pyc_info'][submodule_key] = pyc_info
-    for name, predicate in inspect_types.iteritems():    
+    for name, predicate in inspect_types.iteritems():
         the_list = inspect.getmembers(module,
             lambda m: inspect.getmodule(m) == module and apply(predicate,[m]))
         if the_list:
@@ -75,6 +72,8 @@ def list_files(GLOBALS, original, basedir):
         module_name, ext  = os.path.splitext(filename)
         if os.path.isfile(path):
             if not module_name.startswith('_') \
+                and not module_name.startswith('test_') \
+                and not module_name.endswith('_instrumented') \
                 and ext == '.pyc' \
                 and load_single_pyc(GLOBALS, original, basedir, path):
                 file_list.append(item)

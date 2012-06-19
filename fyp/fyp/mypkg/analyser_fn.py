@@ -23,6 +23,12 @@ class Function(object):
         else:
             return "(%d,%d): %s()" %(self.start,self.end, my_name)
 
+def pydot_sanitise(name):
+    for reserved_kw in ['edge', 'vertex', 'graph', 'place']:
+        if isinstance(name, basestring) and reserved_kw in name:
+            return name+u"\u200B"
+    return str(name)
+
 def write_graph(GLOBALS, globals_key, graphname, suffix, pred_node, pred_edge, prog='dot'):
     basename = GLOBALS['basename']
     graph_nodes = GLOBALS[globals_key]['nodes']
@@ -30,9 +36,13 @@ def write_graph(GLOBALS, globals_key, graphname, suffix, pred_node, pred_edge, p
     graph = pydot.Dot(graphname, graph_type='digraph')
     for node in graph_nodes:
         if pred_node(node):
+            new_node_name = pydot_sanitise(node)
+            graph_nodes[node].set_name(new_node_name)
             graph.add_node( graph_nodes[node] )
     for start,end in graph_edges:
         if pred_edge(start, end):
+            start.set_name(pydot_sanitise(start.get_name()))
+            end.set_name(pydot_sanitise(end.get_name()))
             graph.add_edge( pydot.Edge(start, end) )
     if not graph.get_node_list() and not graph.get_edge_list():
         pass
@@ -129,7 +139,7 @@ def fn_fn_parse(bytecode_list, all_classes):
 def fn_fn_toposort(graph_nodes, graph_edges, all_functions):
     """ assume DAG; perform topological sorting on function nodes """
     # 1. isolated functions (no incoming/outgoing edges)
-    isolated_fns = [fn for name,fn in all_functions.iteritems() \
+    isolated_functions = [fn for name,fn in all_functions.iteritems() \
         if name not in graph_nodes]
     # recursive functions do not affect order of testing - convert to DAG
     graph_edges = [(start,end) for start,end in graph_edges if start != end]
@@ -137,7 +147,7 @@ def fn_fn_toposort(graph_nodes, graph_edges, all_functions):
     # 2. nodes with only outgoing edges
     L, S = [], []
     for name,fn in all_functions.iteritems():
-        if fn not in isolated_fns \
+        if fn not in isolated_functions \
             and not [1 for _,end in graph_edges if end == graph_nodes[name]]:
             S.append((name, fn))
     while S:
@@ -150,7 +160,7 @@ def fn_fn_toposort(graph_nodes, graph_edges, all_functions):
                     S.append((m_node.get_name(),
                         all_functions[m_node.get_name()]))
     assert not graph_edges  # graph is non cyclic
-    return isolated_fns, L
+    return isolated_functions, L
 
 def main(GLOBALS):
     all_classes = GLOBALS['all_classes']
@@ -187,9 +197,10 @@ def main(GLOBALS):
 
         GLOBALS['dependent_fn'][name] = func_calls
         for f in func_calls:
-            if f.name == name \
+            if isinstance(f.name, basestring) \
+                and f.name == name \
                 and f.num_args == len(inspect.getargspec(fn).args):
-                recursive_functions.add(name)
+                recursive_functions.add(fn)
 
         # ASSUME <obj>.<fn> calls are valid wrt #args
         called_fns = set()
@@ -216,9 +227,9 @@ def main(GLOBALS):
     GLOBALS['graph_fn_fn']['nodes'] = graph_nodes
     import copy
     GLOBALS['graph_fn_fn']['edges'] = copy.deepcopy(graph_edges)
-    isolated_fns, L = fn_fn_toposort(graph_nodes, graph_edges, all_functions)
-    GLOBALS['recursive_functions'] = recursive_functions
-    GLOBALS['function_test_order'] = { 'isolated': isolated_fns, 'L': L }
+    isolated_functions,L = fn_fn_toposort(graph_nodes,graph_edges,all_functions)
+    GLOBALS['function_test_order'] = { 'isolated': isolated_functions,
+        'recursive': recursive_functions, 'L': L }
 
     print "(IIb): class as function input arg/in method body"
     graph_nodes, graph_edges = {}, set()
@@ -241,4 +252,3 @@ def main(GLOBALS):
                 graph_edges.add( (graph_nodes[name], graph_nodes[c]) )
     GLOBALS['graph_fn_cls']['nodes'] = graph_nodes
     GLOBALS['graph_fn_cls']['edges'] = graph_edges
-

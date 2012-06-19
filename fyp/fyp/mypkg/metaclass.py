@@ -52,7 +52,7 @@ class MetaParam(type):
     def __getitem__(cls, name):
         return cls.registry[name]
 
-def create_metaparam(index):
+def create_metaparam(index, attr=None, dct={}):
     class Param(object):
         __metaclass__ = MetaParam
         def __new__(cls, *args):
@@ -62,16 +62,25 @@ def create_metaparam(index):
                 used for subclassing immutable type, eg. str,int,unicode,tuple
             """
             return super(Param, cls).__new__(cls, args)
-        def __init__(self, index):
+        def __init__(self, index, attr=None, dct={}):
             """
                 controls initialisation of new instance
             """
             self.index = index + 1  # 1-based index
-            self.__class__.__name__ = "Param%d" % self.index
+            self.attr  = attr
+            self.dct   = dct
+            if self.attr:
+                self.__class__.__name__ = "Param%d_%s" % (self.index,self.attr)
+            else:
+                self.__class__.__name__ = "Param%d" % self.index
+
+            for key, value in dct.iteritems():
+                if not key.startswith("__"):
+                    setattr(self, key, value)
         def __getattr__(self, name):
             raise MetaAttributeError(self, name)
         def __str__(self):
             return repr(self)
         def __repr__(self):
             return self.__class__.__name__
-    return Param(index)
+    return Param(index, attr, dct)

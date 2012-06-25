@@ -49,10 +49,10 @@ def add_tracer(function, *vargs, **kwargs):
         raise e
     finally:
         sys.settrace(None)
-        print ">> Bytecode coverage: %d/%d instruction%s (%.2f%%)" % \
-            (tracer.NUM_LINES_EXECUTED,total,
-            's' if tracer.NUM_LINES_EXECUTED > 1 else '',
-            tracer.NUM_LINES_EXECUTED/float(total)*100)
+#        print ">> Bytecode coverage: %d/%d instruction%s (%.2f%%)" % \
+#            (tracer.NUM_LINES_EXECUTED,total,
+#            's' if tracer.NUM_LINES_EXECUTED > 1 else '',
+#            tracer.NUM_LINES_EXECUTED/float(total)*100)
 
 def metaparam_to_stmts(item):
     stmts = []

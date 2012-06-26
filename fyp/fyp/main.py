@@ -41,7 +41,7 @@ def main():
 
     print "(III): Analyse control flow (CFG)"
     import mypkg.analyser_cfg
-    mypkg.analyser_cfg.main(GLOBALS, write=True)
+    mypkg.analyser_cfg.main(GLOBALS, write=False)
 
     print "(V): Unit test generator"
     import mypkg.generator

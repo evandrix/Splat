@@ -25,6 +25,8 @@ import jsonpickle
 import copy
 import settings
 import warnings
+import signal
+import itertools
 from decorator       import decorator
 from cStringIO       import StringIO
 from pprint          import pprint
@@ -56,23 +58,33 @@ def add_tracer(function, *vargs, **kwargs):
 
 def metaparam_to_stmts(item):
     stmts = []
-    if not is_primitive(item) and hasattr(item, '__class__') \
-        and isinstance(item.__class__, MetaParam) \
+    if not is_primitive(item) \
+        and hasattr(item, '__class__') \
         and hasattr(item, '__dict__'):
-        stmts.append("%s = type('',(object,), {})()" % (item))
-        for key in item.__dict__:
-            value = item.__dict__[key]
-            if not key.startswith("__") and key not in ['index', 'attr', 'dct']:
-                if callable(value):
-                    stmts.append( \
-                        "%s.%s = types.MethodType(%s, %s, %s.__class__)" % \
-                        (item,key,value.func_name,item,item))
-                elif isinstance(value.__class__, MetaParam):
-                    stmts.extend(metaparam_to_stmts(value))
-                    stmts.append("%s.%s = %s" % (item,key,value))
-                else:
-                    stmts.append("%s.%s = %s" % \
-                        (item,key,"''" if value == '' else value))
+        if isinstance(item.__class__, MetaParam):
+            stmts.append("%s = type('',(object,), {})()" % (item))
+            for key in item.__dict__:
+                value = item.__dict__[key]
+                if not key.startswith("__") \
+                    and key not in ['index', 'attr', 'dct']:
+                    if callable(value):
+                        stmts.append( \
+                            "%s.%s = types.MethodType(%s, %s, %s.__class__)" % \
+                            (item,key,value.func_name,item,item))
+                    elif isinstance(value.__class__, MetaParam):
+                        stmts.extend(metaparam_to_stmts(value))
+                        stmts.append("%s.%s = %s" % (item,key,value))
+                    else:
+                        stmts.append("%s.%s = %s" % \
+                            (item,key,"''" if value == '' else value))
+        else:
+            module = inspect.getmodule(item.__class__)
+            if hasattr(module, '__file__'):
+                dirname = os.path.dirname(module.__file__)
+                filename = os.path.basename(module.__file__)
+                name, _ = os.path.splitext(filename)
+                stmts.append("%s_module = imp.load_compiled('%s', '%s')" % \
+                    (name, name, module.__file__))
     return stmts
 
 def arglist_to_stmts(arglist, fn, val_or_exc=None):
@@ -83,20 +95,33 @@ def arglist_to_stmts(arglist, fn, val_or_exc=None):
 
     if isinstance(val_or_exc, Exception):
         if hasattr(val_or_exc, 'parent_exception'):
-            stmts.append("self.assertRaises(%s, %s, *%s)" % \
+            stmts.append("self.assertRaises(%s, self.module.%s, *%s)" % \
                 (val_or_exc.parent_exception.__name__, fn.__name__, arglist))
         else:
+            # assume max 1 Exception raised per unit test
             exception_module = inspect.getmodule(val_or_exc.__class__)
             if hasattr(exception_module, '__file__'):
                 # non-builtin Exception occurred
                 exception_module_dir = os.path.dirname(exception_module.__file__)
                 exception_module_filename = os.path.basename(exception_module.__file__)
                 exception_module_name, _  = os.path.splitext(exception_module_filename)
+
+                arglist_as_string = []
+                for item in arglist:
+                    module = inspect.getmodule(item.__class__)
+                    if isinstance(item, object) \
+                        and hasattr(module, '__file__') \
+                        and not isinstance(item.__class__, MetaParam):
+                        arglist_as_string.append('%s_module.%s'%(item.__class__.__name__,item.__class__.__name__))
+                    else:
+                        arglist_as_string.append(item)
+                arglist_as_string = '['+','.join(map(str,arglist_as_string))+']'
+
                 stmts.extend([
-                    "exception_module = imp.load_compiled('%s', '%s')" % \
-                        (exception_module_name, exception_module.__file__),
-                    "self.assertRaisesException(exception_module.%s,self.module.%s,*%s)" % \
-                        (val_or_exc.__class__.__name__, fn.__name__, arglist),
+                    "%s_module = imp.load_compiled('%s', '%s')" % \
+                        (exception_module_name,exception_module_name, exception_module.__file__),
+                    "self.assertRaisesException(%s_module.%s,self.module.%s,*%s)" % \
+                        (exception_module_name,val_or_exc.__class__.__name__, fn.__name__, arglist_as_string),
                     ])
             else:
                 stmts.append("self.assertRaises(%s, self.module.%s, *%s)" % \
@@ -217,7 +242,7 @@ def trace_recursive(frame, event, arg):
 
         # factorial / hanoi
         param = None
-        for f_param in [ 'n', 'height' ]:
+        for f_param in [ 'z', 'n', 'height' ]:  # recursive function input arg
             if f_param in frame.f_locals:
                 param = frame.f_locals[f_param]
                 break
@@ -305,17 +330,33 @@ def test_recursive(GLOBALS, function, tests):
         else:
             lasti += 1
     print
-    print "Last successful iteration = %d" % lasti
-    for k,v in trace_dict.items():
-        if k in ["stack_frames", "unit_test_objs"]:
-            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
-        print k+':',v
-
     # transform into UnitTestObjects to write out unit test suite
     for key,value in trace_dict["unit_test_objs"].iteritems():
         tests.append(UnitTestObject(function.__name__,key,value))
+    print "Last successful iteration = %d" % lasti
+    for k,v in trace_dict.iteritems():
+        if k in ["stack_frames"]:
+            v = len(v)#'' => '.join(map(lambda f:'0x%x'%id(f), v))
+        if k == 'unit_test_objs':
+            if len(tests) > 0:
+                print term.yellow+term.bold+'Unit test objects: [ '+str(tests[0])+' ...'+str(len(tests)-1)+' more ]'+term.normal
+            else:
+                print term.yellow+term.bold+'Unit test objects: '+str(len(v))+term.normal
+        else:
+            print k+':',v
 
+def test_random_handler(signum, frame):
+#    raise Exception
+    return
 def test_random(GLOBALS, function, arglist, constants, tests):
+    int_intervals = [
+        (SYS_MININT,SYS_MININT/2),
+        (SYS_MININT/2,0),
+        (-2**10,0),
+        (0,0),
+        (0,sys.maxint/2),
+        (0,2**10),
+        (sys.maxint/2,sys.maxint)]
     # assume no Exceptions from now on
     for i, item in enumerate(arglist):
         if not is_primitive(item) and hasattr(item, '__class__') \
@@ -333,26 +374,67 @@ def test_random(GLOBALS, function, arglist, constants, tests):
                                     str(uuid.uuid4()).replace('-',''),
                                     arglist_to_stmts(arglist, function, return_value)))
                         if isinstance(value, int):
-                            for j in xrange(7):
-                                v = random.randint(SYS_MININT,sys.maxint)
-                                setattr(arglist[i], key, v)
-                                return_value = function(*arglist)
-                                tests.append(UnitTestObject(function.__name__,
-                                    str(uuid.uuid4()).replace('-',''),
-                                    arglist_to_stmts(arglist, function, return_value)))
+                            for low, high in int_intervals:
+                                for j in xrange(3):
+#                                    signal.signal(signal.SIGALRM, test_random_handler)
+#                                    signal.alarm(3)
+                                    try:
+                                        v = random.randint(low, high)
+#                                        print '[1]: %s - random value'%function.func_name,v
+                                        setattr(arglist[i], key, v)
+                                        return_value = function(*arglist)
+                                    except Exception as e:
+                                        continue
+                                    else:
+                                        tests.append(UnitTestObject(function.__name__,
+                                            str(uuid.uuid4()).replace('-',''),
+                                            arglist_to_stmts(arglist, function, return_value)))
         elif is_primitive(item):
             for v in constants:
                 if type(v) == type(item):
-                    arglist[i] = v
-                    return_value = function(*arglist)
-                    tests.append(UnitTestObject(function.__name__,
-                        str(uuid.uuid4()).replace('-',''),
-                        arglist_to_stmts(arglist, function, return_value)))
+                    try:
+                        arglist[i] = v
+                        return_value = function(*arglist)
+                    except Exception as e:
+                        continue
+                    else:
+                        tests.append(UnitTestObject(function.__name__,
+                            str(uuid.uuid4()).replace('-',''),
+                            arglist_to_stmts(arglist, function, return_value)))
             if isinstance(item, int):
-                for j in xrange(7):
-                    arglist[i] = random.randint(SYS_MININT,sys.maxint)
-                    return_value = function(*arglist)
-                    tests.append(UnitTestObject(function.__name__,
+                for low, high in int_intervals:
+                    for j in xrange(3):
+#                        signal.signal(signal.SIGALRM, test_random_handler)
+#                        signal.alarm(3)
+                        try:
+                            arglist[i] = random.randint(low, high)
+#                            print '[2]: %s - random value'%function.func_name,arglist[i]
+                            return_value = function(*arglist)
+                        except ValueError as e:
+                            # ValueError: Indices for islice() must be None or an integer: 0 <= x <= maxint.
+                            tests.append(UnitTestObject(function.__name__,
+                                str(uuid.uuid4()).replace('-',''),
+                                arglist_to_stmts(arglist, function, e)))
+                        except Exception as e:
+                            continue
+                        else:
+                            tests.append(UnitTestObject(function.__name__,
+                                str(uuid.uuid4()).replace('-',''),
+                                arglist_to_stmts(arglist, function, return_value)))
+            if isinstance(item, tuple):
+                itemlist = []
+                for length in xrange(random.randint(1,2**4)):
+                    low, high = int_intervals[random.randint(0,len(int_intervals)-1)]
+                    itemlist = [random.randint(low,high) for _ in xrange(length)]
+#                    signal.signal(signal.SIGALRM, test_random_handler)
+#                    signal.alarm(3)
+                    try:
+                        arglist[i] = tuple(itemlist)
+                        return_value = function(*arglist)
+                    except Exception as e:
+                        continue
+                    else:
+                        tests.append(UnitTestObject(function.__name__,
                         str(uuid.uuid4()).replace('-',''),
                         arglist_to_stmts(arglist, function, return_value)))
 
@@ -478,26 +560,26 @@ def test_function(GLOBALS, function):
         if not arg:
             arglist[pos] = create_metaparam(pos)
     print "[test-all-params-with-defaults]:",
-    param_state_info, num_iter, MAX_ITERATIONS, success = {}, 0, 20, False
+    param_state_info, num_iter, success = {}, 0, False
     #######
     while num_iter < MAX_ITERATIONS:
         print 'Argument list:', arglist, param_state_info
         try:
             return_value = function(*arglist)
         except TypeError as e:
-            print "TypeError:", e
+            print term.yellow+term.bold+"TypeError: "+e.message+term.normal
             tests.append(UnitTestObject(function.__name__,
                 str(uuid.uuid4()).replace('-',''),
                 arglist_to_stmts(arglist, function, e)))
             def process_0(msg):
                 if msg:
-                    print "process_0()"
+#                    print "process_0()"
                     param_pos = msg
                     return True
                 return False
             def process_1(msg):
                 if msg:
-                    print "process_1()"
+#                    print "process_1()"
                     arg1, arg2 = msg
                     if arg1.startswith('Param'):
                         arg1 = int(arg1[len('Param'):])
@@ -507,12 +589,11 @@ def test_function(GLOBALS, function):
                 return False
             def process_2(msg):
                 if msg:
-                    print "process_2()"
+#                    print "process_2()"
                     op, arg1, arg2 = msg
                     # No 'type' and 'type'
                     assert(not (not arg1.startswith('Param') \
                         and not arg2.startswith('Param')))
-
                     if arg1.startswith('Param'):
                         param, attr = arg1.partition('_')[::2]
                         arg1 = {
@@ -529,7 +610,6 @@ def test_function(GLOBALS, function):
                             'param_pos': int(param[len('Param'):])-1,
                             'type': 'param',
                         }
-
                     if isinstance(arg1, dict) and isinstance(arg2, dict):
                         if op in op_arithmetic:
                             if arg1['attr']:
@@ -537,6 +617,11 @@ def test_function(GLOBALS, function):
                                 param_state_info['last_instantiated_attr'] = arg1['attr']
                             else:
                                 arglist[arg1['param_pos']] = 0
+                            if arg2['attr']:
+                                setattr(arglist[arg2['param_pos']], arg2['attr'], 0)
+                                param_state_info['last_instantiated_attr'] = arg2['attr']
+                            else:
+                                arglist[arg2['param_pos']] = 0
                             param_state_info['last_instantiated'] = arg1['param_pos']
                     else:
                         the_param, the_type = None, None
@@ -575,10 +660,24 @@ def test_function(GLOBALS, function):
             def process_6(msg):
                 return False
             def process_7(msg):
+                if msg:
+#                    print "process_7()"
+                    param_pos = int(msg[0])-1
+                    arglist[param_pos] = tuple()
+                    param_state_info['last_instantiated'] = param_pos
+                    return True
                 return False
             def process_8(msg):
+                if msg:
+#                    print "process_8()"
+                    param_pos = int(msg[0])-1
+                    arglist[param_pos] = random.randint(-2**10, 2**10)
+                    param_state_info['last_instantiated'] = param_pos
+                    return True
                 return False
             def process_9(msg):
+                return False
+            def process_10(msg):
                 return False
             err_msgs = {
                 '^%d format: a number is required, not Param([0-9]+)$': process_0,
@@ -591,6 +690,7 @@ def test_function(GLOBALS, function):
                 "^'Param([0-9]+)' object is not iterable$": process_7,
                 "^can't multiply sequence by non-int of type 'Param([0-9]+)'$": process_8,
                 "^object of type 'Param([0-9]+)' has no len()$": process_9,
+                "^a float is required$": process_10,
             }
             handled_err_msg = False
             for re_msg, re_fn in err_msgs.iteritems():
@@ -605,21 +705,20 @@ def test_function(GLOBALS, function):
             # produce test case
         except Exception as e:
             if hasattr(e, '__module__'):
-                print "\riteration#%d: Unhandled custom Exception:"%num_iter,e.__class__
+                print "\riteration#%d: Custom Exception:"%num_iter,e.__class__
                 tests.append(UnitTestObject(function.__name__,
                     str(uuid.uuid4()).replace('-',''),
                     arglist_to_stmts(arglist, function, e)))
-                print arglist_to_stmts(arglist, function, e)
             else:
-                print "\riteration#%d: Unhandled builtin Exception:"%num_iter,e.message
+                print "\riteration#%d: Builtin Exception:"%num_iter,e.message
                 tests.append(UnitTestObject(function.__name__,
                     str(uuid.uuid4()).replace('-',''),
                     arglist_to_stmts(arglist, function, e)))
+                if isinstance(e, ArithmeticError) \
+                    and "zero-length list" in e.message:
+                    arglist[param_state_info['last_instantiated']] \
+                        = (random.randint(-2**10,2**10),)
         else:
-            print '...done!', arglist
-            print ">> Discovered parameters in %d/%d iteration%s (%.2f%%)" % \
-                (num_iter, MAX_ITERATIONS, 's' if num_iter > 1 else '', \
-                 num_iter/float(MAX_ITERATIONS)*100)
             success = True
             old_function = function
             function = decorator.decorator(add_tracer, function)
@@ -634,7 +733,13 @@ def test_function(GLOBALS, function):
             else:
                 test_random(GLOBALS, function, arglist, constants, tests)
             break   # all done now, no Exceptions raised
-        num_iter += 1
+        finally:
+            num_iter += 1
+            if success:
+                print '...done!'
+                print ">> Discovered parameters in %d/%d iteration%s (%.2f%%)" % \
+                    (num_iter, MAX_ITERATIONS, 's' if num_iter>1 else '', \
+                     num_iter/float(MAX_ITERATIONS)*100)
     #######
     GLOBALS['unittest_cache'][function.func_name] \
         = {'module': submodule_key, 'testcases': tests}
@@ -691,7 +796,6 @@ def test_function(GLOBALS, function):
         if not os.path.exists('%s-pngs' % GLOBALS['basename']):
             os.makedirs('%s-pngs' % GLOBALS['basename'])
         graph.write_png('%s-pngs/%s_trace.png' % (GLOBALS['basename'],function.func_name))
-
     if False:
         print '=== fn_cfg_nodes ==='
         pprint(sorted([(a,b) \
@@ -719,13 +823,16 @@ def test_function(GLOBALS, function):
         pprint(sorted(used_args))
 
 def main(GLOBALS):
-    tested_functions = []
-    for key in [ 'recursive', 'isolated', 'L']:
-        print '\t === %s ===' % key
+    tested_functions = [ ]
+    for key in [ 'recursive', 'isolated']:#, 'L']:
+        print '\t === %s ===' % term.underline(key)
         for function in GLOBALS['function_test_order'][key]:
             if function in tested_functions: continue
-            print 'Testing %s.%s\t%s...' % \
+            print ('Testing ' + term.bold + term.yellow + '%s.%s' + term.normal + '\t%s...') % \
                 (function.__module__, function.func_name,
                     inspect.getargspec(function))
             test_function(GLOBALS, function)
             tested_functions.append(function)
+            print
+            os.system('read -p "Press any key to continue..."') #linux
+        print

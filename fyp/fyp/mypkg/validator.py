@@ -7,6 +7,7 @@ import byteplay
 import time
 import struct
 import marshal
+import inspect
 from cStringIO import StringIO
 
 def get_base_import_dir(GLOBALS, pkg_type):
@@ -34,12 +35,14 @@ def get_base_import_dir(GLOBALS, pkg_type):
             = [import_name for a,import_name in bytecode_list \
                 if a == byteplay.IMPORT_NAME]
 
-        module, PYTHONPATH = None, None
         sys.stdout = StringIO()
-        tries, MAX_TRIES, module = 0, 3, None
+        module, PYTHONPATH = None, None
+        tries, MAX_TRIES, module = 0, 7, None
         while tries < MAX_TRIES:
             try:
                 module = imp.load_compiled(GLOBALS['module_name'], GLOBALS['pkg_path'])
+                sys.path.append(os.path.dirname(GLOBALS['pkg_path']))
+                __import__(GLOBALS['module_name'])
             except ImportError as e:
                 re_msg = '^No module named (.*)$'
                 re_vars = re.split(re_msg, e.message)[1:-1]
@@ -55,6 +58,10 @@ def get_base_import_dir(GLOBALS, pkg_type):
                 break
             tries += 1
         sys.stdout = sys.__stdout__
+
+        if not PYTHONPATH:
+            PYTHONPATH = os.path.realpath(os.path.dirname(os.sys.argv[0]))
+
         if module:
             return PYTHONPATH
         else:

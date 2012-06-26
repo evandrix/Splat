@@ -6,12 +6,15 @@ requirements.txt
 setup.py
 docs/nondescript.txt
 fyp/__init__.py
+fyp/absolute.py
+fyp/all_paths.py
+fyp/demo.py
 fyp/gui.py
 fyp/main.py
+fyp/test_absolute.py
 fyp/mypkg/__init__.py
 fyp/mypkg/analyser_cfg.py
 fyp/mypkg/analyser_fn.py
-fyp/mypkg/bytecode_modifier.py
 fyp/mypkg/common.py
 fyp/mypkg/constants.py
 fyp/mypkg/decompiler.py

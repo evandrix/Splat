@@ -1,0 +1,113 @@
+\select@language {british}
+\contentsline {chapter}{\numberline {1}Introduction}{8}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivation}{8}{section.1.1}
+\contentsline {section}{\numberline {1.2}Automated software testing for dynamic languages}{9}{section.1.2}
+\contentsline {section}{\numberline {1.3}The Python programming language}{9}{section.1.3}
+\contentsline {section}{\numberline {1.4}Project contributions}{10}{section.1.4}
+\contentsline {section}{\numberline {1.5}Report organisation}{11}{section.1.5}
+\contentsline {chapter}{\numberline {2}Background}{12}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introduction}{12}{section.2.1}
+\contentsline {section}{\numberline {2.2}Definition of terms}{12}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}General software testing}{12}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Modelling programs as graphs}{12}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}Overview}{13}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Functional testing}{14}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Structural testing}{14}{subsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.2.1}Static approach}{14}{subsubsection.2.3.2.1}
+\contentsline {subsubsection}{\numberline {2.3.2.2}Dynamic approach}{15}{subsubsection.2.3.2.2}
+\contentsline {paragraph}{Systematic (optimisation)}{16}{section*.5}
+\contentsline {paragraph}{Random}{17}{section*.6}
+\contentsline {subsection}{\numberline {2.3.3}Hybrid testing}{18}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Testability transformation}{19}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Existing tools}{19}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\textsc {RuTeG}}{19}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Python}{20}{subsection.2.4.2}
+\contentsline {subsubsection}{\numberline {2.4.2.1}\textsf {FizzBuzz} (sample Python module)}{20}{subsubsection.2.4.2.1}
+\contentsline {subsubsection}{\numberline {2.4.2.2}\textsf {Pythoscope}}{23}{subsubsection.2.4.2.2}
+\contentsline {subsubsection}{\numberline {2.4.2.3}Pytestsgenerator}{23}{subsubsection.2.4.2.3}
+\contentsline {section}{\numberline {2.5}The Python programming language}{25}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Dynamic typing}{26}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Introspection/reflection}{26}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Runtime modification}{26}{subsection.2.5.3}
+\contentsline {subsection}{\numberline {2.5.4}Data model}{27}{subsection.2.5.4}
+\contentsline {subsubsection}{\numberline {2.5.4.1}Objects}{27}{subsubsection.2.5.4.1}
+\contentsline {subsubsection}{\numberline {2.5.4.2}Type objects}{27}{subsubsection.2.5.4.2}
+\contentsline {subsubsection}{\numberline {2.5.4.3}Containers}{28}{subsubsection.2.5.4.3}
+\contentsline {subsubsection}{\numberline {2.5.4.4}Bytecode}{28}{subsubsection.2.5.4.4}
+\contentsline {section}{\numberline {2.6}Challenges}{29}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Function argument instantiation}{29}{subsection.2.6.1}
+\contentsline {subsubsection}{\numberline {2.6.1.1}Lazy instantiation}{30}{subsubsection.2.6.1.1}
+\contentsline {subsubsection}{\numberline {2.6.1.2}Runtime in-memory manipulation}{31}{subsubsection.2.6.1.2}
+\contentsline {subsubsection}{\numberline {2.6.1.3}Random testing}{31}{subsubsection.2.6.1.3}
+\contentsline {subsection}{\numberline {2.6.2}Optimising search space coverage}{31}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Testing a dynamically typed language}{32}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Non-terminating program executions}{32}{subsection.2.6.4}
+\contentsline {subsection}{\numberline {2.6.5}Early detection of path infeasibility}{32}{subsection.2.6.5}
+\contentsline {subsection}{\numberline {2.6.6}Improving code coverage}{32}{subsection.2.6.6}
+\contentsline {section}{\numberline {2.7}Summary}{33}{section.2.7}
+\contentsline {chapter}{\numberline {3}Contributions}{34}{chapter.3}
+\contentsline {section}{\numberline {3.1}Key characteristics}{34}{section.3.1}
+\contentsline {section}{\numberline {3.2}Limitations}{35}{section.3.2}
+\contentsline {section}{\numberline {3.3}Approach}{35}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Testing recursive functions}{36}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}Challenges}{36}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Python modules with own imports}{36}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Lack of existing tool support}{37}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Vague error messages}{37}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Relationship between input arguments}{38}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}Various kinds of programs}{38}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}Range of values for testing}{38}{subsection.3.4.6}
+\contentsline {section}{\numberline {3.5}Available tools}{39}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Parsers}{39}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Unit test frameworks}{39}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Graphical User Interface (GUI) toolkits}{39}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}Code coverage}{39}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}Alternative implementations}{40}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}Supporting utilities}{40}{subsection.3.5.6}
+\contentsline {section}{\numberline {3.6}Design decisions}{40}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\textsf {callable()} vs. \textsf {hasattr(obj, "\@uscore .\@uscore .call\@uscore .\@uscore .")}}{40}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Algorithm}{40}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Example}{41}{subsection.3.7.1}
+\contentsline {section}{\numberline {3.8}Summary}{42}{section.3.8}
+\contentsline {chapter}{\numberline {4}\textsc {Splat}}{43}{chapter.4}
+\contentsline {section}{\numberline {4.1}Architecture}{43}{section.4.1}
+\contentsline {section}{\numberline {4.2}Components}{44}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Main run scripts}{44}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Validator}{44}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Bytecode scanner \& Instrumentor}{44}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Program analyser}{44}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Unit test generator}{45}{subsection.4.2.5}
+\contentsline {subsubsection}{\numberline {4.2.5.1}all \lstinline [style=mypythoninline]{None}s}{45}{subsubsection.4.2.5.1}
+\contentsline {subsubsection}{\numberline {4.2.5.2}all \lstinline [style=mypythoninline]{None}s, with structure}{45}{subsubsection.4.2.5.2}
+\contentsline {subsubsection}{\numberline {4.2.5.3}\lstinline [style=mypythoninline]{MetaParam}s, with structure and defaults}{45}{subsubsection.4.2.5.3}
+\contentsline {subsubsection}{\numberline {4.2.5.4}Lazy instantiation}{45}{subsubsection.4.2.5.4}
+\contentsline {subsubsection}{\numberline {4.2.5.5}Argument list to \textsf {UnitTestObject}}{45}{subsubsection.4.2.5.5}
+\contentsline {subsubsection}{\numberline {4.2.5.6}Recursive function tester}{46}{subsubsection.4.2.5.6}
+\contentsline {subsection}{\numberline {4.2.6}Template writer}{46}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}Auxiliary tools}{46}{subsection.4.2.7}
+\contentsline {section}{\numberline {4.3}Summary}{47}{section.4.3}
+\contentsline {chapter}{\numberline {5}Evaluation}{48}{chapter.5}
+\contentsline {section}{\numberline {5.1}Experiment}{48}{section.5.1}
+\contentsline {section}{\numberline {5.2}Evaluation criteria}{48}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Code coverage}{48}{subsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.1.1}Basic coverage criteria}{48}{subsubsection.5.2.1.1}
+\contentsline {subsubsection}{\numberline {5.2.1.2}Additional coverage criteria}{49}{subsubsection.5.2.1.2}
+\contentsline {subsection}{\numberline {5.2.2}Performance}{49}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Quality of test data}{50}{subsection.5.2.3}
+\contentsline {subsubsection}{\numberline {5.2.3.1}Mutation testing}{50}{subsubsection.5.2.3.1}
+\contentsline {subsection}{\numberline {5.2.4}Generality}{51}{subsection.5.2.4}
+\contentsline {section}{\numberline {5.3}Selection of programs}{51}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Fingerprinting Python modules}{52}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Coverage results}{52}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Discussion}{54}{subsection.5.3.3}
+\contentsline {section}{\numberline {5.4}Summary}{55}{section.5.4}
+\contentsline {chapter}{\numberline {6}Conclusion \& Future Work}{56}{chapter.6}
+\contentsline {chapter}{Bibliography}{60}{chapter*.11}
+\contentsline {chapter}{\numberline {A}Python 2.7 Grammar (EBNF)}{61}{appendix.A}
+\contentsline {chapter}{\numberline {B}Type hierarchy}{64}{appendix.B}
+\contentsline {chapter}{\numberline {C}Exception hierarchy}{68}{appendix.C}
+\contentsline {chapter}{\numberline {D}Python objects}{69}{appendix.D}
+\contentsline {section}{\numberline {D.1}frame object}{69}{section.D.1}
+\contentsline {section}{\numberline {D.2}code object}{69}{section.D.2}
+\contentsline {chapter}{\numberline {E}Python 2.7 opcodes}{70}{appendix.E}
+\contentsline {chapter}{\numberline {F}Source code to Bytecode mapping}{72}{appendix.F}

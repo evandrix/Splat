@@ -122,7 +122,7 @@ class ClassType: OLD, NEW = range(2)
 MAX_ITERATIONS = 2**10
 def f_noarg(): return                   # Mock parameters
 def f_varg(*args, **kwargs): return
-PARAM_VALUE_SEQ = [ None, 0, 0.0, '', f_noarg, f_varg ]
+PARAM_VALUE_SEQ = [ None, 0, 0.0, '', (), [], {}, f_noarg, f_varg ]
 PRIMITIVE_TYPES \
     = (int, float, long, complex, basestring, bool, tuple, list, dict)
 is_primitive = lambda var: isinstance(var, PRIMITIVE_TYPES)

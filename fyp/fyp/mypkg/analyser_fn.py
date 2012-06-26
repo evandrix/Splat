@@ -172,9 +172,11 @@ def main(GLOBALS):
     all_modules = set([inspect.getmodule(f_fn) \
         for _,f_fn in all_functions.iteritems()])
     GLOBALS['all_modules'] = all_modules
-    print "[Total: %d functions in %d modules]" % (len(all_functions),len(all_modules))
-    print "(IIa): function -> function (no classes)"
-    print "\t=> work out order to test functions (root -> leaf node)"
+    from blessings import Terminal
+    term = Terminal()
+    print term.bold + term.yellow + "\t[Total: %d functions in %d modules]" % (len(all_functions),len(all_modules)) + term.normal
+    print "\t(IIa): function -> function (no classes)"
+    print "\t\t=> work out order to test functions (root -> leaf node)"
     graph_nodes, graph_edges, recursive_functions = {}, set(), set()
     for name, fn in all_functions.iteritems():
         co = byteplay.Code.from_code(fn.func_code)
@@ -231,7 +233,7 @@ def main(GLOBALS):
     GLOBALS['function_test_order'] = { 'isolated': isolated_functions,
         'recursive': recursive_functions, 'L': L }
 
-    print "(IIb): class as function input arg/in method body"
+    print "\t(IIb): class -> function input argument"
     graph_nodes, graph_edges = {}, set()
     for name, fn in all_functions.iteritems():
         co = byteplay.Code.from_code(fn.func_code)

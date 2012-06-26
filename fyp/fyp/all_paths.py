@@ -10,6 +10,7 @@ import pickle
 import types
 import inspect
 import random
+import time
 import timeit
 import uuid
 import pystache
@@ -158,7 +159,7 @@ def all_paths_for_function(function):
     _, start_node = node_list[start]
     _, end_node = node_list[end]
 
-    all_paths, result = [], []
+    all_paths, result = [], defaultdict(list)
     for i, r in enumerate([node for index, ((opcode,arg), node) in node_list.iteritems() if opcode == byteplay.RETURN_VALUE]):
         print 'target end node =', node_to_index(node_list, r)
         for j, p in enumerate(find_all_paths(start_node, r, node_list, new_edge_list)):
@@ -191,7 +192,7 @@ def all_paths_for_function(function):
 
             graph.write_png('%s-pngs/%s-%d-path-highlight.png' % (function.func_name,function.func_name,len(all_paths)))
 
-            result.append(map(lambda n: node_to_bytecode(node_list, n), p))
+            result[node_to_index(node_list, r)].append(map(lambda n: node_to_bytecode(node_list, n), p))
     print "Total: %d paths discovered" % len(all_paths)
     return result
 
@@ -223,10 +224,97 @@ def tracer(frame, event, arg):
 def main():
     global BYTECODE_LIST
     initLogging()
+
     import absolute
+    function = absolute.absolute
     # debug, info, warning, error, critical
-    logging.info('function: ' + str(absolute.absolute))
-    all_paths = all_paths_for_function(absolute.absolute)
+    logging.info('function: ' + str(function.func_name))
+    all_paths = all_paths_for_function(function)
+    MAX_ITERATIONS = 2**10
+    SYS_MININT = -sys.maxint-1
+    int_intervals = [
+        (SYS_MININT,SYS_MININT/2),
+        (SYS_MININT/2,0),
+        (-2**10,0),
+        (0,0),
+        (0,2**10),
+        (0,sys.maxint/2),
+        (sys.maxint/2,sys.maxint)]
+    iteration_no, coverage, total, test_objects = 0, 0, len(all_paths.keys()), []
+    start_time = time.time()
+    while coverage < total:
+        # num arguments to be given known using inspect
+        num_args = len(inspect.getargspec(function).args)
+
+        arglist = []
+        for _ in xrange(num_args):
+            low, high = int_intervals[random.randint(0,len(int_intervals)-1)]
+            arglist.append(random.randint(low,high))
+
+        BYTECODE_LIST = []
+        sys.settrace(tracer)
+        return_value = function(*arglist)
+        sys.settrace(None)
+        test_objects.append(mypkg.template_writer.UnitTestObject(
+            function.func_name,
+            str(uuid.uuid4()).replace('-',''),
+            ['self.assertEqual(self.module.%s(*%s), %s)' \
+                % (function.func_name,arglist,return_value)])
+        )
+        BYTECODE_LIST = [(opcode,arg) for opcode,arg in BYTECODE_LIST if not isinstance(opcode, byteplay.Label) and not isinstance(arg, byteplay.Label)]
+        # sanity check
+        pattern = [
+            { 'before': [
+                (byteplay.RETURN_VALUE, None),
+                (byteplay.LOAD_CONST, None),
+                (byteplay.RETURN_VALUE, None)
+            ], 'after': [(byteplay.RETURN_VALUE, None)] }
+        ]
+        for item in pattern:
+            if BYTECODE_LIST[-len(item['before']):] == item['before']:
+                BYTECODE_LIST = BYTECODE_LIST[:-len(item['before'])] + item['after']
+
+        if len([ x for x in BYTECODE_LIST if x == (byteplay.RETURN_VALUE, None)]) > 1:
+            BYTECODE_LIST = BYTECODE_LIST[:BYTECODE_LIST.index((byteplay.RETURN_VALUE, None))+1]
+
+        found = False
+        for end_node, paths in all_paths.iteritems():
+            for p in paths:
+                p = [(opcode,arg) for opcode,arg in p if not isinstance(opcode, byteplay.Label) and not isinstance(arg, byteplay.Label)]
+
+                if p == BYTECODE_LIST:
+                    del all_paths[end_node]
+                    coverage += 1
+                    print 'iteration#%d: (time elapsed: %.3f sec) Coverage ='%(iteration_no,time.time()-start_time), str(100*coverage/float(total))+'%', arglist, return_value
+                    found = True
+                    break
+            if found:
+                break
+
+        iteration_no += 1
+        if coverage == total:
+            print 'Full coverage achieved after %d iterations. Stopping...'%(iteration_no)
+            break
+
+    template_file = "mypkg/test_template_py.mustache"
+    with open(template_file, "rU") as template:
+        template = template.read()
+    context = {
+        'module_name': absolute.absolute.func_name,
+        'base_import_path': os.getcwd(),
+        'module_path': os.getcwd(),
+        'all_imports': None,
+        'all_tests':   test_objects
+    }
+    data = pystache.render(template, context)
+    with codecs.open('test_%s.py'%absolute.absolute.func_name, "w", "utf-8") as fout:
+        if isinstance(data, markupsafe.Markup):
+            print >> fout, data.unescape() \
+                .replace("&#34;",'"').replace("&#39;","'")
+        else:
+            print >> fout, data
+    sys.exit(0)
+    sys.exit(0)
 #############################################################################
     for i, path in enumerate(all_paths):
         new_path = []
@@ -256,7 +344,7 @@ def main():
         sys.settrace(tracer)
         return_value = absolute.absolute(*arglist)
         sys.settrace(None)
-        test_objects.append(template_writer.UnitTestObject(
+        test_objects.append(mypkg.template_writer.UnitTestObject(
             absolute.absolute.func_name,
             str(uuid.uuid4()).replace('-',''),
             ['self.assertEqual(self.module.absolute(*%s), %s)' \

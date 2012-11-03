@@ -1,11 +1,14 @@
 #python specific
 *.pyc
 
+#latex specific
+*.bib.bak
+*.aux
+*.toc
+
 ## generic files to ignore
 *~
 *.lock
 *.DS_Store
 *.swp
 *.out
-
-docs/report/fyp.bib.bak

@@ -1,5 +1,5 @@
 #python specific
-*.pyc
+#*.pyc
 
 #latex specific
 *.bib.bak

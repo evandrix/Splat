@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/" >
-    <file>delete.svg</file>
-    <file>todo.svg</file>
-  </qresource>
-</RCC>

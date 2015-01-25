@@ -1,7 +1,0 @@
-Existing work (Python unit test generators)
-    
-    - pytestsgenerator @ http://code.google.com/p/pytestsgenerator/ [STABLE v0.2; Feb 2009]
-        static analysis tool (input: *.py files only)
-
-    - Pythoscope @ http://pythoscope.org/tutorial [STABLE v0.4.3; Feb 28 2010]
-        static analysis tool

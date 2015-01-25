@@ -1,0 +1,6 @@
+[submodule "doc/python-guide"]
+	path = doc/python-guide
+	url = https://github.com/kennethreitz/python-guide
+[submodule "doc/python-for-humans"]
+	path = doc/python-for-humans
+	url = https://github.com/kennethreitz/python-for-humans

@@ -1,0 +1,21 @@
+div.codearea {
+    margin: 0.5em 0;
+    padding: 0 0 0 5px;
+    border: 1pt solid #AEBDCC;
+    background-color: #F3F5F7;
+    color: black;
+    border-image: initial;
+	font-size: 11pt;
+}
+
+pre.bytecode {
+    padding: 5px;
+    background-color: #EFC;
+    color: #333;
+    line-height: 120%;
+    border: 1px solid #AC9;
+    border-left: none;
+    border-right: none;
+    border-image: initial;
+	font-size: 11pt;
+}
